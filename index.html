@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Eureka Forbes specialist catalog with selected SKUs, multilingual support, and a fast product filtering experience." />
+  <meta name="theme-color" content="#012d5a" />
+  <title>Eureka Forbes Specialist</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <h1>Eureka Forbes</h1>
+        <p>Customer Sales Specialist</p>
+      </div>
+      <div class="language-switcher">
+        <button class="lang-btn active" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="hi">हिंदी</button>
+        <button class="lang-btn" data-lang="mr">मराठी</button>
+      </div>
+      <nav class="main-nav">
+        <a href="#home" data-i18n="nav_home">Home</a>
+        <a href="#products" data-i18n="nav_products">Products</a>
+        <a href="#contact" data-i18n="nav_contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="container hero-content">
+      <div>
+        <span class="eyebrow" data-i18n="hero_eyebrow">Selected SKUs · Exclusive Catalog</span>
+        <h2 data-i18n="hero_title">Sell the best Eureka Forbes products with confidence</h2>
+        <p data-i18n="hero_desc">Showcase your selected SKUs and special offline-only items in a professional website designed for your customers.</p>
+        <a href="#products" class="btn" data-i18n="hero_btn">Explore Selected SKUs</a>
+      </div>
+      <div class="hero-card">
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=800&q=80" alt="Home appliance" />
+      </div>
+    </div>
+  </section>
+
+  <section class="products" id="products">
+    <div class="container section-heading">
+      <span class="eyebrow" data-i18n="products_eyebrow">Featured Products</span>
+      <h2 data-i18n="products_title">Selected SKUs and offline-only offers</h2>
+      <p data-i18n="products_desc">Choose from top-quality products that are available through direct sales and exclusive offline channels.</p>
+    </div>
+
+    <div class="container filters">
+      <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search products..." data-i18n="search_placeholder" />
+        <button id="clearSearch" type="button" aria-label="Clear search">✕</button>
+      </div>
+      <div class="filter-buttons">
+        <button type="button" class="filter-btn active" data-category="all" data-i18n="filter_all">All Products</button>
+        <button type="button" class="filter-btn" data-category="Water Purifier" data-i18n="filter_water">Water Purifiers</button>
+        <button type="button" class="filter-btn" data-category="Air Purifier" data-i18n="filter_air">Air Purifiers</button>
+        <button type="button" class="filter-btn" data-category="Vacuum Cleaner" data-i18n="filter_vacuum">Vacuum Cleaners</button>
+        <button type="button" class="filter-btn" data-category="Water Softener" data-i18n="filter_softener">Water Softeners</button>
+      </div>
+    </div>
+
+    <div class="product-grid">
+      <!-- Water Purifiers -->
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD SELECT DESIGNO UTC WS RO+UV" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD SELECT DESIGNO UTC WS RO+UV</h3>
+        <p>Advanced purification, smart alerts, and hygienic storage for pure water every day.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹18,000</div>
+          <div class="price">MOP ₹20,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD SLIM GLASS WS RO+UV" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD SLIM GLASS WS RO+UV</h3>
+        <p>High-efficiency RO system with mineral retention for balanced, healthy water.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹15,000</div>
+          <div class="price">MOP ₹19,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD SLIM GLASS UV BAR INLINE" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD SLIM GLASS UV BAR INLINE</h3>
+        <p>Energy-efficient UV technology with eco-friendly design and easy maintenance.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹13,500</div>
+          <div class="price">MOP ₹13,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD ENHANCE RO+UV+MTDS" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE NOVA RO+UV+SS 2X</h3>
+        <p>Advanced multi-stage purification with TDS control for optimal mineral balance.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹20,000</div>
+          <div class="price">MOP ₹24,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD GENEUS RO+UV+UF+MTDS" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE NOVA RO+UV 2X</h3>
+        <p>Next-gen purification with UF membrane and smart TDS adjustment.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹23,000</div>
+          <div class="price">MOP ₹22,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD BLISS RO+UV+ALKALINE" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ENRICH VECTOR RO+UV+MC 2X</h3>
+        <p>Alkaline water technology for better hydration and antioxidant benefits.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹19,000</div>
+          <div class="price">MOP ₹18,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD AURA RO+UV+MINERAL GUARD" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE NOVA RO+UV ALK 2X</h3>
+        <p>Mineral guard technology preserves essential minerals while purifying water.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹17,000</div>
+          <div class="price">MOP ₹22,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD CRYSTAL RO+UV+SMART TDS" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE NOVA UV+UF 2X</h3>
+        <p>Smart TDS controller with crystal-clear water output and LED indicators.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹21,000</div>
+          <div class="price">MOP ₹15,799</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD NOVA RO+UV+HYGIENIC STORAGE" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE NOVA UV+UF+SS 2X</h3>
+        <p>Large hygienic storage tank with advanced purification for family use.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹24,000</div>
+          <div class="price">MOP ₹18,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD PURE RO+UV+ECO MODE" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE NOVA RO+UV+ALK+SS 2X</h3>
+        <p>Eco-friendly operation with reduced water wastage and energy efficiency.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹14,500</div>
+          <div class="price">MOP ₹24,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD VIVA RO+UV+QUICK PURIFY" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE BLAZE RO+UV+SS 2X</h3>
+        <p>Fast purification technology for instant access to clean drinking water.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹17,500</div>
+          <div class="price">MOP ₹27,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD ZOOM RO+UV+SMART ALERTS" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ENRICH CREST UV DUO 2X</h3>
+        <p>Smart alerts for filter replacement and water quality monitoring.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹20,500</div>
+          <div class="price">MOP ₹14,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD ELITE RO+UV+PREMIUM DESIGN" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE DESIGNO UTC RO+UV 1X</h3>
+        <p>Premium stainless steel design with advanced RO+UV purification.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹26,500</div>
+          <div class="price">MOP ₹26,299</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD AURA RO+UV+ALKALINE BOOST" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ENRICH BOOSTER UV 2X</h3>
+        <p>Enhanced alkaline technology for superior pH balance and antioxidant properties.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹21,000</div>
+          <div class="price">MOP ₹15,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD NOVA RO+UV+ECO PURIFY" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE SLIMTECH RO+UV 2X</h3>
+        <p>Eco-purification mode reduces energy consumption while maintaining high performance.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹16,500</div>
+          <div class="price">MOP ₹22,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD PURE RO+UV+QUICK HEAT" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE SLIMTECH UV STG 2X</h3>
+        <p>Instant hot water feature combined with advanced RO+UV purification technology.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹23,000</div>
+          <div class="price">MOP ₹15,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD ESSENTIAL RO+UV+BASIC" />
+        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+        <h3>AQUAGUARD SURE HYDRA AQUASAVER ROUVUF 2X</h3>
+        <p>Essential purification features at an affordable price for basic household needs.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹12,000</div>
+          <div class="price">MOP ₹15,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+
+
+      <!-- Air Purifiers -->
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334651-1e158d8e8721?auto=format&fit=crop&w=400&q=80" alt="Aero Mist Air Purifier" />
+        <div class="product-tag" data-category="Air Purifier">Air Purifier</div>
+        <h3>FORBES AIR PURIFIER 355 SURROUND 360° SM</h3>
+        <p>Removes pollutants, allergens, and odors with a sleek design that fits any home.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹14,000</div>
+          <div class="price">MOP ₹16,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=400&q=80" alt="PureAir HEPA Air Purifier" />
+        <div class="product-tag" data-category="Air Purifier">Air Purifier</div>
+        <h3>FORBES AIR PURIFIER 500 SURROUND 360° SM</h3>
+        <p>HEPA filtration captures 99.97% of airborne particles for superior air quality.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹17,000</div>
+          <div class="price">MOP ₹21,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334651-1e158d8e8721?auto=format&fit=crop&w=400&q=80" alt="SilentFlow Air Purifier" />
+        <div class="product-tag" data-category="Air Purifier">Air Purifier</div>
+        <h3>FORBES AIR PURIFIER 270 SURROUND 360°</h3>
+        <p>Ultra-quiet operation with smart sensors and auto-mode for continuous clean air.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹11,500</div>
+          <div class="price">MOP ₹9,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=400&q=80" alt="NanoPure Air Purifier" />
+        <div class="product-tag" data-category="Air Purifier">Air Purifier</div>
+        <h3>FORBES AIR PURIFIER 230 SURROUND 360°</h3>
+        <p>Advanced nano-technology filter captures ultrafine particles and eliminates odors.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹15,000</div>
+          <div class="price">MOP ₹7,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <!-- Vacuum Cleaners -->
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="PowerPro Vacuum Cleaner" />
+        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+        <h3>FORBES ATOM</h3>
+        <p>Strong suction, easy-to-clean filter, and comfortable handling for daily cleaning.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹10,000</div>
+          <div class="price">MOP ₹2,599</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=400&q=80" alt="CycloneForce Vacuum Cleaner" />
+        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+        <h3>FORBES SELECT WD X2</h3>
+        <p>Cyclonic technology for powerful suction and long-lasting performance on all surfaces.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹11,000</div>
+          <div class="price">MOP ₹16,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334651-1e158d8e8721?auto=format&fit=crop&w=400&q=80" alt="LightWeight Handheld Vacuum" />
+        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+        <h3>FORBES CORDLESS ZEROBEND Z15</h3>
+        <p>Compact and lightweight design for quick cleanups and car detailing.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹7,000</div>
+          <div class="price">MOP ₹30,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=400&q=80" alt="TurboClean Dry Vacuum" />
+        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+        <h3>FORBES CORDLESS ZEROBEND Z21WM</h3>
+        <p>High-performance dry vacuum with multi-surface tools for carpets and hard floors.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹11,500</div>
+          <div class="price">MOP ₹52,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="UltraFlex Cordless Vacuum" />
+        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+        <h3>FORBES SMARTCLEAN FULLYAUTOMATIC STATION</h3>
+        <p>Cordless cleaning freedom with long battery life and easy storage.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹14,500</div>
+          <div class="price">MOP ₹72,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="SmartSweep Robot Vacuum" />
+        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+        <h3>FORBES SMARTCLEAN with AUTO BIN S2</h3>
+        <p>Smart navigation and auto-docking for effortless everyday cleaning.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹22,000</div>
+          <div class="price">MOP ₹38,499</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="EcoClean Vacuum" />
+        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+        <h3>FORBES TORNADO VAC</h3>
+        <p>Energy-efficient vacuum with eco-friendly filters and reduced noise levels.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹8,500</div>
+          <div class="price">MOP ₹9,999</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <!-- Water Softeners -->
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="BlueSense Water Softener" />
+        <div class="product-tag" data-category="Water Softener">Water Softener</div>
+        <h3>AQUAGUARD SELECT WATER SOFTENER AWS 5000</h3>
+        <p>Reduces hard-water effects on appliances, skin, and hair for smoother daily living.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹15,000</div>
+          <div class="price">MOP ₹82,490</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="EcoSoft Water Softener" />
+        <div class="product-tag" data-category="Water Softener">Water Softener</div>
+        <h3>AQUAGUARD SELECT WATER SOFTENER AWS 7500</h3>
+        <p>Eco-friendly softening with automatic regeneration and low salt consumption.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹17,500</div>
+          <div class="price">MOP ₹95,990</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="CompactFlow Water Softener" />
+        <div class="product-tag" data-category="Water Softener">Water Softener</div>
+        <h3>AQUAGUARD SELECT WATER SOFTENER I 2500</h3>
+        <p>Space-saving design with high capacity for small to medium households.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹13,500</div>
+          <div class="price">MOP ₹57,990</div>
+        </div>
+        <a href="#contact" class="product-btn">Ask for This SKU</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="why-us">
+    <div class="container why-grid">
+      <div>
+        <span class="eyebrow" data-i18n="why_eyebrow">Why Choose Your Specialist Site?</span>
+        <h2 data-i18n="why_title">Build trust and make selling easier</h2>
+        <p data-i18n="why_desc">Your website is your storefront. It helps customers discover selected SKUs, understand product value, and contact you directly for offline items that aren't available online.</p>
+      </div>
+      <ul class="why-list">
+        <li data-i18n="why_list_1">Showcase offline-only products clearly</li>
+        <li data-i18n="why_list_2">Highlight product benefits and pricing</li>
+        <li data-i18n="why_list_3">Provide an easy way for leads to reach you</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="container contact-card">
+      <div>
+        <span class="eyebrow" data-i18n="contact_eyebrow">Contact Your Specialist</span>
+        <h2 data-i18n="contact_title">Ready to place an order?</h2>
+        <p data-i18n="contact_desc">Send a message, call, or WhatsApp directly to book the selected SKUs for your customer.</p>
+      </div>
+      <div class="contact-details">
+        <p><strong data-i18n="contact_name">Name:</strong> Paras Singh Chawsali</p>
+        <p><strong data-i18n="contact_phone">Phone:</strong> +91 89280 02642</p>
+        <p><strong data-i18n="contact_email">Email:</strong> paraschawsali@gmail.com</p>
+        <p><strong data-i18n="contact_whatsapp">WhatsApp:</strong> +91 89280 02642</p>
+        <a href="mailto:paraschawsali@gmail.com" class="btn btn-secondary" data-i18n="contact_email_btn">Email Me</a>
+        <a href="https://wa.me/8928002642" target="_blank" class="btn" data-i18n="contact_wa_btn">WhatsApp Me</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p data-i18n="footer_text1">© 2026 Eureka Forbes Direct Sales Specialist</p>
+      <p data-i18n="footer_text2">Selected SKUs and offline-only offers for your customers.</p>
+    </div>
+  </footer>
+
+  <script src="translations.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      const clearSearch = document.getElementById('clearSearch');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const productCards = document.querySelectorAll('.product-card');
+
+      function injectMrpLabels() {
+        productCards.forEach(card => {
+          const priceEl = card.querySelector('.price');
+          if (!priceEl || card.querySelector('.mrp')) return;
+
+          const mopText = priceEl.textContent.replace(/[^0-9]/g, '');
+          const mopValue = Number(mopText);
+          if (!mopValue) return;
+
+          const explicitMrp = Number(priceEl.dataset.mrp && priceEl.dataset.mrp.replace(/[^0-9]/g, ''));
+          const mrpValue = explicitMrp || Math.ceil(mopValue * 1.2 / 500) * 500;
+          const priceInfo = document.createElement('div');
+          priceInfo.className = 'price-info';
+
+          const mrpEl = document.createElement('div');
+          mrpEl.className = 'mrp';
+          mrpEl.textContent = `MRP ₹${mrpValue.toLocaleString('en-IN')}`;
+
+          priceEl.textContent = `MOP ₹${mopValue.toLocaleString('en-IN')}`;
+          priceEl.parentNode.insertBefore(priceInfo, priceEl);
+          priceInfo.appendChild(mrpEl);
+          priceInfo.appendChild(priceEl);
+        });
+      }
+
+      // Search functionality
+      function filterProducts() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
+
+        productCards.forEach(card => {
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const description = card.querySelector('p').textContent.toLowerCase();
+          const category = card.querySelector('.product-tag')?.dataset.category || '';
+
+          const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+          const matchesFilter = activeFilter === 'all' || category === activeFilter;
+
+          if (matchesSearch && matchesFilter) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
+
+      injectMrpLabels();
+      addProductImageGalleries();
+
+      function addProductImageGalleries() {
+        document.querySelectorAll('.product-card').forEach(card => {
+          const mainImage = card.querySelector('img');
+          if (!mainImage) return;
+
+          const originalSrc = mainImage.src;
+          mainImage.classList.add('gallery-main');
+          const altText = mainImage.alt || 'Product image';
+          const skuSlug = altText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          const galleryThumbs = document.createElement('div');
+          galleryThumbs.className = 'gallery-thumbs';
+
+          const imageUrls = Array.from({ length: 10 }, (_, index) => `images/${skuSlug}/${index + 1}.jpg`);
+          const availableUrls = [];
+
+          function buildGallery() {
+            if (!availableUrls.length) {
+              mainImage.src = originalSrc;
+              return;
+            }
+            mainImage.src = availableUrls[0];
+            availableUrls.forEach((url, index) => {
+              const thumb = document.createElement('img');
+              thumb.src = url;
+              thumb.alt = `${altText} image ${index + 1}`;
+              thumb.className = 'gallery-thumb';
+              if (index === 0) thumb.classList.add('active');
+              thumb.addEventListener('click', () => {
+                mainImage.src = url;
+                galleryThumbs.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+                thumb.classList.add('active');
+              });
+              galleryThumbs.appendChild(thumb);
+            });
+            mainImage.insertAdjacentElement('afterend', galleryThumbs);
+          }
+
+          function checkImage(index) {
+            if (index >= imageUrls.length) {
+              buildGallery();
+              return;
+            }
+            const url = imageUrls[index];
+            const testImage = new Image();
+            testImage.onload = () => {
+              availableUrls.push(url);
+              checkImage(index + 1);
+            };
+            testImage.onerror = () => checkImage(index + 1);
+            testImage.src = url;
+          }
+
+          checkImage(0);
+        });
+      }
+
+      // Search input event
+      searchInput.addEventListener('input', filterProducts);
+
+      // Clear search
+      clearSearch.addEventListener('click', function() {
+        searchInput.value = '';
+        filterProducts();
+      });
+
+      // Filter button events
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          filterProducts();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
