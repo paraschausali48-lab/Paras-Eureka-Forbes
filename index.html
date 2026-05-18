@@ -3,17 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Eureka Forbes specialist catalog with selected SKUs, multilingual support, and a fast product filtering experience." />
+  <meta name="description" content="Authorized Eureka Forbes Specialist serving Navi Mumbai and Thane. Get exclusive offline offers on Aquaguard water purifiers, Forbes vacuum cleaners, and air purifiers." />
+  <meta name="keywords" content="Eureka Forbes, Aquaguard, Water Purifier, Vacuum Cleaner, Navi Mumbai, Thane, Direct Sales, SmartClean" />
   <meta name="theme-color" content="#012d5a" />
-  <title>Eureka Forbes Specialist</title>
+ 
+  <meta property="og:title" content="Eureka Forbes Authorized Specialist" />
+  <meta property="og:description" content="Exclusive catalog for Aquaguard and Forbes home appliances in Navi Mumbai & Thane." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.eurekaforbes-specialist.com" />
+  <meta property="og:image" content="https://www.eurekaforbes-specialist.com/og-image.jpg" />
+  
+  <title>Eureka Forbes Specialist | Exclusive Catalog</title>
   <link rel="stylesheet" href="styles.css" />
+  <script src="translations.js"></script>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
       <div class="brand">
         <h1>Eureka Forbes</h1>
-        <p>Customer Sales Specialist</p>
+        <p class="brand-subtitle" data-i18n="header_rep_title">Customer Sales Specialist</p>
+        <span class="badge-rep" data-i18n="header_rep_badge">Independent Authorized Direct Sales Representative</span>
       </div>
       <div class="language-switcher">
         <button class="lang-btn active" data-lang="en">English</button>
@@ -28,13 +38,41 @@
     </div>
   </header>
 
+  <!-- Value Banner - Why Choose Direct Specialist -->
+  <section class="value-banner reveal" id="why-direct">
+    <div class="container">
+      <div class="value-banner-header">
+        <span class="value-eyebrow" data-i18n="vb_eyebrow">Smart Buyer's Guide</span>
+        <h2 data-i18n="vb_title">Why Choose a Direct Specialist Over Online Bank Discounts?</h2>
+        <p class="value-desc" data-i18n="vb_desc">An online discount saves you a few hundred rupees today, but incorrect configuration or delayed support wipes out those savings instantly. Here is the offline specialist advantage:</p>
+      </div>
+      <div class="value-cards">
+        <div class="value-card">
+          <div class="value-card-icon">📍</div>
+          <h3 data-i18n="vb_card1_title">Local Water Tuning</h3>
+          <p data-i18n="vb_card1_desc">Online sites sell a one-size-fits-all machine. We test your specific building's TDS and pressure to configure the exact RO/UV/Alkaline filters your family needs.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-card-icon">💰</div>
+          <h3 data-i18n="vb_card2_title">Doorstep Buy-Back Credit</h3>
+          <p data-i18n="vb_card2_desc">Trade in your old 10-15 year old purifier directly at your doorstep. We give you an instant valuation credited directly against your new machine's MOP.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-card-icon">⚡</div>
+          <h3 data-i18n="vb_card3_title">Lifetime Priority Support</h3>
+          <p data-i18n="vb_card3_desc">Skip long automated call center queues. You get a direct, personal contact number for rapid installations, genuine cartridge spares, and hassle-free AMC services.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="hero" id="home">
     <div class="container hero-content">
       <div>
-        <span class="eyebrow" data-i18n="hero_eyebrow">Selected SKUs · Exclusive Catalog</span>
-        <h2 data-i18n="hero_title">Sell the best Eureka Forbes products with confidence</h2>
-        <p data-i18n="hero_desc">Showcase your selected SKUs and special offline-only items in a professional website designed for your customers.</p>
-        <a href="#products" class="btn" data-i18n="hero_btn">Explore Selected SKUs</a>
+        <span class="eyebrow" data-i18n="hero_eyebrow">Authorized Direct Sales · Exclusive Catalog</span>
+        <h2 data-i18n="hero_title">Bring Pure Health to Your Home</h2>
+        <p data-i18n="hero_desc">Discover exclusive offline offers on premium Aquaguard water purifiers and Forbes home appliances, complete with free home demonstrations.</p>
+        <a href="#products" class="btn" data-i18n="hero_btn">Explore Premium Catalog</a>
       </div>
       <div class="hero-card">
         <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=800&q=80" alt="Home appliance" />
@@ -42,6 +80,73 @@
     </div>
   </section>
 
+  <!-- Lead Magnet: Free Water Health Check -->
+  <section class="lead-magnet-section reveal" id="water-test" style="background: linear-gradient(135deg, #eaf4ff 0%, #d4ecfc 100%); padding: 60px 0; border-bottom: 2px solid #c0d1e3;">
+    <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+      <div class="lead-text">
+        <span class="eyebrow" data-i18n="lead_eyebrow" style="color: #005a95;">Free Home Service</span>
+        <h2 data-i18n="lead_title" style="color: #012d5a; font-size: 2.2rem; margin-bottom: 15px;">Book a Free Water Quality & TDS Test</h2>
+        <p data-i18n="lead_desc" style="color: #343f53; font-size: 1.1rem; margin-bottom: 20px;">Not sure which Aquaguard you need? Let me test your building's water TDS, hardness, and pressure for free. I will recommend the exact 5th Gen technology required for your specific water type.</p>
+        <ul style="list-style: none; padding: 0; color: #012d5a; font-weight: 600; margin-bottom: 25px; line-height: 1.8;">
+          <li data-i18n="lead_bullet1">✓ Instant Digital TDS Reading</li>
+          <li data-i18n="lead_bullet2">✓ Takes only 10 minutes</li>
+          <li data-i18n="lead_bullet3">✓ Zero obligation to buy</li>
+        </ul>
+      </div>
+      <div class="lead-form-card" style="background: #fff; padding: 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(1, 45, 90, 0.1);">
+        <h3 data-i18n="lead_form_title" style="margin-top: 0; color: #012d5a; margin-bottom: 20px;">Request Your Free Test</h3>
+        <form id="tds-form" style="display: flex; flex-direction: column; gap: 15px;">
+          <input type="text" id="tds-name" placeholder="Your Name" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;">
+          <input type="tel" id="tds-phone" placeholder="WhatsApp Number" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;">
+          <input type="text" id="tds-location" placeholder="Node / Neighborhood (e.g., Kopar Khairane)" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit;">
+          <button type="submit" class="btn" data-i18n="lead_btn" style="width: 100%; border: none;">Send Request via WhatsApp</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Special Offer Banner -->
+  <section class="special-offer-section reveal" id="offers" style="padding: 60px 0; background: #ffffff;">
+    <div class="container" style="text-align: center; max-width: 900px;">
+      <span class="eyebrow" data-i18n="offer_eyebrow" style="color: #ff9900;">Limited Time Offer</span>
+      <h2 data-i18n="offer_title" style="color: #012d5a; margin-bottom: 30px; font-size: 2.2rem;">Exclusive Upgrade Carnival</h2>
+      
+      <div style="position: relative; display: inline-block; width: 100%;">
+        <img src="images/current-offer.jpg" alt="Eureka Forbes Special Offer" style="width: 100%; height: auto; border-radius: 16px; box-shadow: 0 15px 35px rgba(1, 45, 90, 0.15); border: 4px solid #eaf4ff;">
+      </div>
+      
+      <div style="margin-top: 30px;">
+        <p data-i18n="offer_desc" style="color: #4b5874; font-size: 1.1rem; margin-bottom: 20px;">Take advantage of this official Eureka Forbes offer today. Contact me directly to check your eligibility and book your installation.</p>
+        <a href="https://wa.me/918928002642?text=%2AHello%20Paras%2C%20I%20am%20interested%20in%20the%20current%20Special%20Offer%20shown%20on%20your%20website.%2A" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="btn" 
+           data-i18n="offer_btn" 
+           style="background: #ff9900; color: #fff; border: none; padding: 16px 36px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(255, 153, 0, 0.3);">
+          Claim This Offer on WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Your Specialist -->
+  <section class="profile-section reveal" id="about-specialist" style="padding: 64px 0; background: #fff;">
+    <div class="container" style="display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 40px; align-items: center; background: #f8fbff; padding: 40px; border-radius: 24px; box-shadow: 0 8px 24px rgba(4, 28, 63, 0.06); border: 1px solid #eaf4ff;">
+      <div class="profile-image" style="width: 100%; aspect-ratio: 1/1; background: #d4ecfc; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 5rem; color: #005a95; border: 8px solid #fff; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+        👨‍💼
+      </div>
+      <div class="profile-content">
+        <span class="eyebrow" data-i18n="profile_eyebrow">Your Local Expert</span>
+        <h2 data-i18n="profile_title" style="color: #012d5a; margin-bottom: 15px;">Meet Paras Singh Chawsali</h2>
+        <p data-i18n="profile_bio" style="color: #4b5874; font-size: 1.1rem; line-height: 1.7; margin-bottom: 20px;">Hello! I am your local Authorized Direct Sales Specialist for Eureka Forbes. Operating out of Kopar Khairane, I proudly serve families across Navi Mumbai and Thane. My goal is to ensure you get the exact water purification and home cleaning solutions your family needs, backed by priority local support.</p>
+        <div style="display: flex; gap: 15px;">
+          <span style="background: #fff; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; color: #005a95; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">📍 Kopar Khairane</span>
+          <span style="background: #fff; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; font-weight: 600; color: #005a95; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">📍 Navi Mumbai & Thane</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
   <section class="products" id="products">
     <div class="container section-heading">
       <span class="eyebrow" data-i18n="products_eyebrow">Featured Products</span>
@@ -49,11 +154,7 @@
       <p data-i18n="products_desc">Choose from top-quality products that are available through direct sales and exclusive offline channels.</p>
     </div>
 
-    <div class="container filters">
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search products..." data-i18n="search_placeholder" />
-        <button id="clearSearch" type="button" aria-label="Clear search">✕</button>
-      </div>
+    <div class="container filters reveal">
       <div class="filter-buttons">
         <button type="button" class="filter-btn active" data-category="all" data-i18n="filter_all">All Products</button>
         <button type="button" class="filter-btn" data-category="Water Purifier" data-i18n="filter_water">Water Purifiers</button>
@@ -61,405 +162,908 @@
         <button type="button" class="filter-btn" data-category="Vacuum Cleaner" data-i18n="filter_vacuum">Vacuum Cleaners</button>
         <button type="button" class="filter-btn" data-category="Water Softener" data-i18n="filter_softener">Water Softeners</button>
       </div>
+
+      <div class="sub-filter-buttons" id="water-purifier-subfilters" style="display: none;">
+        <button type="button" class="sub-filter-btn active" data-subcategory="all">All</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="alkaline-boost-active-copper">ALK + Active Copper</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="uv">UV</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="smart">Smart</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="active-copper">Active Copper</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="alkaline-boost">Alkaline Boost</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="under-counter">Under Counter</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="storage">Storage</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="without-storage">Without Storage</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="stainless-steel">Stainless Steel</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="food-grade plastic">Food-Grade Plastic</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="ro-uv">RO+UV</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="uv-uf">UV+UF</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="hot-ambient">Hot and Ambient</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="ro-uv-uf">RO+UV+UF</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="slim">Slim</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="zero-pressure-pump">Zero Pressure Pump</button>
+      </div>
+
+      <div class="sub-filter-buttons" id="vacuum-cleaner-subfilters" style="display: none;">
+        <button type="button" class="sub-filter-btn active" data-subcategory="all">All</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="robotic">Robotic</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="upright">Upright</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="canister">Canister</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="handheld">Handheld</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="wet-dry">Wet & Dry</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="pet-grooming">Pet Grooming</button>
+        <button type="button" class="sub-filter-btn" data-subcategory="accessories">Accessories</button>
+      </div>
     </div>
 
     <div class="product-grid">
       <!-- Water Purifiers -->
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD SELECT DESIGNO UTC WS RO+UV" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
-        <h3>AQUAGUARD SELECT DESIGNO UTC WS RO+UV</h3>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="under-counter, ro-uv, active-copper, storage, food-grade plastic">
+        <img src="images/aquaguard-select-designo-utc-ro-uv-2x/1.jpg" alt="AQUAGUARD SELECT DESIGNO UTC RO+UV 2X" loading="lazy" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
+        <h3>AQUAGUARD SELECT DESIGNO UTC RO+UV 2X</h3>
         <p>Advanced purification, smart alerts, and hygienic storage for pure water every day.</p>
         <div class="price-info">
-          <div class="mrp">MRP ₹18,000</div>
+          <div class="mrp">MRP ₹39,500</div>
           <div class="price">MOP ₹20,499</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD SLIM GLASS WS RO+UV" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
-        <h3>AQUAGUARD SLIM GLASS WS RO+UV</h3>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="under-counter, uv-uf, active-copper, storage, food-grade plastic">
+        <img src="images/aquaguard-select-designo-utc-uv-uf-2x/1.jpg" alt="AQUAGUARD SELECT DESIGNO UTC UV+UF 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
+        <h3>AQUAGUARD SELECT DESIGNO UTC UV+UF 2X</h3>
+        <p>Advanced purification, smart alerts, and hygienic storage for pure water every day.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹28,000</div>
+          <div class="price">MOP ₹20,499</div>
+        </div>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="slim, uv-uf, active-copper, storage, food-grade plastic">
+        <img src="images/aquaguard-aspire-slimtech-uv-stg-2x/1.jpg" alt="AQUAGUARD ASPIRE SLIMTECH UV STG 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE SLIMTECH UV STG 2X</h3>
         <p>High-efficiency RO system with mineral retention for balanced, healthy water.</p>
         <div class="price-info">
-          <div class="mrp">MRP ₹15,000</div>
+          <div class="mrp">MRP ₹26,000</div>
           <div class="price">MOP ₹19,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD SLIM GLASS UV BAR INLINE" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="slim, uv, active-copper, without-storage">
+        <img src="images/aquaguard-slim-glass-uv-bar-inline/1.jpg" alt="AQUAGUARD SLIM GLASS UV BAR INLINE" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD SLIM GLASS UV BAR INLINE</h3>
         <p>Energy-efficient UV technology with eco-friendly design and easy maintenance.</p>
         <div class="price-info">
-          <div class="mrp">MRP ₹13,500</div>
+          <div class="mrp">MRP ₹23,000</div>
           <div class="price">MOP ₹13,499</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD ENHANCE RO+UV+MTDS" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="active-copper, stainless-steel, ro-uv, storage, zero-pressure-pump">
+        <img src="images/aquaguard-aspire-nova-ro-uv-ss-2x/1.jpg" alt="AQUAGUARD ASPIRE NOVA RO+UV+SS 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD ASPIRE NOVA RO+UV+SS 2X</h3>
         <p>Advanced multi-stage purification with TDS control for optimal mineral balance.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹20,000</div>
           <div class="price">MOP ₹24,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD GENEUS RO+UV+UF+MTDS" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="active-copper, stainless-steel, uv-uf, storage, zero-pressure-pump">
+        <img src="images/aquaguard-aspire-nova-uv-uf-ss-2x/1.jpg" alt="AQUAGUARD ASPIRE NOVA UV+UF+SS 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE NOVA UV+UF+SS 2X</h3>
+        <p>Advanced multi-stage purification with TDS control for optimal mineral balance.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹20,000</div>
+          <div class="price">MOP ₹24,999</div>
+        </div>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="active-copper, storage, ro-uv, food-grade plastic, zero-pressure-pump">
+        <img src="images/aquaguard-aspire-nova-ro-uv-2x/1.jpg" alt="AQUAGUARD ASPIRE NOVA RO+UV 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD ASPIRE NOVA RO+UV 2X</h3>
         <p>Next-gen purification with UF membrane and smart TDS adjustment.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹23,000</div>
           <div class="price">MOP ₹22,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD BLISS RO+UV+ALKALINE" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="active-copper, storage, uv-uf, food-grade plastic, zero-pressure-pump">
+        <img src="images/aquaguard-aspire-nova-uv-uf-2x/1.jpg" alt="AQUAGUARD ASPIRE NOVA UV+UF 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE NOVA UV+UF 2X</h3>
+        <p>Next-gen purification with UF membrane and smart TDS adjustment.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹23,000</div>
+          <div class="price">MOP ₹22,999</div>
+        </div>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="ro-uv, storage, food-grade plastic">
+        <img src="images/aquaguard-enrich-vector-ro-uv-mc-2x/1.jpg" alt="AQUAGUARD ENRICH VECTOR RO+UV+MC 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD ENRICH VECTOR RO+UV+MC 2X</h3>
         <p>Alkaline water technology for better hydration and antioxidant benefits.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹19,000</div>
           <div class="price">MOP ₹18,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD AURA RO+UV+MINERAL GUARD" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="ro-uv, alkaline-boost, storage, food-grade plastic, zero-pressure-pump">
+        <img src="images/aquaguard-aspire-nova-ro-uv-alk-2x/1.jpg" alt="AQUAGUARD ASPIRE NOVA RO+UV ALK 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD ASPIRE NOVA RO+UV ALK 2X</h3>
         <p>Mineral guard technology preserves essential minerals while purifying water.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹17,000</div>
           <div class="price">MOP ₹22,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
-      </article>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD CRYSTAL RO+UV+SMART TDS" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
-        <h3>AQUAGUARD ASPIRE NOVA UV+UF 2X</h3>
-        <p>Smart TDS controller with crystal-clear water output and LED indicators.</p>
-        <div class="price-info">
-          <div class="mrp">MRP ₹21,000</div>
-          <div class="price">MOP ₹15,799</div>
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD NOVA RO+UV+HYGIENIC STORAGE" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
-        <h3>AQUAGUARD ASPIRE NOVA UV+UF+SS 2X</h3>
-        <p>Large hygienic storage tank with advanced purification for family use.</p>
-        <div class="price-info">
-          <div class="mrp">MRP ₹24,000</div>
-          <div class="price">MOP ₹18,999</div>
-        </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
-      </article>
-
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD PURE RO+UV+ECO MODE" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="ro-uv, alkaline-boost, stainless-steel, storage, zero-pressure-pump">
+        <img src="images/aquaguard-aspire-nova-ro-uv-alk-ss-2x/1.jpg" alt="AQUAGUARD ASPIRE NOVA RO+UV+ALK+SS 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD ASPIRE NOVA RO+UV+ALK+SS 2X</h3>
         <p>Eco-friendly operation with reduced water wastage and energy efficiency.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹14,500</div>
           <div class="price">MOP ₹24,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD VIVA RO+UV+QUICK PURIFY" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="ro-uv, storage, stainless-steel, active-copper, hot-ambient">
+        <img src="images/aquaguard-aspire-blaze-ro-uv-ss-2x/1.jpg" alt="AQUAGUARD ASPIRE BLAZE RO+UV+SS 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD ASPIRE BLAZE RO+UV+SS 2X</h3>
         <p>Fast purification technology for instant access to clean drinking water.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹17,500</div>
           <div class="price">MOP ₹27,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD ZOOM RO+UV+SMART ALERTS" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="uv-uf, storage, stainless-steel, active-copper, hot-ambient">
+        <img src="images/aquaguard-aspire-blaze-uv-uf-ss-2x/1.jpg" alt="AQUAGUARD ASPIRE BLAZE UV+UF+SS 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE BLAZE UV+UF+SS 2X</h3>
+        <p>Fast purification technology for instant access to clean drinking water.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹17,500</div>
+          <div class="price">MOP ₹27,999</div>
+        </div>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="alkaline-boost-active-copper, alkaline-boost, active-copper, UV, without-storage">
+        <img src="images/aquaguard-enrich-crest-uv-duo-2x/1.jpg" alt="AQUAGUARD ENRICH CREST UV DUO 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD ENRICH CREST UV DUO 2X</h3>
         <p>Smart alerts for filter replacement and water quality monitoring.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹20,500</div>
           <div class="price">MOP ₹14,499</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
-      </article>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD ELITE RO+UV+PREMIUM DESIGN" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
-        <h3>AQUAGUARD ASPIRE DESIGNO UTC RO+UV 1X</h3>
-        <p>Premium stainless steel design with advanced RO+UV purification.</p>
-        <div class="price-info">
-          <div class="mrp">MRP ₹26,500</div>
-          <div class="price">MOP ₹26,299</div>
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD AURA RO+UV+ALKALINE BOOST" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="uv, without-storage, active-copper, zero-pressure-pump">
+        <img src="images/aquaguard-enrich-booster-uv-2x/1.jpg" alt="AQUAGUARD ENRICH BOOSTER UV 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD ENRICH BOOSTER UV 2X</h3>
         <p>Enhanced alkaline technology for superior pH balance and antioxidant properties.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹21,000</div>
           <div class="price">MOP ₹15,499</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
-      </article>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD NOVA RO+UV+ECO PURIFY" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
-        <h3>AQUAGUARD ASPIRE SLIMTECH RO+UV 2X</h3>
-        <p>Eco-purification mode reduces energy consumption while maintaining high performance.</p>
-        <div class="price-info">
-          <div class="mrp">MRP ₹16,500</div>
-          <div class="price">MOP ₹22,499</div>
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD PURE RO+UV+QUICK HEAT" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
-        <h3>AQUAGUARD ASPIRE SLIMTECH UV STG 2X</h3>
-        <p>Instant hot water feature combined with advanced RO+UV purification technology.</p>
-        <div class="price-info">
-          <div class="mrp">MRP ₹23,000</div>
-          <div class="price">MOP ₹15,999</div>
-        </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
-      </article>
-
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="AQUAGUARD ESSENTIAL RO+UV+BASIC" />
-        <div class="product-tag" data-category="Water Purifier">Water Purifier</div>
-        <h3>AQUAGUARD SURE HYDRA AQUASAVER ROUVUF 2X</h3>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="ro-uv-uf, storage, food-grade plastic">
+        <img src="images/aquaguard-sure-hydra-aquasaver-rouvuf-2x/1.jpg" alt="AQUAGUARD SURE HYDRA AQUASAVER RO+UV+UF 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
+        <h3>AQUAGUARD SURE HYDRA AQUASAVER RO+UV+UF 2X</h3>
         <p>Essential purification features at an affordable price for basic household needs.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹12,000</div>
           <div class="price">MOP ₹15,499</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="uv-uf, storage, food-grade plastic, zero-pressure-pump, active-copper">
+        <img src="images/aquaguard-enrich-crystal-booster-uv-uf-2x/1.jpg" alt="AQUAGUARD ENRICH CRYSTAL BOOSTER UV+UF 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
+        <h3>AQUAGUARD ENRICH CRYSTAL BOOSTER UV+UF 2X</h3>
+        <p>Essential purification features at an affordable price for basic household needs.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹12,000</div>
+          <div class="price">MOP ₹15,499</div>
+        </div>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="ro-uv, storage, stainless-steel, smart, active-copper">
+        <img src="images/aquaguard-aspire-minerva-ro-uv-ss-2x/1.jpg" alt="AQUAGUARD ASPIRE MINERVA RO+UV+SS 2X" />
+        <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
+        <h3>AQUAGUARD ASPIRE MINERVA RO+UV+SS 2X</h3>
+        <p>Essential purification features at an affordable price for basic household needs.</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹12,000</div>
+          <div class="price">MOP ₹15,499</div>
+        </div>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
 
-
       <!-- Air Purifiers -->
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334651-1e158d8e8721?auto=format&fit=crop&w=400&q=80" alt="Aero Mist Air Purifier" />
-        <div class="product-tag" data-category="Air Purifier">Air Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="air">
+        <img src="images/forbes-air-purifier-355-surround-360-sm/1.jpg" alt="FORBES AIR PURIFIER 355 SURROUND 360° SM" />
+        <div class="product-tag" data-category="Air Purifier" data-i18n="tag_air">Air Purifier</div>
         <h3>FORBES AIR PURIFIER 355 SURROUND 360° SM</h3>
         <p>Removes pollutants, allergens, and odors with a sleek design that fits any home.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹14,000</div>
           <div class="price">MOP ₹16,499</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=400&q=80" alt="PureAir HEPA Air Purifier" />
-        <div class="product-tag" data-category="Air Purifier">Air Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="air">
+        <img src="images/forbes-air-purifier-500-surround-360-sm/1.jpg" alt="FORBES AIR PURIFIER 500 SURROUND 360° SM" />
+        <div class="product-tag" data-category="Air Purifier" data-i18n="tag_air">Air Purifier</div>
         <h3>FORBES AIR PURIFIER 500 SURROUND 360° SM</h3>
         <p>HEPA filtration captures 99.97% of airborne particles for superior air quality.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹17,000</div>
           <div class="price">MOP ₹21,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334651-1e158d8e8721?auto=format&fit=crop&w=400&q=80" alt="SilentFlow Air Purifier" />
-        <div class="product-tag" data-category="Air Purifier">Air Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="air">
+        <img src="images/forbes-air-purifier-270-surround-360/1.jpg" alt="FORBES AIR PURIFIER 270 SURROUND 360°" />
+        <div class="product-tag" data-category="Air Purifier" data-i18n="tag_air">Air Purifier</div>
         <h3>FORBES AIR PURIFIER 270 SURROUND 360°</h3>
         <p>Ultra-quiet operation with smart sensors and auto-mode for continuous clean air.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹11,500</div>
           <div class="price">MOP ₹9,499</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=400&q=80" alt="NanoPure Air Purifier" />
-        <div class="product-tag" data-category="Air Purifier">Air Purifier</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="air">
+        <img src="images/forbes-air-purifier-230-surround-360/1.jpg" alt="FORBES AIR PURIFIER 230 SURROUND 360°" />
+        <div class="product-tag" data-category="Air Purifier" data-i18n="tag_air">Air Purifier</div>
         <h3>FORBES AIR PURIFIER 230 SURROUND 360°</h3>
         <p>Advanced nano-technology filter captures ultrafine particles and eliminates odors.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹15,000</div>
           <div class="price">MOP ₹7,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
       <!-- Vacuum Cleaners -->
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="PowerPro Vacuum Cleaner" />
-        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="vacuum">
+        <img src="images/forbes-atom/1.jpg" alt="FORBES ATOM" />
+        <div class="product-tag" data-category="Vacuum Cleaner" data-i18n="tag_vacuum">Vacuum Cleaner</div>
         <h3>FORBES ATOM</h3>
         <p>Strong suction, easy-to-clean filter, and comfortable handling for daily cleaning.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹10,000</div>
           <div class="price">MOP ₹2,599</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=400&q=80" alt="CycloneForce Vacuum Cleaner" />
-        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="vacuum">
+        <img src="images/forbes-select-wd-x2/1.jpg" alt="FORBES SELECT WD X2" />
+        <div class="product-tag" data-category="Vacuum Cleaner" data-i18n="tag_vacuum">Vacuum Cleaner</div>
         <h3>FORBES SELECT WD X2</h3>
         <p>Cyclonic technology for powerful suction and long-lasting performance on all surfaces.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹11,000</div>
           <div class="price">MOP ₹16,499</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334651-1e158d8e8721?auto=format&fit=crop&w=400&q=80" alt="LightWeight Handheld Vacuum" />
-        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="vacuum">
+        <img src="images/forbes-cordless-zero-bend-z15/1.jpg" alt="FORBES CORDLESS ZEROBEND Z15" />
+        <div class="product-tag" data-category="Vacuum Cleaner" data-i18n="tag_vacuum">Vacuum Cleaner</div>
         <h3>FORBES CORDLESS ZEROBEND Z15</h3>
         <p>Compact and lightweight design for quick cleanups and car detailing.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹7,000</div>
           <div class="price">MOP ₹30,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092162384-8987c1d64926?auto=format&fit=crop&w=400&q=80" alt="TurboClean Dry Vacuum" />
-        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="vacuum">
+        <img src="images/forbes-cordless-zero-bend-z21wm/1.jpg" alt="FORBES CORDLESS ZEROBEND Z21WM" />
+        <div class="product-tag" data-category="Vacuum Cleaner" data-i18n="tag_vacuum">Vacuum Cleaner</div>
         <h3>FORBES CORDLESS ZEROBEND Z21WM</h3>
         <p>High-performance dry vacuum with multi-surface tools for carpets and hard floors.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹11,500</div>
           <div class="price">MOP ₹52,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="UltraFlex Cordless Vacuum" />
-        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+      <article class="product-card reveal" data-gallery-count="18" data-subcategory="vacuum">
+        <img src="images/forbes-smartclean-fullyautomatic-station/1.jpg" alt="FORBES SMARTCLEAN FULLYAUTOMATIC STATION" />
+        <div class="product-tag" data-category="Vacuum Cleaner" data-i18n="tag_vacuum">Vacuum Cleaner</div>
         <h3>FORBES SMARTCLEAN FULLYAUTOMATIC STATION</h3>
         <p>Cordless cleaning freedom with long battery life and easy storage.</p>
         <div class="price-info">
-          <div class="mrp">MRP ₹14,500</div>
+          <div class="mrp">MRP ₹91,000</div>
           <div class="price">MOP ₹72,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="SmartSweep Robot Vacuum" />
-        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+      <article class="product-card reveal" data-gallery-count="10" data-subcategory="vacuum">
+        <img src="images/forbes-smartclean-with-auto-bin-s2/1.jpg" alt="FORBES SMARTCLEAN with AUTO BIN S2" />
+        <div class="product-tag" data-category="Vacuum Cleaner" data-i18n="tag_vacuum">Vacuum Cleaner</div>
         <h3>FORBES SMARTCLEAN with AUTO BIN S2</h3>
         <p>Smart navigation and auto-docking for effortless everyday cleaning.</p>
         <div class="price-info">
-          <div class="mrp">MRP ₹22,000</div>
+          <div class="mrp">MRP ₹48,999</div>
           <div class="price">MOP ₹38,499</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="EcoClean Vacuum" />
-        <div class="product-tag" data-category="Vacuum Cleaner">Vacuum Cleaner</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="vacuum">
+        <img src="images/forbes-tornado-vac/1.jpg" alt="FORBES TORNADO VAC" />
+        <div class="product-tag" data-category="Vacuum Cleaner" data-i18n="tag_vacuum">Vacuum Cleaner</div>
         <h3>FORBES TORNADO VAC</h3>
         <p>Energy-efficient vacuum with eco-friendly filters and reduced noise levels.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹8,500</div>
           <div class="price">MOP ₹9,999</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
       <!-- Water Softeners -->
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=400&q=80" alt="BlueSense Water Softener" />
-        <div class="product-tag" data-category="Water Softener">Water Softener</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="water-softener">
+        <img src="images/aquaguard-select-water-softener-aws-5000/1.jpg" alt="AQUAGUARD SELECT WATER SOFTENER AWS 5000" />
+        <div class="product-tag" data-category="Water Softener" data-i18n="tag_water_softener">Water Softener</div>
         <h3>AQUAGUARD SELECT WATER SOFTENER AWS 5000</h3>
         <p>Reduces hard-water effects on appliances, skin, and hair for smoother daily living.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹15,000</div>
           <div class="price">MOP ₹82,490</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=400&q=80" alt="EcoSoft Water Softener" />
-        <div class="product-tag" data-category="Water Softener">Water Softener</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="water-softener">
+        <img src="images/aquaguard-select-water-softener-aws-7500/1.jpg" alt="AQUAGUARD SELECT WATER SOFTENER AWS 7500" />
+        <div class="product-tag" data-category="Water Softener" data-i18n="tag_water_softener">Water Softener</div>
         <h3>AQUAGUARD SELECT WATER SOFTENER AWS 7500</h3>
         <p>Eco-friendly softening with automatic regeneration and low salt consumption.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹17,500</div>
           <div class="price">MOP ₹95,990</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
 
-      <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=400&q=80" alt="CompactFlow Water Softener" />
-        <div class="product-tag" data-category="Water Softener">Water Softener</div>
+      <article class="product-card reveal" data-gallery-count="20" data-subcategory="water-softener">
+        <img src="images/aquaguard-select-water-softener-i-2500/1.jpg" alt="AQUAGUARD SELECT WATER SOFTENER I 2500" />
+        <div class="product-tag" data-category="Water Softener" data-i18n="tag_water_softener">Water Softener</div>
         <h3>AQUAGUARD SELECT WATER SOFTENER I 2500</h3>
         <p>Space-saving design with high capacity for small to medium households.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹13,500</div>
           <div class="price">MOP ₹57,990</div>
         </div>
-        <a href="#contact" class="product-btn">Ask for This SKU</a>
+        <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
+
+        <div class="hidden-specs" style="display: none;">
+          <ul>
+            <li><strong>Technology:</strong> </li>
+            <li><strong>Capacity:</strong> </li>
+            <li><strong>Material:</strong> </li>
+            <li><strong>Warranty:</strong> 1 Year Factory Warranty</li>
+          </ul>
+        </div>
       </article>
+
     </div>
   </section>
 
-  <section class="why-us">
+  <!-- Exchange & Buy-Back Campaign Section -->
+  <section class="exchange-campaign reveal" id="exchange">
+    <div class="container">
+      <div class="exchange-card">
+        <div class="exchange-content">
+          <span class="exchange-eyebrow" data-i18n="exchange_eyebrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+            </svg>
+            Limited-Time Upgrade Campaign
+          </span>
+          <h2 data-i18n="exchange_title">Have an Old 10-15 Year Old Water Purifier?</h2>
+          <p class="exchange-description" data-i18n="exchange_desc">
+            Don't just discard your vintage system. Trade it in today for a brand-new, advanced Aquaguard featuring 5th Gen UV LED or Alkaline technology, and get a substantial cash discount credited directly against your new machine's MOP!
+          </p>
+          
+          <div class="exchange-perks">
+            <div class="exchange-perk">
+              <div class="perk-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="1" x2="12" y2="23"></line>
+                  <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                </svg>
+              </div>
+              <span data-i18n="exchange_perk_1">Instant Cash Valuation</span>
+            </div>
+            <div class="exchange-perk">
+              <div class="perk-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="3" width="15" height="13"></rect>
+                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                  <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                  <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+              </div>
+              <span data-i18n="exchange_perk_2">Free Doorstep Evaluation & Removal</span>
+            </div>
+            <div class="exchange-perk">
+              <div class="perk-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <polyline points="9 12 11 14 15 10"></polyline>
+                </svg>
+              </div>
+              <span data-i18n="exchange_perk_3">Upgrade to Modern 5th Gen Safety</span>
+            </div>
+          </div>
+
+          <a href="https://wa.me/918928002642?text=%2AHello%20Paras%2C%20I%20want%20to%20check%20the%20exchange%20value%20of%20my%20old%20water%20purifier%20for%20a%20new%20Aquaguard%20upgrade.%2A" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="exchange-cta"
+             aria-label="Check Exchange Value via WhatsApp"
+             data-i18n="exchange_cta">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Check Exchange Value via WhatsApp
+          </a>
+        </div>
+        <div class="exchange-visual">
+          <div class="exchange-badge">
+            <span class="badge-text">SAVE BIG</span>
+            <span class="badge-subtext">on Exchange</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section reveal" id="faq">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow" data-i18n="faq_eyebrow">Common Questions</span>
+        <h2 data-i18n="faq_title">Frequently Asked Questions</h2>
+        <p data-i18n="faq_desc">Get instant answers to the most common questions about water purification, technology, and maintenance.</p>
+      </div>
+
+      <div class="faq-accordion">
+        <!-- FAQ Item 1 -->
+        <div class="faq-item">
+          <button class="faq-question" id="faq-question-1" aria-expanded="false" aria-controls="faq-answer-1">
+            <span class="faq-q-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </span>
+            <span class="faq-question-text" data-i18n="faq_q1">If the municipal corporation already treats our water, why do I need an Aquaguard?</span>
+            <span class="faq-chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" aria-hidden="true">
+            <div class="faq-answer-content">
+              <p data-i18n="faq_a1">While water is treated at the main municipal plant, it travels through kilometers of aging, rusted underground pipelines before reaching your building. Micro-cracks frequently cause underground sewage seepage and cross-contamination right before it hits your tap. Additionally, unless your building's overhead and underground storage tanks are professionally sanitized every month, they accumulate silt, biological slime, and bacteria that re-contaminate the water.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 2 -->
+        <div class="faq-item">
+          <button class="faq-question" id="faq-question-2" aria-expanded="false" aria-controls="faq-answer-2">
+            <span class="faq-q-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </span>
+            <span class="faq-question-text" data-i18n="faq_q2">We boil our water at home anyway. Doesn't that make a purifier unnecessary?</span>
+            <span class="faq-chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" aria-hidden="true">
+            <div class="faq-answer-content">
+              <p data-i18n="faq_a2">Boiling is excellent for neutralizing living bacteria and viruses, but it completely fails against chemical pollutants. Boiling cannot remove dissolved heavy metals (like lead, arsenic, or mercury), rust flakes, muddy turbidity, or agricultural pesticides. In fact, as water evaporates during boiling, the density of these dangerous dissolved toxins actually increases. Furthermore, boiling cannot remove the heavy chlorine smell or taste often added by municipal treatment plants.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 3 -->
+        <div class="faq-item">
+          <button class="faq-question" id="faq-question-3" aria-expanded="false" aria-controls="faq-answer-3">
+            <span class="faq-q-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </span>
+            <span class="faq-question-text" data-i18n="faq_q3">What exactly is 5th Gen UV LED technology and how long does it last?</span>
+            <span class="faq-chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="true">
+            <div class="faq-answer-content">
+              <p data-i18n="faq_a3">5th Generation UV LED is the absolute pinnacle of modern water sterilization, replacing older glass UV tubes. Unlike legacy bulbs that require a warm-up period, 5th Gen LEDs activate instantly the millisecond water flows, ensuring 100% safe water from the very first drop. They are completely mercury-free, generate zero heat (so your water stays cool), and possess an incredible durable lifespan of up to 10 years, dramatically lowering your long-term maintenance layouts.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Item 4 -->
+        <div class="faq-item">
+          <button class="faq-question" id="faq-question-4" aria-expanded="false" aria-controls="faq-answer-4">
+            <span class="faq-q-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </span>
+            <span class="faq-question-text" data-i18n="faq_q4">Is taking an Annual Maintenance Contract (AMC) really worth the pain?</span>
+            <span class="faq-chevron" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </button>
+          <div class="faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="true">
+            <div class="faq-answer-content">
+              <p data-i18n="faq_a4">Absolutely. Think of your purifier as a protective shield; it works by physically trapping mud, chemical particles, and heavy metals so they don't enter your body. Over 6 to 12 months, these heavy-duty carbon blocks and membranes inevitably get completely choked with the dirt they blocked. An active AMC ensures a certified technician comes straight to your doorstep to deep-clean the system and swap cartridges with genuine factory spares before they fail, guaranteeing 365 days of instant health safety.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="why-us reveal">
     <div class="container why-grid">
       <div>
-        <span class="eyebrow" data-i18n="why_eyebrow">Why Choose Your Specialist Site?</span>
-        <h2 data-i18n="why_title">Build trust and make selling easier</h2>
-        <p data-i18n="why_desc">Your website is your storefront. It helps customers discover selected SKUs, understand product value, and contact you directly for offline items that aren't available online.</p>
+        <span class="eyebrow" data-i18n="why_eyebrow">Why Choose a Local Specialist?</span>
+        <h2 data-i18n="why_title">Your Trusted Local Appliance Expert</h2>
+        <p data-i18n="why_desc">Skip the impersonal online stores. I provide personalized water testing, precise machine recommendations, and priority installation.</p>
       </div>
       <ul class="why-list">
-        <li data-i18n="why_list_1">Showcase offline-only products clearly</li>
-        <li data-i18n="why_list_2">Highlight product benefits and pricing</li>
-        <li data-i18n="why_list_3">Provide an easy way for leads to reach you</li>
+        <li data-i18n="why_list_1">Exclusive offline-only products and discounts</li>
+        <li data-i18n="why_list_2">Free personalized home water testing</li>
+        <li data-i18n="why_list_3">Priority doorstep installation and support</li>
       </ul>
     </div>
   </section>
 
-  <section class="contact" id="contact">
+  <section class="contact reveal" id="contact">
     <div class="container contact-card">
       <div>
         <span class="eyebrow" data-i18n="contact_eyebrow">Contact Your Specialist</span>
@@ -468,11 +1072,22 @@
       </div>
       <div class="contact-details">
         <p><strong data-i18n="contact_name">Name:</strong> Paras Singh Chawsali</p>
+        <p><strong data-i18n="contact_service_area">Service Area:</strong> Navi Mumbai & Thane Regions</p>
         <p><strong data-i18n="contact_phone">Phone:</strong> +91 89280 02642</p>
         <p><strong data-i18n="contact_email">Email:</strong> paraschawsali@gmail.com</p>
         <p><strong data-i18n="contact_whatsapp">WhatsApp:</strong> +91 89280 02642</p>
-        <a href="mailto:paraschawsali@gmail.com" class="btn btn-secondary" data-i18n="contact_email_btn">Email Me</a>
-        <a href="https://wa.me/8928002642" target="_blank" class="btn" data-i18n="contact_wa_btn">WhatsApp Me</a>
+
+        <div class="official-care" style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
+          <h3 data-i18n="contact_official_title" style="margin-top: 0; margin-bottom: 12px; font-size: 1.2rem;">Eureka Forbes Customer Care</h3>
+          <p><strong data-i18n="contact_official_phone">Toll-Free / Phone:</strong> 1860 266 1177</p>
+          <p><strong data-i18n="contact_official_whatsapp">Official WhatsApp:</strong> +91 70398 83333</p>
+          <p><strong data-i18n="contact_official_email">Support Email:</strong> customercare@eurekaforbes.com</p>
+        </div>
+
+        <div style="margin-top: 25px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="mailto:customercare@eurekaforbes.com" class="btn btn-outline" data-i18n="contact_email_btn">Email</a>
+          <a href="https://wa.me/917039883333" target="_blank" class="btn" data-i18n="contact_wa_btn">WhatsApp</a>
+        </div>
       </div>
     </div>
   </section>
@@ -481,18 +1096,78 @@
     <div class="container footer-inner">
       <p data-i18n="footer_text1">© 2026 Eureka Forbes Direct Sales Specialist</p>
       <p data-i18n="footer_text2">Selected SKUs and offline-only offers for your customers.</p>
+      <a href="legal-terms.html" class="footer-legal-link" data-i18n="footer_legal_link">Legal & Copyright Info</a>
+    </div>
+    <div class="container footer-disclaimer" data-i18n="footer_disclaimer_text">
+      Disclaimer: This website is independently operated by Paras Singh Chawsali, an Authorized Direct Sales Representative for Eureka Forbes. This is NOT the official website of Eureka Forbes Limited. All product names, logos, brands, trademarks, and images featured or referred to within this site are the sole property of Eureka Forbes Limited and are used strictly for informational and demonstrative purposes to facilitate direct sales. This platform is intended solely for product display and inquiry generation. No payments or financial transactions are processed through this website. All final purchases, billing, and installations are handled strictly through official Eureka Forbes channels.
     </div>
   </footer>
 
-  <script src="translations.js"></script>
+  <!-- Product Detail Modal -->
+  <div id="pdp-modal" class="pdp-modal">
+    <div class="pdp-content">
+      <span class="pdp-close" aria-label="Close">&times;</span>
+      <div class="pdp-layout">
+        
+        <div class="pdp-gallery-section" id="pdp-gallery">
+          </div>
+        
+        <div class="pdp-info-section">
+          <div class="pdp-tag" id="pdp-category">Category</div>
+          <h2 id="pdp-title">Product Name</h2>
+          <div class="pdp-sku" id="pdp-sku"><strong>SKU:</strong> <span></span></div>
+          <div class="pdp-pricing" id="pdp-price">
+            </div>
+          
+          <div class="pdp-scrollable-content">
+            <div class="pdp-description">
+              <h3>About this Product</h3>
+              <div id="pdp-about">
+                </div>
+            </div>
+            
+            <div class="pdp-features">
+              <h3>Technical Specifications</h3>
+              <div id="pdp-specs">
+                </div>
+            </div>
+          </div>
+          <div class="pdp-actions" id="pdp-action-btn">
+            </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <!-- Demo Booking Modal -->
+  <div id="demo-modal" class="pdp-modal" style="z-index: 2000;">
+    <div class="pdp-content" style="max-width: 450px; padding: 30px;">
+      <span class="demo-close pdp-close" aria-label="Close">&times;</span>
+      <h2 style="color: #005a95; margin-bottom: 20px;">Book a Free Demo</h2>
+      <p id="demo-product-name" style="font-weight: bold; margin-bottom: 20px; color: #333;"></p>
+      
+      <form id="demo-form" style="display: flex; flex-direction: column; gap: 15px;">
+        <input type="text" id="demo-name" placeholder="Your Name" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; box-sizing: border-box;">
+        <input type="tel" id="demo-phone" placeholder="Phone Number" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; box-sizing: border-box;">
+        <input type="email" id="demo-email" placeholder="Email ID" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; box-sizing: border-box;">
+        <textarea id="demo-address" placeholder="Full Address" rows="3" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; box-sizing: border-box; resize: vertical;"></textarea>
+        <button type="submit" class="product-btn" style="width: 100%; border: none; cursor: pointer; text-align: center; font-size: 16px;">Submit & Send via WhatsApp</button>
+      </form>
+    </div>
+  </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const searchInput = document.getElementById('searchInput');
-      const clearSearch = document.getElementById('clearSearch');
       const filterButtons = document.querySelectorAll('.filter-btn');
       const productCards = document.querySelectorAll('.product-card');
 
+      // Sub-filter elements
+      const subFilterButtons = document.querySelectorAll('.sub-filter-btn');
+      const waterPurifierSubFilters = document.getElementById('water-purifier-subfilters');
+      const vacuumCleanerSubFilters = document.getElementById('vacuum-cleaner-subfilters');
+
+      // 1. Inject Prices
       function injectMrpLabels() {
         productCards.forEach(card => {
           const priceEl = card.querySelector('.price');
@@ -504,6 +1179,7 @@
 
           const explicitMrp = Number(priceEl.dataset.mrp && priceEl.dataset.mrp.replace(/[^0-9]/g, ''));
           const mrpValue = explicitMrp || Math.ceil(mopValue * 1.2 / 500) * 500;
+          
           const priceInfo = document.createElement('div');
           priceInfo.className = 'price-info';
 
@@ -518,104 +1194,377 @@
         });
       }
 
-      // Search functionality
+      /**
+       * PERFORMANCE OPTIMIZATION: Lazy Gallery Loading System
+       * 
+       * PROBLEM: The original implementation preloaded ALL gallery images (up to 20 per card)
+       * for ALL product cards (up to 30) during DOMContentLoaded, resulting in 600+ simultaneous
+       * network requests that choked bandwidth and destroyed Core Web Vitals scores.
+       * 
+       * SOLUTION:
+       * 1. Only the primary hero image (1.jpg) loads on initial render via native HTML
+       * 2. Gallery thumbnails are generated ON-DEMAND when user clicks to open the modal
+       * 3. Images are injected dynamically into the modal, not the card
+       * 4. Gallery is completely purged from DOM when modal closes to free memory
+       * 5. Error handling hides broken image icons gracefully
+       */
+
+      /**
+       * Helper: Extract SKU slug from product card for image path construction
+       * @param {HTMLElement} card - The product card element
+       * @returns {string} URL-safe slug derived from product title
+       */
+      function getSkuSlugFromCard(card) {
+        const titleEl = card.querySelector('h3');
+        if (!titleEl) return '';
+        return titleEl.textContent
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-|-$/g, '');
+      }
+
+      /**
+       * On-Demand Gallery Builder: Generates thumbnail strip ONLY when modal opens
+       * This replaces the old addProductImageGalleries() that ran on every page load.
+       * 
+       * @param {HTMLElement} card - The clicked product card
+       * @param {HTMLElement} galleryContainer - The modal's #pdp-gallery element
+       */
+      function buildModalGalleryOnDemand(card, galleryContainer) {
+        const galleryCount = parseInt(card.getAttribute('data-gallery-count') || '1');
+        const skuSlug = getSkuSlugFromCard(card);
+        
+        if (!skuSlug || galleryCount < 1) {
+          console.warn('[Gallery] Invalid gallery data for card:', card);
+          return;
+        }
+
+        // Create main display image area
+        const mainDisplay = document.createElement('div');
+        mainDisplay.className = 'pdp-main-image-container';
+        
+        const mainImg = document.createElement('img');
+        mainImg.className = 'pdp-main-image';
+        mainImg.src = `images/${skuSlug}/1.jpg`;
+        mainImg.alt = card.querySelector('h3')?.textContent || 'Product image';
+        mainDisplay.appendChild(mainImg);
+        galleryContainer.appendChild(mainDisplay);
+
+        // Create thumbnail strip container
+        const thumbStrip = document.createElement('div');
+        thumbStrip.className = 'pdp-thumb-strip';
+
+        // Generate thumbnails for images 1 through galleryCount
+        for (let i = 1; i <= galleryCount; i++) {
+          const thumbWrapper = document.createElement('div');
+          thumbWrapper.className = 'pdp-thumb-wrapper';
+          
+          const thumb = document.createElement('img');
+          thumb.className = 'pdp-thumb';
+          thumb.dataset.index = i;
+          thumb.dataset.src = `images/${skuSlug}/${i}.jpg`;
+          thumb.alt = `${card.querySelector('h3')?.textContent} - Image ${i}`;
+          thumb.loading = 'lazy'; // Native lazy loading for thumbnails
+          
+          // Mark first image as active
+          if (i === 1) {
+            thumbWrapper.classList.add('active');
+          }
+
+          // Error handling: Hide thumb if image doesn't exist (e.g., image 14 out of 20)
+          thumb.onerror = function() {
+            this.parentElement.style.display = 'none';
+            console.debug(`[Gallery] Image not found: images/${skuSlug}/${i}.jpg`);
+          };
+
+          // Click handler: Update main image when thumbnail is clicked
+          thumb.onclick = function() {
+            // Update main image
+            mainImg.src = this.dataset.src;
+            
+            // Update active state
+            thumbStrip.querySelectorAll('.pdp-thumb-wrapper').forEach(w => w.classList.remove('active'));
+            thumbWrapper.classList.add('active');
+          };
+
+          thumbWrapper.appendChild(thumb);
+          thumbStrip.appendChild(thumbWrapper);
+        }
+
+        galleryContainer.appendChild(thumbStrip);
+
+        // Store reference to main image for later use
+        galleryContainer._mainImage = mainImg;
+      }
+
+      /**
+       * Cleanup: Purge dynamically generated gallery from modal to free memory
+       * Called when modal closes to return #pdp-gallery to empty state.
+       * 
+       * @param {HTMLElement} galleryContainer - The modal's #pdp-gallery element
+       */
+      function cleanupModalGallery(galleryContainer) {
+        // Remove all child elements
+        galleryContainer.innerHTML = '';
+        // Clear any stored references
+        galleryContainer._mainImage = null;
+      }
+
+      // 3. Sub-filter Visibility Logic
+      function updateSubFiltersVisibility(category) {
+        if(waterPurifierSubFilters) waterPurifierSubFilters.style.display = category === 'Water Purifier' ? 'flex' : 'none';
+        if(vacuumCleanerSubFilters) vacuumCleanerSubFilters.style.display = category === 'Vacuum Cleaner' ? 'flex' : 'none';
+        
+        // Reset sub-filters to 'all' whenever a main category changes
+        document.querySelectorAll('.sub-filter-buttons').forEach(container => {
+           const btns = container.querySelectorAll('.sub-filter-btn');
+           btns.forEach(btn => btn.classList.remove('active'));
+           if (btns.length > 0) btns[0].classList.add('active'); // Set 'All' to active
+        });
+      }
+
+      // 4. Combined Filter Logic (Main + Sub-categories)
       function filterProducts() {
-        const searchTerm = searchInput.value.toLowerCase();
         const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
+        
+        // Find active subcategory for the current active filter
+        let activeSubCategory = 'all';
+        if (activeFilter === 'Water Purifier' && waterPurifierSubFilters) {
+           activeSubCategory = waterPurifierSubFilters.querySelector('.sub-filter-btn.active')?.dataset.subcategory || 'all';
+        } else if (activeFilter === 'Vacuum Cleaner' && vacuumCleanerSubFilters) {
+           activeSubCategory = vacuumCleanerSubFilters.querySelector('.sub-filter-btn.active')?.dataset.subcategory || 'all';
+        }
 
         productCards.forEach(card => {
           const title = card.querySelector('h3').textContent.toLowerCase();
           const description = card.querySelector('p').textContent.toLowerCase();
           const category = card.querySelector('.product-tag')?.dataset.category || '';
+          
+          // Split subcategories into a list, allowing multiple tags like "ro-uv, uv-uf"
+          const subCategoriesList = (card.dataset.subcategory || 'none').split(',').map(s => s.trim()); 
 
-          const matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
           const matchesFilter = activeFilter === 'all' || category === activeFilter;
+          const matchesSubFilter = activeSubCategory === 'all' || subCategoriesList.includes(activeSubCategory);
 
-          if (matchesSearch && matchesFilter) {
-            card.style.display = 'flex';
-          } else {
-            card.style.display = 'none';
-          }
+          card.style.display = (matchesFilter && matchesSubFilter) ? 'flex' : 'none';
         });
       }
 
+      // Run initial setup - ONLY inject MRP labels
+      // NOTE: Gallery preloading removed for performance optimization
+      // Galleries are now built on-demand when modal opens
       injectMrpLabels();
-      addProductImageGalleries();
 
-      function addProductImageGalleries() {
-        document.querySelectorAll('.product-card').forEach(card => {
-          const mainImage = card.querySelector('img');
-          if (!mainImage) return;
-
-          const originalSrc = mainImage.src;
-          mainImage.classList.add('gallery-main');
-          const altText = mainImage.alt || 'Product image';
-          const skuSlug = altText.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-          const galleryThumbs = document.createElement('div');
-          galleryThumbs.className = 'gallery-thumbs';
-
-          const imageUrls = Array.from({ length: 10 }, (_, index) => `images/${skuSlug}/${index + 1}.jpg`);
-          const availableUrls = [];
-
-          function buildGallery() {
-            if (!availableUrls.length) {
-              mainImage.src = originalSrc;
-              return;
-            }
-            mainImage.src = availableUrls[0];
-            availableUrls.forEach((url, index) => {
-              const thumb = document.createElement('img');
-              thumb.src = url;
-              thumb.alt = `${altText} image ${index + 1}`;
-              thumb.className = 'gallery-thumb';
-              if (index === 0) thumb.classList.add('active');
-              thumb.addEventListener('click', () => {
-                mainImage.src = url;
-                galleryThumbs.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-                thumb.classList.add('active');
-              });
-              galleryThumbs.appendChild(thumb);
-            });
-            mainImage.insertAdjacentElement('afterend', galleryThumbs);
-          }
-
-          function checkImage(index) {
-            if (index >= imageUrls.length) {
-              buildGallery();
-              return;
-            }
-            const url = imageUrls[index];
-            const testImage = new Image();
-            testImage.onload = () => {
-              availableUrls.push(url);
-              checkImage(index + 1);
-            };
-            testImage.onerror = () => checkImage(index + 1);
-            testImage.src = url;
-          }
-
-          checkImage(0);
-        });
-      }
-
-      // Search input event
-      searchInput.addEventListener('input', filterProducts);
-
-      // Clear search
-      clearSearch.addEventListener('click', function() {
-        searchInput.value = '';
-        filterProducts();
-      });
-
-      // Filter button events
+      // Filter Events
       filterButtons.forEach(button => {
         button.addEventListener('click', function() {
           filterButtons.forEach(btn => btn.classList.remove('active'));
           this.classList.add('active');
+          updateSubFiltersVisibility(this.dataset.category);
           filterProducts();
         });
       });
+
+      subFilterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          this.parentNode.querySelectorAll('.sub-filter-btn').forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          filterProducts();
+        });
+      });
+
+      // 5. Professional Modal Logic (Optimized: On-Demand Gallery Injection)
+      const pdpModal = document.getElementById('pdp-modal');
+      const modalGallery = document.getElementById('pdp-gallery');
+      
+      productCards.forEach(card => {
+          card.addEventListener('click', function(e) {
+              // Do nothing if they click the WhatsApp button
+              if (e.target.tagName === 'A') return;
+
+              // Grab details from the card
+              const title = this.querySelector('h3').textContent;
+              const category = this.querySelector('.product-tag').textContent;
+              const priceHTML = this.querySelector('.price-info') ? this.querySelector('.price-info').innerHTML : '';
+              
+              const hiddenAbout = this.querySelector('.hidden-about');
+              const hiddenSpecs = this.querySelector('.hidden-specs');
+              
+              const baseAboutHTML = hiddenAbout ? hiddenAbout.innerHTML : "<p>Experience premium quality and reliable performance.</p><ul><li>Advanced technology</li><li>Free standard installation</li></ul>";
+              const specsHTML = hiddenSpecs ? hiddenSpecs.innerHTML : "<ul><li><strong>Brand:</strong> Eureka Forbes</li><li><strong>Warranty:</strong> 1 Year</li></ul>";
+
+              // Generate SKU from product name
+              const sku = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 20).toUpperCase();
+              
+              // Put the text into the modal
+              document.getElementById('pdp-title').textContent = title;
+              document.getElementById('pdp-category').textContent = category;
+              document.getElementById('pdp-sku').querySelector('span').textContent = 'EF-' + sku;
+              document.getElementById('pdp-price').innerHTML = priceHTML;
+              
+              document.getElementById('pdp-about').innerHTML = baseAboutHTML;
+              document.getElementById('pdp-specs').innerHTML = specsHTML;
+
+              // PERFORMANCE OPTIMIZATION: Build gallery on-demand instead of cloning pre-built thumbnails
+              // This is the KEY change - images 2-20 are ONLY fetched when user clicks to open modal
+              cleanupModalGallery(modalGallery); // Ensure clean state
+              buildModalGalleryOnDemand(this, modalGallery);
+
+              // Put the WhatsApp button into the modal
+              const btn = this.querySelector('.product-btn').cloneNode(true);
+              const btnContainer = document.getElementById('pdp-action-btn');
+              btnContainer.innerHTML = '';
+
+              // Align buttons side by side
+              btnContainer.style.display = 'flex';
+              btnContainer.style.gap = '10px';
+              btnContainer.style.flexWrap = 'wrap';
+
+              btnContainer.appendChild(btn);
+
+              // --- ADD "BOOK A FREE DEMO" BUTTON ---
+              const demoBtn = document.createElement('button');
+              demoBtn.textContent = 'Book a Free Demo';
+              demoBtn.className = 'product-btn';
+              demoBtn.style.backgroundColor = '#ff9900';
+              demoBtn.style.color = '#fff';
+              demoBtn.style.border = 'none';
+              demoBtn.style.cursor = 'pointer';
+
+              // Open Demo Form when clicked
+              demoBtn.onclick = function() {
+                  document.getElementById('demo-product-name').textContent = "Product: " + title;
+                  document.getElementById('demo-modal').classList.add('active');
+              };
+
+              btnContainer.appendChild(demoBtn);
+
+              // Show the modal
+              pdpModal.classList.add('active');
+              document.body.style.overflow = 'hidden';
+          });
+      });
+
+      // Handle closing of the Demo Form Modal
+      const demoModal = document.getElementById('demo-modal');
+      document.querySelector('.demo-close').addEventListener('click', () => {
+          demoModal.classList.remove('active');
+      });
+      demoModal.addEventListener('click', (e) => {
+          if (e.target === demoModal) {
+              demoModal.classList.remove('active');
+          }
+      });
+
+      // Handle sending the TDS Lead Magnet Form to WhatsApp
+      document.getElementById('tds-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const name = document.getElementById('tds-name').value;
+          const phone = document.getElementById('tds-phone').value;
+          const location = document.getElementById('tds-location').value;
+          
+          const vendorWhatsApp = "918928002642"; 
+          
+          const message = `*Free Water TDS Test Request*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Location:* ${location}`;
+          const encodedMessage = encodeURIComponent(message);
+          
+          const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodedMessage}`;
+          window.open(waUrl, '_blank');
+          
+          this.reset();
+      });
+
+      // Handle sending the Demo Form to WhatsApp
+      document.getElementById('demo-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const name = document.getElementById('demo-name').value;
+          const phone = document.getElementById('demo-phone').value;
+          const email = document.getElementById('demo-email').value;
+          const address = document.getElementById('demo-address').value;
+          const product = document.getElementById('demo-product-name').textContent.replace("Product: ", "");
+          
+          const vendorWhatsApp = "918928002642"; 
+          
+          const message = `*Free Demo Request*\n\n*Product:* ${product}\n*Name:* ${name}\n*Phone:* ${phone}\n*Email:* ${email}\n*Address:* ${address}`;
+          const encodedMessage = encodeURIComponent(message);
+          
+          const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodedMessage}`;
+          window.open(waUrl, '_blank');
+          
+          demoModal.classList.remove('active');
+          this.reset();
+      });
+
+      // Logic to close the modal (with gallery cleanup for memory management)
+      function closePdpModal() {
+          // PERFORMANCE: Clean up dynamically generated gallery images to free memory
+          cleanupModalGallery(modalGallery);
+          pdpModal.classList.remove('active');
+          document.body.style.overflow = '';
+      }
+
+      document.querySelector('.pdp-close').addEventListener('click', closePdpModal);
+      
+      pdpModal.addEventListener('click', (e) => {
+          if(e.target === pdpModal) {
+              closePdpModal();
+          }
+      });
+      
+      // Also close on Escape key for accessibility
+      document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && pdpModal.classList.contains('active')) {
+              closePdpModal();
+          }
+      });
+      
+    }); // End of DOMContentLoaded
+
+    // 6. Scroll Animation Logic
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        var windowHeight = window.innerHeight;
+        reveals.forEach(el => {
+          var elementTop = el.getBoundingClientRect().top;
+          if (elementTop < windowHeight - 50) {
+            el.classList.add("active");
+          }
+        });
+      }
+      
+    window.addEventListener("scroll", reveal);
+    setTimeout(reveal, 100);
+
+    // 7. FAQ Accordion Logic with ARIA accessibility
+    document.querySelectorAll('.faq-question').forEach(button => {
+      button.addEventListener('click', function() {
+        const faqItem = this.parentElement;
+        const answerPanel = faqItem.querySelector('.faq-answer');
+        const isExpanded = faqItem.classList.contains('active');
+        
+        // Close all other FAQ items (exclusive accordion behavior)
+        document.querySelectorAll('.faq-item').forEach(item => {
+          const otherButton = item.querySelector('.faq-question');
+          const otherAnswer = item.querySelector('.faq-answer');
+          item.classList.remove('active');
+          otherButton.setAttribute('aria-expanded', 'false');
+          if (otherAnswer) otherAnswer.setAttribute('aria-hidden', 'true');
+        });
+        
+        // Toggle the clicked item
+        if (!isExpanded) {
+          faqItem.classList.add('active');
+          this.setAttribute('aria-expanded', 'true');
+          if (answerPanel) answerPanel.setAttribute('aria-hidden', 'false');
+        }
+      });
     });
   </script>
+  <a href="https://wa.me/918928002642" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+  <span>Chat with Specialist</span>
+</a>
 </body>
 </html>
