@@ -1,0 +1,57 @@
+{
+  // Theme & Icons
+  "workbench.colorTheme": "One Dark Pro",
+  "workbench.iconTheme": "material-icon-theme",
+  "editor.fontSize": 14,
+  "editor.fontFamily": "'Cascadia Code', 'Fira Code', 'Consolas', monospace",
+  
+  // Auto-close and auto-rename HTML tags
+  "auto-close-tag.activationOnLanguage": ["html", "xml"],
+  "auto-rename-tag.activationOnLanguage": ["html", "xml"],
+  
+  // Formatter - use Prettier by default
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  
+  // ErrorLens - show errors inline
+  "errorLens.enabled": true,
+  "errorLens.fontStyle": "italic",
+  
+  // Todo Tree
+  "todo-tree.highlights.enabled": true,
+  "todo-tree.general.showActivityBarBadge": true,
+  
+  // Code Spell Checker
+  "cSpell.language": "en",
+  
+  // Indent Rainbow
+  "indentRainbow.indicatorStyle": "light",
+  "indentRainbow.lightIndicatorStyleLineWidth": 2,
+  
+  // Better Comments - colorize comments
+  "better-comments.multilineComments": true,
+  "better-comments.highlightPlainText": false,
+  "better-comments.tags": [
+    { "tag": "!", "color": "#FF2D00", "strikethrough": false, "backgroundColor": "transparent" },
+    { "tag": "?", "color": "#3498DB", "strikethrough": false, "backgroundColor": "transparent" },
+    { "tag": "TODO", "color": "#FF8C00", "strikethrough": false, "backgroundColor": "transparent" },
+    { "tag": "FIXME", "color": "#FF2D00", "strikethrough": false, "backgroundColor": "transparent" }
+  ],
+  
+  // Minimap
+  "editor.minimap.enabled": true,
+  "editor.minimap.showSlider": "always",
+  
+  // Bracket Pair Colorization
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+  
+  // Smooth cursor
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.cursorBlinking": "smooth",
+  
+  // Live Server
+  "liveServer.settings.donotVerifyTags": true,
+  "liveServer.settings.donotShowInfoMsg": true
+}

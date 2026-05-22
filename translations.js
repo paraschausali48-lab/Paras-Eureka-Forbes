@@ -19,8 +19,8 @@ const translations = {
     // HERO SECTION
     // ============================================
     hero_eyebrow: "Authorized Direct Sales · Exclusive Catalog",
-    hero_title: "Bring Pure Health to Your Home",
-    hero_desc: "Discover exclusive offline offers on premium Aquaguard water purifiers and Forbes home appliances, complete with free home demonstrations.",
+    hero_title: "Aquaguard Water Purifiers, Forbes Vacuum Cleaners & Air Purifiers in Navi Mumbai",
+    hero_desc: "Book free home demos, water TDS testing, installation guidance, and offline offers from your local Eureka Forbes direct sales specialist serving Navi Mumbai and Thane.",
     hero_btn: "Explore Premium Catalog",
 
     // ============================================
@@ -40,13 +40,13 @@ const translations = {
     // ============================================
     vb_eyebrow: "Smart Buyer's Guide",
     vb_title: "Why Choose a Direct Specialist Over Online Bank Discounts?",
-    vb_desc: "An online discount saves you a few hundred rupees today, but incorrect configuration or delayed support wipes out those savings instantly. Here is the offline specialist advantage:",
-    vb_card1_title: "📍 Local Water Tuning",
-    vb_card1_desc: "Online sites sell a one-size-fits-all machine. We test your specific building's TDS and pressure to configure the exact RO/UV/Alkaline filters your family needs.",
-    vb_card2_title: "💰 Doorstep Buy-Back Credit",
-    vb_card2_desc: "Trade in your old 10-15 year old purifier directly at your doorstep. We give you an instant valuation credited directly against your new machine's MOP.",
-    vb_card3_title: "⚡ Lifetime Priority Support",
-    vb_card3_desc: "Skip long automated call center queues. You get a direct, personal contact number for rapid installations, genuine cartridge spares, and hassle-free AMC services.",
+    vb_desc: "An online discount can look attractive, but appliances need the right product match, correct installation, demo guidance, and reliable support. Here is the direct specialist advantage across the full Eureka Forbes catalog:",
+    vb_card1_title: "Right Product Selection",
+    vb_card1_desc: "Get help choosing the right Aquaguard water purifier, air purifier, vacuum cleaner, or water softener based on your home, room size, usage, water TDS, flooring, and budget.",
+    vb_card2_title: "Demo, Exchange & Offers",
+    vb_card2_desc: "Compare current offline offers, book product demos, check exchange value for eligible old appliances, and understand which model gives better long-term value than a small online bank discount.",
+    vb_card3_title: "Installation & After-Sales Support",
+    vb_card3_desc: "Get a direct local contact for installation coordination, usage guidance, genuine consumables, AMC help, service follow-ups, and support across water purifiers, vacuums, air purifiers, and softeners.",
 
     // ============================================
     // PRODUCTS SECTION
@@ -187,13 +187,13 @@ const translations = {
     // ============================================
     vb_eyebrow: "स्मार्ट बायर गाइड",
     vb_title: "ऑनलाइन बैंक डिस्काउंट के बजाय डायरेक्ट स्पेशलिस्ट को क्यों चुनें?",
-    vb_desc: "एक ऑनलाइन डिस्काउंट आज आपके कुछ पैसे बचा सकता है, लेकिन गलत फिल्टर सेटिंग या सर्विस में देरी उस बचत को खत्म कर देती है। जानिए ऑफलाइन विशेषज्ञ के फायदे:",
-    vb_card1_title: "📍 लोकल पानी के अनुसार ट्यूनिंग",
-    vb_card1_desc: "ऑनलाइन साइट्स सभी के लिए एक जैसा प्रोडक्ट बेचती हैं। हम आपकी बिल्डिंग के सटीक TDS और प्रेशर की जांच करके आपकी फैमिली के लिए सही RO/UV/Alkaline फिल्टर कॉन्फ़िगर करते हैं।",
-    vb_card2_title: "💰 डोरस्टेप बाय-बैक क्रेडिट",
-    vb_card2_desc: "अपने 10-15 साल पुराने प्यूरीफायर को सीधे अपने घर पर एक्सचेंज करें। हम आपको तुरंत वैल्यूएशन देकर नए मॉडल की MOP पर सीधी नकद छूट देते हैं।",
-    vb_card3_title: "⚡ लाइफटाइम प्रायोरिटी सपोर्ट",
-    vb_card3_desc: "कॉल सेंटर की लंबी कतारों को छोड़ें। त्वरित इंस्टॉलेशन, असली स्पेयर पार्ट्स और बिना किसी परेशानी के AMC सेवाओं के लिए आपको एक सीधा पर्सनल संपर्क नंबर मिलता है।",
+    vb_desc: "ऑनलाइन डिस्काउंट आकर्षक लग सकता है, लेकिन सही प्रोडक्ट चयन, सही इंस्टॉलेशन, डेमो गाइडेंस और भरोसेमंद सपोर्ट भी उतने ही जरूरी हैं। पूरे Eureka Forbes कैटलॉग के लिए डायरेक्ट स्पेशलिस्ट के फायदे:",
+    vb_card1_title: "सही प्रोडक्ट चयन",
+    vb_card1_desc: "आपके घर, कमरे के आकार, उपयोग, पानी के TDS, फ्लोरिंग और बजट के अनुसार सही Aquaguard वॉटर प्यूरीफायर, एयर प्यूरीफायर, वैक्यूम क्लीनर या वॉटर सॉफ्टनर चुनने में मदद मिलती है।",
+    vb_card2_title: "डेमो, एक्सचेंज और ऑफर",
+    vb_card2_desc: "मौजूदा ऑफलाइन ऑफर की तुलना करें, प्रोडक्ट डेमो बुक करें, योग्य पुराने अप्लायंस का एक्सचेंज वैल्यू चेक करें और समझें कि कौन सा मॉडल छोटे ऑनलाइन बैंक डिस्काउंट से बेहतर लंबी अवधि की वैल्यू देता है।",
+    vb_card3_title: "इंस्टॉलेशन और आफ्टर-सेल्स सपोर्ट",
+    vb_card3_desc: "वॉटर प्यूरीफायर, वैक्यूम, एयर प्यूरीफायर और सॉफ्टनर के लिए इंस्टॉलेशन कोऑर्डिनेशन, उपयोग गाइडेंस, असली कंज्यूमेबल्स, AMC सहायता, सर्विस फॉलो-अप और लोकल संपर्क मिलता है।",
 
     // ============================================
     // PRODUCTS SECTION
@@ -333,13 +333,13 @@ const translations = {
     profile_bio: "नमस्कार! मी युरोका फोर्ब्ससाठी तुमचा स्थानिक अधिकृत थेट विक्री विशेषज्ञ आहे. कोपर खैरणे येथे कार्यरत असून, मी नवी मुंबई आणि ठाणे भरातील कुटुंबांची सेवा करण्याचा अभिमान बाळगतो. माझे ध्येय हे आहे की तुम्हाला तुमच्या कुटुंबासाठी अचूक जल शुद्धीकरण आणि घरगुती सफाई उपाय मिळावेत, प्राधान्य स्थानिक समर्थनासह.",
 
     vb_title: "ऑनलाइन बँक डिस्काउंटऐवजी डायरेक्ट स्पेशलिस्ट का निवडावा?",
-    vb_desc: "ऑनलाइन डिस्काउंटमुळे आज तुमचे काही पैसे वाचतील, पण चुकीचे फिल्टर कॉन्फिग्रेशन किंवा सर्व्हिसमधील विलंबाने तो फायदा लगेच वाया जातो. ऑफलाइन तज्ज्ञांचे फायदे जाणून घ्या:",
-    vb_card1_title: "📍 स्थानिक पाण्यानुसार ट्यूनिंग",
-    vb_card1_desc: "ऑनलाइन साइट्स सर्वांसाठी एकच मशीन विकतात. आम्ही तुमच्या इमारतीमधील पाण्याचे अचूक TDS आणि प्रेशर तपासून तुमच्या कुटुंबासाठी योग्य RO/UV/Alkaline फिल्टर सेट करतो.",
-    vb_card2_title: "💰 डोरस्टेप बाय-बैक क्रेडिट",
-    vb_card2_desc: "तुमचा 10-15 वर्षे जुना प्युरिफायर थेट तुमच्या दारावर एक्सचेंज करा. आम्ही तात्काळ मूल्यमापन करून नवीन मशीनच्या MOP वर थेट रोकड सवलत देतो.",
-    vb_card3_title: "⚡ लाइफटाइम प्रायोरिटी सपोर्ट",
-    vb_card3_desc: "कॉल सेंटरच्या लांबलचक रांगा टाळा. जलद इन्स्टॉलेशन, ओरिजिनल स्पेअर्स आणि विनात्रास AMC सेवांसाठी तुम्हाला थेट वैयक्तिक संपर्क क्रमांक मिळतो.",
+    vb_desc: "ऑनलाइन डिस्काउंट आकर्षक वाटू शकतो, पण योग्य प्रोडक्ट निवड, योग्य इंस्टॉलेशन, डेमो मार्गदर्शन आणि भरोसेमंद सपोर्टही महत्त्वाचे असतात. संपूर्ण Eureka Forbes कॅटलॉगसाठी डायरेक्ट स्पेशलिस्टचे फायदे:",
+    vb_card1_title: "योग्य प्रोडक्ट निवड",
+    vb_card1_desc: "तुमचे घर, खोलीचा आकार, वापर, पाण्याचा TDS, फ्लोअरिंग आणि बजेट यानुसार योग्य Aquaguard वॉटर प्युरिफायर, एअर प्युरिफायर, व्हॅक्यूम क्लीनर किंवा वॉटर सॉफ्टनर निवडण्यात मदत मिळते.",
+    vb_card2_title: "डेमो, एक्सचेंज आणि ऑफर",
+    vb_card2_desc: "सध्याच्या ऑफलाइन ऑफरची तुलना करा, प्रोडक्ट डेमो बुक करा, पात्र जुन्या उपकरणाचे एक्सचेंज मूल्य तपासा आणि कोणता मॉडेल छोट्या ऑनलाइन बँक डिस्काउंटपेक्षा जास्त दीर्घकालीन मूल्य देतो ते समजून घ्या.",
+    vb_card3_title: "इंस्टॉलेशन आणि आफ्टर-सेल्स सपोर्ट",
+    vb_card3_desc: "वॉटर प्युरिफायर, व्हॅक्यूम, एअर प्युरिफायर आणि सॉफ्टनरसाठी इंस्टॉलेशन कोऑर्डिनेशन, वापर मार्गदर्शन, अस्सल कंझ्युमेबल्स, AMC मदत, सर्व्हिस फॉलो-अप आणि स्थानिक संपर्क मिळतो.",
 
     // ============================================
     // PRODUCTS SECTION
@@ -474,6 +474,7 @@ const translations = {
     }
 
     currentLang = lang;
+    document.documentElement.lang = lang;
 
     // Query all elements with data-i18n attribute
     const elements = document.querySelectorAll('[data-i18n]');
@@ -529,6 +530,10 @@ const translations = {
       localStorage.setItem('preferredLanguage', lang);
     } catch (e) {
       // localStorage may not be available in some contexts
+    }
+
+    if (typeof window.updateProductActionLabels === 'function') {
+      window.updateProductActionLabels();
     }
   }
 
