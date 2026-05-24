@@ -1,0 +1,11 @@
+[build]
+  # The folder that contains your website (the root folder in this case)
+  publish = "."
+  # We leave 'command' empty because there is no build step (like npm run build) required
+
+# Optional: Headers for better security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"

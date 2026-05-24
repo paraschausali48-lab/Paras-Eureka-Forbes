@@ -6,17 +6,40 @@
   <meta name="description" content="Contact Paras Singh Chawsali, an authorized Eureka Forbes direct sales specialist serving Navi Mumbai and Thane. Book free TDS testing, Aquaguard water purifier demos, installation support, and offline offers on Forbes appliances." />
   <meta name="keywords" content="Eureka Forbes specialist Navi Mumbai, Aquaguard water purifier Navi Mumbai, Aquaguard dealer Thane, water purifier TDS test, Forbes vacuum cleaner, air purifier, Kopar Khairane" />
   <meta name="theme-color" content="#012d5a" />
- 
+
   <link rel="canonical" href="https://www.eurekaforbes-specialist.com/" />
   <meta property="og:title" content="Eureka Forbes & Aquaguard Specialist in Navi Mumbai" />
   <meta property="og:description" content="Book free TDS testing, Aquaguard demos, installation support, and offline Forbes appliance offers in Navi Mumbai and Thane." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.eurekaforbes-specialist.com" />
   <meta property="og:image" content="https://www.eurekaforbes-specialist.com/og-image.jpg" />
-  
+
+  <!-- Twitter Card Data -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Eureka Forbes & Aquaguard Specialist in Navi Mumbai" />
+  <meta name="twitter:description" content="Book free TDS testing, Aquaguard demos, installation support, and offline Forbes appliance offers in Navi Mumbai and Thane." />
+  <meta name="twitter:image" content="https://www.eurekaforbes-specialist.com/og-image.jpg" />
+
+  <!-- PWA & Favicon Assets -->
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="manifest" href="site.webmanifest">
+
+  <!-- Preload Hero Image to improve LCP (Largest Contentful Paint) -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=800&q=80" fetchpriority="high">
+
+  <!-- DNS Prefetch and Preconnect for External Assets -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <title>Eureka Forbes & Aquaguard Specialist in Navi Mumbai | Water Purifier, Vacuum Cleaner & Air Purifier Offers</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="translations.js"></script>
+  <script defer src="main.js"></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -55,6 +78,16 @@
     ]
   }
   </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -69,7 +102,12 @@
         <button class="lang-btn" data-lang="hi">हिंदी</button>
         <button class="lang-btn" data-lang="mr">मराठी</button>
       </div>
-      <nav class="main-nav">
+      <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav class="main-nav" id="main-nav">
         <a href="#home" data-i18n="nav_home">Home</a>
         <a href="#products" data-i18n="nav_products">Products</a>
         <a href="#contact" data-i18n="nav_contact">Contact</a>
@@ -114,7 +152,7 @@
         <a href="#products" class="btn" data-i18n="hero_btn">Explore Premium Catalog</a>
       </div>
       <div class="hero-card">
-        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=800&q=80" alt="Home appliance" />
+        <img src="https://images.unsplash.com/photo-1581092334664-8797f603cefd?auto=format&fit=crop&w=800&q=80" alt="Home appliance" width="800" height="533" fetchpriority="high" loading="eager" />
       </div>
     </div>
   </section>
@@ -136,8 +174,15 @@
         <h3 data-i18n="lead_form_title">Request Your Free Test</h3>
         <form id="tds-form" class="lead-form">
           <input type="text" id="tds-name" placeholder="Your Name" required>
-          <input type="tel" id="tds-phone" placeholder="WhatsApp Number" required>
-          <input type="text" id="tds-location" placeholder="Node / Neighborhood (e.g., Kopar Khairane)" required>
+          <input type="text" id="tds-address" placeholder="Home or Office Address" required>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" id="tds-pincode" placeholder="Pincode" required pattern="[0-9]{6}" title="Enter a 6-digit pincode" style="flex: 1;">
+            <select id="tds-location-type" required style="flex: 0 0 110px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 1rem; background: #fff;">
+              <option value="">Type</option>
+              <option value="Home">🏠 Home</option>
+              <option value="Office">🏢 Office</option>
+            </select>
+          </div>
           <button type="submit" class="btn" data-i18n="lead_btn">Send Request via WhatsApp</button>
         </form>
       </div>
@@ -149,17 +194,17 @@
     <div class="container offer-section">
       <span class="eyebrow offer-eyebrow" data-i18n="offer_eyebrow">Limited Time Offer</span>
       <h2 class="offer-title" data-i18n="offer_title">Exclusive Upgrade Carnival</h2>
-      
+
       <div class="offer-image-wrap">
-        <img src="images/current-offer.jpg" alt="Eureka Forbes Special Offer" class="offer-image">
+        <img src="images/current-offer.jpg" alt="Eureka Forbes Special Offer" class="offer-image" width="900" height="450" loading="lazy">
       </div>
-      
+
       <div class="offer-text-wrap">
         <p class="offer-desc" data-i18n="offer_desc">Take advantage of this official Eureka Forbes offer today. Contact me directly to check your eligibility and book your installation.</p>
-        <a href="https://wa.me/918928002642?text=%2AHello%20Paras%2C%20I%20am%20interested%20in%20the%20current%20Special%20Offer%20shown%20on%20your%20website.%2A" 
-           target="_blank" 
-           rel="noopener noreferrer" 
-           class="btn offer-wa-btn" 
+        <a href="https://wa.me/918928002642?text=%2AHello%20Paras%2C%20I%20am%20interested%20in%20the%20current%20Special%20Offer%20shown%20on%20your%20website.%2A"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="btn offer-wa-btn"
            data-i18n="offer_btn">
           Claim This Offer on WhatsApp
         </a>
@@ -186,24 +231,29 @@
   </section>
 
   <section class="service-area-section reveal" id="service-area">
-    <div class="container service-area-content">
-      <span class="eyebrow">Local Service Area</span>
-      <h2>Aquaguard and Forbes Appliance Support Across Navi Mumbai & Thane</h2>
-      <p>I help customers compare Aquaguard water purifiers, Forbes vacuum cleaners, air purifiers, and water softeners with doorstep guidance, free TDS testing, product demos, exchange support, and installation coordination.</p>
-      <div class="service-area-tags" aria-label="Service areas">
-        <span>Kopar Khairane</span>
-        <span>Vashi</span>
-        <span>Ghansoli</span>
-        <span>Airoli</span>
-        <span>Nerul</span>
-        <span>Sanpada</span>
-        <span>CBD Belapur</span>
-        <span>Navi Mumbai</span>
-        <span>Thane</span>
+    <div class="container service-area-wrapper">
+      <div class="service-area-content">
+        <span class="eyebrow">Local Service Area</span>
+        <h2>Aquaguard and Forbes Appliance Support Across Navi Mumbai & Thane</h2>
+        <p>I help customers compare Aquaguard water purifiers, Forbes vacuum cleaners, air purifiers, and water softeners with doorstep guidance, free TDS testing, product demos, exchange support, and installation coordination.</p>
+        <div class="service-area-tags" aria-label="Service areas">
+          <span>Kopar Khairane</span>
+          <span>Vashi</span>
+          <span>Ghansoli</span>
+          <span>Airoli</span>
+          <span>Nerul</span>
+          <span>Sanpada</span>
+          <span>CBD Belapur</span>
+          <span>Navi Mumbai</span>
+          <span>Thane</span>
+        </div>
+      </div>
+      <div class="service-area-map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d120653.12260655383!2d72.94314167195861!3d19.085648833989066!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sNavi%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1714246026857!5m2!1sen!2sin" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Navi Mumbai Service Area Map"></iframe>
       </div>
     </div>
   </section>
-  
+
   <section class="products" id="products">
     <div class="container section-heading">
       <span class="eyebrow" data-i18n="products_eyebrow">Featured Products</span>
@@ -211,54 +261,140 @@
       <p data-i18n="products_desc">Choose from top-quality products that are available through direct sales and exclusive offline channels.</p>
     </div>
 
-    <div class="container filters reveal">
-      <div class="filter-buttons">
-        <button type="button" class="filter-btn active" data-category="all" data-i18n="filter_all">All Products</button>
-        <button type="button" class="filter-btn" data-category="Water Purifier" data-i18n="filter_water">Water Purifiers</button>
-        <button type="button" class="filter-btn" data-category="Air Purifier" data-i18n="filter_air">Air Purifiers</button>
-        <button type="button" class="filter-btn" data-category="Vacuum Cleaner" data-i18n="filter_vacuum">Vacuum Cleaners</button>
-        <button type="button" class="filter-btn" data-category="Water Softener" data-i18n="filter_softener">Water Softeners</button>
-      </div>
+    <div class="container products-layout reveal">
+      <!-- Filter Sidebar -->
+      <aside class="filter-sidebar" id="filter-sidebar">
+        <div class="filter-sidebar-header" style="flex-direction: column; align-items: stretch; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+            <h3>Filters</h3>
+            <button type="button" class="filter-clear-all" id="filter-clear-all">Clear All</button>
+            <button type="button" class="filter-sidebar-close" id="filter-sidebar-close">&times;</button>
+          </div>
+          <div class="search-box">
+             <input type="text" id="product-search" data-i18n="search_placeholder" placeholder="Search products..." style="width: 100%; padding: 8px 12px; border: 1px solid var(--color-gray-100); border-radius: var(--radius-sm); font-family: inherit;">
+          </div>
+        </div>
 
-      <div class="sub-filter-buttons" id="water-purifier-subfilters" style="display: none;">
-        <button type="button" class="sub-filter-btn active" data-subcategory="all">All</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="alkaline-boost-active-copper">ALK + Active Copper</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="uv">UV</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="smart">Smart</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="active-copper">Active Copper</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="alkaline-boost">Alkaline Boost</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="under-counter">Under Counter</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="storage">Storage</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="without-storage">Without Storage</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="stainless-steel">Stainless Steel</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="food-grade plastic">Food-Grade Plastic</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="ro-uv">RO+UV</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="uv-uf">UV+UF</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="hot-ambient">Hot and Ambient</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="ro-uv-uf">RO+UV+UF</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="slim">Slim</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="zero-pressure-pump">Zero Pressure Pump</button>
-      </div>
+        <!-- Category Filter (Always visible) -->
+        <div class="filter-group">
+          <div class="filter-group-title">Category</div>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-cat" value="all" checked>
+            <span>All Products</span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-cat" value="Water Purifier" data-count="0">
+            <span>Water Purifiers <span class="filter-count" data-cat="Water Purifier"></span></span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-cat" value="Air Purifier" data-count="0">
+            <span>Air Purifiers <span class="filter-count" data-cat="Air Purifier"></span></span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-cat" value="Vacuum Cleaner" data-count="0">
+            <span>Vacuum Cleaners <span class="filter-count" data-cat="Vacuum Cleaner"></span></span>
+          </label>
+          <label class="filter-option">
+            <input type="checkbox" class="filter-cat" value="Water Softener" data-count="0">
+            <span>Water Softeners <span class="filter-count" data-cat="Water Softener"></span></span>
+          </label>
+        </div>
 
-      <div class="sub-filter-buttons" id="vacuum-cleaner-subfilters" style="display: none;">
-        <button type="button" class="sub-filter-btn active" data-subcategory="all">All</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="robotic">Robotic</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="upright">Upright</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="canister">Canister</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="handheld">Handheld</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="wet-dry">Wet & Dry</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="pet-grooming">Pet Grooming</button>
-        <button type="button" class="sub-filter-btn" data-subcategory="accessories">Accessories</button>
-      </div>
-    </div>
+        <!-- Water Purifier Filters -->
+        <div class="filter-group water-filter" style="display:none;">
+          <div class="filter-group-title">Water Source</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="water-source" value="municipal"><span>Municipal Water (TMC / NMMC / BMC)</span></label>
+          <span class="small-helper">Select your building's water source</span>
+        </div>
 
-    <div class="product-grid">
+        <div class="filter-group water-filter" style="display:none;">
+          <div class="filter-group-title">Technology</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="tech" value="ro"><span>RO (Reverse Osmosis)</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="tech" value="uv"><span>UV (Ultraviolet)</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="tech" value="uf"><span>UF (Ultrafiltration)</span></label>
+        </div>
+
+        <div class="filter-group water-filter" style="display:none;">
+          <div class="filter-group-title">Placement</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="placement" value="wall-mounted"><span>Wall Mounted</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="placement" value="under-counter"><span>Under Counter</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="placement" value="table-top"><span>Table Top</span></label>
+        </div>
+
+        <div class="filter-group water-filter" style="display:none;">
+          <div class="filter-group-title">Storage Capacity</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="storage" value="small"><span>Up to 5 Liters</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="storage" value="medium"><span>6 to 8 Liters</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="storage" value="large"><span>Above 8 Liters</span></label>
+        </div>
+
+        <div class="filter-group water-filter" style="display:none;">
+          <div class="filter-group-title">Special Features</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="features" value="active-copper"><span>Active Copper / Zinc Booster</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="features" value="hot-ambient"><span>Hot & Ambient Water</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="features" value="alkaline"><span>Alkaline Water Tech</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="features" value="mtds"><span>Taste Enhancer (MTDS)</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="features" value="smart"><span>Smart LED / Digital Display</span></label>
+        </div>
+
+        <!-- Vacuum Cleaner Filters -->
+        <div class="filter-group vacuum-filter" style="display:none;">
+          <div class="filter-group-title">Type</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-type" value="canister"><span>Canister</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-type" value="handheld"><span>Handheld</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-type" value="upright"><span>Upright / Stick</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-type" value="robotic"><span>Robotic</span></label>
+        </div>
+
+        <div class="filter-group vacuum-filter" style="display:none;">
+          <div class="filter-group-title">Application</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-app" value="dry"><span>Dry Cleaning Only</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-app" value="wet-dry"><span>Wet & Dry Cleaning</span></label>
+        </div>
+
+        <div class="filter-group vacuum-filter" style="display:none;">
+          <div class="filter-group-title">Dust Collection</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-dust" value="bagless"><span>Bagless (Cyclonic)</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-dust" value="bagged"><span>Bagged (Disposable)</span></label>
+        </div>
+
+        <div class="filter-group vacuum-filter" style="display:none;">
+          <div class="filter-group-title">Power</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-power" value="corded"><span>Corded</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="vac-power" value="cordless"><span>Cordless (Battery)</span></label>
+        </div>
+
+        <!-- Universal: Price Range -->
+        <div class="filter-group">
+          <div class="filter-group-title">Price Range</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="price" value="0-10000"><span>Under ₹10,000</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="price" value="10000-15000"><span>₹10,000 - ₹15,000</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="price" value="15000-20000"><span>₹15,000 - ₹20,000</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="price" value="20000+"><span>Above ₹20,000</span></label>
+        </div>
+
+        <!-- Universal: Offers -->
+        <div class="filter-group">
+          <div class="filter-group-title">Offers</div>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="offer" value="exchange"><span>Exchange Eligible</span></label>
+          <label class="filter-option"><input type="checkbox" class="filter-facet" data-facet="offer" value="free-installation"><span>Free Installation</span></label>
+        </div>
+      </aside>
+
+      <!-- Mobile Filter Toggle -->
+      <button type="button" class="filter-mobile-toggle" id="filter-mobile-toggle">☰ Filter & Sort <span id="filter-badge" class="filter-badge" style="display: none;">0</span></button>
+
+      <!-- Product Grid -->
+      <!-- Screen Reader Announcer for Filters -->
+      <div id="search-announcer" class="sr-only" aria-live="polite"></div>
+
+      <div class="product-grid" id="product-grid">
       <!-- Water Purifiers -->
       <article class="product-card reveal" data-gallery-count="20" data-subcategory="under-counter, ro-uv, active-copper, storage, food-grade plastic">
         <img src="images/aquaguard-select-designo-utc-ro-uv-2x/1.jpg" alt="AQUAGUARD SELECT DESIGNO UTC RO+UV 2X" loading="lazy" />
         <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD SELECT DESIGNO UTC RO+UV 2X</h3>
-        <p>NanoPore 2X Filter Technology, 2 Year Filter Life, Superior Design, Additional Mega Sediment Filter, Superior 9-Stage Purification including RO+UV, Water Saving RO Technology, Free Service Plan, Works With All Water Sources, Widest Service Network, Warranty and Installation.</p>
+        <p>NanoPore 2X Filter Technology, 2 Year Filter Life, Superior Design, Additional Mega Sediment Filter, Superior 9-Stage Purification including RO+UV, b) UV e-boiling, Water Saving RO Technology, Free Service Plan, Works With All Water Sources, Widest Service Network, Warranty and Installation.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹39,500</div>
           <div class="price">MOP ₹29,999</div>
@@ -270,8 +406,8 @@
             <li><strong>Gross Weight:</strong> 11Kg</li>
             <li><strong>Included in the Box:</strong> Water Purifier, Mega Sediment Filter, Accessory (Faucet, Input pipe, Reject water pipe, Diverter valve & Warranty Card), TDS Meter</li>
             <li><strong>Input Voltage:</strong> 230V AC, 50Hz</li>
-            <li><strong>Input Water Chlorine (Max):</strong> <0.2 mg/L</li>
-            <li><strong>Input Water Iron:</strong> <0.1 mg/L</li>
+            <li><strong>Input Water Chlorine (Max):</strong> &lt;0.2 mg/L</li>
+            <li><strong>Input Water Iron:</strong> &lt;0.1 mg/L</li>
             <li><strong>Input Water Pressure:</strong> Upto 3 kg/cm²</li>
             <li><strong>Input Water Temperature:</strong> 5°C – 45°C</li>
             <li><strong>Input Water Turbidity (Max):</strong> 5 NTU</li>
@@ -293,7 +429,7 @@
         <img src="images/aquaguard-select-designo-utc-uv-uf-2x/1.jpg" alt="AQUAGUARD SELECT DESIGNO UTC UV+UF 2X" />
         <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD SELECT DESIGNO UTC UV+UF 2X</h3>
-        <p>Advanced purification, smart alerts, and hygienic storage for pure water every day.</p>
+        <p>NanoPore 2X Filter Technology, 2 Year Filter Life, Superior Design, Additional Mega Sediment Filter, Superior 8-Stage Purification including, a) Mega Sediment Filter, b) UV e-boiling, c) Ultra Filtration 2X, UV e-Boiling, Works with Municipal Water Only, Most Trusted Service Network, LED Indication, Warranty and Installation.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹28,000</div>
           <div class="price">MOP ₹20,499</div>
@@ -313,7 +449,7 @@
         <img src="images/aquaguard-aspire-slimtech-uv-stg-2x/1.jpg" alt="AQUAGUARD ASPIRE SLIMTECH UV STG 2X" />
         <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD ASPIRE SLIMTECH UV STG 2X</h3>
-        <p>High-efficiency RO system with mineral retention for balanced, healthy water.</p>
+        <p>Aquaguard Aspire Slimtech, Premium Design, NanoPore Long Life Filter Technology, 2-Year Filter Life, 3-in-1 Active Copper Technology, Mega Sediment Filter, 9-Stage Purification, 5th Gen UV LED, Free Service Plan, Widest Service Network, Warranty & Installation.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹26,000</div>
           <div class="price">MOP ₹19,999</div>
@@ -333,9 +469,9 @@
         <img src="images/aquaguard-slim-glass-uv-bar-inline/1.jpg" alt="AQUAGUARD SLIM GLASS UV BAR INLINE" />
         <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
         <h3>AQUAGUARD SLIM GLASS UV BAR INLINE</h3>
-        <p>Energy-efficient UV technology with eco-friendly design and easy maintenance.</p>
+        <p>Works with Municipal Water Only, Sleek and Premium Glass Exterior, Intelligent Water Quality Indicator, Slimmest Ever UV Water Purifier, Advanced User Alerts, 7-Stage Purification, 5th Gen UV LED, 3-in-1 Patented Active Copper Technology, Warranty and Installation.</p>
         <div class="price-info">
-          <div class="mrp">MRP ₹23,000</div>
+          <div class="mrp">MRP ₹23,500</div>
           <div class="price">MOP ₹13,499</div>
         </div>
         <a href="#contact" class="product-btn" data-i18n="btn_ask">Ask for This SKU</a>
@@ -713,7 +849,7 @@
         <img src="images/forbes-air-purifier-230-surround-360/1.jpg" alt="FORBES AIR PURIFIER 230 SURROUND 360°" />
         <div class="product-tag" data-category="Air Purifier" data-i18n="tag_air">Air Purifier</div>
         <h3>FORBES AIR PURIFIER 230 SURROUND 360°</h3>
-        <p>Advanced nano-technology filter captures ultrafine particles and eliminates odors.</p>
+        <p>Advanced nano-technology filter captures particles and eliminates odors.</p>
         <div class="price-info">
           <div class="mrp">MRP ₹15,000</div>
           <div class="price">MOP ₹7,999</div>
@@ -816,7 +952,7 @@
       </article>
 
       <article class="product-card reveal" data-gallery-count="18" data-subcategory="vacuum">
-        <img src="images/forbes-smartclean-fullyautomatic-station/1.jpg" alt="FORBES SMARTCLEAN FULLYAUTOMATIC STATION" />
+        <img src="images/forbes-smartclean-fullyautomatic-station/1.jpg" alt="FORBES SMARTCLEAN FULLY AUTOMATIC STATION" />
         <div class="product-tag" data-category="Vacuum Cleaner" data-i18n="tag_vacuum">Vacuum Cleaner</div>
         <h3>FORBES SMARTCLEAN FULLYAUTOMATIC STATION</h3>
         <p>Cordless cleaning freedom with long battery life and easy storage.</p>
@@ -960,7 +1096,7 @@
           <p class="exchange-description" data-i18n="exchange_desc">
             Don't just discard your vintage system. Trade it in today for a brand-new, advanced Aquaguard featuring 5th Gen UV LED or Alkaline technology, and get a substantial cash discount credited directly against your new machine's MOP!
           </p>
-          
+
           <div class="exchange-perks">
             <div class="exchange-perk">
               <div class="perk-icon">
@@ -993,16 +1129,15 @@
             </div>
           </div>
 
-          <a href="https://wa.me/918928002642?text=%2AHello%20Paras%2C%20I%20want%20to%20check%20the%20exchange%20value%20of%20my%20old%20water%20purifier%20for%20a%20new%20Aquaguard%20upgrade.%2A" 
-             target="_blank" 
+          <a href="https://wa.me/918928002642?text=%2AHello%20Paras%2C%20I%20want%20to%20check%20the%20exchange%20value%20of%20my%20old%20water%20purifier%20for%20a%20new%20Aquaguard%20upgrade.%2A"
+             target="_blank"
              rel="noopener noreferrer"
              class="exchange-cta"
-             aria-label="Check Exchange Value via WhatsApp"
-             data-i18n="exchange_cta">
+             aria-label="Check Exchange Value via WhatsApp">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
-            Check Exchange Value via WhatsApp
+           <span data-i18n="exchange_cta">Check Exchange Value via WhatsApp</span>
           </a>
         </div>
         <div class="exchange-visual">
@@ -1015,7 +1150,7 @@
     </div>
   </section>
 
-  <!-- FAQ Section -->
+  <!-- FAQ Section with Category Tabs and Accordion -->
   <section class="faq-section reveal" id="faq">
     <div class="container">
       <div class="section-heading">
@@ -1024,95 +1159,374 @@
         <p data-i18n="faq_desc">Get instant answers to the most common questions about water purification, technology, and maintenance.</p>
       </div>
 
-      <div class="faq-accordion">
-        <!-- FAQ Item 1 -->
-        <div class="faq-item">
-          <button class="faq-question" id="faq-question-1" aria-expanded="false" aria-controls="faq-answer-1">
-            <span class="faq-q-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </span>
-            <span class="faq-question-text" data-i18n="faq_q1">If the municipal corporation already treats our water, why do I need an Aquaguard?</span>
-            <span class="faq-chevron" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" aria-hidden="true">
-            <div class="faq-answer-content">
-              <p data-i18n="faq_a1">While water is treated at the main municipal plant, it travels through kilometers of aging, rusted underground pipelines before reaching your building. Micro-cracks frequently cause underground sewage seepage and cross-contamination right before it hits your tap. Additionally, unless your building's overhead and underground storage tanks are professionally sanitized every month, they accumulate silt, biological slime, and bacteria that re-contaminate the water.</p>
+      <!-- Category Tabs -->
+      <div class="faq-tabs" role="tablist">
+        <button class="faq-tab active" role="tab" aria-selected="true" data-faq-tab="aquaguards" id="faq-tab-aquaguards">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/><path d="M15 22c-1.798-1.998-2.518-3.995-2.807-5.993"/><path d="M22 9c-1.972-2.24-4.2-3.214-6.5-3.214"/><path d="M2 9c.637-1.09 1.382-1.979 2.235-2.668"/></svg>
+          <span data-i18n="faq_tab_aquaguards">Aquaguards</span>
+        </button>
+        <button class="faq-tab" role="tab" aria-selected="false" data-faq-tab="vacuums" id="faq-tab-vacuums">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><path d="M10 20L21 9"/><path d="M5 15l4 4"/><path d="M4 12l3-3 5 5-3 3z"/></svg>
+          <span data-i18n="faq_tab_vacuums">Vacuum Cleaners</span>
+        </button>
+        <button class="faq-tab" role="tab" aria-selected="false" data-faq-tab="service" id="faq-tab-service">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span data-i18n="faq_tab_service">Servicing & AMC</span>
+        </button>
+      </div>
+
+      <!-- FAQ Accordion Container -->
+      <div class="faq-accordion" id="faq-accordion-container">
+        <!-- ===== AQUAGUARDS TAB (Water Purifiers) ===== -->
+        <div class="faq-tab-panel" role="tabpanel" data-faq-panel="aquaguards" aria-labelledby="faq-tab-aquaguards">
+          <!-- FAQ Item 1 -->
+          <div class="faq-item" data-faq-category="aquaguards">
+            <button class="faq-question" id="faq-question-1" aria-expanded="false" aria-controls="faq-answer-1">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q1">If the municipal corporation already treats our water, why do I need an Aquaguard?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p data-i18n="faq_a1">While water is treated at the main municipal plant, it travels through kilometers of aging, rusted underground pipelines before reaching your building. Micro-cracks frequently cause underground sewage seepage and cross-contamination right before it hits your tap. Additionally, unless your building's overhead and underground storage tanks are professionally sanitized every month, they accumulate silt, biological slime, and bacteria that re-contaminate the water.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="faq-item" data-faq-category="aquaguards">
+            <button class="faq-question" id="faq-question-2" aria-expanded="false" aria-controls="faq-answer-2">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q2">We boil our water at home anyway. Doesn't that make a purifier unnecessary?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p data-i18n="faq_a2">Boiling is excellent for neutralizing living bacteria and viruses, but it completely fails against chemical pollutants. Boiling cannot remove dissolved heavy metals (like lead, arsenic, or mercury), rust flakes, muddy turbidity, or agricultural pesticides. In fact, as water evaporates during boiling, the density of these dangerous dissolved toxins actually increases. Furthermore, boiling cannot remove the heavy chlorine smell or taste often added by municipal treatment plants.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="faq-item" data-faq-category="aquaguards">
+            <button class="faq-question" id="faq-question-3" aria-expanded="false" aria-controls="faq-answer-3">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q3">What exactly is 5th Gen UV LED technology and how long does it last?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p data-i18n="faq_a3">5th Generation UV LED is the absolute pinnacle of modern water sterilization, replacing older glass UV tubes. Unlike legacy bulbs that require a warm-up period, 5th Gen LEDs activate instantly the millisecond water flows, ensuring 100% safe water from the very first drop. They are completely mercury-free, generate zero heat (so your water stays cool), and possess an incredible durable lifespan of up to 10 years, dramatically lowering your long-term maintenance layouts.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 5 -->
+          <div class="faq-item" data-faq-category="aquaguards">
+            <button class="faq-question" id="faq-question-5" aria-expanded="false" aria-controls="faq-answer-5">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q5">Do I really need an RO purifier if I live in Mumbai, Navi Mumbai, or Thane?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-5" role="region" aria-labelledby="faq-question-5" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>It depends on your building's water source. If your society relies strictly on municipal water (NMMC, TMC, or BMC), the water is naturally soft and a UV+UF purifier is usually sufficient to remove pathogens and rust. However, if your society uses borewell water or orders private water tankers (common during summer cuts), an RO purifier is highly recommended to handle the fluctuating TDS (Total Dissolved Solids) and hardness.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 6 -->
+          <div class="faq-item" data-faq-category="aquaguards">
+            <button class="faq-question" id="faq-question-6" aria-expanded="false" aria-controls="faq-answer-6">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q6">Will an RO purifier remove essential minerals from my drinking water?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-6" role="region" aria-labelledby="faq-question-6" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>No. Modern Aquaguard RO models come equipped with patented Mineral Guard™ technology. This ensures that while heavy metals, excess salts, and harmful impurities are filtered out, essential natural minerals like calcium and magnesium are retained in your drinking water.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 7 -->
+          <div class="faq-item" data-faq-category="aquaguards">
+            <button class="faq-question" id="faq-question-7" aria-expanded="false" aria-controls="faq-answer-7">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q7">How often do I need to replace the filters in my Aquaguard?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-7" role="region" aria-labelledby="faq-question-7" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>Typically, the pre-filter and carbon filters need replacement every 6 to 12 months, depending on your household's water consumption and the input water quality. If you live in an area with older GI plumbing, sediment filters may need replacing sooner. Your machine will also alert you when it's time for a filter change.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 8 -->
+          <div class="faq-item" data-faq-category="aquaguards">
+            <button class="faq-question" id="faq-question-8" aria-expanded="false" aria-controls="faq-answer-8">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q8">Can I exchange my old water purifier for a new Aquaguard?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-8" role="region" aria-labelledby="faq-question-8" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>Yes! We are currently running an official Aquaguard Buy-Back and Exchange campaign (valid until December 2026). You can exchange your old water purifier&mdash;regardless of the brand or condition&mdash;for a significant discount on a new, upgraded Aquaguard model. Contact me via WhatsApp to get an exact valuation for your old machine.</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- FAQ Item 2 -->
-        <div class="faq-item">
-          <button class="faq-question" id="faq-question-2" aria-expanded="false" aria-controls="faq-answer-2">
-            <span class="faq-q-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </span>
-            <span class="faq-question-text" data-i18n="faq_q2">We boil our water at home anyway. Doesn't that make a purifier unnecessary?</span>
-            <span class="faq-chevron" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" aria-hidden="true">
-            <div class="faq-answer-content">
-              <p data-i18n="faq_a2">Boiling is excellent for neutralizing living bacteria and viruses, but it completely fails against chemical pollutants. Boiling cannot remove dissolved heavy metals (like lead, arsenic, or mercury), rust flakes, muddy turbidity, or agricultural pesticides. In fact, as water evaporates during boiling, the density of these dangerous dissolved toxins actually increases. Furthermore, boiling cannot remove the heavy chlorine smell or taste often added by municipal treatment plants.</p>
+        <!-- ===== VACUUM CLEANERS TAB ===== -->
+        <div class="faq-tab-panel" role="tabpanel" data-faq-panel="vacuums" aria-labelledby="faq-tab-vacuums" hidden>
+          <!-- FAQ Item 9 -->
+          <div class="faq-item" data-faq-category="vacuums">
+            <button class="faq-question" id="faq-question-9" aria-expanded="false" aria-controls="faq-answer-9">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q9">Which vacuum cleaner is better for Indian homes: Bagless or Bagged?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-9" role="region" aria-labelledby="faq-question-9" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>Both are highly effective, but they serve different needs. Bagless (cyclonic) models are incredibly convenient, lightweight, and save you the cost of buying replacement bags. Bagged models, however, are often recommended for allergy sufferers as the dust is completely sealed away during disposal, preventing dust clouds.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 10 -->
+          <div class="faq-item" data-faq-category="vacuums">
+            <button class="faq-question" id="faq-question-10" aria-expanded="false" aria-controls="faq-answer-10">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q10">Can a vacuum cleaner help if I or my family members have dust allergies?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-10" role="region" aria-labelledby="faq-question-10" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>Absolutely. If you have dust allergies, look for our Forbes models equipped with a True HEPA (High-Efficiency Particulate Air) filter. These filters trap 99.9% of microscopic allergens, dust mites, and pet hair, ensuring they are not exhausted back into your room's air.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 11 -->
+          <div class="faq-item" data-faq-category="vacuums">
+            <button class="faq-question" id="faq-question-11" aria-expanded="false" aria-controls="faq-answer-11">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text">Does a handheld vacuum cleaner replace a standard floor vacuum?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-11" role="region" aria-labelledby="faq-question-11" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>Handheld vacuums are excellent for quick cleanups, car interiors, sofas, and hard-to-reach corners. However, for deep cleaning large carpets and entire floors, a canister or robotic vacuum cleaner provides the sustained suction power and battery life required.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 12 -->
+          <div class="faq-item" data-faq-category="vacuums">
+            <button class="faq-question" id="faq-question-12" aria-expanded="false" aria-controls="faq-answer-12">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text">Why does my vacuum cleaner get hot and shut off?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-12" role="region" aria-labelledby="faq-question-12" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>This is a built-in safety feature. If the dust bag is completely full, or if the filters or hoses are severely clogged with hair or debris, the motor works harder and heats up. Emptying the dust cup and cleaning the filter regularly will prevent this and ensure maximum suction power.</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- FAQ Item 3 -->
-        <div class="faq-item">
-          <button class="faq-question" id="faq-question-3" aria-expanded="false" aria-controls="faq-answer-3">
-            <span class="faq-q-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </span>
-            <span class="faq-question-text" data-i18n="faq_q3">What exactly is 5th Gen UV LED technology and how long does it last?</span>
-            <span class="faq-chevron" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" aria-hidden="true">
-            <div class="faq-answer-content">
-              <p data-i18n="faq_a3">5th Generation UV LED is the absolute pinnacle of modern water sterilization, replacing older glass UV tubes. Unlike legacy bulbs that require a warm-up period, 5th Gen LEDs activate instantly the millisecond water flows, ensuring 100% safe water from the very first drop. They are completely mercury-free, generate zero heat (so your water stays cool), and possess an incredible durable lifespan of up to 10 years, dramatically lowering your long-term maintenance layouts.</p>
+        <!-- ===== SERVICING & AMC TAB ===== -->
+        <div class="faq-tab-panel" role="tabpanel" data-faq-panel="service" aria-labelledby="faq-tab-service" hidden>
+          <!-- FAQ Item 4 (Previous AMC question moved here) -->
+          <div class="faq-item" data-faq-category="service">
+            <button class="faq-question" id="faq-question-4" aria-expanded="false" aria-controls="faq-answer-4">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text" data-i18n="faq_q4">Is taking an Annual Maintenance Contract (AMC) really worth the pain?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p data-i18n="faq_a4">Absolutely. Think of your purifier as a protective shield; it works by physically trapping mud, chemical particles, and heavy metals so they don't enter your body. Over 6 to 12 months, these heavy-duty carbon blocks and membranes inevitably get completely choked with the dirt they blocked. An active AMC ensures a certified technician comes straight to your doorstep to deep-clean the system and swap cartridges with genuine factory spares before they fail, guaranteeing 365 days of instant health safety.</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- FAQ Item 4 -->
-        <div class="faq-item">
-          <button class="faq-question" id="faq-question-4" aria-expanded="false" aria-controls="faq-answer-4">
-            <span class="faq-q-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-            </span>
-            <span class="faq-question-text" data-i18n="faq_q4">Is taking an Annual Maintenance Contract (AMC) really worth the pain?</span>
-            <span class="faq-chevron" aria-hidden="true">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </span>
-          </button>
-          <div class="faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" aria-hidden="true">
-            <div class="faq-answer-content">
-              <p data-i18n="faq_a4">Absolutely. Think of your purifier as a protective shield; it works by physically trapping mud, chemical particles, and heavy metals so they don't enter your body. Over 6 to 12 months, these heavy-duty carbon blocks and membranes inevitably get completely choked with the dirt they blocked. An active AMC ensures a certified technician comes straight to your doorstep to deep-clean the system and swap cartridges with genuine factory spares before they fail, guaranteeing 365 days of instant health safety.</p>
+          <!-- FAQ Item 13 -->
+          <div class="faq-item" data-faq-category="service">
+            <button class="faq-question" id="faq-question-13" aria-expanded="false" aria-controls="faq-answer-13">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text">How do I book a free home demonstration?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-13" role="region" aria-labelledby="faq-question-13" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>Simply click the "Book a Demo" button or message me directly on WhatsApp. Since I am your authorized local Eureka Forbes specialist for Navi Mumbai and Thane, I will bring the selected models to your home so you can see exactly how they perform in your own space before making a decision.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 14 -->
+          <div class="faq-item" data-faq-category="service">
+            <button class="faq-question" id="faq-question-14" aria-expanded="false" aria-controls="faq-answer-14">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text">What is covered under the Eureka Forbes AMC (Annual Maintenance Contract)?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-14" role="region" aria-labelledby="faq-question-14" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>A genuine Aquaguard AMC gives you complete peace of mind. It generally includes up to 3 scheduled maintenance visits a year, annual filter replacement, tank cleaning, unlimited breakdown repair visits, and free replacement of spare parts (including electronics and pumps) depending on the plan you choose.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 15 -->
+          <div class="faq-item" data-faq-category="service">
+            <button class="faq-question" id="faq-question-15" aria-expanded="false" aria-controls="faq-answer-15">
+              <span class="faq-q-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </span>
+              <span class="faq-question-text">How soon will my product be installed after purchase?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <div class="faq-answer" id="faq-answer-15" role="region" aria-labelledby="faq-question-15" aria-hidden="true">
+              <div class="faq-answer-content">
+                <p>Installation is incredibly fast. Once your order is confirmed, an authorized Eureka Forbes technician will arrive at your home to install the device within 24 to 48 hours.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -1175,33 +1589,38 @@
     </div>
   </footer>
 
-  <!-- Product Detail Modal -->
-  <div id="pdp-modal" class="pdp-modal">
-    <div class="pdp-content">
-      <span class="pdp-close" aria-label="Close">&times;</span>
+  <!-- Product Detail Full-Page View -->
+  <div id="pdp-modal" class="pdp-page-overlay">
+    <div class="pdp-top-bar">
+      <button class="pdp-back-btn pdp-close" aria-label="Back to Catalog">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        Back to Products
+      </button>
+    </div>
+    <div class="pdp-page-content">
       <div class="pdp-layout">
-        
-        <div class="pdp-gallery-section" id="pdp-gallery">
-          </div>
-        
+
+        <div class="pdp-gallery-section pdp-gallery" id="pdp-gallery">
+        </div>
+
         <div class="pdp-info-section">
           <div class="pdp-tag" id="pdp-category">Category</div>
           <h2 id="pdp-title">Product Name</h2>
           <div class="pdp-sku" id="pdp-sku"><strong>SKU:</strong> <span></span></div>
           <div class="pdp-pricing" id="pdp-price">
-            </div>
-          
+          </div>
+
           <div class="pdp-scrollable-content">
             <div class="pdp-features">
               <h3>Technical Specifications</h3>
               <div id="pdp-specs">
-                </div>
+              </div>
             </div>
           </div>
           <div class="pdp-actions" id="pdp-action-btn">
-            </div>
+          </div>
         </div>
-        
+
       </div>
     </div>
   </div>
@@ -1210,614 +1629,49 @@
   <div id="demo-modal" class="pdp-modal" style="z-index: 2000;">
     <div class="pdp-content" style="max-width: 450px; padding: 30px;">
       <span class="demo-close pdp-close" aria-label="Close">&times;</span>
-      <h2 style="color: #005a95; margin-bottom: 20px;">Book a Free Demo</h2>
+      <h2 style="color: #005a95; margin-bottom: 20px;" data-i18n="demo_form_title">Book a Free Demo</h2>
       <p id="demo-product-name" style="font-weight: bold; margin-bottom: 20px; color: #333;"></p>
-      
+
       <form id="demo-form" style="display: flex; flex-direction: column; gap: 15px;">
         <input type="text" id="demo-name" placeholder="Your Name" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; box-sizing: border-box;">
         <input type="tel" id="demo-phone" placeholder="Phone Number" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; box-sizing: border-box;">
         <input type="email" id="demo-email" placeholder="Email ID" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; box-sizing: border-box;">
         <textarea id="demo-address" placeholder="Full Address" rows="3" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; width: 100%; box-sizing: border-box; resize: vertical;"></textarea>
-        <button type="submit" class="product-btn" style="width: 100%; border: none; cursor: pointer; text-align: center; font-size: 16px;">Submit & Send via WhatsApp</button>
+        <button type="submit" class="product-btn" style="width: 100%; border: none; cursor: pointer; text-align: center; font-size: 16px;" data-i18n="demo_form_btn">Submit & Send via WhatsApp</button>
       </form>
     </div>
   </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const filterButtons = document.querySelectorAll('.filter-btn');
-      const productCards = document.querySelectorAll('.product-card');
+  <!-- Mobile Bottom Navigation -->
+  <nav class="mobile-bottom-nav">
+    <a href="#home" class="bottom-nav-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      <span data-i18n="nav_home">Home</span>
+    </a>
+    <a href="#products" class="bottom-nav-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      <span data-i18n="nav_products">Products</span>
+    </a>
+    <a href="#contact" class="bottom-nav-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      <span data-i18n="nav_contact">Contact</span>
+    </a>
+    <a href="https://wa.me/918928002642" class="bottom-nav-item bottom-nav-wa" target="_blank" aria-label="Chat on WhatsApp">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span data-i18n="contact_wa_btn">WhatsApp</span>
+    </a>
+  </nav>
 
-      // Sub-filter elements
-      const subFilterButtons = document.querySelectorAll('.sub-filter-btn');
-      const waterPurifierSubFilters = document.getElementById('water-purifier-subfilters');
-      const vacuumCleanerSubFilters = document.getElementById('vacuum-cleaner-subfilters');
-      const vendorWhatsApp = "918928002642";
-
-      function getProductCategory(card) {
-        return card.querySelector('.product-tag')?.dataset.category || '';
-      }
-
-      function getCardCtaLabel(category) {
-        switch (category) {
-          case 'Water Purifier':
-            return 'Check Suitability';
-          case 'Water Softener':
-            return 'Check Hard Water Solution';
-          case 'Vacuum Cleaner':
-            return 'Get Best Offer';
-          case 'Air Purifier':
-            return 'Get Recommendation';
-          default:
-            return 'Get Details';
-        }
-      }
-
-      function getModalActions(category, title) {
-        switch (category) {
-          case 'Water Purifier':
-            return [
-              {
-                label: 'Book Free TDS Test',
-                message: `Hello Paras, I am interested in ${title}. Please help me book a free TDS test and check if this purifier is suitable for my home water.`
-              },
-              {
-                label: 'Get Price & Installation Details',
-                secondary: true,
-                message: `Hello Paras, I am interested in ${title}. Please share the current price, offer, installation details, and availability.`
-              }
-            ];
-          case 'Water Softener':
-            return [
-              {
-                label: 'Book Hard Water Check',
-                message: `Hello Paras, I am interested in ${title}. Please help me check if this water softener is suitable for my hard water issue and home usage.`
-              },
-              {
-                label: 'Get Price & Installation Details',
-                secondary: true,
-                message: `Hello Paras, I am interested in ${title}. Please share the current price, installation requirements, and availability.`
-              }
-            ];
-          case 'Vacuum Cleaner':
-            return [
-              {
-                label: 'Book Home Demo',
-                message: `Hello Paras, I am interested in ${title}. Please help me book a home demo and share availability.`
-              },
-              {
-                label: 'Get Best Offer on WhatsApp',
-                secondary: true,
-                message: `Hello Paras, I am interested in ${title}. Please share the best current offer and demo availability.`
-              }
-            ];
-          case 'Air Purifier':
-            return [
-              {
-                label: 'Check Room Coverage',
-                message: `Hello Paras, I am interested in ${title}. Please help me check if it is suitable for my room size and air quality needs.`
-              },
-              {
-                label: 'Get Price & Filter Details',
-                secondary: true,
-                message: `Hello Paras, I am interested in ${title}. Please share the current price, filter details, and availability.`
-              }
-            ];
-          default:
-            return [
-              {
-                label: 'Get Details on WhatsApp',
-                message: `Hello Paras, I am interested in ${title}. Please share details, offer, and availability.`
-              }
-            ];
-        }
-      }
-
-      function openWhatsAppMessage(message) {
-        const encodedMessage = encodeURIComponent(message);
-        window.open(`https://wa.me/${vendorWhatsApp}?text=${encodedMessage}`, '_blank');
-      }
-
-      function createModalActionButton(action) {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.textContent = action.label;
-        button.className = action.secondary ? 'product-btn product-btn-secondary' : 'product-btn';
-        button.addEventListener('click', function() {
-          openWhatsAppMessage(action.message);
-        });
-        return button;
-      }
-
-      function updateProductActionLabels() {
-        productCards.forEach(card => {
-          const button = card.querySelector(':scope > .product-btn');
-          if (!button) return;
-          button.textContent = getCardCtaLabel(getProductCategory(card));
-          button.setAttribute('href', '#');
-          button.removeAttribute('data-i18n');
-        });
-      }
-
-      window.updateProductActionLabels = updateProductActionLabels;
-
-      function createProductImagePlaceholder(card) {
-        const existingPlaceholder = card.querySelector('.product-image-placeholder');
-        if (existingPlaceholder) return existingPlaceholder;
-
-        const title = card.querySelector('h3')?.textContent || 'Product image coming soon';
-        const category = card.querySelector('.product-tag')?.textContent || 'Eureka Forbes';
-        const placeholder = document.createElement('div');
-        placeholder.className = 'product-image-placeholder';
-        placeholder.setAttribute('role', 'img');
-        placeholder.setAttribute('aria-label', `${title} image coming soon`);
-        placeholder.innerHTML = `
-          <span class="placeholder-brand">${category}</span>
-          <strong>${title}</strong>
-          <span>Image coming soon</span>
-        `;
-
-        const image = card.querySelector(':scope > img');
-        if (image) {
-          image.insertAdjacentElement('afterend', placeholder);
-        } else {
-          card.insertBefore(placeholder, card.firstChild);
-        }
-
-        return placeholder;
-      }
-
-      function applyProductImageFallbacks() {
-        productCards.forEach(card => {
-          const image = card.querySelector(':scope > img');
-          if (!image) {
-            createProductImagePlaceholder(card);
-            return;
-          }
-
-          image.addEventListener('error', function() {
-            this.classList.add('image-missing');
-            createProductImagePlaceholder(card);
-          }, { once: true });
-
-          if (image.complete && image.naturalWidth === 0) {
-            image.classList.add('image-missing');
-            createProductImagePlaceholder(card);
-          }
-        });
-      }
-
-      function applyHeroImageFallback() {
-        const heroCard = document.querySelector('.hero-card');
-        const heroImage = heroCard?.querySelector('img');
-        if (!heroCard || !heroImage) return;
-
-        heroImage.addEventListener('error', function() {
-          this.classList.add('image-missing');
-          if (!heroCard.querySelector('.hero-image-placeholder')) {
-            const placeholder = document.createElement('div');
-            placeholder.className = 'hero-image-placeholder';
-            placeholder.setAttribute('role', 'img');
-            placeholder.setAttribute('aria-label', 'Eureka Forbes product catalog');
-            placeholder.innerHTML = `
-              <span>Eureka Forbes</span>
-              <strong>Premium Water Purifiers & Home Appliances</strong>
-              <small>Book a free home demonstration</small>
-            `;
-            heroCard.appendChild(placeholder);
-          }
-        }, { once: true });
-      }
-
-      // 1. Inject Prices
-      function injectMrpLabels() {
-        productCards.forEach(card => {
-          const priceEl = card.querySelector('.price');
-          if (!priceEl || card.querySelector('.mrp')) return;
-
-          const mopText = priceEl.textContent.replace(/[^0-9]/g, '');
-          const mopValue = Number(mopText);
-          if (!mopValue) return;
-
-          const explicitMrp = Number(priceEl.dataset.mrp && priceEl.dataset.mrp.replace(/[^0-9]/g, ''));
-          const mrpValue = explicitMrp || Math.ceil(mopValue * 1.2 / 500) * 500;
-          
-          const priceInfo = document.createElement('div');
-          priceInfo.className = 'price-info';
-
-          const mrpEl = document.createElement('div');
-          mrpEl.className = 'mrp';
-          mrpEl.textContent = `MRP ₹${mrpValue.toLocaleString('en-IN')}`;
-
-          priceEl.textContent = `MOP ₹${mopValue.toLocaleString('en-IN')}`;
-          priceEl.parentNode.insertBefore(priceInfo, priceEl);
-          priceInfo.appendChild(mrpEl);
-          priceInfo.appendChild(priceEl);
-        });
-      }
-
-      /**
-       * PERFORMANCE OPTIMIZATION: Lazy Gallery Loading System
-       * 
-       * PROBLEM: The original implementation preloaded ALL gallery images (up to 20 per card)
-       * for ALL product cards (up to 30) during DOMContentLoaded, resulting in 600+ simultaneous
-       * network requests that choked bandwidth and destroyed Core Web Vitals scores.
-       * 
-       * SOLUTION:
-       * 1. Only the primary hero image (1.jpg) loads on initial render via native HTML
-       * 2. Gallery thumbnails are generated ON-DEMAND when user clicks to open the modal
-       * 3. Images are injected dynamically into the modal, not the card
-       * 4. Gallery is completely purged from DOM when modal closes to free memory
-       * 5. Error handling hides broken image icons gracefully
-       */
-
-      /**
-       * Helper: Extract SKU slug from product card for image path construction
-       * @param {HTMLElement} card - The product card element
-       * @returns {string} URL-safe slug derived from product title
-       */
-      function getSkuSlugFromCard(card) {
-        const titleEl = card.querySelector('h3');
-        if (!titleEl) return '';
-        return titleEl.textContent
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-|-$/g, '');
-      }
-
-      /**
-       * On-Demand Gallery Builder: Generates thumbnail strip ONLY when modal opens
-       * This replaces the old addProductImageGalleries() that ran on every page load.
-       * 
-       * @param {HTMLElement} card - The clicked product card
-       * @param {HTMLElement} galleryContainer - The modal's #pdp-gallery element
-       */
-      function buildModalGalleryOnDemand(card, galleryContainer) {
-        const galleryCount = parseInt(card.getAttribute('data-gallery-count') || '1');
-        const skuSlug = getSkuSlugFromCard(card);
-        
-        if (!skuSlug || galleryCount < 1) {
-          console.warn('[Gallery] Invalid gallery data for card:', card);
-          return;
-        }
-
-        // Create main display image area
-        const mainDisplay = document.createElement('div');
-        mainDisplay.className = 'pdp-main-image-container';
-        
-        const mainImg = document.createElement('img');
-        mainImg.className = 'pdp-main-image';
-        mainImg.src = `images/${skuSlug}/1.jpg`;
-        mainImg.alt = card.querySelector('h3')?.textContent || 'Product image';
-        mainImg.onerror = function() {
-          mainDisplay.classList.add('image-unavailable');
-          mainDisplay.innerHTML = `
-            <div class="pdp-image-placeholder">
-              <span>${card.querySelector('.product-tag')?.textContent || 'Eureka Forbes'}</span>
-              <strong>${card.querySelector('h3')?.textContent || 'Product image'}</strong>
-              <small>Product image coming soon</small>
-            </div>
-          `;
-        };
-        mainDisplay.appendChild(mainImg);
-        galleryContainer.appendChild(mainDisplay);
-
-        // Create thumbnail strip container
-        const thumbStrip = document.createElement('div');
-        thumbStrip.className = 'pdp-thumb-strip';
-
-        // Generate thumbnails for images 1 through galleryCount
-        for (let i = 1; i <= galleryCount; i++) {
-          const thumbWrapper = document.createElement('div');
-          thumbWrapper.className = 'pdp-thumb-wrapper';
-          
-          const thumb = document.createElement('img');
-          thumb.className = 'pdp-thumb';
-          thumb.dataset.index = i;
-          thumb.dataset.src = `images/${skuSlug}/${i}.jpg`;
-          thumb.alt = `${card.querySelector('h3')?.textContent} - Image ${i}`;
-          thumb.loading = 'lazy'; // Native lazy loading for thumbnails
-          thumb.src = thumb.dataset.src;
-          
-          // Mark first image as active
-          if (i === 1) {
-            thumbWrapper.classList.add('active');
-          }
-
-          // Error handling: Hide thumb if image doesn't exist (e.g., image 14 out of 20)
-          thumb.onerror = function() {
-            this.style.display = 'none';
-            this.parentElement.style.display = 'none';
-            console.debug(`[Gallery] Image not found: images/${skuSlug}/${i}.jpg`);
-          };
-
-          // Click handler: Update main image when thumbnail is clicked
-          thumb.onclick = function() {
-            // Update main image
-            mainImg.src = this.dataset.src;
-            
-            // Update active state
-            thumbStrip.querySelectorAll('.pdp-thumb-wrapper').forEach(w => w.classList.remove('active'));
-            thumbWrapper.classList.add('active');
-          };
-
-          thumbWrapper.appendChild(thumb);
-          thumbStrip.appendChild(thumbWrapper);
-        }
-
-        galleryContainer.appendChild(thumbStrip);
-
-        // Store reference to main image for later use
-        galleryContainer._mainImage = mainImg;
-      }
-
-      /**
-       * Cleanup: Purge dynamically generated gallery from modal to free memory
-       * Called when modal closes to return #pdp-gallery to empty state.
-       * 
-       * @param {HTMLElement} galleryContainer - The modal's #pdp-gallery element
-       */
-      function cleanupModalGallery(galleryContainer) {
-        // Remove all child elements
-        galleryContainer.innerHTML = '';
-        // Clear any stored references
-        galleryContainer._mainImage = null;
-      }
-
-      // 3. Sub-filter Visibility Logic
-      function updateSubFiltersVisibility(category) {
-        if(waterPurifierSubFilters) waterPurifierSubFilters.style.display = category === 'Water Purifier' ? 'flex' : 'none';
-        if(vacuumCleanerSubFilters) vacuumCleanerSubFilters.style.display = category === 'Vacuum Cleaner' ? 'flex' : 'none';
-        
-        // Reset sub-filters to 'all' whenever a main category changes
-        document.querySelectorAll('.sub-filter-buttons').forEach(container => {
-           const btns = container.querySelectorAll('.sub-filter-btn');
-           btns.forEach(btn => btn.classList.remove('active'));
-           if (btns.length > 0) btns[0].classList.add('active'); // Set 'All' to active
-        });
-      }
-
-      // 4. Combined Filter Logic (Main + Sub-categories)
-      function filterProducts() {
-        const activeFilter = document.querySelector('.filter-btn.active').dataset.category;
-        
-        // Find active subcategory for the current active filter
-        let activeSubCategory = 'all';
-        if (activeFilter === 'Water Purifier' && waterPurifierSubFilters) {
-           activeSubCategory = waterPurifierSubFilters.querySelector('.sub-filter-btn.active')?.dataset.subcategory || 'all';
-        } else if (activeFilter === 'Vacuum Cleaner' && vacuumCleanerSubFilters) {
-           activeSubCategory = vacuumCleanerSubFilters.querySelector('.sub-filter-btn.active')?.dataset.subcategory || 'all';
-        }
-
-        productCards.forEach(card => {
-          const title = card.querySelector('h3').textContent.toLowerCase();
-          const description = card.querySelector('p').textContent.toLowerCase();
-          const category = card.querySelector('.product-tag')?.dataset.category || '';
-          
-          // Split subcategories into a list, allowing multiple tags like "ro-uv, uv-uf"
-          const subCategoriesList = (card.dataset.subcategory || 'none').split(',').map(s => s.trim()); 
-
-          const matchesFilter = activeFilter === 'all' || category === activeFilter;
-          const matchesSubFilter = activeSubCategory === 'all' || subCategoriesList.includes(activeSubCategory);
-
-          card.style.display = (matchesFilter && matchesSubFilter) ? 'flex' : 'none';
-        });
-      }
-
-      // Run initial setup - ONLY inject MRP labels
-      // NOTE: Gallery preloading removed for performance optimization
-      // Galleries are now built on-demand when modal opens
-      injectMrpLabels();
-      applyProductImageFallbacks();
-      applyHeroImageFallback();
-      updateProductActionLabels();
-
-      // Filter Events
-      filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          filterButtons.forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
-          updateSubFiltersVisibility(this.dataset.category);
-          filterProducts();
-        });
-      });
-
-      subFilterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          this.parentNode.querySelectorAll('.sub-filter-btn').forEach(btn => btn.classList.remove('active'));
-          this.classList.add('active');
-          filterProducts();
-        });
-      });
-
-      // 5. Professional Modal Logic (Optimized: On-Demand Gallery Injection)
-      const pdpModal = document.getElementById('pdp-modal');
-      const modalGallery = document.getElementById('pdp-gallery');
-      
-      productCards.forEach(card => {
-          card.addEventListener('click', function(e) {
-              const cardButton = e.target.closest('.product-btn');
-              if (cardButton) {
-                  e.preventDefault();
-              } else if (e.target.closest('a')) {
-                  return;
-              }
-
-              // Grab details from the card
-              const title = this.querySelector('h3').textContent;
-              const category = this.querySelector('.product-tag').textContent;
-              const categoryKey = getProductCategory(this);
-              const priceHTML = this.querySelector('.price-info') ? this.querySelector('.price-info').innerHTML : '';
-              
-              const hiddenSpecs = this.querySelector('.hidden-specs');
-              
-              const specsHTML = hiddenSpecs ? hiddenSpecs.innerHTML : "<ul><li><strong>Brand:</strong> Eureka Forbes</li><li><strong>Warranty:</strong> 1 Year</li></ul>";
-
-              // Generate SKU from product name
-              const sku = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 20).toUpperCase();
-              
-              // Put the text into the modal
-              document.getElementById('pdp-title').textContent = title;
-              document.getElementById('pdp-category').textContent = category;
-              document.getElementById('pdp-sku').querySelector('span').textContent = 'EF-' + sku;
-              document.getElementById('pdp-price').innerHTML = priceHTML;
-              
-              document.getElementById('pdp-specs').innerHTML = specsHTML;
-
-              // PERFORMANCE OPTIMIZATION: Build gallery on-demand instead of cloning pre-built thumbnails
-              // This is the KEY change - images 2-20 are ONLY fetched when user clicks to open modal
-              cleanupModalGallery(modalGallery); // Ensure clean state
-              buildModalGalleryOnDemand(this, modalGallery);
-
-              const btnContainer = document.getElementById('pdp-action-btn');
-              btnContainer.innerHTML = '';
-
-              // Align buttons side by side
-              btnContainer.style.display = 'flex';
-              btnContainer.style.gap = '10px';
-              btnContainer.style.flexWrap = 'wrap';
-
-              getModalActions(categoryKey, title).forEach(action => {
-                  btnContainer.appendChild(createModalActionButton(action));
-              });
-
-              const leafletUrl = this.dataset.leaflet;
-              if (leafletUrl) {
-                  const leafletBtn = document.createElement('a');
-                  leafletBtn.href = leafletUrl;
-                  leafletBtn.target = '_blank';
-                  leafletBtn.rel = 'noopener noreferrer';
-                  leafletBtn.textContent = 'View Product Leaflet';
-                  leafletBtn.className = 'product-btn product-btn-secondary';
-                  btnContainer.appendChild(leafletBtn);
-              }
-
-              // Show the modal
-              pdpModal.classList.add('active');
-              document.body.style.overflow = 'hidden';
-          });
-      });
-
-      // Handle closing of the Demo Form Modal
-      const demoModal = document.getElementById('demo-modal');
-      document.querySelector('.demo-close').addEventListener('click', () => {
-          demoModal.classList.remove('active');
-      });
-      demoModal.addEventListener('click', (e) => {
-          if (e.target === demoModal) {
-              demoModal.classList.remove('active');
-          }
-      });
-
-      // Handle sending the TDS Lead Magnet Form to WhatsApp
-      document.getElementById('tds-form').addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          const name = document.getElementById('tds-name').value;
-          const phone = document.getElementById('tds-phone').value;
-          const location = document.getElementById('tds-location').value;
-          
-          const vendorWhatsApp = "918928002642"; 
-          
-          const message = `*Free Water TDS Test Request*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Location:* ${location}`;
-          const encodedMessage = encodeURIComponent(message);
-          
-          const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodedMessage}`;
-          window.open(waUrl, '_blank');
-          
-          this.reset();
-      });
-
-      // Handle sending the Demo Form to WhatsApp
-      document.getElementById('demo-form').addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          const name = document.getElementById('demo-name').value;
-          const phone = document.getElementById('demo-phone').value;
-          const email = document.getElementById('demo-email').value;
-          const address = document.getElementById('demo-address').value;
-          const product = document.getElementById('demo-product-name').textContent.replace("Product: ", "");
-          
-          const vendorWhatsApp = "918928002642"; 
-          
-          const message = `*Free Demo Request*\n\n*Product:* ${product}\n*Name:* ${name}\n*Phone:* ${phone}\n*Email:* ${email}\n*Address:* ${address}`;
-          const encodedMessage = encodeURIComponent(message);
-          
-          const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodedMessage}`;
-          window.open(waUrl, '_blank');
-          
-          demoModal.classList.remove('active');
-          this.reset();
-      });
-
-      // Logic to close the modal (with gallery cleanup for memory management)
-      function closePdpModal() {
-          // PERFORMANCE: Clean up dynamically generated gallery images to free memory
-          cleanupModalGallery(modalGallery);
-          pdpModal.classList.remove('active');
-          document.body.style.overflow = '';
-      }
-
-      document.querySelector('.pdp-close').addEventListener('click', closePdpModal);
-      
-      pdpModal.addEventListener('click', (e) => {
-          if(e.target === pdpModal) {
-              closePdpModal();
-          }
-      });
-      
-      // Also close on Escape key for accessibility
-      document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && pdpModal.classList.contains('active')) {
-              closePdpModal();
-          }
-      });
-      
-    }); // End of DOMContentLoaded
-
-    // 6. Scroll Animation Logic
-    function reveal() {
-        var reveals = document.querySelectorAll(".reveal");
-        var windowHeight = window.innerHeight;
-        reveals.forEach(el => {
-          var elementTop = el.getBoundingClientRect().top;
-          if (elementTop < windowHeight - 50) {
-            el.classList.add("active");
-          }
-        });
-      }
-      
-    window.addEventListener("scroll", reveal);
-    setTimeout(reveal, 100);
-
-    // 7. FAQ Accordion Logic with ARIA accessibility
-    document.querySelectorAll('.faq-question').forEach(button => {
-      button.addEventListener('click', function() {
-        const faqItem = this.parentElement;
-        const answerPanel = faqItem.querySelector('.faq-answer');
-        const isExpanded = faqItem.classList.contains('active');
-        
-        // Close all other FAQ items (exclusive accordion behavior)
-        document.querySelectorAll('.faq-item').forEach(item => {
-          const otherButton = item.querySelector('.faq-question');
-          const otherAnswer = item.querySelector('.faq-answer');
-          item.classList.remove('active');
-          otherButton.setAttribute('aria-expanded', 'false');
-          if (otherAnswer) otherAnswer.setAttribute('aria-hidden', 'true');
-        });
-        
-        // Toggle the clicked item
-        if (!isExpanded) {
-          faqItem.classList.add('active');
-          this.setAttribute('aria-expanded', 'true');
-          if (answerPanel) answerPanel.setAttribute('aria-hidden', 'false');
-        }
-      });
-    });
-  </script>
   <a href="https://wa.me/918928002642" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
   <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
   <span>Chat with Specialist</span>
 </a>
+
+<!-- Scroll to Top Button -->
+<button id="scrollToTop" class="scroll-to-top" aria-label="Scroll to top">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="18 15 12 9 6 15"></polyline>
+  </svg>
+</button>
 </body>
 </html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Page Not Found - Eureka Forbes Specialist" />
+    <meta name="theme-color" content="#012d5a" />
+    <title>404 - Page Not Found | Eureka Forbes Specialist</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="translations.js"></script>
+    <style>
+      .error-page {
+        padding: 100px 20px;
+        text-align: center;
+        background: var(--color-white);
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .error-code {
+        font-size: 6rem;
+        font-weight: 900;
+        color: var(--color-primary);
+        line-height: 1;
+        margin-bottom: 20px;
+      }
+      .error-title {
+        font-size: 2rem;
+        color: var(--color-gray-800);
+        margin-bottom: 20px;
+      }
+      .error-desc {
+        font-size: 1.1rem;
+        color: var(--color-gray-600);
+        max-width: 500px;
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <div class="brand">
+          <h1>Eureka Forbes</h1>
+          <p class="brand-subtitle">Customer Sales Specialist</p>
+          <span class="badge-rep">Independent Authorized Direct Sales Representative</span>
+        </div>
+        <nav class="main-nav" style="margin-left: auto">
+          <a href="index.html">Home</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="error-page">
+      <div class="error-code">404</div>
+      <h2 class="error-title" data-i18n="error_title">Page Not Found</h2>
+      <p class="error-desc" data-i18n="error_desc">
+        The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+      </p>
+      <a href="index.html" class="btn" data-i18n="error_btn">Return to Homepage</a>
+    </main>
+  </body>
+</html>

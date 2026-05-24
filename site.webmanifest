@@ -1,0 +1,21 @@
+{
+  "name": "Eureka Forbes & Aquaguard Specialist in Navi Mumbai",
+  "short_name": "EF Specialist",
+  "description": "Book free TDS testing, Aquaguard demos, installation support, and offline Forbes appliance offers in Navi Mumbai and Thane.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#012d5a",
+  "icons": [
+    {
+      "src": "favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

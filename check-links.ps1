@@ -1,0 +1,1 @@
+$c = Get-Content index.html -Raw; [regex]::Matches($c, 'src="([^"]+)"') | ForEach-Object { $path = $_.Groups[1].Value; if (-not $path.StartsWith("http") -and -not (Test-Path $path)) { Write-Output "Missing: $path" } }

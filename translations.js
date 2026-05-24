@@ -1,6 +1,7 @@
+// cSpell:disable
 /**
  * Translations Dictionary for Eureka Forbes Specialist Website
- * 
+ *
  * This file contains all translatable strings for English (en), Hindi (hi), and Marathi (mr).
  * Product SKU names (e.g., "AQUAGUARD SELECT DESIGNO UTC RO+UV 2X") are intentionally
  * kept in English only to maintain factory compliance and catalog clarity.
@@ -19,8 +20,10 @@ const translations = {
     // HERO SECTION
     // ============================================
     hero_eyebrow: "Authorized Direct Sales · Exclusive Catalog",
-    hero_title: "Aquaguard Water Purifiers, Forbes Vacuum Cleaners & Air Purifiers in Navi Mumbai",
-    hero_desc: "Book free home demos, water TDS testing, installation guidance, and offline offers from your local Eureka Forbes direct sales specialist serving Navi Mumbai and Thane.",
+    hero_title:
+      "Aquaguard Water Purifiers, Forbes Vacuum Cleaners & Air Purifiers in Navi Mumbai",
+    hero_desc:
+      "Book free home demos, water TDS testing, installation guidance, and offline offers from your local Eureka Forbes direct sales specialist serving Navi Mumbai and Thane.",
     hero_btn: "Explore Premium Catalog",
 
     // ============================================
@@ -28,7 +31,8 @@ const translations = {
     // ============================================
     lead_eyebrow: "Free Home Service",
     lead_title: "Book a Free Water Quality & TDS Test",
-    lead_desc: "Not sure which Aquaguard you need? Let me test your building's water TDS, hardness, and pressure for free. I will recommend the exact 5th Gen technology required for your specific water type.",
+    lead_desc:
+      "Not sure which Aquaguard you need? Let me test your building's water TDS, hardness, and pressure for free. I will recommend the exact 5th Gen technology required for your specific water type.",
     lead_bullet1: "✓ Instant Digital TDS Reading",
     lead_bullet2: "✓ Takes only 10 minutes",
     lead_bullet3: "✓ Zero obligation to buy",
@@ -40,26 +44,36 @@ const translations = {
     // ============================================
     vb_eyebrow: "Smart Buyer's Guide",
     vb_title: "Why Choose a Direct Specialist Over Online Bank Discounts?",
-    vb_desc: "An online discount can look attractive, but appliances need the right product match, correct installation, demo guidance, and reliable support. Here is the direct specialist advantage across the full Eureka Forbes catalog:",
+    vb_desc:
+      "An online discount can look attractive, but appliances need the right product match, correct installation, demo guidance, and reliable support. Here is the direct specialist advantage across the full Eureka Forbes catalog:",
     vb_card1_title: "Right Product Selection",
-    vb_card1_desc: "Get help choosing the right Aquaguard water purifier, air purifier, vacuum cleaner, or water softener based on your home, room size, usage, water TDS, flooring, and budget.",
+    vb_card1_desc:
+      "Get help choosing the right Aquaguard water purifier, air purifier, vacuum cleaner, or water softener based on your home, room size, usage, water TDS, flooring, and budget.",
     vb_card2_title: "Demo, Exchange & Offers",
-    vb_card2_desc: "Compare current offline offers, book product demos, check exchange value for eligible old appliances, and understand which model gives better long-term value than a small online bank discount.",
+    vb_card2_desc:
+      "Compare current offline offers, book product demos, check exchange value for eligible old appliances, and understand which model gives better long-term value than a small online bank discount.",
     vb_card3_title: "Installation & After-Sales Support",
-    vb_card3_desc: "Get a direct local contact for installation coordination, usage guidance, genuine consumables, AMC help, service follow-ups, and support across water purifiers, vacuums, air purifiers, and softeners.",
+    vb_card3_desc:
+      "Get a direct local contact for installation coordination, usage guidance, genuine consumables, AMC help, service follow-ups, and support across water purifiers, vacuums, air purifiers, and softeners.",
 
     // ============================================
     // PRODUCTS SECTION
     // ============================================
     products_eyebrow: "Featured Products",
     products_title: "Selected SKUs and offline-only offers",
-    products_desc: "Choose from top-quality products that are available through direct sales and exclusive offline channels.",
+    products_desc:
+      "Choose from top-quality products that are available through direct sales and exclusive offline channels.",
     filter_all: "All Products",
     filter_water: "Water Purifiers",
     filter_air: "Air Purifiers",
     filter_vacuum: "Vacuum Cleaners",
     filter_softener: "Water Softeners",
     btn_ask: "Ask for This SKU",
+    btn_check_suitability: "Check Suitability",
+    btn_check_hard_water: "Check Hard Water Solution",
+    btn_get_best_offer: "Get Best Offer",
+    btn_get_recommendation: "Get Recommendation",
+    btn_get_details: "Get Details",
 
     // Product Tags
     tag_water: "Water Purifier",
@@ -72,7 +86,8 @@ const translations = {
     // ============================================
     why_eyebrow: "Why Choose a Local Specialist?",
     why_title: "Your Trusted Local Appliance Expert",
-    why_desc: "Skip the impersonal online stores. I provide personalized water testing, precise machine recommendations, and priority installation.",
+    why_desc:
+      "Skip the impersonal online stores. I provide personalized water testing, precise machine recommendations, and priority installation.",
     why_list_1: "Exclusive offline-only products and discounts",
     why_list_2: "Free personalized home water testing",
     why_list_3: "Priority doorstep installation and support",
@@ -82,7 +97,8 @@ const translations = {
     // ============================================
     contact_eyebrow: "Contact Your Specialist",
     contact_title: "Ready to place an order?",
-    contact_desc: "Send a message, call, or WhatsApp directly to book the selected SKUs for your customer.",
+    contact_desc:
+      "Send a message, call, or WhatsApp directly to book the selected SKUs for your customer.",
     contact_name: "Name:",
     contact_service_area: "Service Area:",
     contact_phone: "Phone:",
@@ -101,7 +117,8 @@ const translations = {
     footer_text1: "© 2026 Eureka Forbes Direct Sales Specialist",
     footer_text2: "Selected SKUs and offline-only offers for your customers.",
     footer_legal_link: "Legal & Copyright Info",
-    footer_disclaimer_text: "Disclaimer: This website is independently operated by Paras Singh Chousali, an Authorized Direct Sales Representative for Eureka Forbes. This is NOT the official website of Eureka Forbes Limited. All product names, logos, brands, trademarks, and images featured or referred to within this site are the sole property of Eureka Forbes Limited and are used strictly for informational and demonstrative purposes to facilitate direct sales. This platform is intended solely for product display and inquiry generation. No payments or financial transactions are processed through this website. All final purchases, billing, and installations are handled strictly through official Eureka Forbes channels.",
+    footer_disclaimer_text:
+      "Disclaimer: This website is independently operated by Paras Singh Chawsali, an Authorized Direct Sales Representative for Eureka Forbes. This is NOT the official website of Eureka Forbes Limited. All product names, logos, brands, trademarks, and images featured or referred to within this site are the sole property of Eureka Forbes Limited and are used strictly for informational and demonstrative purposes to facilitate direct sales. This platform is intended solely for product display and inquiry generation. No payments or financial transactions are processed through this website. All final purchases, billing, and installations are handled strictly through official Eureka Forbes channels.",
 
     // ============================================
     // HEADER
@@ -114,22 +131,73 @@ const translations = {
     // ============================================
     faq_eyebrow: "Common Questions",
     faq_title: "Frequently Asked Questions",
-    faq_desc: "Get instant answers to the most common questions about water purification, technology, and maintenance.",
-    faq_q1: "If the municipal corporation already treats our water, why do I need an Aquaguard?",
-    faq_a1: "While water is treated at the main municipal plant, it travels through kilometers of aging, rusted underground pipelines before reaching your building. Micro-cracks frequently cause underground sewage seepage and cross-contamination right before it hits your tap. Additionally, unless your building's overhead and underground storage tanks are professionally sanitized every month, they accumulate silt, biological slime, and bacteria that re-contaminate the water.",
-    faq_q2: "We boil our water at home anyway. Doesn't that make a purifier unnecessary?",
-    faq_a2: "Boiling is excellent for neutralizing living bacteria and viruses, but it completely fails against chemical pollutants. Boiling cannot remove dissolved heavy metals (like lead, arsenic, or mercury), rust flakes, muddy turbidity, or agricultural pesticides. In fact, as water evaporates during boiling, the density of these dangerous dissolved toxins actually increases. Furthermore, boiling cannot remove the heavy chlorine smell or taste often added by municipal treatment plants.",
-    faq_q3: "What exactly is 5th Gen UV LED technology and how long does it last?",
-    faq_a3: "5th Generation UV LED is the absolute pinnacle of modern water sterilization, replacing older glass UV tubes. Unlike legacy bulbs that require a warm-up period, 5th Gen LEDs activate instantly the millisecond water flows, ensuring 100% safe water from the very first drop. They are completely mercury-free, generate zero heat (so your water stays cool), and possess an incredible durable lifespan of up to 10 years, dramatically lowering your long-term maintenance layouts.",
-    faq_q4: "Is taking an Annual Maintenance Contract (AMC) really worth the pain?",
-    faq_a4: "Absolutely. Think of your purifier as a protective shield; it works by physically trapping mud, chemical particles, and heavy metals so they don't enter your body. Over 6 to 12 months, these heavy-duty carbon blocks and membranes inevitably get completely choked with the dirt they blocked. An active AMC ensures a certified technician comes straight to your doorstep to deep-clean the system and swap cartridges with genuine factory spares before they fail, guaranteeing 365 days of instant health safety.",
+    faq_desc:
+      "Get instant answers to the most common questions about water purification, technology, and maintenance.",
+    faq_tab_aquaguards: "Aquaguards",
+    faq_tab_vacuums: "Vacuum Cleaners",
+    faq_tab_service: "Servicing & AMC",
+    faq_q1:
+      "If the municipal corporation already treats our water, why do I need an Aquaguard?",
+    faq_a1:
+      "While water is treated at the main municipal plant, it travels through kilometers of aging, rusted underground pipelines before reaching your building. Micro-cracks frequently cause underground sewage seepage and cross-contamination right before it hits your tap. Additionally, unless your building's overhead and underground storage tanks are professionally sanitized every month, they accumulate silt, biological slime, and bacteria that re-contaminate the water.",
+    faq_q2:
+      "We boil our water at home anyway. Doesn't that make a purifier unnecessary?",
+    faq_a2:
+      "Boiling is excellent for neutralizing living bacteria and viruses, but it completely fails against chemical pollutants. Boiling cannot remove dissolved heavy metals (like lead, arsenic, or mercury), rust flakes, muddy turbidity, or agricultural pesticides. In fact, as water evaporates during boiling, the density of these dangerous dissolved toxins actually increases. Furthermore, boiling cannot remove the heavy chlorine smell or taste often added by municipal treatment plants.",
+    faq_q3:
+      "What exactly is 5th Gen UV LED technology and how long does it last?",
+    faq_a3:
+      "5th Generation UV LED is the absolute pinnacle of modern water sterilization, replacing older glass UV tubes. Unlike legacy bulbs that require a warm-up period, 5th Gen LEDs activate instantly the millisecond water flows, ensuring 100% safe water from the very first drop. They are completely mercury-free, generate zero heat (so your water stays cool), and possess an incredible durable lifespan of up to 10 years, dramatically lowering your long-term maintenance layouts.",
+    faq_q4:
+      "Is taking an Annual Maintenance Contract (AMC) really worth the pain?",
+    faq_a4:
+      "Absolutely. Think of your purifier as a protective shield; it works by physically trapping mud, chemical particles, and heavy metals so they don't enter your body. Over 6 to 12 months, these heavy-duty carbon blocks and membranes inevitably get completely choked with the dirt they blocked. An active AMC ensures a certified technician comes straight to your doorstep to deep-clean the system and swap cartridges with genuine factory spares before they fail, guaranteeing 365 days of instant health safety.",
+    faq_q5:
+      "Do I really need an RO purifier if I live in Mumbai, Navi Mumbai, or Thane?",
+    faq_a5:
+      "It depends on your building's water source. If your society relies strictly on municipal water (NMMC, TMC, or BMC), the water is naturally soft and a UV+UF purifier is usually sufficient to remove pathogens and rust. However, if your society uses borewell water or orders private water tankers (common during summer cuts), an RO purifier is highly recommended to handle the fluctuating TDS (Total Dissolved Solids) and hardness.",
+    faq_q6:
+      "Will an RO purifier remove essential minerals from my drinking water?",
+    faq_a6:
+      "No. Modern Aquaguard RO models come equipped with patented Mineral Guard™ technology. This ensures that while heavy metals, excess salts, and harmful impurities are filtered out, essential natural minerals like calcium and magnesium are retained in your drinking water.",
+    faq_q7: "How often do I need to replace the filters in my Aquaguard?",
+    faq_a7:
+      "Typically, the pre-filter and carbon filters need replacement every 6 to 12 months, depending on your household's water consumption and the input water quality. If you live in an area with older GI plumbing, sediment filters may need replacing sooner. Your machine will also alert you when it's time for a filter change.",
+    faq_q8: "Can I exchange my old water purifier for a new Aquaguard?",
+    faq_a8:
+      "Yes! We are currently running an official Aquaguard Buy-Back and Exchange campaign (valid until December 2026). You can exchange your old water purifier—regardless of the brand or condition—for a significant discount on a new, upgraded Aquaguard model. Contact me via WhatsApp to get an exact valuation for your old machine.",
+    faq_q9:
+      "Which vacuum cleaner is better for Indian homes: Bagless or Bagged?",
+    faq_a9:
+      "Both are highly effective, but they serve different needs. Bagless (cyclonic) models are incredibly convenient, lightweight, and save you the cost of buying replacement bags. Bagged models, however, are often recommended for allergy sufferers as the dust is completely sealed away during disposal, preventing dust clouds.",
+    faq_q10:
+      "Can a vacuum cleaner help if I or my family members have dust allergies?",
+    faq_a10:
+      "Absolutely. If you have dust allergies, look for our Forbes models equipped with a True HEPA (High-Efficiency Particulate Air) filter. These filters trap 99.9% of microscopic allergens, dust mites, and pet hair, ensuring they are not exhausted back into your room's air.",
+    faq_q11: "Does a handheld vacuum cleaner replace a standard floor vacuum?",
+    faq_a11:
+      "Handheld vacuums are excellent for quick cleanups, car interiors, sofas, and hard-to-reach corners. However, for deep cleaning large carpets and entire floors, a canister or robotic vacuum cleaner provides the sustained suction power and battery life required.",
+    faq_q12: "Why does my vacuum cleaner get hot and shut off?",
+    faq_a12:
+      "This is a built-in safety feature. If the dust bag is completely full, or if the filters or hoses are severely clogged with hair or debris, the motor works harder and heats up. Emptying the dust cup and cleaning the filter regularly will prevent this and ensure maximum suction power.",
+    faq_q13: "How do I book a free home demonstration?",
+    faq_a13:
+      'Simply click the "Book a Demo" button or message me directly on WhatsApp. Since I am your authorized local Eureka Forbes specialist for Navi Mumbai and Thane, I will bring the selected models to your home so you can see exactly how they perform in your own space before making a decision.',
+    faq_q14:
+      "What is covered under the Eureka Forbes AMC (Annual Maintenance Contract)?",
+    faq_a14:
+      "A genuine Aquaguard AMC gives you complete peace of mind. It generally includes up to 3 scheduled maintenance visits a year, annual filter replacement, tank cleaning, unlimited breakdown repair visits, and free replacement of spare parts (including electronics and pumps) depending on the plan you choose.",
+    faq_q15: "How soon will my product be installed after purchase?",
+    faq_a15:
+      "Installation is incredibly fast. Once your order is confirmed, an authorized Eureka Forbes technician will arrive at your home to install the device within 24 to 48 hours.",
 
     // ============================================
     // EXCHANGE & BUY-BACK CAMPAIGN
     // ============================================
     exchange_eyebrow: "Limited-Time Upgrade Campaign",
     exchange_title: "Have an Old 10-15 Year Old Water Purifier?",
-    exchange_desc: "Don't just discard your vintage system. Trade it in today for a brand-new, advanced Aquaguard featuring 5th Gen UV LED or Alkaline technology, and get a substantial cash discount credited directly against your new machine's MOP!",
+    exchange_desc:
+      "Don't just discard your vintage system. Trade it in today for a brand-new, advanced Aquaguard featuring 5th Gen UV LED or Alkaline technology, and get a substantial cash discount credited directly against your new machine's MOP!",
     exchange_perk_1: "Instant Cash Valuation",
     exchange_perk_2: "Free Doorstep Evaluation & Removal",
     exchange_perk_3: "Upgrade to Modern 5th Gen Safety",
@@ -142,16 +210,29 @@ const translations = {
     // LEGAL TERMS PAGE
     // ============================================
     legal_title: "Legal & Copyright Information",
-    legal_subtitle: "Important legal disclaimers regarding the operation of this independent sales portfolio.",
+    legal_subtitle:
+      "Important legal disclaimers regarding the operation of this independent sales portfolio.",
     legal_s1_title: "Intellectual Property & Copyright Acknowledgment",
-    legal_s1_text: "The content provided on this website is for educational and sales inquiry purposes only. I, as an authorized direct salesperson, utilize official product images and specifications to accurately represent the water purifiers, vacuum cleaners, and other products to prospective clients. No copyright infringement is intended. The intellectual property rights of all product images, proprietary technology names, and brand assets remain entirely with Eureka Forbes Limited.",
+    legal_s1_text:
+      "The content provided on this website is for educational and sales inquiry purposes only. I, as an authorized direct salesperson, utilize official product images and specifications to accurately represent the water purifiers, vacuum cleaners, and other products to prospective clients. No copyright infringement is intended. The intellectual property rights of all product images, proprietary technology names, and brand assets remain entirely with Eureka Forbes Limited.",
     legal_s2_title: "No E-commerce Transactions",
-    legal_s2_text: "To ensure customer security and adhere to authorized sales protocols, this website does not feature any payment gateways. Visitors cannot buy products directly on this site. If you wish to purchase a product after reviewing the information here, I will personally assist you with the official documentation and payment process as dictated by Eureka Forbes Limited.",
+    legal_s2_text:
+      "To ensure customer security and adhere to authorized sales protocols, this website does not feature any payment gateways. Visitors cannot buy products directly on this site. If you wish to purchase a product after reviewing the information here, I will personally assist you with the official documentation and payment process as dictated by Eureka Forbes Limited.",
 
     demo_form_name_placeholder: "Your Name",
     demo_form_phone_placeholder: "Phone Number",
     demo_form_email_placeholder: "Email ID",
-    demo_form_address_placeholder: "Full Address"
+    demo_form_address_placeholder: "Full Address",
+
+    demo_form_title: "Book a Free Demo",
+    demo_form_btn: "Submit & Send via WhatsApp",
+    search_placeholder: "Search products...",
+    share_btn: "Share on WhatsApp",
+    share_fb_btn: "Share on Facebook",
+    share_copy_btn: "Copy Link",
+    error_title: "Page Not Found",
+    error_desc: "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+    error_btn: "Return to Homepage",
   },
 
   hi: {
@@ -167,7 +248,8 @@ const translations = {
     // ============================================
     hero_eyebrow: "अधिकृत प्रत्यक्ष बिक्री · एक्सक्लूसिव कैटलॉग",
     hero_title: "अपने घर में लाएं शुद्ध स्वास्थ्य",
-    hero_desc: "प्रीमियम एक्वागार्ड वॉटर प्यूरीफायर और फोर्ब्स घरेलू उपकरणों पर विशेष ऑफ़लाइन ऑफ़र खोजें, साथ में मुफ्त घरेलू डेमो।",
+    hero_desc:
+      "प्रीमियम एक्वागार्ड वॉटर प्यूरीफायर और फोर्ब्स घरेलू उपकरणों पर विशेष ऑफ़लाइन ऑफ़र खोजें, साथ में मुफ्त घरेलू डेमो।",
     hero_btn: "प्रीमियम कैटलॉग देखें",
 
     // ============================================
@@ -175,7 +257,8 @@ const translations = {
     // ============================================
     lead_eyebrow: "मुफ्त घरेलू सेवा",
     lead_title: "मुफ्त पानी की गुणवत्ता और TDS टेस्ट बुक करें",
-    lead_desc: "पता नहीं कौन सा एक्वागार्ड चाहिए? मुझे आपकी बिल्डिंग के पानी का TDS, कठोरता और प्रेशर मुफ्त में जांचने दें। मैं आपके पानी के प्रकार के लिए सटीक 5th Gen तकनीक की सिफारिश करूंगा।",
+    lead_desc:
+      "पता नहीं कौन सा एक्वागार्ड चाहिए? मुझे आपकी बिल्डिंग के पानी का TDS, कठोरता और प्रेशर मुफ्त में जांचने दें। मैं आपके पानी के प्रकार के लिए सटीक 5th Gen तकनीक की सिफारिश करूंगा।",
     lead_bullet1: "✓ तुरंत डिजिटल TDS रीडिंग",
     lead_bullet2: "✓ केवल 10 मिनट लगते हैं",
     lead_bullet3: "✓ खरीदने की कोई बाध्यता नहीं",
@@ -186,27 +269,38 @@ const translations = {
     // VALUE BANNER SECTION
     // ============================================
     vb_eyebrow: "स्मार्ट बायर गाइड",
-    vb_title: "ऑनलाइन बैंक डिस्काउंट के बजाय डायरेक्ट स्पेशलिस्ट को क्यों चुनें?",
-    vb_desc: "ऑनलाइन डिस्काउंट आकर्षक लग सकता है, लेकिन सही प्रोडक्ट चयन, सही इंस्टॉलेशन, डेमो गाइडेंस और भरोसेमंद सपोर्ट भी उतने ही जरूरी हैं। पूरे Eureka Forbes कैटलॉग के लिए डायरेक्ट स्पेशलिस्ट के फायदे:",
+    vb_title:
+      "ऑनलाइन बैंक डिस्काउंट के बजाय डायरेक्ट स्पेशलिस्ट को क्यों चुनें?",
+    vb_desc:
+      "ऑनलाइन डिस्काउंट आकर्षक लग सकता है, लेकिन सही प्रोडक्ट चयन, सही इंस्टॉलेशन, डेमो गाइडेंस और भरोसेमंद सपोर्ट भी उतने ही जरूरी हैं। पूरे Eureka Forbes कैटलॉग के लिए डायरेक्ट स्पेशलिस्ट के फायदे:",
     vb_card1_title: "सही प्रोडक्ट चयन",
-    vb_card1_desc: "आपके घर, कमरे के आकार, उपयोग, पानी के TDS, फ्लोरिंग और बजट के अनुसार सही Aquaguard वॉटर प्यूरीफायर, एयर प्यूरीफायर, वैक्यूम क्लीनर या वॉटर सॉफ्टनर चुनने में मदद मिलती है।",
+    vb_card1_desc:
+      "आपके घर, कमरे के आकार, उपयोग, पानी के TDS, फ्लोरिंग और बजट के अनुसार सही Aquaguard वॉटर प्यूरीफायर, एयर प्यूरीफायर, वैक्यूम क्लीनर या वॉटर सॉफ्टनर चुनने में मदद मिलती है।",
     vb_card2_title: "डेमो, एक्सचेंज और ऑफर",
-    vb_card2_desc: "मौजूदा ऑफलाइन ऑफर की तुलना करें, प्रोडक्ट डेमो बुक करें, योग्य पुराने अप्लायंस का एक्सचेंज वैल्यू चेक करें और समझें कि कौन सा मॉडल छोटे ऑनलाइन बैंक डिस्काउंट से बेहतर लंबी अवधि की वैल्यू देता है।",
+    vb_card2_desc:
+      "मौजूदा ऑफलाइन ऑफर की तुलना करें, प्रोडक्ट डेमो बुक करें, योग्य पुराने अप्लायंस का एक्सचेंज वैल्यू चेक करें और समझें कि कौन सा मॉडल छोटे ऑनलाइन बैंक डिस्काउंट से बेहतर लंबी अवधि की वैल्यू देता है।",
     vb_card3_title: "इंस्टॉलेशन और आफ्टर-सेल्स सपोर्ट",
-    vb_card3_desc: "वॉटर प्यूरीफायर, वैक्यूम, एयर प्यूरीफायर और सॉफ्टनर के लिए इंस्टॉलेशन कोऑर्डिनेशन, उपयोग गाइडेंस, असली कंज्यूमेबल्स, AMC सहायता, सर्विस फॉलो-अप और लोकल संपर्क मिलता है।",
+    vb_card3_desc:
+      "वॉटर प्यूरीफायर, वैक्यूम, एयर प्यूरीफायर और सॉफ्टनर के लिए इंस्टॉलेशन कोऑर्डिनेशन, उपयोग गाइडेंस, असली कंज्यूमेबल्स, AMC सहायता, सर्विस फॉलो-अप और लोकल संपर्क मिलता है।",
 
     // ============================================
     // PRODUCTS SECTION
     // ============================================
     products_eyebrow: "विशेष उत्पाद",
     products_title: "चयनित SKU और ऑफ़लाइन-केवल ऑफर",
-    products_desc: "शीर्ष-गुणवत्ता के उत्पादों में से चुनें जो सीधी बिक्री और एक्सक्लूसिव ऑफ़लाइन चैनलों के माध्यम से उपलब्ध हैं।",
+    products_desc:
+      "शीर्ष-गुणवत्ता के उत्पादों में से चुनें जो सीधी बिक्री और एक्सक्लूसिव ऑफ़लाइन चैनलों के माध्यम से उपलब्ध हैं।",
     filter_all: "सभी उत्पाद",
     filter_water: "जल शुद्धिकरण",
     filter_air: "वायु शुद्धिकरण",
     filter_vacuum: "वैक्यूम क्लीनर",
     filter_softener: "जल सॉफ़्टनर",
     btn_ask: "इस SKU के लिए पूछें",
+    btn_check_suitability: "उपयुक्तता जांचें",
+    btn_check_hard_water: "कठोर जल समाधान जांचें",
+    btn_get_best_offer: "सर्वोत्तम ऑफर प्राप्त करें",
+    btn_get_recommendation: "सिफारिश प्राप्त करें",
+    btn_get_details: "विवरण प्राप्त करें",
 
     // Product Tags
     tag_water: "जल शुद्धिकरण",
@@ -219,7 +313,8 @@ const translations = {
     // ============================================
     why_eyebrow: "स्थानीय विशेषज्ञ को क्यों चुनें?",
     why_title: "आपका विश्वसनीय स्थानीय उपकरण विशेषज्ञ",
-    why_desc: "व्यक्तिगत रहित ऑनलाइन स्टोर को छोड़ें। मैं व्यक्तिगत जल परीक्षण, सटीक मशीन सिफारिशें और प्राथमिकता इंस्टॉलेशन प्रदान करता हूं।",
+    why_desc:
+      "व्यक्तिगत रहित ऑनलाइन स्टोर को छोड़ें। मैं व्यक्तिगत जल परीक्षण, सटीक मशीन सिफारिशें और प्राथमिकता इंस्टॉलेशन प्रदान करता हूं।",
     why_list_1: "विशेष ऑफ़लाइन-केवल उत्पाद और छूट",
     why_list_2: "मुफ्त व्यक्तिगत घरेलू जल परीक्षण",
     why_list_3: "प्राथमिकता डोरस्टेप इंस्टॉलेशन और सपोर्ट",
@@ -229,7 +324,8 @@ const translations = {
     // ============================================
     contact_eyebrow: "अपने विशेषज्ञ से संपर्क करें",
     contact_title: "ऑर्डर देने के लिए तैयार हैं?",
-    contact_desc: "चयनित SKU बुक करने के लिए अपने ग्राहक के लिए सीधे संदेश, कॉल या व्हाट्सएप करें।",
+    contact_desc:
+      "चयनित SKU बुक करने के लिए अपने ग्राहक के लिए सीधे संदेश, कॉल या व्हाट्सएप करें।",
     contact_name: "नाम:",
     contact_service_area: "सेवा क्षेत्र:",
     contact_phone: "फोन:",
@@ -248,7 +344,8 @@ const translations = {
     footer_text1: "© 2026 यूरेका फोर्ब्स प्रत्यक्ष बिक्री विशेषज्ञ",
     footer_text2: "आपके ग्राहकों के लिए चयनित SKU और ऑफ़लाइन-केवल ऑफर।",
     footer_legal_link: "कानूनी और कॉपीराइट जानकारी",
-    footer_disclaimer_text: "अस्वीकरण: यह वेबसाइट पारस सिंह चावसाली द्वारा स्वतंत्र रूप से संचालित की जाती है, जो यूरेका फोर्ब्स के लिए एक अधिकृत प्रत्यक्ष बिक्री प्रतिनिधि हैं। यह यूरेका फोर्ब्स लिमिटेड की आधिकारिक वेबसाइट नहीं है। इस साइट पर प्रदर्शित या संदर्भित सभी उत्पाद नाम, लोगो, ब्रांड, ट्रेडमार्क और चित्र यूरेका फोर्ब्स लिमिटेड की एकमात्र संपत्ति हैं और प्रत्यक्ष बिक्री की सुविधा के लिए केवल सूचनात्मक और प्रदर्शन उद्देश्यों के लिए उपयोग किए जाते हैं। यह प्लेटफ़ॉर्म केवल उत्पाद प्रदर्शन और पूछताछ उत्पन्न करने के लिए है। इस वेबसाइट के माध्यम से कोई भुगतान या वित्तीय लेन-देन नहीं किया जाता है। सभी अंतिम खरीद, बिलिंग और इंस्टॉलेशन पूरी तरह से आधिकारिक यूरेका फोर्ब्स चैनलों के माध्यम से निपटाए जाते हैं।",
+    footer_disclaimer_text:
+      "अस्वीकरण: यह वेबसाइट पारस सिंह चावसाली द्वारा स्वतंत्र रूप से संचालित की जाती है, जो यूरेका फोर्ब्स के लिए एक अधिकृत प्रत्यक्ष बिक्री प्रतिनिधि हैं। यह यूरेका फोर्ब्स लिमिटेड की आधिकारिक वेबसाइट नहीं है। इस साइट पर प्रदर्शित या संदर्भित सभी उत्पाद नाम, लोगो, ब्रांड, ट्रेडमार्क और चित्र यूरेका फोर्ब्स लिमिटेड की एकमात्र संपत्ति हैं और प्रत्यक्ष बिक्री की सुविधा के लिए केवल सूचनात्मक और प्रदर्शन उद्देश्यों के लिए उपयोग किए जाते हैं। यह प्लेटफ़ॉर्म केवल उत्पाद प्रदर्शन और पूछताछ उत्पन्न करने के लिए है। इस वेबसाइट के माध्यम से कोई भुगतान या वित्तीय लेन-देन नहीं किया जाता है। सभी अंतिम खरीद, बिलिंग और इंस्टॉलेशन पूरी तरह से आधिकारिक यूरेका फोर्ब्स चैनलों के माध्यम से निपटाए जाते हैं।",
     header_rep_title: "ग्राहक बिक्री विशेषज्ञ",
     header_rep_badge: "स्वतंत्र अधिकृत प्रत्यक्ष बिक्री प्रतिनिधि",
 
@@ -257,22 +354,31 @@ const translations = {
     // ============================================
     faq_eyebrow: "सामान्य प्रश्न",
     faq_title: "अक्सर पूछे जाने वाले प्रश्न",
-    faq_desc: "जल शुद्धिकरण, प्रौद्योगिकी और रखरखाव के बारे में सबसे सामान्य प्रश्नों के तुरंत उत्तर प्राप्त करें।",
-    faq_q1: "अगर नगर निगम पहले से ही हमारे पानी का उपचार करता है, तो मुझे एक्वागार्ड की क्यों जरूरत है?",
-    faq_a1: "हालांकि पानी मुख्य नगर निगम संयंत्र में उपचारित किया जाता है, यह आपकी इमारत तक पहुंचने से पहले किलोमीटर पुरानी, जंग लगी भूमिगत पाइपलाइनों से होकर गुजरता है। माइक्रो-दरारें अक्सर भूमिगत सीवेज रिसाव और क्रॉस-दूषित होने का कारण बनती हैं। इसके अलावा, जब तक आपकी इमारत की ओवरहेड और भूमिगत भंडारण टंकियों को हर महीने पेशेवर रूप से स्वच्छ नहीं किया जाता, वे गाद, जैविक स्लाइम और बैक्टीरिया जमा करते हैं जो पानी को फिर से दूषित कर देते हैं।",
-    faq_q2: "हम वैसे भी घर पर पानी उबालते हैं। क्या इससे प्यूरीफायर बेकार नहीं हो जाता?",
-    faq_a2: "उबालना जीवित बैक्टीरिया और वायरस को बेअसर करने के लिए उत्कृष्ट है, लेकिन यह रासायनिक प्रदूषकों के खिलाफ पूरी तरह विफल रहता है। उबालने से घुलनशील भारी धातुओं (सीसा, आर्सेनिक या मर्क्युरी जैसे), जंग के टुकड़े, कीचड़ वाली गंदगी या कृषि कीटनाशकों को नहीं हटाया जा सकता। वास्तव में, उबालने के दौरान पानी के वाष्पित होने के साथ, इन खतरनाक घुलनशील विषाक्त पदार्थों का घनत्व वास्तव में बढ़ जाता है। इसके अलावा, उबालने से भारी क्लोरिन की गंध या स्वाद को नहीं हटाया जा सकता जो अक्सर नगर निगम उपचार संयंत्रों द्वारा जोड़ा जाता है।",
-    faq_q3: "5th Gen UV LED तकनीक वास्तव में क्या है और यह कितने समय तक चलती है?",
-    faq_a3: "5th Generation UV LED आधुनिक जल विसंक्रमण का सर्वोच्च शिखर है, जो पुरानी कांच की UV ट्यूबों की जगह लेता है। विरासत बल्बों के विपरीत जिन्हें वार्म-अप अवधि की आवश्यकता होती है, 5th Gen LEDs पानी के बहते ही तुरंत सक्रिय हो जाते हैं, पहले बूंद से ही 100% सुरक्षित पानी सुनिश्चित करते हैं। ये पूरी तरह से पारा-मुक्त हैं, शून्य गर्मी उत्पन्न करते हैं (ताकि आपका पानी ठंडा रहे), और 10 साल तक की अविश्वसनीय रूप से टिकाऊ जीवनकाल रखते हैं, जो आपके दीर्घकालिक रखरखाव लागत को नाटकीय रूप से कम करता है।",
+    faq_desc:
+      "जल शुद्धिकरण, प्रौद्योगिकी और रखरखाव के बारे में सबसे सामान्य प्रश्नों के तुरंत उत्तर प्राप्त करें।",
+    faq_q1:
+      "अगर नगर निगम पहले से ही हमारे पानी का उपचार करता है, तो मुझे एक्वागार्ड की क्यों जरूरत है?",
+    faq_a1:
+      "हालांकि पानी मुख्य नगर निगम संयंत्र में उपचारित किया जाता है, यह आपकी इमारत तक पहुंचने से पहले किलोमीटर पुरानी, जंग लगी भूमिगत पाइपलाइनों से होकर गुजरता है। माइक्रो-दरारें अक्सर भूमिगत सीवेज रिसाव और क्रॉस-दूषित होने का कारण बनती हैं। इसके अलावा, जब तक आपकी इमारत की ओवरहेड और भूमिगत भंडारण टंकियों को हर महीने पेशेवर रूप से स्वच्छ नहीं किया जाता, वे गाद, जैविक स्लाइम और बैक्टीरिया जमा करते हैं जो पानी को फिर से दूषित कर देते हैं।",
+    faq_q2:
+      "हम वैसे भी घर पर पानी उबालते हैं। क्या इससे प्यूरीफायर बेकार नहीं हो जाता?",
+    faq_a2:
+      "उबालना जीवित बैक्टीरिया और वायरस को बेअसर करने के लिए उत्कृष्ट है, लेकिन यह रासायनिक प्रदूषकों के खिलाफ पूरी तरह विफल रहता है। उबालने से घुलनशील भारी धातुओं (सीसा, आर्सेनिक या मर्क्युरी जैसे), जंग के टुकड़े, कीचड़ वाली गंदगी या कृषि कीटनाशकों को नहीं हटाया जा सकता। वास्तव में, उबालने के दौरान पानी के वाष्पित होने के साथ, इन खतरनाक घुलनशील विषाक्त पदार्थों का घनत्व वास्तव में बढ़ जाता है। इसके अलावा, उबालने से भारी क्लोरिन की गंध या स्वाद को नहीं हटाया जा सकता जो अक्सर नगर निगम उपचार संयंत्रों द्वारा जोड़ा जाता है।",
+    faq_q3:
+      "5th Gen UV LED तकनीक वास्तव में क्या है और यह कितने समय तक चलती है?",
+    faq_a3:
+      "5th Generation UV LED आधुनिक जल विसंक्रमण का सर्वोच्च शिखर है, जो पुरानी कांच की UV ट्यूबों की जगह लेता है। विरासत बल्बों के विपरीत जिन्हें वार्म-अप अवधि की आवश्यकता होती है, 5th Gen LEDs पानी के बहते ही तुरंत सक्रिय हो जाते हैं, पहले बूंद से ही 100% सुरक्षित पानी सुनिश्चित करते हैं। ये पूरी तरह से पारा-मुक्त हैं, शून्य गर्मी उत्पन्न करते हैं (ताकि आपका पानी ठंडा रहे), और 10 साल तक की अविश्वसनीय रूप से टिकाऊ जीवनकाल रखते हैं, जो आपके दीर्घकालिक रखरखाव लागत को नाटकीय रूप से कम करता है।",
     faq_q4: "वार्षिक रखरखाव अनुबंध (AMC) लेना वास्तव में दर्द के लायक है?",
-    faq_a4: "बिल्कुल। अपने प्यूरीफायर के बारे में एक सुरक्षात्मक ढाल के रूप में सोचें; यह कीचड़, रासायनिक कणों और भारी धातुओं को शारीरिक रूप से फंसाकर काम करता है ताकि वे आपके शरीर में प्रवेश न करें। 6 से 12 महीनों में, ये भारी-शुल्क कार्बन ब्लॉक और झिल्लियां अपरिहार्य रूप से उस गंदगी से पूरी तरह से भर जाती हैं जिसे उन्होंने रोका। एक सक्रिय AMC सुनिश्चित करता है कि एक प्रमाणित तकनीशियन आपके दरवाजे पर सीधे आकर सिस्टम को गहराई से साफ करे और विफल होने से पहले असली कारखाना स्पेयर्स के साथ कार्ट्रिज बदल दे, 365 दिनों की तुरंत स्वास्थ्य सुरक्षा की गारंटी देता है।",
+    faq_a4:
+      "बिल्कुल। अपने प्यूरीफायर के बारे में एक सुरक्षात्मक ढाल के रूप में सोचें; यह कीचड़, रासायनिक कणों और भारी धातुओं को शारीरिक रूप से फंसाकर काम करता है ताकि वे आपके शरीर में प्रवेश न करें। 6 से 12 महीनों में, ये भारी-शुल्क कार्बन ब्लॉक और झिल्लियां अपरिहार्य रूप से उस गंदगी से पूरी तरह से भर जाती हैं जिसे उन्होंने रोका। एक सक्रिय AMC सुनिश्चित करता है कि एक प्रमाणित तकनीशियन आपके दरवाजे पर सीधे आकर सिस्टम को गहराई से साफ करे और विफल होने से पहले असली कारखाना स्पेयर्स के साथ कार्ट्रिज बदल दे, 365 दिनों की तुरंत स्वास्थ्य सुरक्षा की गारंटी देता है।",
 
     // ============================================
     // EXCHANGE & BUY-BACK CAMPAIGN
     // ============================================
     exchange_eyebrow: "सीमित समय का अपग्रेड अभियान",
     exchange_title: "क्या आपके पास 10-15 साल पुराना वॉटर प्यूरीफायर है?",
-    exchange_desc: "अपने पुराने सिस्टम को बस यूं ही फेंकें नहीं। आज ही उसे एक्सचेंज करें और 5th Gen UV LED या Alkaline तकनीक वाले बिल्कुल नए एडवांस्ड एक्वागार्ड पर भारी कैश छूट पाएं, जो सीधे आपकी नई मशीन की MOP में जमा हो जाएगी!",
+    exchange_desc:
+      "अपने पुराने सिस्टम को बस यूं ही फेंकें नहीं। आज ही उसे एक्सचेंज करें और 5th Gen UV LED या Alkaline तकनीक वाले बिल्कुल नए एडवांस्ड एक्वागार्ड पर भारी कैश छूट पाएं, जो सीधे आपकी नई मशीन की MOP में जमा हो जाएगी!",
     exchange_perk_1: "तुरंत कैश मूल्यांकन",
     exchange_perk_2: "मुफ्त दरवाजे पर मूल्यांकन और हटाना",
     exchange_perk_3: "आधुनिक 5th Gen सुरक्षा पर अपग्रेड करें",
@@ -285,16 +391,29 @@ const translations = {
     // LEGAL TERMS PAGE
     // ============================================
     legal_title: "कानूनी और कॉपीराइट जानकारी",
-    legal_subtitle: "इस स्वतंत्र बिक्री पोर्टफोलियो के संचालन से संबंधित महत्वपूर्ण कानूनी अस्वीकरण।",
+    legal_subtitle:
+      "इस स्वतंत्र बिक्री पोर्टफोलियो के संचालन से संबंधित महत्वपूर्ण कानूनी अस्वीकरण।",
     legal_s1_title: "बौद्धिक संपदा और कॉपीराइट स्वीकृति",
-    legal_s1_text: "इस वेबसाइट पर प्रदान की गई सामग्री केवल शैक्षिक और बिक्री पूछताछ उद्देश्यों के लिए है। मैं, एक अधिकृत प्रत्यक्ष विक्रेता के रूप में, संभावित ग्राहकों को वॉटर प्यूरीफायर, वैक्यूम क्लीनर और अन्य उत्पादों का सटीक प्रतिनिधित्व करने के लिए आधिकारिक उत्पाद छवियों और विशिष्टताओं का उपयोग करता हूं। कोई कॉपीराइट उल्लंघन का इरादा नहीं है। सभी उत्पाद छवियों, मालिकाना प्रौद्योगिकी नामों और ब्रांड संपत्तियों के बौद्धिक संपदा अधिकार पूरी तरह से यूरेका फोर्ब्स लिमिटेड के पास रहते हैं।",
+    legal_s1_text:
+      "इस वेबसाइट पर प्रदान की गई सामग्री केवल शैक्षिक और बिक्री पूछताछ उद्देश्यों के लिए है। मैं, एक अधिकृत प्रत्यक्ष विक्रेता के रूप में, संभावित ग्राहकों को वॉटर प्यूरीफायर, वैक्यूम क्लीनर और अन्य उत्पादों का सटीक प्रतिनिधित्व करने के लिए आधिकारिक उत्पाद छवियों और विशिष्टताओं का उपयोग करता हूं। कोई कॉपीराइट उल्लंघन का इरादा नहीं है। सभी उत्पाद छवियों, मालिकाना प्रौद्योगिकी नामों और ब्रांड संपत्तियों के बौद्धिक संपदा अधिकार पूरी तरह से यूरेका फोर्ब्स लिमिटेड के पास रहते हैं।",
     legal_s2_title: "कोई ई-कॉमर्स लेन-देन नहीं",
-    legal_s2_text: "ग्राहक सुरक्षा सुनिश्चित करने और अधिकृत बिक्री प्रोटोकॉल का पालन करने के लिए, इस वेबसाइट पर कोई भुगतान गेटवे नहीं है। आगंतुक इस साइट पर सीधे उत्पाद नहीं खरीद सकते। यदि आप यहां दी गई जानकारी की समीक्षा करने के बाद कोई उत्पाद खरीदना चाहते हैं, तो मैं यूरेका फोर्ब्स लिमिटेड द्वारा निर्धारित आधिकारिक दस्तावेज और भुगतान प्रक्रिया में व्यक्तिगत रूप से आपकी सहायता करूंगा।",
+    legal_s2_text:
+      "ग्राहक सुरक्षा सुनिश्चित करने और अधिकृत बिक्री प्रोटोकॉल का पालन करने के लिए, इस वेबसाइट पर कोई भुगतान गेटवे नहीं है। आगंतुक इस साइट पर सीधे उत्पाद नहीं खरीद सकते। यदि आप यहां दी गई जानकारी की समीक्षा करने के बाद कोई उत्पाद खरीदना चाहते हैं, तो मैं यूरेका फोर्ब्स लिमिटेड द्वारा निर्धारित आधिकारिक दस्तावेज और भुगतान प्रक्रिया में व्यक्तिगत रूप से आपकी सहायता करूंगा।",
 
     demo_form_name_placeholder: "अपना नाम दर्ज करें",
     demo_form_phone_placeholder: "फोन नंबर दर्ज करें",
     demo_form_email_placeholder: "ईमेल आईडी दर्ज करें",
-    demo_form_address_placeholder: "पूरा पता दर्ज करें"
+    demo_form_address_placeholder: "पूरा पता दर्ज करें",
+
+    demo_form_title: "मुफ्त डेमो बुक करें",
+    demo_form_btn: "सबमिट करें और व्हाट्सएप के माध्यम से भेजें",
+    search_placeholder: "उत्पाद खोजें...",
+    share_btn: "व्हाट्सएप पर शेयर करें",
+    share_fb_btn: "फेसबुक पर शेयर करें",
+    share_copy_btn: "लिंक कॉपी करें",
+    error_title: "पृष्ठ नहीं मिला",
+    error_desc: "आप जिस पृष्ठ की तलाश कर रहे हैं उसे हटा दिया गया होगा, उसका नाम बदल दिया गया होगा, या अस्थायी रूप से अनुपलब्ध होगा।",
+    error_btn: "होमपेज पर लौटें",
   },
 
   mr: {
@@ -310,7 +429,8 @@ const translations = {
     // ============================================
     hero_eyebrow: "अधिकृत थेट विक्री · एक्सक्लूसिव कॅटलॉग",
     hero_title: "तुमच्या घरी आणा शुद्ध आरोग्य",
-    hero_desc: "प्रीमियम ॲक्वागार्ड वॉटर प्युरिफायर आणि फोर्ब्स घरगुती उपकरणांवर विशेष ऑफलाइन ऑफर शोधा, पूर्णपणे मोफत घरगुती डेमोसह.",
+    hero_desc:
+      "प्रीमियम ॲक्वागार्ड वॉटर प्युरिफायर आणि फोर्ब्स घरगुती उपकरणांवर विशेष ऑफलाइन ऑफर शोधा, पूर्णपणे मोफत घरगुती डेमोसह.",
     hero_btn: "प्रीमियम कॅटलॉग पहा",
 
     // ============================================
@@ -318,7 +438,8 @@ const translations = {
     // ============================================
     lead_eyebrow: "मोफत घरगुती सेवा",
     lead_title: "मोफत पाण्याची गुणवत्ता आणि TDS चाचणी बुक करा",
-    lead_desc: "कोणता ॲक्वागार्ड हवा हे माहित नाही? मला तुमच्या इमारतीच्या पाण्याचे TDS, कडकपणा आणि दबाव मोफत तपासू द्या. मी तुमच्या पाण्याच्या प्रकारासाठी आवश्यक असलेल्या अचूक 5th Gen तंत्रज्ञानाची शिफारस करेन.",
+    lead_desc:
+      "कोणता ॲक्वागार्ड हवा हे माहित नाही? मला तुमच्या इमारतीच्या पाण्याचे TDS, कडकपणा आणि दबाव मोफत तपासू द्या. मी तुमच्या पाण्याच्या प्रकारासाठी आवश्यक असलेल्या अचूक 5th Gen तंत्रज्ञानाची शिफारस करेन.",
     lead_bullet1: "✓ त्वरित डिजिटल TDS वाचन",
     lead_bullet2: "✓ फक्त 10 मिनिटे लागतात",
     lead_bullet3: "✓ खरेदी करण्याचे कोणतेही बंधन नाही",
@@ -330,29 +451,40 @@ const translations = {
     // ============================================
     profile_eyebrow: "तुमचे स्थानिक तज्ज्ञ",
     profile_title: "पारस सिंग चावसाली यांना भेटा",
-    profile_bio: "नमस्कार! मी युरोका फोर्ब्ससाठी तुमचा स्थानिक अधिकृत थेट विक्री विशेषज्ञ आहे. कोपर खैरणे येथे कार्यरत असून, मी नवी मुंबई आणि ठाणे भरातील कुटुंबांची सेवा करण्याचा अभिमान बाळगतो. माझे ध्येय हे आहे की तुम्हाला तुमच्या कुटुंबासाठी अचूक जल शुद्धीकरण आणि घरगुती सफाई उपाय मिळावेत, प्राधान्य स्थानिक समर्थनासह.",
+    profile_bio:
+      "नमस्कार! मी युरोका फोर्ब्ससाठी तुमचा स्थानिक अधिकृत थेट विक्री विशेषज्ञ आहे. कोपर खैरणे येथे कार्यरत असून, मी नवी मुंबई आणि ठाणे भरातील कुटुंबांची सेवा करण्याचा अभिमान बाळगतो. माझे ध्येय हे आहे की तुम्हाला तुमच्या कुटुंबासाठी अचूक जल शुद्धीकरण आणि घरगुती सफाई उपाय मिळावेत, प्राधान्य स्थानिक समर्थनासह.",
 
     vb_title: "ऑनलाइन बँक डिस्काउंटऐवजी डायरेक्ट स्पेशलिस्ट का निवडावा?",
-    vb_desc: "ऑनलाइन डिस्काउंट आकर्षक वाटू शकतो, पण योग्य प्रोडक्ट निवड, योग्य इंस्टॉलेशन, डेमो मार्गदर्शन आणि भरोसेमंद सपोर्टही महत्त्वाचे असतात. संपूर्ण Eureka Forbes कॅटलॉगसाठी डायरेक्ट स्पेशलिस्टचे फायदे:",
+    vb_desc:
+      "ऑनलाइन डिस्काउंट आकर्षक वाटू शकतो, पण योग्य प्रोडक्ट निवड, योग्य इंस्टॉलेशन, डेमो मार्गदर्शन आणि भरोसेमंद सपोर्टही महत्त्वाचे असतात. संपूर्ण Eureka Forbes कॅटलॉगसाठी डायरेक्ट स्पेशलिस्टचे फायदे:",
     vb_card1_title: "योग्य प्रोडक्ट निवड",
-    vb_card1_desc: "तुमचे घर, खोलीचा आकार, वापर, पाण्याचा TDS, फ्लोअरिंग आणि बजेट यानुसार योग्य Aquaguard वॉटर प्युरिफायर, एअर प्युरिफायर, व्हॅक्यूम क्लीनर किंवा वॉटर सॉफ्टनर निवडण्यात मदत मिळते.",
+    vb_card1_desc:
+      "तुमचे घर, खोलीचा आकार, वापर, पाण्याचा TDS, फ्लोअरिंग आणि बजेट यानुसार योग्य Aquaguard वॉटर प्युरिफायर, एअर प्युरिफायर, व्हॅक्यूम क्लीनर किंवा वॉटर सॉफ्टनर निवडण्यात मदत मिळते.",
     vb_card2_title: "डेमो, एक्सचेंज आणि ऑफर",
-    vb_card2_desc: "सध्याच्या ऑफलाइन ऑफरची तुलना करा, प्रोडक्ट डेमो बुक करा, पात्र जुन्या उपकरणाचे एक्सचेंज मूल्य तपासा आणि कोणता मॉडेल छोट्या ऑनलाइन बँक डिस्काउंटपेक्षा जास्त दीर्घकालीन मूल्य देतो ते समजून घ्या.",
+    vb_card2_desc:
+      "सध्याच्या ऑफलाइन ऑफरची तुलना करा, प्रोडक्ट डेमो बुक करा, पात्र जुन्या उपकरणाचे एक्सचेंज मूल्य तपासा आणि कोणता मॉडेल छोट्या ऑनलाइन बँक डिस्काउंटपेक्षा जास्त दीर्घकालीन मूल्य देतो ते समजून घ्या.",
     vb_card3_title: "इंस्टॉलेशन आणि आफ्टर-सेल्स सपोर्ट",
-    vb_card3_desc: "वॉटर प्युरिफायर, व्हॅक्यूम, एअर प्युरिफायर आणि सॉफ्टनरसाठी इंस्टॉलेशन कोऑर्डिनेशन, वापर मार्गदर्शन, अस्सल कंझ्युमेबल्स, AMC मदत, सर्व्हिस फॉलो-अप आणि स्थानिक संपर्क मिळतो.",
+    vb_card3_desc:
+      "वॉटर प्युरिफायर, व्हॅक्यूम, एअर प्युरिफायर आणि सॉफ्टनरसाठी इंस्टॉलेशन कोऑर्डिनेशन, वापर मार्गदर्शन, अस्सल कंझ्युमेबल्स, AMC मदत, सर्व्हिस फॉलो-अप आणि स्थानिक संपर्क मिळतो.",
 
     // ============================================
     // PRODUCTS SECTION
     // ============================================
     products_eyebrow: "विशेष उत्पादने",
     products_title: "निवडलेले SKU आणि ऑफलाइन-फक्त ऑफर",
-    products_desc: "शीर्ष-गुणवत्तेच्या उत्पादनांमधून निवडा जी थेट विक्री आणि एक्सक्लूसिव ऑफलाइन चॅनेलद्वारे उपलब्ध आहेत।",
+    products_desc:
+      "शीर्ष-गुणवत्तेच्या उत्पादनांमधून निवडा जी थेट विक्री आणि एक्सक्लूसिव ऑफलाइन चॅनेलद्वारे उपलब्ध आहेत।",
     filter_all: "सर्व उत्पादने",
     filter_water: "जल शुद्धिकरणे",
     filter_air: "वायु शुद्धिकरणे",
     filter_vacuum: "व्हॅक्यूम क्लीनर",
     filter_softener: "जल कोमल करणे",
     btn_ask: "या SKU साठी विचारा",
+    btn_check_suitability: "सुसंगतता तपासा",
+    btn_check_hard_water: "कठोर पाण्याचे समाधान तपासा",
+    btn_get_best_offer: "सर्वोत्तम ऑफर मिळवा",
+    btn_get_recommendation: "शिफारस मिळवा",
+    btn_get_details: "तपशील मिळवा",
 
     // Product Tags
     tag_water: "जल शुद्धिकरण",
@@ -365,7 +497,8 @@ const translations = {
     // ============================================
     why_eyebrow: "स्थानिक तज्ज्ञ का निवडा?",
     why_title: "तुमचा विश्वासू स्थानिक उपकरण तज्ज्ञ",
-    why_desc: "वैयक्तिक संपर्क नसलेली ऑनलाइन स्टोर्स सोडा. मी वैयक्तिक पाणी चाचणी, अचूक मशीन शिफारसी आणि प्राधान्य इन्स्टॉलेशन प्रदान करतो.",
+    why_desc:
+      "वैयक्तिक संपर्क नसलेली ऑनलाइन स्टोर्स सोडा. मी वैयक्तिक पाणी चाचणी, अचूक मशीन शिफारसी आणि प्राधान्य इन्स्टॉलेशन प्रदान करतो.",
     why_list_1: "विशेष ऑफलाइन-फक्त उत्पादने आणि सूट",
     why_list_2: "मोफत वैयक्तिक घरगुती पाणी चाचणी",
     why_list_3: "प्राधान्य डोअरस्टेप इन्स्टॉलेशन आणि सपोर्ट",
@@ -375,7 +508,8 @@ const translations = {
     // ============================================
     contact_eyebrow: "आपल्या विशेषज्ञाशी संपर्क साधा",
     contact_title: "ऑर्डर देण्यास तयार आहात?",
-    contact_desc: "आपल्या ग्राहकासाठी निवडलेले SKU बुक करण्यासाठी थेट संदेश, कॉल किंवा व्हाट्सअँप करा.",
+    contact_desc:
+      "आपल्या ग्राहकासाठी निवडलेले SKU बुक करण्यासाठी थेट संदेश, कॉल किंवा व्हाट्सअँप करा.",
     contact_name: "नाव:",
     contact_service_area: "सेवा क्षेत्र:",
     contact_phone: "फोन:",
@@ -394,7 +528,8 @@ const translations = {
     footer_text1: "© 2026 यूरेका फोर्ब्स थेट विक्री विशेषज्ञ",
     footer_text2: "आपल्या ग्राहकांसाठी निवडलेले SKU आणि ऑफलाइन-फक्त ऑफर.",
     footer_legal_link: "कायदेशीर आणि कॉपीराइट माहिती",
-    footer_disclaimer_text: "अस्वीकरण: ही वेबसाइट पारस सिंग चावसाली यांच्याद्वारे स्वतंत्रपणे संचालित केली जाते, जे युरोका फोर्ब्ससाठी अधिकृत थेट विक्री प्रतिनिधी आहेत. ही युरोका फोर्ब्स लिमिटेडची अधिकृत वेबसाइट नाही. या साइटवर वैशिष्ट्यीकृत किंवा संदर्भित केलेली सर्व उत्पादन नावे, लोगो, ब्रँड, ट्रेडमार्क आणि प्रतिमा या युरोका फोर्ब्स लिमिटेडची एकमेव मालमत्ता आहेत आणि थेट विक्री सुलभ करण्यासाठी केवळ माहितीपूर्ण आणि प्रात्यक्षिक हेतूंसाठी वापरली जातात. हे प्लॅटफॉर्म केवळ उत्पादन प्रदर्शन आणि चौकशी निर्मितीसाठी आहे. या वेबसाइटद्वारे कोणतेही पेमेंट किंवा आर्थिक व्यवहार प्रक्रिया केली जात नाही. सर्व अंतिम खरेदी, बिलिंग आणि इंस्टॉलेशन पूर्णपणे अधिकृत युरोका फोर्ब्स चॅनेलद्वारे हाताळले जातात.",
+    footer_disclaimer_text:
+      "अस्वीकरण: ही वेबसाइट पारस सिंग चावसाली यांच्याद्वारे स्वतंत्रपणे संचालित केली जाते, जे युरोका फोर्ब्ससाठी अधिकृत थेट विक्री प्रतिनिधी आहेत. ही युरोका फोर्ब्स लिमिटेडची अधिकृत वेबसाइट नाही. या साइटवर वैशिष्ट्यीकृत किंवा संदर्भित केलेली सर्व उत्पादन नावे, लोगो, ब्रँड, ट्रेडमार्क आणि प्रतिमा या युरोका फोर्ब्स लिमिटेडची एकमेव मालमत्ता आहेत आणि थेट विक्री सुलभ करण्यासाठी केवळ माहितीपूर्ण आणि प्रात्यक्षिक हेतूंसाठी वापरली जातात. हे प्लॅटफॉर्म केवळ उत्पादन प्रदर्शन आणि चौकशी निर्मितीसाठी आहे. या वेबसाइटद्वारे कोणतेही पेमेंट किंवा आर्थिक व्यवहार प्रक्रिया केली जात नाही. सर्व अंतिम खरेदी, बिलिंग आणि इंस्टॉलेशन पूर्णपणे अधिकृत युरोका फोर्ब्स चॅनेलद्वारे हाताळले जातात.",
     header_rep_title: "ग्राहक विक्री विशेषज्ञ",
     header_rep_badge: "स्वतंत्र अधिकृत थेट विक्री प्रतिनिधी",
 
@@ -403,22 +538,30 @@ const translations = {
     // ============================================
     faq_eyebrow: "सामान्य प्रश्न",
     faq_title: "नेहमी विचारले जाणारे प्रश्न",
-    faq_desc: "जल शुद्धीकरण, तंत्रज्ञान आणि देखभालीबद्दलच्या सर्वात सामान्य प्रश्नांची तात्काळ उत्तरे मिळवा.",
-    faq_q1: "जर नगरपालिका आधीच आमच्या पाण्यावर उपचार करते, तर मला ॲक्वागार्डची का गरज आहे?",
-    faq_a1: "जरी पाणी मुख्य नगरपालिका प्रकल्पात उपचारित केले जात असले तरी, ते आपल्या इमारतीपर्यंत पोहोचण्यापूर्वी किलोमीट्रो जुन्या, गंजलेल्या भूमिगत पाइपलाईनमधून वाहते. सूक्ष्म-तडे सहसा भूमिगत सांडपाणी गळती आणि क्रॉस-दूषित होण्याचे कारण बनतात. याशिवाय, आपल्या इमारतीच्या ओव्हरहेड आणि भूमिगत स्टोरेज टाक्या दरमहा व्यावसायिकरित्या स्वच्छ केल्या जात नसल्यास, त्या गाळ, जैविक स्लाइम आणि बॅक्टेरिया जमा करतात जे पाण्याला पुन्हा दूषित करतात.",
-    faq_q2: "आम्ही तसेच घरी पाणी उकळतो. यामुळे प्युरिफायर अनावश्यक होत नाही का?",
-    faq_a2: "उकळणे जिवंत बॅक्टेरिया आणि व्हायरस निष्क्रिय करण्यासाठी उत्कृष्ट आहे, परंतु ते रासायनिक प्रदूषकांविरुद्ध पूर्णपणे अपयशी ठरते. उकळण्याने विरघळलेली जड धातू (शिसे, आर्सेनिक किंवा मर्क्युरीसारखी), गंजाचे तुकडे, चिखलाची अस्वच्छता किंवा कृषी कीटकनाशके काढता येत नाहीत. वास्तविक, उकळण्यादरम्यान पाणी बाष्परूपाने जाताना, या धोकादायक विरघळलेल्या विषारी पदार्थांची घनता प्रत्यक्षात वाढते. याशिवाय, उकळण्याने जड क्लोरिनचा वास किंवा चव काढता येत नाही जी सहसा नगरपालिका उपचार प्रकल्पांद्वारे जोडली जाते.",
+    faq_desc:
+      "जल शुद्धीकरण, तंत्रज्ञान आणि देखभालीबद्दलच्या सर्वात सामान्य प्रश्नांची तात्काळ उत्तरे मिळवा.",
+    faq_q1:
+      "जर नगरपालिका आधीच आमच्या पाण्यावर उपचार करते, तर मला ॲक्वागार्डची का गरज आहे?",
+    faq_a1:
+      "जरी पाणी मुख्य नगरपालिका प्रकल्पात उपचारित केले जात असले तरी, ते आपल्या इमारतीपर्यंत पोहोचण्यापूर्वी किलोमीट्रो जुन्या, गंजलेल्या भूमिगत पाइपलाईनमधून वाहते. सूक्ष्म-तडे सहसा भूमिगत सांडपाणी गळती आणि क्रॉस-दूषित होण्याचे कारण बनतात. याशिवाय, आपल्या इमारतीच्या ओव्हरहेड आणि भूमिगत स्टोरेज टाक्या दरमहा व्यावसायिकरित्या स्वच्छ केल्या जात नसल्यास, त्या गाळ, जैविक स्लाइम आणि बॅक्टेरिया जमा करतात जे पाण्याला पुन्हा दूषित करतात.",
+    faq_q2:
+      "आम्ही तसेच घरी पाणी उकळतो. यामुळे प्युरिफायर अनावश्यक होत नाही का?",
+    faq_a2:
+      "उकळणे जिवंत बॅक्टेरिया आणि व्हायरस निष्क्रिय करण्यासाठी उत्कृष्ट आहे, परंतु ते रासायनिक प्रदूषकांविरुद्ध पूर्णपणे अपयशी ठरते. उकळण्याने विरघळलेली जड धातू (शिसे, आर्सेनिक किंवा मर्क्युरीसारखी), गंजाचे तुकडे, चिखलाची अस्वच्छता किंवा कृषी कीटकनाशके काढता येत नाहीत. वास्तविक, उकळण्यादरम्यान पाणी बाष्परूपाने जाताना, या धोकादायक विरघळलेल्या विषारी पदार्थांची घनता प्रत्यक्षात वाढते. याशिवाय, उकळण्याने जड क्लोरिनचा वास किंवा चव काढता येत नाही जी सहसा नगरपालिका उपचार प्रकल्पांद्वारे जोडली जाते.",
     faq_q3: "5th Gen UV LED तंत्रज्ञान नक्की काय आहे आणि ते किती काळ टिकते?",
-    faq_a3: "5th Generation UV LED हे आधुनिक जल निर्जंतुकीकरणाचे सर्वोच्च शिखर आहे, जे जुन्या काचेच्या UV ट्यूबची जागा घेते. वार्म-अप कालावधीची आवश्यकता असलेल्या वारसदारी बल्बच्या विपरीत, 5th Gen LEDs पाणी वाहताच क्षणार्धात सक्रिय होतात, पहिल्या थेंबापासून 100% सुरक्षित पाणी सुनिश्चित करतात. ते पूर्णपणे मर्क्युरी-मुक्त आहेत, शून्य उष्णता निर्माण करतात (म्हणून आपले पाणी थंड राहते), आणि 10 वर्षांपर्यंतचा अविश्वसनीय टिकाऊ आयुष्यकाळ असतो, जो आपल्या दीर्घकालीन देखभाल खर्चात नाट्यमयपणे घट करतो.",
+    faq_a3:
+      "5th Generation UV LED हे आधुनिक जल निर्जंतुकीकरणाचे सर्वोच्च शिखर आहे, जे जुन्या काचेच्या UV ट्यूबची जागा घेते. वार्म-अप कालावधीची आवश्यकता असलेल्या वारसदारी बल्बच्या विपरीत, 5th Gen LEDs पाणी वाहताच क्षणार्धात सक्रिय होतात, पहिल्या थेंबापासून 100% सुरक्षित पाणी सुनिश्चित करतात. ते पूर्णपणे मर्क्युरी-मुक्त आहेत, शून्य उष्णता निर्माण करतात (म्हणून आपले पाणी थंड राहते), आणि 10 वर्षांपर्यंतचा अविश्वसनीय टिकाऊ आयुष्यकाळ असतो, जो आपल्या दीर्घकालीन देखभाल खर्चात नाट्यमयपणे घट करतो.",
     faq_q4: "वार्षिक देखभाल करार (AMC) घेणे खरोखर दर्दनाक आहे का?",
-    faq_a4: "अगदी. आपल्या प्युरिफायरबद्दल संरक्षणात्मक ढाल म्हणून विचार करा; हे चिखल, रासायनिक कण आणि जड धातूंना शारीरिकरित्या अडकवून काम करते जेणेकरून ते आपल्या शरीरात प्रवेश करणार नाहीत. 6 ते 12 महिन्यांत, हे जड-कर्तव्य कार्बन ब्लॉक्स आणि मेंब्रेन अपरिहार्यपणे त्या गंदगीने पूर्णपणे भरले जातात ज्यांना त्यांनी अडवले. सक्रिय AMC सुनिश्चित करते की प्रमाणित तंत्रज्ञान आपल्या दारावर थेट येऊन सिस्टमची खोल साफसफाई करतो आणि अपयशी होण्यापूर्वी खऱ्या कारखाना स्पेअर्ससह कार्ट्रिज बदलतो, 365 दिवसांची तात्काळ आरोग्य सुरक्षिततेची हमी देतो.",
+    faq_a4:
+      "अगदी. आपल्या प्युरिफायरबद्दल संरक्षणात्मक ढाल म्हणून विचार करा; हे चिखल, रासायनिक कण आणि जड धातूंना शारीरिकरित्या अडकवून काम करते जेणेकरून ते आपल्या शरीरात प्रवेश करणार नाहीत. 6 ते 12 महिन्यांत, हे जड-कर्तव्य कार्बन ब्लॉक्स आणि मेंब्रेन अपरिहार्यपणे त्या गंदगीने पूर्णपणे भरले जातात ज्यांना त्यांनी अडवले. सक्रिय AMC सुनिश्चित करते की प्रमाणित तंत्रज्ञान आपल्या दारावर थेट येऊन सिस्टमची खोल साफसफाई करतो आणि अपयशी होण्यापूर्वी खऱ्या कारखाना स्पेअर्ससह कार्ट्रिज बदलतो, 365 दिवसांची तात्काळ आरोग्य सुरक्षिततेची हमी देतो.",
 
     // ============================================
     // EXCHANGE & BUY-BACK CAMPAIGN
     // ============================================
     exchange_eyebrow: "मर्यादित कालावधीचा अपग्रेड मोहीम",
     exchange_title: "आपल्याकडे 10-15 वर्षे जुना वॉटर प्युरिफायर आहे का?",
-    exchange_desc: "आपल्या जुन्या सिस्टमला असेच फेकून देऊ नका. आजच एक्सचेंज करा आणि 5th Gen UV LED किंवा Alkaline तंत्रज्ञान असलेल्या अगदी नवीन ॲडव्हान्स्ड ॲक्वागार्डवर मोठी रोकड सवलत मिळवा, जी थेट आपल्या नवीन मशीनच्या MOP मध्ये जमा होईल!",
+    exchange_desc:
+      "आपल्या जुन्या सिस्टमला असेच फेकून देऊ नका. आजच एक्सचेंज करा आणि 5th Gen UV LED किंवा Alkaline तंत्रज्ञान असलेल्या अगदी नवीन ॲडव्हान्स्ड ॲक्वागार्डवर मोठी रोकड सवलत मिळवा, जी थेट आपल्या नवीन मशीनच्या MOP मध्ये जमा होईल!",
     exchange_perk_1: "तात्काळ रोकड मूल्यांकन",
     exchange_perk_2: "मोफत दारावर मूल्यांकन आणि काढून टाकणे",
     exchange_perk_3: "आधुनिक 5th Gen सुरक्षिततेवर अपग्रेड करा",
@@ -431,22 +574,35 @@ const translations = {
     // LEGAL TERMS PAGE
     // ============================================
     legal_title: "कायदेशीर आणि कॉपीराइट माहिती",
-    legal_subtitle: "या स्वतंत्र विक्री पोर्टफोलिओच्या कार्याशी संबंधित महत्त्वपूर्ण कायदेशीर अस्वीकरणे.",
+    legal_subtitle:
+      "या स्वतंत्र विक्री पोर्टफोलिओच्या कार्याशी संबंधित महत्त्वपूर्ण कायदेशीर अस्वीकरणे.",
     legal_s1_title: "बौद्धिक संपदा आणि कॉपीराइट स्वीकृती",
-    legal_s1_text: "या वेबसाइटवर प्रदान केलेली सामग्री केवळ शैक्षणिक आणि विक्री चौकशीच्या उद्देशांसाठी आहे. मी, एक अधिकृत थेट विक्रेता म्हणून, संभाव्य ग्राहकांना वॉटर प्युरिफायर, व्हॅक्यूम क्लीनर आणि इतर उत्पादनांचे अचूक प्रतिनिधित्व करण्यासाठी अधिकृत उत्पादन प्रतिमा आणि तपशील वापरतो. कोणतेही कॉपीराइट उल्लंघन हेतू नाही. सर्व उत्पादन प्रतिमा, मालकी तंत्रज्ञान नावे आणि ब्रँड मालमत्तांचे बौद्धिक संपदा अधिकार पूर्णपणे युरोका फोर्ब्स लिमिटेडकडे राहतात.",
+    legal_s1_text:
+      "या वेबसाइटवर प्रदान केलेली सामग्री केवळ शैक्षणिक आणि विक्री चौकशीच्या उद्देशांसाठी आहे. मी, एक अधिकृत थेट विक्रेता म्हणून, संभाव्य ग्राहकांना वॉटर प्युरिफायर, व्हॅक्यूम क्लीनर आणि इतर उत्पादनांचे अचूक प्रतिनिधित्व करण्यासाठी अधिकृत उत्पादन प्रतिमा आणि तपशील वापरतो. कोणतेही कॉपीराइट उल्लंघन हेतू नाही. सर्व उत्पादन प्रतिमा, मालकी तंत्रज्ञान नावे आणि ब्रँड मालमत्तांचे बौद्धिक संपदा अधिकार पूर्णपणे युरोका फोर्ब्स लिमिटेडकडे राहतात.",
     legal_s2_title: "कोणतेही ई-कॉमर्स व्यवहार नाहीत",
-    legal_s2_text: "ग्राहक सुरक्षा सुनिश्चित करण्यासाठी आणि अधिकृत विक्री प्रोटोकॉलचे पालन करण्यासाठी, या वेबसाइटवर कोणतेही पेमेंट गेटवे नाहीत. अभ्यागत या साइटवर थेट उत्पादने खरेदी करू शकत नाहीत. येथे दिलेल्या माहितीचे पुनरावलोकन केल्यानंतर तुम्हाला उत्पादन खरेदी करायचे असल्यास, मी युरोका फोर्ब्स लिमिटेडने निर्धारित केलेल्या अधिकृत दस्तऐवजीकरण आणि पेमेंट प्रक्रियेत वैयक्तिकरित्या तुम्हाला मदत करेन.",
+    legal_s2_text:
+      "ग्राहक सुरक्षा सुनिश्चित करण्यासाठी आणि अधिकृत विक्री प्रोटोकॉलचे पालन करण्यासाठी, या वेबसाइटवर कोणतेही पेमेंट गेटवे नाहीत. अभ्यागत या साइटवर थेट उत्पादने खरेदी करू शकत नाहीत. येथे दिलेल्या माहितीचे पुनरावलोकन केल्यानंतर तुम्हाला उत्पादन खरेदी करायचे असल्यास, मी युरोका फोर्ब्स लिमिटेडने निर्धारित केलेल्या अधिकृत दस्तऐवजीकरण आणि पेमेंट प्रक्रियेत वैयक्तिकरित्या तुम्हाला मदत करेन.",
 
     demo_form_name_placeholder: "आपले नाव प्रविष्ट करा",
     demo_form_phone_placeholder: "फोन नंबर प्रविष्ट करा",
     demo_form_email_placeholder: "ईमेल आयडी प्रविष्ट करा",
-    demo_form_address_placeholder: "पूर्ण पत्ता प्रविष्ट करा"
-  }
+    demo_form_address_placeholder: "पूर्ण पत्ता प्रविष्ट करा",
+
+    demo_form_title: "मोफत डेमो बुक करा",
+    demo_form_btn: "सबमिट करा आणि व्हाट्सअँपद्वारे पाठवा",
+    search_placeholder: "उत्पादने शोधा...",
+    share_btn: "व्हाट्सअँपवर शेअर करा",
+    share_fb_btn: "फेसबुकवर शेअर करा",
+    share_copy_btn: "लिंक कॉपी करा",
+    error_title: "पृष्ठ आढळले नाही",
+    error_desc: "तुम्ही शोधत असलेले पृष्ठ काढून टाकले गेले असावे, त्याचे नाव बदलले गेले असेल किंवा तात्पुरते अनुपलब्ध असेल.",
+    error_btn: "होमपेजवर परत जा",
+  },
 };
 
 /**
  * Language Switcher - Complete Implementation
- * 
+ *
  * This module handles all language switching functionality:
  * 1. Attaches click listeners to all .lang-btn elements
  * 2. Toggles the 'active' class between buttons
@@ -455,32 +611,34 @@ const translations = {
  * 5. Saves language preference to localStorage
  * 6. Protects product SKU names from translation (always English)
  */
-(function() {
-  'use strict';
+(function () {
+  "use strict";
 
   // Current active language (defaults to English)
-  let currentLang = 'en';
+  let currentLang = "en";
 
   /**
    * Apply translations for the given language code
    * Safely handles null references and different element types
-   * 
+   *
    * @param {string} lang - Language code ('en', 'hi', or 'mr')
    */
   function applyTranslations(lang) {
     if (!translations[lang]) {
-      console.warn(`[i18n] translations.js: Language '${lang}' not found. Falling back to 'en'.`);
-      lang = 'en';
+      console.warn(
+        `[i18n] translations.js: Language '${lang}' not found. Falling back to 'en'.`,
+      );
+      lang = "en";
     }
 
     currentLang = lang;
     document.documentElement.lang = lang;
 
     // Query all elements with data-i18n attribute
-    const elements = document.querySelectorAll('[data-i18n]');
+    const elements = document.querySelectorAll("[data-i18n]");
 
-    elements.forEach(function(el) {
-      const key = el.getAttribute('data-i18n');
+    elements.forEach(function (el) {
+      const key = el.getAttribute("data-i18n");
       if (!key) return;
 
       const translation = translations[lang][key];
@@ -492,21 +650,10 @@ const translations = {
       // Handle different element types appropriately
       const tagName = el.tagName.toLowerCase();
 
-      if (tagName === 'input' || tagName === 'textarea') {
+      if (tagName === "input" || tagName === "textarea") {
         // For form inputs, update placeholder attribute
-        if (el.hasAttribute('placeholder')) {
+        if (el.hasAttribute("placeholder")) {
           el.placeholder = translation;
-        }
-      } else if (tagName === 'a' && el.classList.contains('exchange-cta')) {
-        // For the exchange CTA link, preserve the SVG and update only text node
-        const textNodes = [];
-        el.childNodes.forEach(function(node) {
-          if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-            textNodes.push(node);
-          }
-        });
-        if (textNodes.length > 0) {
-          textNodes[textNodes.length - 1].textContent = translation;
         }
       } else {
         // For regular elements, update textContent
@@ -515,25 +662,30 @@ const translations = {
     });
 
     // Update demo form placeholders specifically
-    const demoName = document.getElementById('demo-name');
-    const demoPhone = document.getElementById('demo-phone');
-    const demoEmail = document.getElementById('demo-email');
-    const demoAddress = document.getElementById('demo-address');
+    const demoName = document.getElementById("demo-name");
+    const demoPhone = document.getElementById("demo-phone");
+    const demoEmail = document.getElementById("demo-email");
+    const demoAddress = document.getElementById("demo-address");
 
-    if (demoName) demoName.placeholder = translations[lang].demo_form_name_placeholder || demoName.placeholder;
-    if (demoPhone) demoPhone.placeholder = translations[lang].demo_form_phone_placeholder || demoPhone.placeholder;
-    if (demoEmail) demoEmail.placeholder = translations[lang].demo_form_email_placeholder || demoEmail.placeholder;
-    if (demoAddress) demoAddress.placeholder = translations[lang].demo_form_address_placeholder || demoAddress.placeholder;
+    if (demoName)
+      demoName.placeholder =
+        translations[lang].demo_form_name_placeholder || demoName.placeholder;
+    if (demoPhone)
+      demoPhone.placeholder =
+        translations[lang].demo_form_phone_placeholder || demoPhone.placeholder;
+    if (demoEmail)
+      demoEmail.placeholder =
+        translations[lang].demo_form_email_placeholder || demoEmail.placeholder;
+    if (demoAddress)
+      demoAddress.placeholder =
+        translations[lang].demo_form_address_placeholder ||
+        demoAddress.placeholder;
 
     // Save preference to localStorage
     try {
-      localStorage.setItem('preferredLanguage', lang);
+      localStorage.setItem("preferredLanguage", lang);
     } catch (e) {
       // localStorage may not be available in some contexts
-    }
-
-    if (typeof window.updateProductActionLabels === 'function') {
-      window.updateProductActionLabels();
     }
   }
 
@@ -542,20 +694,20 @@ const translations = {
    * Attaches click handlers to all .lang-btn elements
    */
   function initLanguageSwitcher() {
-    const langButtons = document.querySelectorAll('.lang-btn');
+    const langButtons = document.querySelectorAll(".lang-btn");
 
-    langButtons.forEach(function(btn) {
-      btn.addEventListener('click', function() {
+    langButtons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
         // Remove active class from all buttons
-        langButtons.forEach(function(b) {
-          b.classList.remove('active');
+        langButtons.forEach(function (b) {
+          b.classList.remove("active");
         });
 
         // Add active class to clicked button
-        this.classList.add('active');
+        this.classList.add("active");
 
         // Get language code and apply translations
-        const lang = this.getAttribute('data-lang');
+        const lang = this.getAttribute("data-lang");
         if (lang) {
           applyTranslations(lang);
         }
@@ -564,8 +716,8 @@ const translations = {
 
     // Load saved language preference
     try {
-      const savedLang = localStorage.getItem('preferredLanguage') || 'en';
-      if (savedLang !== 'en') {
+      const savedLang = localStorage.getItem("preferredLanguage") || "en";
+      if (savedLang !== "en") {
         const savedBtn = document.querySelector(`[data-lang="${savedLang}"]`);
         if (savedBtn) {
           // Programmatically trigger the click to activate the saved language
@@ -578,8 +730,8 @@ const translations = {
   }
 
   // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initLanguageSwitcher);
   } else {
     // DOM is already loaded
     initLanguageSwitcher();
@@ -587,5 +739,4 @@ const translations = {
 
   // Expose applyTranslations globally for any external use
   window.applyTranslations = applyTranslations;
-
 })();
