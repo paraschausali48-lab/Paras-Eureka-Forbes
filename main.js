@@ -43,9 +43,23 @@ document.addEventListener('DOMContentLoaded', function () {
     return card.querySelector('.product-tag')?.dataset.category || '';
   }
 
+  function getSkuCode(title) {
+    return (
+      'EF-' +
+      title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-|-$/g, '')
+        .toUpperCase()
+    );
+  }
+
   // Get card facets from subcategory attribute
   function getCardSubcategories(card) {
-    return (card.dataset.subcategory || '').split(',').map((s) => s.trim());
+    return (card.dataset.subcategory || '')
+      .toLowerCase()
+      .split(',')
+      .map((s) => s.trim());
   }
 
   // Check if card matches a facet (value)
@@ -114,6 +128,12 @@ document.addEventListener('DOMContentLoaded', function () {
         'active-copper',
         'hot-ambient',
         'alkaline',
+        'alkaline-boost',
+        'alkaline-boost-active-copper',
+        'food-grade plastic',
+        'slim',
+        'stainless-steel',
+        'zero-pressure-pump',
         'mtds',
         'smart',
         'ro',
@@ -168,12 +188,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     const badge = document.getElementById('filter-badge');
+    const bottomNavBadge = document.getElementById('bottom-nav-filter-badge');
+
     if (badge) {
       if (activeCount > 0) {
         badge.textContent = activeCount;
         badge.style.display = 'inline-flex';
       } else {
         badge.style.display = 'none';
+      }
+    }
+
+    if (bottomNavBadge) {
+      if (activeCount > 0) {
+        bottomNavBadge.textContent = activeCount;
+        bottomNavBadge.style.display = 'flex';
+      } else {
+        bottomNavBadge.style.display = 'none';
+      }
+    }
+
+    if (clearAllBtn) {
+      if (activeCount > 0) {
+        clearAllBtn.classList.add('active-filters');
+      } else {
+        clearAllBtn.classList.remove('active-filters');
       }
     }
 
@@ -185,6 +224,28 @@ document.addEventListener('DOMContentLoaded', function () {
       checkedCats.forEach((cb) => {
         if (cb.value !== 'all') selectedCategories.push(cb.value);
       });
+    }
+
+    // Sync Visual Image Filters
+    const visualFilters = document.querySelectorAll('.visual-filter-btn');
+    if (visualFilters.length > 0) {
+      visualFilters.forEach((btn) => btn.classList.remove('active'));
+      const activeFacetsList = Array.from(checkedFacets).map((cb) => cb.value);
+
+      if (searchQuery || (activeFacetsList.length === 0 && allChecked)) {
+        const allBtn = document.querySelector('.visual-filter-btn[data-filter="all"]');
+        if (allBtn) allBtn.classList.add('active');
+      } else if (
+        activeFacetsList.length === 1 &&
+        selectedCategories.length === 1 &&
+        selectedCategories[0] === 'Water Purifier'
+      ) {
+        const btn = document.querySelector(`.visual-filter-btn[data-filter="${activeFacetsList[0]}"]`);
+        if (btn) btn.classList.add('active');
+      } else if (activeFacetsList.length === 0 && selectedCategories.length === 1) {
+        const btn = document.querySelector(`.visual-filter-btn[data-filter="${selectedCategories[0]}"]`);
+        if (btn) btn.classList.add('active');
+      }
     }
 
     // Gather active facet values
@@ -208,9 +269,24 @@ document.addEventListener('DOMContentLoaded', function () {
         matchesFacets = activeFacets.some((f) => cardHasFacet(card, f));
       }
 
-      const show = matchesCategory && matchesFacets;
-      card.style.display = show ? 'flex' : 'none';
-      if (show) visibleCount++;
+      // Check search query
+      let matchesSearch = true;
+      if (searchQuery) {
+        const title = (card.querySelector('h3')?.textContent || '').toLowerCase();
+        const desc = (card.querySelector('p')?.textContent || '').toLowerCase();
+        matchesSearch = title.includes(searchQuery) || desc.includes(searchQuery);
+      }
+
+      const show = matchesCategory && matchesFacets && matchesSearch;
+      if (show) {
+        card.style.display = 'flex';
+        card.style.animation = 'none';
+        void card.offsetHeight; // Trigger reflow to restart animation
+        card.style.animation = `filterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards ${Math.min(visibleCount, 15) * 0.04}s`;
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
     });
 
     // Update category counts
@@ -225,12 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Announce to screen readers
     const announcer = document.getElementById('search-announcer');
     if (announcer) {
-        announcer.textContent = `Showing ${visibleCount} products.`;
-    }
-
-    // Close mobile drawer after filter
-    if (window.innerWidth <= 900 && document.activeElement !== document.getElementById('product-search')) {
-      closeFilterDrawer();
+      announcer.textContent = `Showing ${visibleCount} products.`;
     }
   }
 
@@ -277,8 +348,73 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Search input event listener
   const searchInput = document.getElementById('product-search');
+  const searchBtn = document.querySelector('.header-search button');
+
+  function executeSearchAndScroll() {
+    if (!searchInput) return;
+
+    const catView = document.getElementById('category-view');
+    const prodView = document.getElementById('product-listing-view');
+
+    if (searchInput.value.trim() !== '') {
+      if (catView && prodView) {
+        catView.style.display = 'none';
+        prodView.style.display = 'block';
+      }
+      applyFilters();
+
+      const productsSection = document.getElementById('products');
+      if (productsSection) {
+        const y = productsSection.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    } else {
+      if (catView && prodView) {
+        catView.style.display = 'block';
+        prodView.style.display = 'none';
+        const y = catView.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+      applyFilters();
+    }
+  }
+
   if (searchInput) {
-    searchInput.addEventListener('input', debounce(applyFilters, 300));
+    searchInput.addEventListener(
+      'input',
+      debounce(function () {
+        const catView = document.getElementById('category-view');
+        const prodView = document.getElementById('product-listing-view');
+        if (searchInput.value.trim() !== '') {
+          if (catView && prodView) {
+            catView.style.display = 'none';
+            prodView.style.display = 'block';
+          }
+        } else {
+          if (catView && prodView) {
+            catView.style.display = 'block';
+            prodView.style.display = 'none';
+          }
+        }
+        applyFilters();
+      }, 300),
+    );
+
+    // Handle 'Enter' key press
+    searchInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        executeSearchAndScroll();
+      }
+    });
+  }
+
+  // Handle Search button click
+  if (searchBtn) {
+    searchBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      executeSearchAndScroll();
+    });
   }
 
   // Clear all
@@ -295,22 +431,62 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Visual Filters Click Logic
+  const visualFilters = document.querySelectorAll('.visual-filter-btn');
+  if (visualFilters.length > 0) {
+    visualFilters.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        const filterVal = this.dataset.filter;
+
+        // Clear all existing checkbox filters
+        document.querySelectorAll('.filter-cat, .filter-facet').forEach((cb) => (cb.checked = false));
+        const searchInput = document.getElementById('product-search');
+        if (searchInput) searchInput.value = '';
+
+        if (filterVal === 'all') {
+          document.querySelector('.filter-cat[value="all"]').checked = true;
+        } else if (filterVal === 'Air Purifier' || filterVal === 'Vacuum Cleaner') {
+          const catCb = document.querySelector(`.filter-cat[value="${filterVal}"]`);
+          if (catCb) catCb.checked = true;
+        } else {
+          // Water purifier specific filter
+          document.querySelector('.filter-cat[value="Water Purifier"]').checked = true;
+          const facetCb = document.querySelector(`.filter-facet[value="${filterVal}"]`);
+          if (facetCb) facetCb.checked = true;
+        }
+
+        const hasWater = document.querySelector('.filter-cat[value="Water Purifier"]:checked');
+        const hasVacuum = document.querySelector('.filter-cat[value="Vacuum Cleaner"]:checked');
+        const allCats = document.querySelector('.filter-cat[value="all"]:checked');
+
+        document
+          .querySelectorAll('.water-filter')
+          .forEach((el) => (el.style.display = allCats || hasWater ? '' : 'none'));
+        document
+          .querySelectorAll('.vacuum-filter')
+          .forEach((el) => (el.style.display = allCats || hasVacuum ? '' : 'none'));
+
+        applyFilters();
+      });
+    });
+  }
+
   // Initial filter run
   setTimeout(applyFilters, 50);
 
   // ============= END FACETED FILTERING =============
 
-    // Accessibility: Make product cards keyboard navigable
-    productCards.forEach(card => {
-        card.setAttribute('tabindex', '0');
-        card.setAttribute('role', 'button');
-        card.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            }
-        });
+  // Accessibility: Make product cards keyboard navigable
+  productCards.forEach((card) => {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        this.click();
+      }
     });
+  });
 
   // ============= DYNAMIC META TAGS FOR SEO & BROWSER TABS =============
   const originalMeta = {
@@ -337,7 +513,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateTag('meta[property="og:title"]', 'content', title || originalMeta.ogTitle);
     updateTag('meta[property="og:description"]', 'content', desc || originalMeta.ogDesc);
 
-    if (image) updateTag('meta[property="og:image"]', 'content', image || originalMeta.ogImage);
+    updateTag('meta[property="og:image"]', 'content', image || originalMeta.ogImage);
   }
 
   function updateProductSchema(title, sku, price, image, description) {
@@ -355,18 +531,19 @@ document.addEventListener('DOMContentLoaded', function () {
       image: image,
       description: description,
       sku: sku,
+      brand: {
+        '@type': 'Brand',
+        name: 'Eureka Forbes',
+      },
       offers: {
         '@type': 'Offer',
         url: window.location.href,
         priceCurrency: 'INR',
         price: price,
         availability: 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/NewCondition',
       },
     });
-  }
-
-  function getProductCategory(card) {
-    return card.querySelector('.product-tag')?.dataset.category || '';
   }
 
   function getCardCtaLabelKey(category) {
@@ -397,6 +574,11 @@ document.addEventListener('DOMContentLoaded', function () {
             secondary: true,
             message: `Hello Paras, I am interested in ${title}. Please share the current price, offer, installation details, and availability.`,
           },
+          {
+            label: 'Check Exchange Value',
+            secondary: true,
+            message: `Hello Paras, I want to exchange my old water purifier for the ${title}. Please let me know the exchange value and offers.`,
+          },
         ];
       case 'Water Softener':
         return [
@@ -414,7 +596,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return [
           {
             label: 'Book Home Demo',
-            message: `Hello Paras, I am interested in ${title}. Please help me book a home demo and share availability.`,
+            isDemo: true,
+            productTitle: title,
           },
           {
             label: 'Get Best Offer on WhatsApp',
@@ -458,7 +641,16 @@ document.addEventListener('DOMContentLoaded', function () {
     button.textContent = action.label;
     button.className = action.secondary ? 'product-btn product-btn-secondary' : 'product-btn';
     button.addEventListener('click', function () {
-      openWhatsAppMessage(action.message);
+      if (action.isDemo) {
+        const demoModal = document.getElementById('demo-modal');
+        const demoProduct = document.getElementById('demo-product-name');
+        if (demoModal && demoProduct) {
+          demoProduct.textContent = `Product: ${action.productTitle}`;
+          demoModal.classList.add('active');
+        }
+      } else {
+        openWhatsAppMessage(action.message);
+      }
     });
     return button;
   }
@@ -466,19 +658,56 @@ document.addEventListener('DOMContentLoaded', function () {
   function updateProductActionLabels() {
     const lang = document.documentElement.lang || 'en';
     productCards.forEach((card) => {
-      const button = card.querySelector(':scope > .product-btn');
+      const category = getCardCategory(card);
+      let button = card.querySelector('.product-btn:not(.exchange-btn)');
+      if (!button) {
+        button = card.querySelector(':scope > .product-btn');
+      }
       if (!button) return;
-      const key = getCardCtaLabelKey(getProductCategory(card));
+
+      const key = getCardCtaLabelKey(category);
       button.setAttribute('data-i18n', key);
       button.setAttribute('href', '#');
 
       if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
         button.textContent = translations[lang][key];
       }
+
+      // Add Exchange Button for Water Purifiers dynamically
+      if (category === 'Water Purifier' && !card.querySelector('.exchange-btn')) {
+        const exchangeBtn = document.createElement('button');
+        exchangeBtn.type = 'button';
+        exchangeBtn.className = 'product-btn product-btn-secondary exchange-btn';
+
+        const exchangeLabel =
+          typeof translations !== 'undefined' && translations[lang] && translations[lang]['btn_exchange']
+            ? translations[lang]['btn_exchange']
+            : 'Exchange Offer';
+
+        exchangeBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><path d="M17 1l4 4-4 4"></path><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><path d="M7 23l-4-4 4-4"></path><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg><span data-i18n="btn_exchange">${exchangeLabel}</span>`;
+
+        exchangeBtn.addEventListener('click', function (e) {
+          e.stopPropagation(); // prevent modal from opening
+          const title = card.querySelector('h3')?.textContent || '';
+          const message = `Hello Paras, I want to exchange my old water purifier for the ${title}. Please let me know the exchange value and offers.`;
+          const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodeURIComponent(message)}`;
+
+          if (typeof gtag === 'function') {
+            gtag('event', 'exchange_click', { event_category: 'WhatsApp', event_label: title });
+          }
+          window.open(waUrl, '_blank');
+        });
+
+        if (!button.parentElement.classList.contains('card-actions')) {
+          const actionsContainer = document.createElement('div');
+          actionsContainer.className = 'card-actions';
+          button.parentNode.insertBefore(actionsContainer, button);
+          actionsContainer.appendChild(button);
+        }
+        button.parentElement.appendChild(exchangeBtn);
+      }
     });
   }
-
-  window.updateProductActionLabels = updateProductActionLabels;
 
   function createProductImagePlaceholder(card) {
     const existingPlaceholder = card.querySelector('.product-image-placeholder');
@@ -530,56 +759,58 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  function applyHeroImageFallback() {
-    const heroCard = document.querySelector('.hero-card');
-    const heroImage = heroCard?.querySelector('img');
-    if (!heroCard || !heroImage) return;
-
-    heroImage.addEventListener(
-      'error',
-      function () {
-        this.classList.add('image-missing');
-        if (!heroCard.querySelector('.hero-image-placeholder')) {
-          const placeholder = document.createElement('div');
-          placeholder.className = 'hero-image-placeholder';
-          placeholder.setAttribute('role', 'img');
-          placeholder.setAttribute('aria-label', 'Eureka Forbes product catalog');
-          placeholder.innerHTML = `
-            <span>Eureka Forbes</span>
-            <strong>Premium Water Purifiers & Home Appliances</strong>
-            <small>Book a free home demonstration</small>
-        `;
-          heroCard.appendChild(placeholder);
-        }
-      },
-      { once: true },
-    );
-  }
-
-  // 1. Inject Prices
-  function injectMrpLabels() {
+  // 1. Inject Prices and Calculate Discounts dynamically
+  function processPricingAndDiscounts() {
     productCards.forEach((card) => {
-      const priceEl = card.querySelector('.price');
-      if (!priceEl || card.querySelector('.mrp')) return;
+      let priceEl = card.querySelector('.price');
+      let mrpEl = card.querySelector('.mrp');
 
-      const mopText = priceEl.textContent.replace(/[^0-9]/g, '');
-      const mopValue = Number(mopText);
+      if (!priceEl) return;
+
+      const mopValue = parseInt(priceEl.textContent.replace(/[^0-9]/g, ''));
       if (!mopValue) return;
 
-      const explicitMrp = Number(priceEl.dataset.mrp && priceEl.dataset.mrp.replace(/[^0-9]/g, ''));
-      const mrpValue = explicitMrp || Math.ceil((mopValue * 1.2) / 500) * 500;
+      let mrpValue = 0;
 
-      const priceInfo = document.createElement('div');
-      priceInfo.className = 'price-info';
+      // Ensure MRP element exists, if not generate a fallback
+      if (!mrpEl) {
+        const explicitMrp = parseInt(priceEl.dataset.mrp && priceEl.dataset.mrp.replace(/[^0-9]/g, ''));
+        mrpValue = explicitMrp || Math.ceil((mopValue * 1.2) / 500) * 500;
 
-      const mrpEl = document.createElement('div');
-      mrpEl.className = 'mrp';
-      mrpEl.textContent = `MRP ₹${mrpValue.toLocaleString('en-IN')}`;
+        const priceInfo = document.createElement('div');
+        priceInfo.className = 'price-info';
 
-      priceEl.textContent = `MOP ₹${mopValue.toLocaleString('en-IN')}`;
-      priceEl.parentNode.insertBefore(priceInfo, priceEl);
-      priceInfo.appendChild(mrpEl);
-      priceInfo.appendChild(priceEl);
+        mrpEl = document.createElement('div');
+        mrpEl.className = 'mrp';
+        mrpEl.textContent = `MRP ₹${mrpValue.toLocaleString('en-IN')}`;
+
+        priceEl.textContent = `MOP ₹${mopValue.toLocaleString('en-IN')}`;
+        priceEl.parentNode.insertBefore(priceInfo, priceEl);
+        priceInfo.appendChild(mrpEl);
+        priceInfo.appendChild(priceEl);
+      } else {
+        mrpValue = parseInt(mrpEl.textContent.replace(/[^0-9]/g, ''));
+      }
+
+      // Calculate and Inject Discount Badge
+      if (mrpValue > mopValue && mopValue > 0 && !card.querySelector('.discount-badge')) {
+        const discount = Math.round(((mrpValue - mopValue) / mrpValue) * 100);
+
+        if (discount > 0) {
+          const badge = document.createElement('span');
+          badge.className = 'discount-badge';
+          badge.textContent = `${discount}% OFF`;
+
+          // Create a wrapper for MRP and Badge to sit side-by-side
+          if (!mrpEl.parentElement.classList.contains('mrp-wrapper')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'mrp-wrapper';
+            mrpEl.parentNode.insertBefore(wrapper, mrpEl);
+            wrapper.appendChild(mrpEl);
+            wrapper.appendChild(badge);
+          }
+        }
+      }
     });
   }
 
@@ -602,7 +833,7 @@ document.addEventListener('DOMContentLoaded', function () {
   function buildModalGalleryOnDemand(card, galleryContainer) {
     const galleryCount = parseInt(card.getAttribute('data-gallery-count') || '1');
     const skuSlug = getSkuSlugFromCard(card);
-    const imgExt = 'jpg';
+    const imgExt = 'webp';
 
     if (!skuSlug || galleryCount < 1) {
       console.warn('[Gallery] Invalid gallery data for card:', card);
@@ -656,7 +887,7 @@ document.addEventListener('DOMContentLoaded', function () {
       thumb.onerror = function () {
         this.style.display = 'none';
         this.parentElement.style.display = 'none';
-        console.debug(`[Gallery] Image not found: images/${skuSlug}/${i}.jpg`);
+        console.debug(`[Gallery] Image not found: images/${skuSlug}/${i}.${imgExt}`);
       };
 
       // Click handler: Update main image when thumbnail is clicked
@@ -695,13 +926,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const title = card.querySelector('h3')?.textContent || '';
       if (!title) return;
 
-      const skuSlug = title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '')
-        .substring(0, 20)
-        .toUpperCase();
-      const sku = 'EF-' + skuSlug;
+      const sku = getSkuCode(title);
       const rawPrice = card.querySelector('.price')
         ? card.querySelector('.price').textContent.replace(/[^0-9]/g, '')
         : '0';
@@ -717,12 +942,17 @@ document.addEventListener('DOMContentLoaded', function () {
           image: imgSrc,
           description: descText,
           sku: sku,
+          brand: {
+            '@type': 'Brand',
+            name: 'Eureka Forbes',
+          },
           offers: {
             '@type': 'Offer',
             url: baseUrl + '#' + sku,
             priceCurrency: 'INR',
             price: rawPrice,
             availability: 'https://schema.org/InStock',
+            itemCondition: 'https://schema.org/NewCondition',
           },
         },
       });
@@ -741,70 +971,73 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-    // Generates FAQ Schema for Rich Snippets in Google Search
-    function generateFaqSchema() {
-        const faqItems = document.querySelectorAll('.faq-item');
-        const mainEntity = [];
+  // Generates FAQ Schema for Rich Snippets in Google Search
+  function generateFaqSchema() {
+    const faqItems = document.querySelectorAll('.faq-item');
+    const mainEntity = [];
 
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question-text')?.textContent;
-            const answer = item.querySelector('.faq-answer-content')?.textContent;
-            if (question && answer) {
-                mainEntity.push({
-                    "@type": "Question",
-                    "name": question.trim(),
-                    "acceptedAnswer": {
-                        "@type": "Answer",
-                        "text": answer.trim()
-                    }
-                });
-            }
+    faqItems.forEach((item) => {
+      const question = item.querySelector('.faq-question-text')?.textContent;
+      const answer = item.querySelector('.faq-answer-content')?.textContent;
+      if (question && answer) {
+        mainEntity.push({
+          '@type': 'Question',
+          name: question.trim(),
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: answer.trim(),
+          },
         });
+      }
+    });
 
-        if (mainEntity.length > 0) {
-            const schemaScript = document.createElement('script');
-            schemaScript.type = 'application/ld+json';
-            schemaScript.id = 'faq-schema';
-            schemaScript.textContent = JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "mainEntity": mainEntity
-            });
-            document.head.appendChild(schemaScript);
-        }
+    if (mainEntity.length > 0) {
+      const schemaScript = document.createElement('script');
+      schemaScript.type = 'application/ld+json';
+      schemaScript.id = 'faq-schema';
+      schemaScript.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: mainEntity,
+      });
+      document.head.appendChild(schemaScript);
     }
+  }
 
   // Run initial setup - ONLY inject MRP labels
   // NOTE: Gallery preloading removed for performance optimization
   // Galleries are now built on-demand when modal opens
-  injectMrpLabels();
+  processPricingAndDiscounts();
   applyProductImageFallbacks();
-  applyHeroImageFallback();
   updateProductActionLabels();
-  generateAllProductsSchema();
-    generateFaqSchema();
 
-    // Make product cards act like real links for professional behavior
-    function enhanceProductCardsWithLinks() {
-        productCards.forEach(card => {
-            const titleEl = card.querySelector('h3');
-            if (!titleEl || titleEl.querySelector('a')) return;
-            const title = titleEl.textContent;
-            const sku = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 20).toUpperCase();
-            const link = document.createElement('a');
-            link.href = '#EF-' + sku;
-            link.className = 'product-card-link';
-            link.textContent = title;
-            titleEl.textContent = '';
-            titleEl.appendChild(link);
-        });
-    }
-    enhanceProductCardsWithLinks();
+  // Defer heavy SEO schema generation to avoid blocking the main thread during initial page load
+  setTimeout(() => {
+    generateAllProductsSchema();
+    generateFaqSchema();
+  }, 1500);
+
+  // Make product cards act like real links for professional behavior
+  function enhanceProductCardsWithLinks() {
+    productCards.forEach((card) => {
+      const titleEl = card.querySelector('h3');
+      if (!titleEl || titleEl.querySelector('a')) return;
+      const title = titleEl.textContent;
+      const sku = getSkuCode(title);
+      const link = document.createElement('a');
+      link.href = '#' + sku;
+      link.className = 'product-card-link';
+      link.textContent = title;
+      titleEl.textContent = '';
+      titleEl.appendChild(link);
+    });
+  }
+  enhanceProductCardsWithLinks();
 
   // Professional Modal Logic (Optimized: On-Demand Gallery Injection)
   const pdpModal = document.getElementById('pdp-modal');
   const modalGallery = document.getElementById('pdp-gallery');
-    let lastFocusedElement = null;
+  let lastFocusedElement = null;
 
   productCards.forEach((card) => {
     card.addEventListener('click', function (e) {
@@ -820,13 +1053,13 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
       }
 
-            // Store focus for accessibility restoration later
-            lastFocusedElement = this;
+      // Store focus for accessibility restoration later
+      lastFocusedElement = this;
 
       // Grab details from the card
       const title = this.querySelector('h3').textContent;
       const category = this.querySelector('.product-tag').textContent;
-      const categoryKey = getProductCategory(this);
+      const categoryKey = getCardCategory(this);
       const priceHTML = this.querySelector('.price-info') ? this.querySelector('.price-info').innerHTML : '';
 
       const hiddenSpecs = this.querySelector('.hidden-specs');
@@ -836,17 +1069,12 @@ document.addEventListener('DOMContentLoaded', function () {
         : '<ul><li><strong>Brand:</strong> Eureka Forbes</li><li><strong>Warranty:</strong> 1 Year</li></ul>';
 
       // Generate SKU from product name
-      const sku = title
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-|-$/g, '')
-        .substring(0, 20)
-        .toUpperCase();
+      const sku = getSkuCode(title);
 
       // Put the text into the modal
       document.getElementById('pdp-title').textContent = title;
       document.getElementById('pdp-category').textContent = category;
-      document.getElementById('pdp-sku').querySelector('span').textContent = 'EF-' + sku;
+      document.getElementById('pdp-sku').querySelector('span').textContent = sku;
       document.getElementById('pdp-price').innerHTML = priceHTML;
 
       // Extract details for schema
@@ -857,12 +1085,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const descText = this.querySelector('p') ? this.querySelector('p').textContent : title;
 
       // Inject dynamic schema
-      updateProductSchema(title, 'EF-' + sku, rawPrice, imgSrc, descText);
+      updateProductSchema(title, sku, rawPrice, imgSrc, descText);
 
       // Update URL Hash for direct linking (unless triggered by hashchange)
       if (!this.hasAttribute('data-hash-triggered')) {
         if (window.history && window.history.pushState) {
-          window.history.pushState(null, null, '#EF-' + sku);
+          window.history.pushState(null, null, '#' + sku);
         }
       }
       this.removeAttribute('data-hash-triggered');
@@ -915,7 +1143,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       shareBtn.addEventListener('click', function () {
         const baseUrl = window.location.href.split('#')[0];
-        const productUrl = `${baseUrl}#EF-${sku}`;
+        const productUrl = `${baseUrl}#${sku}`;
         const message = `Check out this product: *${title}*\n\n${productUrl}`;
         const waUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
 
@@ -946,7 +1174,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       shareFbBtn.addEventListener('click', function () {
         const baseUrl = window.location.href.split('#')[0];
-        const productUrl = `${baseUrl}#EF-${sku}`;
+        const productUrl = `${baseUrl}#${sku}`;
         const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl)}`;
 
         if (typeof gtag === 'function') {
@@ -976,7 +1204,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       shareCopyBtn.addEventListener('click', function () {
         const baseUrl = window.location.href.split('#')[0];
-        const productUrl = `${baseUrl}#EF-${sku}`;
+        const productUrl = `${baseUrl}#${sku}`;
 
         navigator.clipboard.writeText(productUrl).then(() => {
           const span = shareCopyBtn.querySelector('span');
@@ -1000,35 +1228,13 @@ document.addEventListener('DOMContentLoaded', function () {
       pdpModal.scrollTop = 0; // Scroll to top for the full-page view
       document.body.style.overflow = 'hidden';
 
-            // Focus the close button for accessibility
-            setTimeout(() => {
-                const closeBtn = pdpModal.querySelector('.pdp-close');
-                if (closeBtn) closeBtn.focus();
-            }, 100);
+      // Focus the close button for accessibility
+      setTimeout(() => {
+        const closeBtn = pdpModal.querySelector('.pdp-close');
+        if (closeBtn) closeBtn.focus();
+      }, 100);
     });
   });
-
-  // ============= HAMBURGER NAV TOGGLE =============
-  const navToggle = document.querySelector('.nav-toggle');
-  const mainNav = document.getElementById('main-nav');
-
-  if (navToggle && mainNav) {
-    navToggle.addEventListener('click', function () {
-      this.classList.toggle('open');
-      mainNav.classList.toggle('open');
-      const isOpen = mainNav.classList.contains('open');
-      this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-    });
-
-    // Close nav when clicking a link
-    mainNav.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', function () {
-        navToggle.classList.remove('open');
-        mainNav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
 
   // Handle closing of the Demo Form Modal
   const demoModal = document.getElementById('demo-modal');
@@ -1041,30 +1247,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Handle sending the TDS Lead Magnet Form to WhatsApp
-  document.getElementById('tds-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const name = document.getElementById('tds-name').value;
-    const address = document.getElementById('tds-address').value;
-    const pincode = document.getElementById('tds-pincode').value;
-    const locationType = document.getElementById('tds-location-type').value;
-
-    const vendorWhatsApp = '918928002642';
-
-    const message = `*Free Water TDS Test Request*\n\n*Name:* ${name}\n*Address:* ${address}\n*Pincode:* ${pincode}\n*Location:* ${locationType}`;
-    const encodedMessage = encodeURIComponent(message);
-
-    if (typeof gtag === 'function') {
-      gtag('event', 'generate_lead', { event_category: 'WhatsApp', event_label: 'TDS Test Request' });
-    }
-
-    const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodedMessage}`;
-    window.open(waUrl, '_blank');
-
-    this.reset();
-  });
-
   // Handle sending the Demo Form to WhatsApp
   document.getElementById('demo-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -1074,8 +1256,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const email = document.getElementById('demo-email').value;
     const address = document.getElementById('demo-address').value;
     const product = document.getElementById('demo-product-name').textContent.replace('Product: ', '');
-
-    const vendorWhatsApp = '918928002642';
 
     const message = `*Free Demo Request*\n\n*Product:* ${product}\n*Name:* ${name}\n*Phone:* ${phone}\n*Email:* ${email}\n*Address:* ${address}`;
     const encodedMessage = encodeURIComponent(message);
@@ -1093,19 +1273,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Logic to close the modal (with gallery cleanup for memory management)
   function closePdpModal() {
-    // PERFORMANCE: Clean up dynamically generated gallery images to free memory
-    cleanupModalGallery(modalGallery);
     pdpModal.classList.remove('active');
     document.body.style.overflow = '';
 
     // Restore original metadata
     updateMetaTags(null, null, null);
 
-        // Restore focus for accessibility
-        if (lastFocusedElement) {
-            lastFocusedElement.focus();
-            lastFocusedElement = null;
-        }
+    // PERFORMANCE: Clean up dynamically generated gallery images to free memory
+    // Wait for the exit transition (0.3s) to finish before removing elements from the DOM
+    setTimeout(() => {
+      cleanupModalGallery(modalGallery);
+    }, 300);
+
+    // Restore focus for accessibility
+    if (lastFocusedElement) {
+      lastFocusedElement.focus();
+      lastFocusedElement = null;
+    }
 
     // Clean up URL hash if closing manually (via X button or overlay)
     if (window.location.hash.startsWith('#EF-')) {
@@ -1206,13 +1390,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const hashSku = window.location.hash.substring(1);
       const targetCard = Array.from(productCards).find((card) => {
         const title = card.querySelector('h3')?.textContent || '';
-        const sku = title
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, '-')
-          .replace(/^-|-$/g, '')
-          .substring(0, 20)
-          .toUpperCase();
-        return 'EF-' + sku === hashSku;
+        return getSkuCode(title) === hashSku;
       });
 
       if (targetCard && !pdpModal.classList.contains('active')) {
@@ -1231,21 +1409,125 @@ document.addEventListener('DOMContentLoaded', function () {
       closePdpModal();
     }
   });
-}); // End of DOMContentLoaded
 
-// 6. Scroll Animation Logic
-const revealObserver = new IntersectionObserver((entries, observer) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('active');
-      observer.unobserve(entry.target); // Stop tracking once revealed to save memory
-    }
+  // 6. Scroll Animation Logic
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Stop tracking once revealed to save memory
+        }
+      });
+    },
+    { rootMargin: '0px 0px -50px 0px', threshold: 0.05 },
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => {
+    revealObserver.observe(el);
   });
-}, { rootMargin: '0px 0px -50px 0px', threshold: 0.05 });
 
-document.querySelectorAll('.reveal').forEach((el) => {
-  revealObserver.observe(el);
-});
+  // ============= COUNTDOWN TIMER LOGIC =============
+  const countDownDate = new Date('May 31, 2026 23:59:59').getTime();
+
+  const countdownInterval = setInterval(function () {
+    const now = new Date().getTime();
+    const distance = countDownDate - now;
+
+    const elCountdown = document.getElementById('offer-countdown');
+    if (!elCountdown) return;
+
+    if (distance < 0) {
+      clearInterval(countdownInterval);
+      elCountdown.style.display = 'none';
+      return;
+    }
+
+    // Add red "ending-soon" warning if less than 24 hours remain
+    if (distance < 24 * 60 * 60 * 1000) {
+      elCountdown.classList.add('ending-soon');
+    } else {
+      elCountdown.classList.remove('ending-soon');
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    const elDays = document.getElementById('cd-days');
+    const elHours = document.getElementById('cd-hours');
+    const elMins = document.getElementById('cd-minutes');
+    const elSecs = document.getElementById('cd-seconds');
+
+    if (elDays) elDays.textContent = days.toString().padStart(2, '0');
+    if (elHours) elHours.textContent = hours.toString().padStart(2, '0');
+    if (elMins) elMins.textContent = minutes.toString().padStart(2, '0');
+    if (elSecs) elSecs.textContent = seconds.toString().padStart(2, '0');
+  }, 1000);
+
+  // ============= SHOP BY CATEGORY LOGIC =============
+  const categoryView = document.getElementById('category-view');
+  const productListingView = document.getElementById('product-listing-view');
+  const backToCategoriesBtn = document.getElementById('back-to-categories');
+  const catCards = document.querySelectorAll('.cat-card');
+
+  if (catCards.length > 0 && productListingView && categoryView) {
+    catCards.forEach((card) => {
+      card.addEventListener('click', function () {
+        const targetCat = this.getAttribute('data-target-category');
+
+        categoryView.style.display = 'none';
+        productListingView.style.display = 'block';
+
+        // Reset filters
+        document.querySelectorAll('.filter-cat, .filter-facet').forEach((cb) => (cb.checked = false));
+        const targetCb = document.querySelector(`.filter-cat[value="${targetCat}"]`);
+        if (targetCb) targetCb.checked = true;
+
+        const waterFilters = document.querySelectorAll('.water-filter');
+        const vacuumFilters = document.querySelectorAll('.vacuum-filter');
+        waterFilters.forEach((el) => (el.style.display = targetCat === 'Water Purifier' ? '' : 'none'));
+        vacuumFilters.forEach((el) => (el.style.display = targetCat === 'Vacuum Cleaner' ? '' : 'none'));
+
+        document.querySelectorAll('.visual-filter-btn').forEach((btn) => btn.classList.remove('active'));
+        const visualBtn = document.querySelector(`.visual-filter-btn[data-filter="${targetCat}"]`);
+        if (visualBtn) {
+          visualBtn.classList.add('active');
+        } else if (targetCat === 'Water Purifier') {
+          const allBtn = document.querySelector('.visual-filter-btn[data-filter="all"]');
+          if (allBtn) allBtn.classList.add('active');
+        }
+
+        applyFilters();
+
+        setTimeout(() => {
+          document.querySelectorAll('.product-card').forEach((el) => {
+            if (el.style.display !== 'none') el.classList.add('active');
+          });
+        }, 50);
+
+        const productsSection = document.getElementById('products');
+        if (productsSection) {
+          const y = productsSection.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    });
+
+    if (backToCategoriesBtn) {
+      backToCategoriesBtn.addEventListener('click', function () {
+        productListingView.style.display = 'none';
+        categoryView.style.display = 'block';
+        const catViewEl = document.getElementById('category-view');
+        if (catViewEl) {
+          const y = catViewEl.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      });
+    }
+  }
+}); // End of DOMContentLoaded
 
 // Track clicks on all direct WhatsApp links (Floating button, Exchange Offer, etc.)
 document.addEventListener('click', function (e) {
@@ -1261,23 +1543,46 @@ document.addEventListener('click', function (e) {
 });
 
 const scrollToTopBtn = document.getElementById('scrollToTop');
-if (scrollToTopBtn) {
-  let isScrolling = false;
-  window.addEventListener('scroll', () => {
-    if (!isScrolling) {
-      window.requestAnimationFrame(() => {
-        if (window.scrollY > 500) {
-          scrollToTopBtn.classList.add('show');
-        } else {
-          scrollToTopBtn.classList.remove('show');
-        }
-        isScrolling = false;
-      });
-      isScrolling = true;
-    }
-  }, { passive: true });
+const bottomNav = document.querySelector('.mobile-bottom-nav');
+let lastScrollTop = 0;
 
-  scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+if (scrollToTopBtn || bottomNav) {
+  let isScrolling = false;
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!isScrolling) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+
+          if (scrollToTopBtn) {
+            if (currentScrollY > 500) {
+              scrollToTopBtn.classList.add('show');
+            } else {
+              scrollToTopBtn.classList.remove('show');
+            }
+          }
+
+          if (bottomNav && window.innerWidth <= 768) {
+            if (currentScrollY > lastScrollTop && currentScrollY > 100) {
+              bottomNav.classList.add('hidden'); // Scrolling down
+            } else {
+              bottomNav.classList.remove('hidden'); // Scrolling up
+            }
+            lastScrollTop = currentScrollY <= 0 ? 0 : currentScrollY;
+          }
+
+          isScrolling = false;
+        });
+        isScrolling = true;
+      }
+    },
+    { passive: true },
+  );
+
+  if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 }
