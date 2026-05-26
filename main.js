@@ -8,6 +8,43 @@ document.addEventListener('DOMContentLoaded', function () {
   const filterClose = document.getElementById('filter-sidebar-close');
   const clearAllBtn = document.getElementById('filter-clear-all');
 
+  // ============= FILTER ACCORDION LOGIC =============
+  const filterToggles = document.querySelectorAll('.filter-group-toggle');
+  filterToggles.forEach((toggle) => {
+    toggle.addEventListener('click', function () {
+      const isExpanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !isExpanded);
+    });
+  });
+
+  // ============= REVEAL PRODUCTS LOGIC =============
+  function revealProductsSection() {
+    const productsSection = document.getElementById('products');
+    const filterSidebar = document.getElementById('filter-sidebar');
+    if (productsSection) productsSection.style.display = '';
+    if (filterSidebar) filterSidebar.style.display = '';
+  }
+
+  // ============= HEADER SCROLL EFFECT =============
+  const siteHeader = document.querySelector('.site-header');
+  if (siteHeader) {
+    let isScrolled = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        const currentScroll = window.scrollY;
+        if (!isScrolled && currentScroll > 20) {
+          isScrolled = true;
+          siteHeader.classList.add('scrolled');
+        } else if (isScrolled && currentScroll <= 20) {
+          isScrolled = false;
+          siteHeader.classList.remove('scrolled');
+        }
+      },
+      { passive: true },
+    );
+  }
+
   // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'filter-overlay';
@@ -86,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Vacuum type mapping
     const vacTypeMap = {
-      canister: ['canister', 'wet-dry', 'upright'],
+      canister: ['canister'],
       handheld: ['handheld'],
       upright: ['upright', 'stick'],
       robotic: ['robotic'],
@@ -232,61 +269,107 @@ document.addEventListener('DOMContentLoaded', function () {
       visualFilters.forEach((btn) => btn.classList.remove('active'));
       const activeFacetsList = Array.from(checkedFacets).map((cb) => cb.value);
 
-      if (searchQuery || (activeFacetsList.length === 0 && allChecked)) {
-        const allBtn = document.querySelector('.visual-filter-btn[data-filter="all"]');
-        if (allBtn) allBtn.classList.add('active');
-      } else if (
-        activeFacetsList.length === 1 &&
-        selectedCategories.length === 1 &&
-        selectedCategories[0] === 'Water Purifier'
-      ) {
+      if (activeFacetsList.length === 1 && selectedCategories.length === 1) {
         const btn = document.querySelector(`.visual-filter-btn[data-filter="${activeFacetsList[0]}"]`);
         if (btn) btn.classList.add('active');
       } else if (activeFacetsList.length === 0 && selectedCategories.length === 1) {
-        const btn = document.querySelector(`.visual-filter-btn[data-filter="${selectedCategories[0]}"]`);
+        const btn = document.querySelector(
+          `.visual-filter-btn[data-filter="${selectedCategories[0]}"], .visual-filter-btn[data-nav-category="${selectedCategories[0]}"]`,
+        );
         if (btn) btn.classList.add('active');
       }
     }
 
-    // Gather active facet values
-    const activeFacets = [];
-    checkedFacets.forEach((cb) => activeFacets.push(cb.value));
+    // Gather active facet values grouped by their facet type (e.g., 'price', 'tech', 'storage')
+    const activeFacetGroups = {};
+    checkedFacets.forEach((cb) => {
+      const facetType = cb.dataset.facet;
+      if (!activeFacetGroups[facetType]) {
+        activeFacetGroups[facetType] = [];
+      }
+      activeFacetGroups[facetType].push(cb.value);
+    });
 
     // Show/hide products
     let visibleCount = 0;
+    const toShow = [];
+    const toHide = [];
     productCards.forEach((card) => {
       const cat = getCardCategory(card);
 
       // Check category
       const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(cat);
 
-      // Check all active facets
+      // Check all active facets using Advanced Faceted Logic (AND between groups, OR within groups)
       let matchesFacets = true;
-      if (activeFacets.length > 0) {
-        // For each active facet, at least one must match (OR within same facet group)
-        // But different facet groups must all be satisfied (AND between groups)
-        // Simplified: if any facet is checked, card must match at least one
-        matchesFacets = activeFacets.some((f) => cardHasFacet(card, f));
+      const facetKeys = Object.keys(activeFacetGroups);
+
+      if (facetKeys.length > 0) {
+        matchesFacets = facetKeys.every((key) => {
+          const groupValues = activeFacetGroups[key];
+          // Card must match at least ONE of the selected values in THIS specific group
+          return groupValues.some((val) => cardHasFacet(card, val));
+        });
       }
 
-      // Check search query
+      // Check search query (Advanced multi-word search)
       let matchesSearch = true;
       if (searchQuery) {
         const title = (card.querySelector('h3')?.textContent || '').toLowerCase();
         const desc = (card.querySelector('p')?.textContent || '').toLowerCase();
-        matchesSearch = title.includes(searchQuery) || desc.includes(searchQuery);
+
+        const searchTerms = searchQuery.split(' ').filter((term) => term.trim().length > 0);
+        matchesSearch = searchTerms.every((term) => title.includes(term) || desc.includes(term));
       }
 
       const show = matchesCategory && matchesFacets && matchesSearch;
       if (show) {
-        card.style.display = 'flex';
-        card.style.animation = 'none';
-        void card.offsetHeight; // Trigger reflow to restart animation
-        card.style.animation = `filterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards ${Math.min(visibleCount, 15) * 0.04}s`;
+        toShow.push(card);
         visibleCount++;
       } else {
-        card.style.display = 'none';
+        toHide.push(card);
       }
+    });
+
+    // Batch DOM writes to prevent layout thrashing
+    toHide.forEach((card) => (card.style.display = 'none'));
+    toShow.forEach((card) => {
+      card.style.display = 'flex';
+      card.style.animation = 'none';
+    });
+
+    // Advanced UI: Handle Empty State
+    let emptyState = document.getElementById('empty-state-message');
+    const productGrid = document.getElementById('product-grid');
+    if (visibleCount === 0) {
+      if (!emptyState && productGrid) {
+        emptyState = document.createElement('div');
+        emptyState.id = 'empty-state-message';
+        emptyState.className = 'empty-state';
+        emptyState.innerHTML = `
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-gray-400); margin-bottom: 16px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <h3>No products found</h3>
+          <p>Try adjusting your filters or search query to find what you're looking for.</p>
+          <button type="button" class="btn btn-outline filter-clear-all-empty" style="margin-top: 20px; border-color: var(--color-primary); color: var(--color-primary); padding: 10px 24px;">Clear All Filters</button>
+        `;
+        productGrid.parentNode.insertBefore(emptyState, productGrid);
+
+        emptyState.querySelector('.filter-clear-all-empty').addEventListener('click', () => {
+          if (clearAllBtn) clearAllBtn.click();
+        });
+      }
+      if (emptyState) emptyState.style.display = 'flex';
+      if (productGrid) productGrid.style.display = 'none';
+    } else {
+      if (emptyState) emptyState.style.display = 'none';
+      if (productGrid) productGrid.style.display = ''; // Restore grid layout
+    }
+
+    // Restart animations cleanly in the next frame
+    requestAnimationFrame(() => {
+      toShow.forEach((card, idx) => {
+        card.style.animation = `filterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards ${Math.min(idx, 15) * 0.04}s`;
+      });
     });
 
     // Update category counts
@@ -296,6 +379,15 @@ document.addEventListener('DOMContentLoaded', function () {
       ).length;
       const countEl = document.querySelector(`.filter-count[data-cat="${cat}"]`);
       if (countEl) countEl.textContent = `(${count})`;
+    });
+
+    // Update individual filter group bubble counters
+    document.querySelectorAll('.filter-group').forEach((group) => {
+      const checkedCount = Array.from(group.querySelectorAll('input[type="checkbox"]:checked')).filter(
+        (cb) => cb.value !== 'all',
+      ).length;
+      const title = group.querySelector('.filter-group-title');
+      if (title) title.setAttribute('data-selected-count', checkedCount);
     });
 
     // Announce to screen readers
@@ -349,56 +441,39 @@ document.addEventListener('DOMContentLoaded', function () {
   // Search input event listener
   const searchInput = document.getElementById('product-search');
   const searchBtn = document.querySelector('.header-search button');
+  let searchTimeout;
 
   function executeSearchAndScroll() {
     if (!searchInput) return;
+    clearTimeout(searchTimeout); // Prevent double-execution
 
-    const catView = document.getElementById('category-view');
-    const prodView = document.getElementById('product-listing-view');
+    revealProductsSection();
+    applyFilters();
 
-    if (searchInput.value.trim() !== '') {
-      if (catView && prodView) {
-        catView.style.display = 'none';
-        prodView.style.display = 'block';
-      }
-      applyFilters();
-
-      const productsSection = document.getElementById('products');
-      if (productsSection) {
-        const y = productsSection.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    } else {
-      if (catView && prodView) {
-        catView.style.display = 'block';
-        prodView.style.display = 'none';
-        const y = catView.getBoundingClientRect().top + window.scrollY - 80;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-      applyFilters();
+    const productsSection = document.getElementById('products');
+    if (productsSection) {
+      const y = productsSection.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   }
 
   if (searchInput) {
-    searchInput.addEventListener(
-      'input',
-      debounce(function () {
-        const catView = document.getElementById('category-view');
-        const prodView = document.getElementById('product-listing-view');
-        if (searchInput.value.trim() !== '') {
-          if (catView && prodView) {
-            catView.style.display = 'none';
-            prodView.style.display = 'block';
-          }
-        } else {
-          if (catView && prodView) {
-            catView.style.display = 'block';
-            prodView.style.display = 'none';
+    searchInput.addEventListener('input', function () {
+      revealProductsSection();
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        applyFilters();
+
+        // Auto-scroll if products section isn't fully in view
+        const productsSection = document.getElementById('products');
+        if (productsSection) {
+          const rect = productsSection.getBoundingClientRect();
+          if (rect.top > window.innerHeight * 0.6 || rect.bottom < 0) {
+            window.scrollTo({ top: rect.top + window.scrollY - 120, behavior: 'smooth' });
           }
         }
-        applyFilters();
-      }, 300),
-    );
+      }, 300);
+    });
 
     // Handle 'Enter' key press
     searchInput.addEventListener('keydown', function (e) {
@@ -424,6 +499,14 @@ document.addEventListener('DOMContentLoaded', function () {
       document.querySelector('.filter-cat[value="all"]').checked = true;
       document.querySelectorAll('.water-filter').forEach((el) => (el.style.display = ''));
       document.querySelectorAll('.vacuum-filter').forEach((el) => (el.style.display = ''));
+
+      const vfMain = document.getElementById('vf-main');
+      if (vfMain) {
+        document.getElementById('vf-water').style.display = 'none';
+        document.getElementById('vf-vacuum').style.display = 'none';
+        vfMain.style.display = 'flex';
+      }
+
       if (searchInput) {
         searchInput.value = '';
       }
@@ -436,6 +519,40 @@ document.addEventListener('DOMContentLoaded', function () {
   if (visualFilters.length > 0) {
     visualFilters.forEach((btn) => {
       btn.addEventListener('click', function () {
+        revealProductsSection();
+
+        // Handle Top-Level Navigation to Sub-Filters
+        if (this.hasAttribute('data-nav-category')) {
+          const cat = this.dataset.navCategory;
+          const vfMain = document.getElementById('vf-main');
+          const vfWater = document.getElementById('vf-water');
+          const vfVacuum = document.getElementById('vf-vacuum');
+
+          if (vfMain) vfMain.style.display = 'none';
+          if (cat === 'Water Purifier' && vfWater) vfWater.style.display = 'flex';
+          if (cat === 'Vacuum Cleaner' && vfVacuum) vfVacuum.style.display = 'flex';
+
+          document.querySelectorAll('.filter-cat, .filter-facet').forEach((cb) => (cb.checked = false));
+          const searchInput = document.getElementById('product-search');
+          if (searchInput) searchInput.value = '';
+
+          const catCb = document.querySelector(`.filter-cat[value="${cat}"]`);
+          if (catCb) catCb.checked = true;
+
+          const hasWater = cat === 'Water Purifier';
+          const hasVacuum = cat === 'Vacuum Cleaner';
+          document.querySelectorAll('.water-filter').forEach((el) => (el.style.display = hasWater ? '' : 'none'));
+          document.querySelectorAll('.vacuum-filter').forEach((el) => (el.style.display = hasVacuum ? '' : 'none'));
+
+          applyFilters();
+          const productsSection = document.getElementById('products');
+          if (productsSection) {
+            const y = productsSection.getBoundingClientRect().top + window.scrollY - 150;
+            window.scrollTo({ top: y, behavior: 'smooth' });
+          }
+          return; // Stop standard filter logic
+        }
+
         const filterVal = this.dataset.filter;
 
         // Clear all existing checkbox filters
@@ -443,14 +560,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.getElementById('product-search');
         if (searchInput) searchInput.value = '';
 
-        if (filterVal === 'all') {
-          document.querySelector('.filter-cat[value="all"]').checked = true;
-        } else if (filterVal === 'Air Purifier' || filterVal === 'Vacuum Cleaner') {
+        const mainCategories = ['Water Purifier', 'Air Purifier', 'Vacuum Cleaner', 'Water Softener'];
+
+        if (mainCategories.includes(filterVal)) {
           const catCb = document.querySelector(`.filter-cat[value="${filterVal}"]`);
           if (catCb) catCb.checked = true;
         } else {
-          // Water purifier specific filter
-          document.querySelector('.filter-cat[value="Water Purifier"]').checked = true;
+          // Determine if facet belongs to Vacuum or Water Purifier
+          const vacuumFacets = ['robotic', 'canister', 'handheld', 'wet-dry'];
+          if (vacuumFacets.includes(filterVal)) {
+            document.querySelector('.filter-cat[value="Vacuum Cleaner"]').checked = true;
+          } else {
+            document.querySelector('.filter-cat[value="Water Purifier"]').checked = true;
+          }
+
           const facetCb = document.querySelector(`.filter-facet[value="${filterVal}"]`);
           if (facetCb) facetCb.checked = true;
         }
@@ -467,12 +590,47 @@ document.addEventListener('DOMContentLoaded', function () {
           .forEach((el) => (el.style.display = allCats || hasVacuum ? '' : 'none'));
 
         applyFilters();
+
+        // Auto-scroll to the product section so the user can see the filtered results
+        const productsSection = document.getElementById('products');
+        if (productsSection) {
+          const y = productsSection.getBoundingClientRect().top + window.scrollY - 150;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
       });
     });
   }
 
-  // Initial filter run
-  setTimeout(applyFilters, 50);
+  // Back Button Logic for Visual Filters
+  const backBtns = document.querySelectorAll('.vf-back-btn');
+  if (backBtns.length > 0) {
+    backBtns.forEach((btn) => {
+      btn.addEventListener('click', function () {
+        document.getElementById('vf-water').style.display = 'none';
+        document.getElementById('vf-vacuum').style.display = 'none';
+        document.getElementById('vf-main').style.display = 'flex';
+
+        document.querySelectorAll('.filter-cat, .filter-facet').forEach((cb) => (cb.checked = false));
+        document.querySelector('.filter-cat[value="all"]').checked = true;
+        document.querySelectorAll('.water-filter').forEach((el) => (el.style.display = ''));
+        document.querySelectorAll('.vacuum-filter').forEach((el) => (el.style.display = ''));
+
+        applyFilters();
+      });
+    });
+  }
+
+  // Initial filter run & Cross-Page Search Routing
+  setTimeout(() => {
+    applyFilters();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQueryParam = urlParams.get('q');
+    if (searchQueryParam && searchInput) {
+      searchInput.value = searchQueryParam;
+      executeSearchAndScroll();
+    }
+  }, 50);
 
   // ============= END FACETED FILTERING =============
 
@@ -561,35 +719,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function getModalActions(category, title) {
+  function getModalActions(category, title, isOutOfStock = false) {
+    const stockMsg = isOutOfStock
+      ? ' I understand it is currently out of stock, could you let me know when it will be available?'
+      : '';
+
     switch (category) {
       case 'Water Purifier':
         return [
           {
             label: 'Book Free TDS Test',
-            message: `Hello Paras, I am interested in ${title}. Please help me book a free TDS test and check if this purifier is suitable for my home water.`,
-          },
-          {
-            label: 'Get Price & Installation Details',
-            secondary: true,
-            message: `Hello Paras, I am interested in ${title}. Please share the current price, offer, installation details, and availability.`,
+            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please help me book a free TDS test and check if this purifier is suitable for my home water.`,
           },
           {
             label: 'Check Exchange Value',
             secondary: true,
-            message: `Hello Paras, I want to exchange my old water purifier for the ${title}. Please let me know the exchange value and offers.`,
+            message: `Hello Paras, I want to exchange my old water purifier for the ${title}.${stockMsg} Please let me know the exchange value and offers.`,
           },
         ];
       case 'Water Softener':
         return [
           {
             label: 'Book Hard Water Check',
-            message: `Hello Paras, I am interested in ${title}. Please help me check if this water softener is suitable for my hard water issue and home usage.`,
-          },
-          {
-            label: 'Get Price & Installation Details',
-            secondary: true,
-            message: `Hello Paras, I am interested in ${title}. Please share the current price, installation requirements, and availability.`,
+            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please help me check if this water softener is suitable for my hard water issue and home usage.`,
           },
         ];
       case 'Vacuum Cleaner':
@@ -602,26 +754,21 @@ document.addEventListener('DOMContentLoaded', function () {
           {
             label: 'Get Best Offer on WhatsApp',
             secondary: true,
-            message: `Hello Paras, I am interested in ${title}. Please share the best current offer and demo availability.`,
+            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please share the best current offer and demo availability.`,
           },
         ];
       case 'Air Purifier':
         return [
           {
             label: 'Check Room Coverage',
-            message: `Hello Paras, I am interested in ${title}. Please help me check if it is suitable for my room size and air quality needs.`,
-          },
-          {
-            label: 'Get Price & Filter Details',
-            secondary: true,
-            message: `Hello Paras, I am interested in ${title}. Please share the current price, filter details, and availability.`,
+            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please help me check if it is suitable for my room size and air quality needs.`,
           },
         ];
       default:
         return [
           {
             label: 'Get Details on WhatsApp',
-            message: `Hello Paras, I am interested in ${title}. Please share details, offer, and availability.`,
+            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please share details, offer, and availability.`,
           },
         ];
     }
@@ -689,7 +836,11 @@ document.addEventListener('DOMContentLoaded', function () {
         exchangeBtn.addEventListener('click', function (e) {
           e.stopPropagation(); // prevent modal from opening
           const title = card.querySelector('h3')?.textContent || '';
-          const message = `Hello Paras, I want to exchange my old water purifier for the ${title}. Please let me know the exchange value and offers.`;
+          const isOutOfStock = card.classList.contains('out-of-stock');
+          const stockMsg = isOutOfStock
+            ? ' I understand it is currently out of stock, could you let me know when it will be available?'
+            : '';
+          const message = `Hello Paras, I want to exchange my old water purifier for the ${title}.${stockMsg} Please let me know the exchange value and offers.`;
           const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodeURIComponent(message)}`;
 
           if (typeof gtag === 'function') {
@@ -1096,7 +1247,7 @@ document.addEventListener('DOMContentLoaded', function () {
       this.removeAttribute('data-hash-triggered');
 
       // Update Browser Metadata
-      updateMetaTags(title, descText, new URL(imgSrc, window.location.origin).href);
+      updateMetaTags(title, descText, imgSrc);
 
       document.getElementById('pdp-specs').innerHTML = specsHTML;
 
@@ -1113,7 +1264,9 @@ document.addEventListener('DOMContentLoaded', function () {
       btnContainer.style.gap = '10px';
       btnContainer.style.flexWrap = 'wrap';
 
-      getModalActions(categoryKey, title).forEach((action) => {
+      const isOutOfStock = this.classList.contains('out-of-stock');
+
+      getModalActions(categoryKey, title, isOutOfStock).forEach((action) => {
         btnContainer.appendChild(createModalActionButton(action));
       });
 
@@ -1128,100 +1281,79 @@ document.addEventListener('DOMContentLoaded', function () {
         btnContainer.appendChild(leafletBtn);
       }
 
-      // Add "Share on WhatsApp" Button
-      const shareBtn = document.createElement('button');
-      shareBtn.type = 'button';
-      shareBtn.className = 'product-btn product-btn-secondary';
-
+      // Add Unified Native Share Button
+      const nativeShareBtn = document.createElement('button');
+      nativeShareBtn.type = 'button';
+      nativeShareBtn.className = 'product-btn product-btn-secondary';
       const lang = document.documentElement.lang || 'en';
-      const shareLabel =
-        typeof translations !== 'undefined' && translations[lang] && translations[lang]['share_btn']
-          ? translations[lang]['share_btn']
-          : 'Share on WhatsApp';
+      const shareLabel = 'Share';
 
-      shareBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span data-i18n="share_btn">${shareLabel}</span>`;
+      nativeShareBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span>${shareLabel}</span>`;
 
-      shareBtn.addEventListener('click', function () {
+      nativeShareBtn.addEventListener('click', async function () {
         const baseUrl = window.location.href.split('#')[0];
         const productUrl = `${baseUrl}#${sku}`;
-        const message = `Check out this product: *${title}*\n\n${productUrl}`;
-        const waUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-
-        if (typeof gtag === 'function') {
-          gtag('event', 'share', {
-            event_category: 'Engagement',
-            event_label: title,
-            method: 'WhatsApp',
-          });
-        }
-
-        window.open(waUrl, '_blank');
-      });
-
-      btnContainer.appendChild(shareBtn);
-
-      // Add "Share on Facebook" Button
-      const shareFbBtn = document.createElement('button');
-      shareFbBtn.type = 'button';
-      shareFbBtn.className = 'product-btn product-btn-secondary';
-
-      const fbLabel =
-        typeof translations !== 'undefined' && translations[lang] && translations[lang]['share_fb_btn']
-          ? translations[lang]['share_fb_btn']
-          : 'Share on Facebook';
-
-      shareFbBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span data-i18n="share_fb_btn">${fbLabel}</span>`;
-
-      shareFbBtn.addEventListener('click', function () {
-        const baseUrl = window.location.href.split('#')[0];
-        const productUrl = `${baseUrl}#${sku}`;
-        const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl)}`;
-
-        if (typeof gtag === 'function') {
-          gtag('event', 'share', {
-            event_category: 'Engagement',
-            event_label: title,
-            method: 'Facebook',
-          });
-        }
-
-        window.open(fbUrl, 'facebook-share-dialog', 'width=600,height=400');
-      });
-
-      btnContainer.appendChild(shareFbBtn);
-
-      // Add "Copy Link" Button
-      const shareCopyBtn = document.createElement('button');
-      shareCopyBtn.type = 'button';
-      shareCopyBtn.className = 'product-btn product-btn-secondary';
-
-      const copyLabel =
-        typeof translations !== 'undefined' && translations[lang] && translations[lang]['share_copy_btn']
-          ? translations[lang]['share_copy_btn']
-          : 'Copy Link';
-
-      shareCopyBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg><span data-i18n="share_copy_btn">${copyLabel}</span>`;
-
-      shareCopyBtn.addEventListener('click', function () {
-        const baseUrl = window.location.href.split('#')[0];
-        const productUrl = `${baseUrl}#${sku}`;
-
-        navigator.clipboard.writeText(productUrl).then(() => {
-          const span = shareCopyBtn.querySelector('span');
-          const originalText = span.textContent;
-          span.textContent = 'Copied!';
-
-          if (typeof gtag === 'function') {
-            gtag('event', 'share', { event_category: 'Engagement', event_label: title, method: 'Copy Link' });
+        if (navigator.share) {
+          try {
+            await navigator.share({ title: title, text: `Check out ${title}`, url: productUrl });
+            if (typeof gtag === 'function')
+              gtag('event', 'share', { event_category: 'Engagement', event_label: title, method: 'Native Share' });
+          } catch (err) {
+            console.log('Share canceled or failed.', err);
           }
-
-          setTimeout(() => {
-            span.textContent = originalText;
-          }, 2000);
-        });
+        } else {
+          navigator.clipboard.writeText(productUrl).then(() => {
+            const span = nativeShareBtn.querySelector('span');
+            const originalText = span.textContent;
+            span.textContent = 'Link Copied!';
+            setTimeout(() => {
+              span.textContent = originalText;
+            }, 2000);
+          });
+        }
       });
+      btnContainer.appendChild(nativeShareBtn);
 
-      btnContainer.appendChild(shareCopyBtn);
+      // Add Wishlist Button
+      const wishlistBtn = document.createElement('button');
+      wishlistBtn.type = 'button';
+      wishlistBtn.className = 'product-btn product-btn-secondary';
+
+      const getWishlist = () => JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
+
+      const updateWishlistUI = (wished) => {
+        wishlistBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="${wished ? '#e63946' : 'none'}" stroke="${wished ? '#e63946' : 'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>${wished ? 'Saved' : 'Wishlist'}</span>`;
+        if (wished) {
+          wishlistBtn.style.color = '#e63946';
+          wishlistBtn.style.borderColor = '#e63946';
+          wishlistBtn.style.background = '#fff0f2';
+        } else {
+          wishlistBtn.style.color = '';
+          wishlistBtn.style.borderColor = '';
+          wishlistBtn.style.background = '';
+        }
+      };
+
+      let currentWished = getWishlist().includes(sku);
+      updateWishlistUI(currentWished);
+
+      wishlistBtn.addEventListener('click', function () {
+        let wishlist = getWishlist();
+        const index = wishlist.indexOf(sku);
+        if (index > -1) {
+          wishlist.splice(index, 1);
+          currentWished = false;
+          showToast('Removed from Wishlist', false);
+        } else {
+          wishlist.push(sku);
+          currentWished = true;
+          showToast('Added to Wishlist!', true);
+        }
+        localStorage.setItem('ef_wishlist', JSON.stringify(wishlist));
+        updateWishlistUI(currentWished);
+        if (typeof updateWishlistBadgeDisplay === 'function') updateWishlistBadgeDisplay();
+      });
+      btnContainer.appendChild(wishlistBtn);
 
       // Show the modal
       pdpModal.classList.add('active');
@@ -1269,6 +1401,151 @@ document.addEventListener('DOMContentLoaded', function () {
 
     demoModal.classList.remove('active');
     this.reset();
+  });
+
+  // ============= TOAST NOTIFICATION LOGIC =============
+  function showToast(message, isAdded = true) {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'toast-message';
+
+    const icon = isAdded
+      ? '<svg width="18" height="18" viewBox="0 0 24 24" fill="#e63946" stroke="#e63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>'
+      : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path><line x1="18" y1="6" x2="6" y2="18"></line></svg>';
+
+    toast.innerHTML = `${icon}<span>${message}</span>`;
+    container.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // ============= WISHLIST MODAL LOGIC =============
+  const wishlistModal = document.getElementById('wishlist-modal');
+  const wishlistContainer = document.getElementById('wishlist-items-container');
+  const wishlistToggleBtns = document.querySelectorAll('.wishlist-toggle-btn');
+  const wishlistClearAllBtn = document.getElementById('wishlist-clear-all');
+
+  function updateWishlistBadgeDisplay() {
+    const wishlist = JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
+    const badges = document.querySelectorAll('.wishlist-badge');
+    badges.forEach((badge) => {
+      badge.style.display = wishlist.length > 0 ? 'block' : 'none';
+    });
+  }
+  updateWishlistBadgeDisplay();
+
+  function renderWishlist() {
+    if (!wishlistContainer) return;
+    wishlistContainer.innerHTML = '';
+    const wishlist = JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
+
+    if (wishlist.length === 0) {
+      if (wishlistClearAllBtn) wishlistClearAllBtn.style.display = 'none';
+      wishlistContainer.innerHTML = `
+        <div class="wishlist-empty">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px; opacity: 0.5;">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <p>Your wishlist is currently empty.</p>
+        </div>`;
+      return;
+    }
+
+    if (wishlistClearAllBtn) wishlistClearAllBtn.style.display = 'block';
+
+    wishlist.forEach((sku) => {
+      const originalCard = Array.from(productCards).find((card) => {
+        const title = card.querySelector('h3')?.textContent || '';
+        return getSkuCode(title) === sku;
+      });
+
+      if (originalCard) {
+        const title = originalCard.querySelector('h3').textContent;
+        const price = originalCard.querySelector('.price').textContent;
+        const imgSrc = originalCard.querySelector('img') ? originalCard.querySelector('img').src : '';
+
+        const itemEl = document.createElement('div');
+        itemEl.className = 'wishlist-item';
+        itemEl.innerHTML = `
+          <img src="${imgSrc}" alt="${title}">
+          <div class="wishlist-item-details">
+            <div class="wishlist-item-title">${title}</div>
+            <div class="wishlist-item-price">${price}</div>
+          </div>
+          <button class="wishlist-item-remove" aria-label="Remove from Wishlist" data-sku="${sku}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 6h18"></path>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              <line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line>
+            </svg>
+          </button>
+        `;
+
+        itemEl.querySelector('.wishlist-item-title').addEventListener('click', () => {
+          wishlistModal.classList.remove('active');
+          document.body.style.overflow = '';
+          originalCard.click();
+        });
+
+        itemEl.querySelector('.wishlist-item-remove').addEventListener('click', (e) => {
+          const currentSku = e.currentTarget.dataset.sku;
+          let wl = JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
+          wl = wl.filter((item) => item !== currentSku);
+          localStorage.setItem('ef_wishlist', JSON.stringify(wl));
+          renderWishlist();
+          updateWishlistBadgeDisplay();
+          showToast('Removed from Wishlist', false);
+        });
+
+        wishlistContainer.appendChild(itemEl);
+      }
+    });
+  }
+
+  wishlistToggleBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      renderWishlist();
+      wishlistModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  if (wishlistClearAllBtn) {
+    wishlistClearAllBtn.addEventListener('click', () => {
+      localStorage.setItem('ef_wishlist', '[]');
+      renderWishlist();
+      updateWishlistBadgeDisplay();
+      showToast('Wishlist cleared', false);
+    });
+  }
+
+  const wishlistCloseBtn = wishlistModal?.querySelector('.wishlist-close');
+  if (wishlistCloseBtn) {
+    wishlistCloseBtn.addEventListener('click', () => {
+      wishlistModal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
+
+  wishlistModal?.addEventListener('click', (e) => {
+    if (e.target === wishlistModal) {
+      wishlistModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
   });
 
   // Logic to close the modal (with gallery cleanup for memory management)
@@ -1394,6 +1671,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       if (targetCard && !pdpModal.classList.contains('active')) {
+        revealProductsSection();
         targetCard.setAttribute('data-hash-triggered', 'true');
         targetCard.click();
       }
@@ -1465,68 +1743,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (elMins) elMins.textContent = minutes.toString().padStart(2, '0');
     if (elSecs) elSecs.textContent = seconds.toString().padStart(2, '0');
   }, 1000);
-
-  // ============= SHOP BY CATEGORY LOGIC =============
-  const categoryView = document.getElementById('category-view');
-  const productListingView = document.getElementById('product-listing-view');
-  const backToCategoriesBtn = document.getElementById('back-to-categories');
-  const catCards = document.querySelectorAll('.cat-card');
-
-  if (catCards.length > 0 && productListingView && categoryView) {
-    catCards.forEach((card) => {
-      card.addEventListener('click', function () {
-        const targetCat = this.getAttribute('data-target-category');
-
-        categoryView.style.display = 'none';
-        productListingView.style.display = 'block';
-
-        // Reset filters
-        document.querySelectorAll('.filter-cat, .filter-facet').forEach((cb) => (cb.checked = false));
-        const targetCb = document.querySelector(`.filter-cat[value="${targetCat}"]`);
-        if (targetCb) targetCb.checked = true;
-
-        const waterFilters = document.querySelectorAll('.water-filter');
-        const vacuumFilters = document.querySelectorAll('.vacuum-filter');
-        waterFilters.forEach((el) => (el.style.display = targetCat === 'Water Purifier' ? '' : 'none'));
-        vacuumFilters.forEach((el) => (el.style.display = targetCat === 'Vacuum Cleaner' ? '' : 'none'));
-
-        document.querySelectorAll('.visual-filter-btn').forEach((btn) => btn.classList.remove('active'));
-        const visualBtn = document.querySelector(`.visual-filter-btn[data-filter="${targetCat}"]`);
-        if (visualBtn) {
-          visualBtn.classList.add('active');
-        } else if (targetCat === 'Water Purifier') {
-          const allBtn = document.querySelector('.visual-filter-btn[data-filter="all"]');
-          if (allBtn) allBtn.classList.add('active');
-        }
-
-        applyFilters();
-
-        setTimeout(() => {
-          document.querySelectorAll('.product-card').forEach((el) => {
-            if (el.style.display !== 'none') el.classList.add('active');
-          });
-        }, 50);
-
-        const productsSection = document.getElementById('products');
-        if (productsSection) {
-          const y = productsSection.getBoundingClientRect().top + window.scrollY - 80;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      });
-    });
-
-    if (backToCategoriesBtn) {
-      backToCategoriesBtn.addEventListener('click', function () {
-        productListingView.style.display = 'none';
-        categoryView.style.display = 'block';
-        const catViewEl = document.getElementById('category-view');
-        if (catViewEl) {
-          const y = catViewEl.getBoundingClientRect().top + window.scrollY - 80;
-          window.scrollTo({ top: y, behavior: 'smooth' });
-        }
-      });
-    }
-  }
 }); // End of DOMContentLoaded
 
 // Track clicks on all direct WhatsApp links (Floating button, Exchange Offer, etc.)
@@ -1561,15 +1777,6 @@ if (scrollToTopBtn || bottomNav) {
             } else {
               scrollToTopBtn.classList.remove('show');
             }
-          }
-
-          if (bottomNav && window.innerWidth <= 768) {
-            if (currentScrollY > lastScrollTop && currentScrollY > 100) {
-              bottomNav.classList.add('hidden'); // Scrolling down
-            } else {
-              bottomNav.classList.remove('hidden'); // Scrolling up
-            }
-            lastScrollTop = currentScrollY <= 0 ? 0 : currentScrollY;
           }
 
           isScrolling = false;

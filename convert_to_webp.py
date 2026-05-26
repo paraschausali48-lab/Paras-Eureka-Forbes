@@ -1,6 +1,7 @@
 import os
 import glob
 import re
+import concurrent.futures
 try:
     from PIL import Image
 except ImportError:
@@ -16,19 +17,21 @@ def convert_images_to_webp(directory="images"):
     if not image_files:
         print(f"No JPG files found in the '{directory}' directory.")
     else:
-        print(f"Found {len(image_files)} images to convert. Starting conversion...")
-        for file_path in image_files:
+        print(f"Found {len(image_files)} images to convert. Starting concurrent conversion...")
+
+        def process_image(file_path):
             try:
                 with Image.open(file_path) as img:
                     base_name = os.path.splitext(file_path)[0]
                     webp_path = f"{base_name}.webp"
-
-                    # Save as WebP format with 80% quality (great balance of size and quality)
+                    # Save as WebP format with 80% quality
                     img.save(webp_path, "webp", quality=80, optimize=True)
                     print(f"Converted: {file_path} -> {webp_path}")
-
             except Exception as e:
                 print(f"Failed to convert {file_path}: {e}")
+
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            executor.map(process_image, image_files)
 
 def update_code_references():
     print("\nUpdating website code to use .webp format...")

@@ -54,9 +54,32 @@
     <header class="site-header">
       <div class="container header-inner">
         <div class="brand">
-          <h1>Eureka Forbes & Aquaguard Specialist</h1>
-          <span class="badge-rep">Independent Authorized Direct Sales Representative</span>
+          <h1>Eureka Forbes & Aquaguard Specialist in Mumbai & Navi Mumbai</h1>
+          <span class="badge-rep" data-i18n="header_rep_badge">Independent Authorized Direct Sales Representative</span>
         </div>
+        <form class="header-search" action="index.html" method="GET">
+          <input
+            type="search"
+            name="q"
+            placeholder="Search for products, brands and more..."
+            aria-label="Search products"
+          />
+          <button type="submit" aria-label="Search">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </button>
+        </form>
         <div class="language-switcher">
           <button class="lang-btn active" data-lang="en">English</button>
           <button class="lang-btn" data-lang="hi">हिंदी</button>
@@ -78,10 +101,38 @@
       <div class="container footer-inner">
         <div class="footer-info">
           <p data-i18n="footer_text1">© 2026 Eureka Forbes Direct Sales Specialist</p>
-          <p data-i18n="footer_text2">Selected SKUs and offline-only offers for your customers.</p>
         </div>
         <a href="legal-terms.html" class="footer-legal-link" data-i18n="footer_legal_link">Legal & Copyright Info</a>
       </div>
+      <div
+        class="container footer-disclaimer"
+        data-i18n="footer_disclaimer_text"
+        style="
+          font-size: 0.75rem;
+          margin-top: 20px;
+          padding-top: 16px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          color: rgba(200, 212, 230, 0.65);
+          text-align: center;
+        "
+      >
+        Disclaimer: This website is independently operated by Paras Singh Chawsali, an Authorized Direct Sales
+        Representative for Eureka Forbes. This is NOT the official website of Eureka Forbes Limited. All product names,
+        logos, brands, trademarks, and images featured or referred to within this site are the sole property of Eureka
+        Forbes Limited and are used strictly for informational and demonstrative purposes to facilitate direct sales.
+        This platform is intended solely for product display and inquiry generation. No payments or financial
+        transactions are processed through this website. All final purchases, billing, and installations are handled
+        strictly through official Eureka Forbes channels.
+      </div>
     </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const wishlist = JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
+        const badge = document.querySelector('.header-wishlist-badge');
+        if (badge && wishlist.length > 0) {
+          badge.style.display = 'block';
+        }
+      });
+    </script>
   </body>
 </html>
