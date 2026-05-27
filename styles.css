@@ -2803,16 +2803,67 @@ html:lang(mr) .product-card.out-of-stock::after {
     padding: 6px;
   }
 
+  #sort-modal.pdp-modal {
+    padding: 0;
+    align-items: flex-end;
+  }
+
   #sort-modal .pdp-content {
     height: auto;
     max-height: 60vh;
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
     transform: translateY(100%);
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 24px 0 0 0;
   }
+
   #sort-modal.active .pdp-content {
     transform: translateY(0);
+  }
+
+  #sort-modal .demo-modal-title {
+    padding: 0 24px;
+    font-size: 1.25rem;
+    margin-bottom: 12px !important;
+  }
+
+  #sort-modal .pdp-close {
+    top: 18px;
+    right: 20px;
+    background: transparent;
+    box-shadow: none;
+    font-size: 28px;
+    color: var(--color-gray-600);
+  }
+
+  #sort-modal .sort-options {
+    gap: 0;
+    margin-top: 10px;
+  }
+
+  #sort-modal .sort-option {
+    border: none;
+    border-top: 1px solid var(--color-gray-100);
+    border-radius: 0;
+    padding: 16px 24px;
+    justify-content: space-between;
+  }
+
+  #sort-modal .sort-option:last-child {
+    padding-bottom: calc(16px + env(safe-area-inset-bottom, 20px));
+  }
+
+  #sort-modal .sort-option span {
+    order: 1;
+    font-size: 1.05rem;
+    color: var(--color-gray-800);
+  }
+
+  #sort-modal .sort-option input[type='radio'] {
+    order: 2;
   }
 
   .mobile-actions-wrapper .mobile-action-btn {
