@@ -2879,9 +2879,6 @@ html:lang(mr) .product-card.out-of-stock::after {
 
   .header-inner {
     align-items: center;
-    flex-wrap: nowrap;
-    gap: 8px;
-    padding: 12px 0;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 10px;
@@ -2901,7 +2898,6 @@ html:lang(mr) .product-card.out-of-stock::after {
   .language-switcher {
     flex-wrap: nowrap;
     justify-content: center;
-    margin: 0 auto;
     margin: 0;
   }
 
