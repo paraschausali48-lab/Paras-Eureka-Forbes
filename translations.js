@@ -56,7 +56,7 @@ const translations = {
     filter_air: 'Air Purifiers',
     filter_vacuum: 'Vacuum Cleaners',
     filter_softener: 'Water Softeners',
-    btn_ask: 'Ask for This SKU',
+    btn_ask: 'Book a Demo',
     btn_check_suitability: 'Check Suitability',
     btn_check_hard_water: 'Check Hard Water Solution',
     btn_get_best_offer: 'Get Best Offer',
@@ -89,7 +89,7 @@ const translations = {
     offer_title: 'Mega May Deals!',
     offer_desc:
       'Take advantage of these official Eureka Forbes Mega May Deals today. Offer valid until the end of May.',
-    offer_btn: 'Claim This Offer on WhatsApp',
+    offer_btn: 'Book Now to Claim Offer',
 
     cat_water: 'Water Purifiers',
     cat_water_desc: 'RO, UV, UF & Copper',
@@ -111,7 +111,7 @@ const translations = {
     // CONTACT SECTION
     // ============================================
     contact_eyebrow: 'Contact Your Specialist',
-    contact_title: 'Ready to place an order?',
+    contact_title: 'Have a Question?',
     contact_desc: 'Send a message, call, or WhatsApp directly to book products or schedule a free home demonstration.',
     contact_name: 'Name:',
     contact_service_area: 'Service Area:',
@@ -187,7 +187,7 @@ const translations = {
       'This is a built-in safety feature. If the dust bag is completely full, or if the filters or hoses are severely clogged with hair or debris, the motor works harder and heats up. Emptying the dust cup and cleaning the filter regularly will prevent this and ensure maximum suction power.',
     faq_q13: 'How do I book a free home demonstration?',
     faq_a13:
-      'Simply click the "Book a Demo" button or message me directly on WhatsApp. Since I am your authorized local Eureka Forbes specialist for Navi Mumbai and Thane, I will bring the selected models to your home so you can see exactly how they perform in your own space before making a decision.',
+      'Simply click the "Book a Demo" button on any product. A calendar will pop up, allowing you to select a date and time that works best for you. As your authorized local specialist, I will then confirm the appointment and bring the selected models to your home.',
     faq_q14: 'What is covered under the Eureka Forbes AMC (Annual Maintenance Contract)?',
     faq_a14:
       'A genuine Aquaguard AMC gives you complete peace of mind. It generally includes up to 3 scheduled maintenance visits a year, annual filter replacement, tank cleaning, unlimited breakdown repair visits, and free replacement of spare parts (including electronics and pumps) depending on the plan you choose.',
@@ -216,13 +216,6 @@ const translations = {
     legal_s4_text:
       'While every effort is made to ensure product specifications, features, and prices are accurate, these details are subject to change by Eureka Forbes Limited without prior notice. The operator of this website shall not be held liable for any discrepancies.',
 
-    demo_form_name_placeholder: 'Your Name',
-    demo_form_phone_placeholder: 'Phone Number',
-    demo_form_email_placeholder: 'Email ID',
-    demo_form_address_placeholder: 'Full Address',
-
-    demo_form_title: 'Book a Free Demo',
-    demo_form_btn: 'Submit & Send via WhatsApp',
     search_placeholder: 'Search products...',
     share_btn: 'Share on WhatsApp',
     share_fb_btn: 'Share on Facebook',
@@ -281,7 +274,7 @@ const translations = {
     filter_air: 'वायु शुद्धिकरण',
     filter_vacuum: 'वैक्यूम क्लीनर',
     filter_softener: 'जल सॉफ़्टनर',
-    btn_ask: 'इस SKU के लिए पूछें',
+    btn_ask: 'डेमो बुक करें',
     btn_check_suitability: 'उपयुक्तता जांचें',
     btn_check_hard_water: 'कठोर जल समाधान जांचें',
     btn_get_best_offer: 'सर्वोत्तम ऑफर प्राप्त करें',
@@ -313,7 +306,7 @@ const translations = {
     offer_eyebrow: 'सीमित समय का ऑफर',
     offer_title: 'मेगा मई डील्स!',
     offer_desc: 'आज ही इन आधिकारिक यूरेका फोर्ब्स मेगा मई डील्स का लाभ उठाएं। ऑफर मई के अंत तक वैध है।',
-    offer_btn: 'व्हाट्सएप पर इस ऑफर का दावा करें',
+    offer_btn: 'ऑफर का दावा करने के लिए बुक करें',
 
     cat_water: 'वॉटर प्यूरीफायर',
     cat_water_desc: 'RO, UV, UF और कॉपर',
@@ -335,7 +328,7 @@ const translations = {
     // CONTACT SECTION
     // ============================================
     contact_eyebrow: 'अपने विशेषज्ञ से संपर्क करें',
-    contact_title: 'ऑर्डर देने के लिए तैयार हैं?',
+    contact_title: 'कोई सवाल है?',
     contact_desc: 'चयनित उत्पाद बुक करने या घर पर मुफ्त डेमो शेड्यूल करने के लिए सीधे कॉल या व्हाट्सएप करें।',
     contact_name: 'नाम:',
     contact_service_area: 'सेवा क्षेत्र:',
@@ -407,7 +400,7 @@ const translations = {
       'यह एक अंतर्निहित सुरक्षा सुविधा है। यदि डस्ट बैग पूरी तरह से भर गया है, या यदि फिल्टर या होसेस बालों या मलबे से गंभीर रूप से बंद हो गए हैं, तो मोटर अधिक मेहनत करती है और गर्म हो जाती है। डस्ट कप को खाली करना और फिल्टर को नियमित रूप से साफ करना इसे रोकेगा और अधिकतम सक्शन पावर सुनिश्चित करेगा।',
     faq_q13: 'मैं मुफ्त होम डेमो कैसे बुक करूं?',
     faq_a13:
-      '"बुक ए डेमो" बटन पर क्लिक करें या मुझे सीधे व्हाट्सएप पर संदेश भेजें। चूंकि मैं नवी मुंबई और ठाणे के लिए आपका अधिकृत स्थानीय यूरेका फोर्ब्स विशेषज्ञ हूं, इसलिए मैं चयनित मॉडल आपके घर लाऊंगा ताकि आप निर्णय लेने से पहले देख सकें कि वे आपके अपने स्थान पर कैसा प्रदर्शन करते हैं।',
+      'किसी भी उत्पाद पर "डेमो बुक करें" बटन पर क्लिक करें। एक कैलेंडर पॉप अप होगा, जिससे आप अपनी सुविधानुसार तारीख और समय चुन सकते हैं। आपके अधिकृत स्थानीय विशेषज्ञ के रूप में, मैं फिर अपॉइंटमेंट की पुष्टि करूंगा और चयनित मॉडल आपके घर लाऊंगा।',
     faq_q14: 'यूरेका फोर्ब्स AMC (वार्षिक रखरखाव अनुबंध) के तहत क्या कवर किया गया है?',
     faq_a14:
       'एक वास्तविक एक्वागार्ड AMC आपको पूरी मानसिक शांति देता है। इसमें आम तौर पर साल में 3 निर्धारित रखरखाव दौरे, वार्षिक फिल्टर प्रतिस्थापन, टैंक की सफाई, असीमित ब्रेकडाउन मरम्मत दौरे, और आपके द्वारा चुने गए प्लान के आधार पर स्पेयर पार्ट्स (इलेक्ट्रॉनिक्स और पंप सहित) का मुफ्त प्रतिस्थापन शामिल होता है।',
@@ -436,13 +429,6 @@ const translations = {
     legal_s4_text:
       'हालांकि यह सुनिश्चित करने के लिए हर संभव प्रयास किया जाता है कि उत्पाद विनिर्देश, विशेषताएं और मूल्य सटीक हों, ये विवरण पूर्व सूचना के बिना यूरेका फोर्ब्स लिमिटेड द्वारा परिवर्तन के अधीन हैं। इस वेबसाइट के ऑपरेटर को किसी भी विसंगतियों के लिए उत्तरदायी नहीं ठहराया जाएगा।',
 
-    demo_form_name_placeholder: 'अपना नाम दर्ज करें',
-    demo_form_phone_placeholder: 'फोन नंबर दर्ज करें',
-    demo_form_email_placeholder: 'ईमेल आईडी दर्ज करें',
-    demo_form_address_placeholder: 'पूरा पता दर्ज करें',
-
-    demo_form_title: 'मुफ्त डेमो बुक करें',
-    demo_form_btn: 'सबमिट करें और व्हाट्सएप के माध्यम से भेजें',
     search_placeholder: 'उत्पाद खोजें...',
     share_btn: 'व्हाट्सएप पर शेयर करें',
     share_fb_btn: 'फेसबुक पर शेयर करें',
@@ -498,7 +484,7 @@ const translations = {
     filter_air: 'वायु शुद्धिकरणे',
     filter_vacuum: 'व्हॅक्यूम क्लीनर',
     filter_softener: 'जल कोमल करणे',
-    btn_ask: 'या SKU साठी विचारा',
+    btn_ask: 'डेमो बुक करा',
     btn_check_suitability: 'सुसंगतता तपासा',
     btn_check_hard_water: 'कठोर पाण्याचे समाधान तपासा',
     btn_get_best_offer: 'सर्वोत्तम ऑफर मिळवा',
@@ -530,7 +516,7 @@ const translations = {
     offer_eyebrow: 'मर्यादित वेळेची ऑफर',
     offer_title: 'मेगा मे डील्स!',
     offer_desc: 'आजच या अधिकृत युरेका फोर्ब्स मेगा मे डील्सचा लाभ घ्या. ऑफर मे महिन्याच्या अखेरपर्यंत वैध आहे.',
-    offer_btn: 'व्हाट्सअँपवर या ऑफरवर दावा करा',
+    offer_btn: 'ऑफरवर दावा करण्यासाठी बुक करा',
 
     cat_water: 'वॉटर प्युरिफायर',
     cat_water_desc: 'RO, UV, UF आणि कॉपर',
@@ -552,7 +538,7 @@ const translations = {
     // CONTACT SECTION
     // ============================================
     contact_eyebrow: 'आपल्या विशेषज्ञाशी संपर्क साधा',
-    contact_title: 'ऑर्डर देण्यास तयार आहात?',
+    contact_title: 'प्रश्न आहे?',
     contact_desc:
       'निवडलेली उत्पादने बुक करण्यासाठी किंवा मोफत होम डेमो शेड्यूल करण्यासाठी थेट कॉल किंवा व्हाट्सएप करा.',
     contact_name: 'नाव:',
@@ -625,7 +611,7 @@ const translations = {
       'ही एक अंगभूत सुरक्षा सुविधा आहे. जर डस्ट बॅग पूर्णपणे भरलेली असेल, किंवा फिल्टर किंवा होसेस केस किंवा कचऱ्याने गंभीरपणे ब्लॉक झाले असतील, तर मोटर जास्त काम करते आणि गरम होते. डस्ट कप रिकामा करणे आणि फिल्टर नियमितपणे स्वच्छ केल्याने हे टाळता येईल आणि जास्तीत जास्त सक्शन पॉवर सुनिश्चित होईल.',
     faq_q13: 'मी मोफत होम डेमो कसे बुक करू?',
     faq_a13:
-      'फक्त "डेमो बुक करा" बटणावर क्लिक करा किंवा मला थेट व्हाट्सएपवर संदेश पाठवा. मी नवी मुंबई आणि ठाण्यासाठी तुमचा अधिकृत स्थानिक युरेका फोर्ब्स विशेषज्ञ असल्यामुळे, मी निवडक मॉडेल्स तुमच्या घरी आणेन जेणेकरून तुम्ही निर्णय घेण्यापूर्वी ते तुमच्या स्वतःच्या जागेत कसे काम करतात ते पाहू शकाल.',
+      'कोणत्याही उत्पादनावरील "डेमो बुक करा" बटणावर क्लिक करा. एक कॅलेंडर उघडेल, जे तुम्हाला तुमच्यासाठी सोयीस्कर असलेली तारीख आणि वेळ निवडण्याची परवानगी देईल. तुमचा अधिकृत स्थानिक विशेषज्ञ म्हणून, मी भेटीची वेळ निश्चित करेन आणि निवडलेली मॉडेल्स तुमच्या घरी आणेन.',
     faq_q14: 'युरेका फोर्ब्स AMC (वार्षिक देखभाल करार) अंतर्गत काय समाविष्ट आहे?',
     faq_a14:
       'एक अस्सल ॲक्वागार्ड AMC तुम्हाला पूर्ण मानसिक शांती देते. यात साधारणपणे वर्षातून 3 नियोजित देखभाल भेटी, वार्षिक फिल्टर बदलणे, टाकीची स्वच्छता, अमर्याद ब्रेकडाउन दुरुस्ती भेटी आणि तुम्ही निवडलेल्या योजनेनुसार स्पेअर पार्ट्स (इलेक्ट्रॉनिक्स आणि पंपसह) मोफत बदलणे समाविष्ट असते.',
@@ -654,13 +640,6 @@ const translations = {
     legal_s4_text:
       'उत्पादन तपशील, वैशिष्ट्ये आणि किमती अचूक आहेत याची खात्री करण्यासाठी प्रत्येक प्रयत्न केला जात असला तरी, हे तपशील पूर्वसूचनेशिवाय युरेका फोर्ब्स लिमिटेडद्वारे बदलले जाऊ शकतात. या वेबसाइटच्या ऑपरेटरला कोणत्याही विसंगतीसाठी जबाबदार धरले जाणार नाही.',
 
-    demo_form_name_placeholder: 'आपले नाव प्रविष्ट करा',
-    demo_form_phone_placeholder: 'फोन नंबर प्रविष्ट करा',
-    demo_form_email_placeholder: 'ईमेल आयडी प्रविष्ट करा',
-    demo_form_address_placeholder: 'पूर्ण पत्ता प्रविष्ट करा',
-
-    demo_form_title: 'मोफत डेमो बुक करा',
-    demo_form_btn: 'सबमिट करा आणि व्हाट्सअँपद्वारे पाठवा',
     search_placeholder: 'उत्पादने शोधा...',
     share_btn: 'व्हाट्सअँपवर शेअर करा',
     share_fb_btn: 'फेसबुकवर शेअर करा',
@@ -730,18 +709,6 @@ const translations = {
         el.textContent = translation;
       }
     });
-
-    // Update demo form placeholders specifically
-    const demoName = document.getElementById('demo-name');
-    const demoPhone = document.getElementById('demo-phone');
-    const demoEmail = document.getElementById('demo-email');
-    const demoAddress = document.getElementById('demo-address');
-
-    if (demoName) demoName.placeholder = translations[lang].demo_form_name_placeholder || demoName.placeholder;
-    if (demoPhone) demoPhone.placeholder = translations[lang].demo_form_phone_placeholder || demoPhone.placeholder;
-    if (demoEmail) demoEmail.placeholder = translations[lang].demo_form_email_placeholder || demoEmail.placeholder;
-    if (demoAddress)
-      demoAddress.placeholder = translations[lang].demo_form_address_placeholder || demoAddress.placeholder;
 
     // Save preference to localStorage
     try {

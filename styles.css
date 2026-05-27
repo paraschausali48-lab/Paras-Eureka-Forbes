@@ -313,10 +313,6 @@ a {
   transform: translateY(-100%);
 }
 
-body.header-hidden .mobile-actions-wrapper {
-  top: 15px;
-}
-
 .header-inner {
   display: flex;
   justify-content: space-between;
@@ -2982,21 +2978,8 @@ html:lang(mr) .product-card.out-of-stock::after {
     transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  body.header-hidden .mobile-actions-wrapper {
-    top: 15px;
-  }
-
   .desktop-sort-wrapper {
     display: none;
-  }
-
-  @media (max-width: 768px) {
-    .mobile-actions-wrapper {
-      top: 145px;
-    }
-    body.header-hidden .mobile-actions-wrapper {
-      top: 15px;
-    }
   }
 
   .products-layout .product-grid {
@@ -3485,58 +3468,6 @@ html:lang(mr) .product-card.out-of-stock::after {
     width: 40px;
     height: 40px;
   }
-}
-
-/* =========================================
-   Demo Booking Modal
-   ========================================= */
-.demo-modal-wrapper {
-  z-index: 2005; /* Keeps modal layered gracefully above PDP */
-}
-.demo-modal-content {
-  max-width: 450px;
-  padding: 30px;
-}
-.demo-modal-title {
-  color: var(--color-primary-dark);
-  margin-bottom: 20px;
-  font-size: 1.6rem;
-}
-.demo-modal-product {
-  font-weight: 700;
-  margin-bottom: 20px;
-  color: var(--color-gray-800);
-  font-size: 1.1rem;
-}
-.demo-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-.demo-form-input {
-  padding: 14px 16px;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-sm);
-  width: 100%;
-  background: var(--color-white);
-  color: var(--color-text);
-  font-family: var(--font-family);
-  font-size: 1rem;
-  transition: var(--transition);
-}
-.demo-form-input:focus {
-  outline: none;
-  border-color: var(--color-primary-light);
-  box-shadow: 0 0 0 3px rgba(0, 114, 188, 0.15);
-}
-.demo-form-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-.demo-form-submit {
-  width: 100%;
-  padding: 14px;
-  font-size: 1.05rem;
 }
 
 /* =========================================
