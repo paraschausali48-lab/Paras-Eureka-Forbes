@@ -19,11 +19,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ============= 2. HEADER SCROLL EFFECT =============
   const siteHeader = document.querySelector('.site-header');
+  let lastScrollY = window.scrollY;
+
   window.addEventListener(
     'scroll',
     () => {
       if (window.scrollY > 20) siteHeader.classList.add('scrolled');
       else siteHeader.classList.remove('scrolled');
+
+      // Auto-hide header on scroll down, show on scroll up
+      if (window.scrollY > lastScrollY && window.scrollY > 150) {
+        siteHeader.classList.add('hidden');
+      } else {
+        siteHeader.classList.remove('hidden');
+      }
+      lastScrollY = window.scrollY;
     },
     { passive: true },
   );
