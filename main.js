@@ -349,6 +349,13 @@ document.addEventListener('DOMContentLoaded', function () {
     .querySelectorAll('.pdp-close, .wishlist-close, .sort-close')
     .forEach((btn) => btn.addEventListener('click', closeActiveOverlay));
 
+  // Allow closing any modal by tapping its dark background
+  document.querySelectorAll('.pdp-modal').forEach((modal) => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeActiveOverlay();
+    });
+  });
+
   productCards.forEach((card) => {
     card.addEventListener('click', function (e) {
       const isMoreInfoBtn = e.target.closest('.product-btn[href="#contact"]');
@@ -640,7 +647,6 @@ document.addEventListener('DOMContentLoaded', function () {
       document.body.style.overflow = 'hidden';
     } else if (hash === '#view-sort') {
       if (sortModal) sortModal.classList.add('active');
-      if (overlay) overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     } else if (hash === '#view-wishlist') {
       renderWishlist();
