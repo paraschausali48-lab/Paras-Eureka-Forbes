@@ -127,12 +127,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function applyFilters() {
     const checkedCats = Array.from(document.querySelectorAll('.filter-cat:checked')).map((cb) => cb.value);
+    const isAllSelected = checkedCats.includes('all');
+
+    // Dynamic Sidebar Filters - Show only relevant facet groups
+    document.querySelectorAll('.water-filter').forEach((el) => {
+      const show = isAllSelected || checkedCats.includes('Water Purifier');
+      el.style.display = show ? '' : 'none';
+      if (!show) el.querySelectorAll('.filter-facet').forEach((cb) => (cb.checked = false));
+    });
+    document.querySelectorAll('.vacuum-filter').forEach((el) => {
+      const show = isAllSelected || checkedCats.includes('Vacuum Cleaner');
+      el.style.display = show ? '' : 'none';
+      if (!show) el.querySelectorAll('.filter-facet').forEach((cb) => (cb.checked = false));
+    });
+
     const activeFacets = Array.from(document.querySelectorAll('.filter-facet:checked')).map((cb) => cb.value);
     const query = (searchInput?.value || '').toLowerCase().trim();
     const searchTerms = query.split(' ').filter((t) => t.length > 0);
 
     let visibleCount = 0;
-    const isAllSelected = checkedCats.includes('all');
 
     productCards.forEach((card) => {
       const cat = getCardCategory(card);
@@ -292,7 +305,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // ============= 6. PDP MODAL & DYNAMIC GALLERY =============
   const pdpModal = document.getElementById('pdp-modal');
-  const pdpGallery = document.getElementById('pdp-gallery');
   let lastFocused = null;
 
   document.querySelectorAll('.pdp-close').forEach((btn) =>
@@ -300,7 +312,6 @@ document.addEventListener('DOMContentLoaded', function () {
       this.closest('.pdp-modal').classList.remove('active');
       document.body.style.overflow = '';
       if (this.closest('#pdp-modal')) {
-        pdpGallery.innerHTML = ''; // Memory cleanup
         if (lastFocused) lastFocused.focus();
         if (window.location.hash.startsWith('#EF-')) {
           window.history.replaceState(null, null, window.location.pathname + window.location.search);
@@ -311,7 +322,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   productCards.forEach((card) => {
     card.addEventListener('click', function (e) {
-      if (e.target.closest('.product-btn') || e.target.closest('a')) return;
+      const isMoreInfoBtn = e.target.closest('.product-btn[href="#contact"]');
+      if (!isMoreInfoBtn && (e.target.closest('.product-btn') || e.target.closest('a'))) return;
+      if (isMoreInfoBtn) e.preventDefault(); // Prevent jumping down the page, open modal instead
       lastFocused = this;
 
       const title = this.querySelector('h3').textContent;
@@ -325,11 +338,6 @@ document.addEventListener('DOMContentLoaded', function () {
           .replace(/[^a-z0-9]+/g, '-')
           .replace(/^-|-$/g, '')
           .toUpperCase();
-      const count = parseInt(this.dataset.galleryCount || '1');
-
-      // Determine image directory slug
-      const imgMatch = this.querySelector('img')?.src.match(/images\/([^\/]+)\//);
-      const slug = imgMatch ? imgMatch[1] : '';
 
       document.getElementById('pdp-title').textContent = title;
       document.getElementById('pdp-category').textContent = category;
@@ -337,63 +345,35 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById('pdp-price').innerHTML = priceHTML;
       document.getElementById('pdp-specs').innerHTML = specsHTML;
 
-      // Generate Gallery
-      pdpGallery.innerHTML = '';
-      if (slug && count > 0) {
-        const mainWrap = document.createElement('div');
-        mainWrap.className = 'pdp-main-image-container';
-        const mainImg = document.createElement('img');
-        mainImg.className = 'pdp-main-image';
-        mainImg.src = `images/${slug}/1.webp`;
-        mainWrap.appendChild(mainImg);
-        pdpGallery.appendChild(mainWrap);
-
-        if (count > 1) {
-          const thumbStrip = document.createElement('div');
-          thumbStrip.className = 'pdp-thumb-strip';
-          for (let i = 1; i <= count; i++) {
-            const tWrap = document.createElement('div');
-            tWrap.className = `pdp-thumb-wrapper ${i === 1 ? 'active' : ''}`;
-            const tImg = document.createElement('img');
-            tImg.className = 'pdp-thumb';
-            tImg.src = `images/${slug}/${i}.webp`;
-            tImg.onerror = () => (tWrap.style.display = 'none');
-            tImg.onclick = () => {
-              mainImg.src = tImg.src;
-              thumbStrip.querySelectorAll('.pdp-thumb-wrapper').forEach((w) => w.classList.remove('active'));
-              tWrap.classList.add('active');
-            };
-            tWrap.appendChild(tImg);
-            thumbStrip.appendChild(tWrap);
-          }
-          pdpGallery.appendChild(thumbStrip);
-        }
-      }
-
       // Action Buttons
       const btnContainer = document.getElementById('pdp-action-btn');
       btnContainer.innerHTML = '';
 
       const bookDemoBtn = document.createElement('button');
       bookDemoBtn.className = 'product-btn';
-      bookDemoBtn.textContent = 'Book a Free Demo'; // This could also be a translation key
+      const isVacuum = category === 'Vacuum Cleaner';
+      bookDemoBtn.setAttribute('data-i18n', isVacuum ? 'btn_ask' : 'btn_book_appointment');
+      bookDemoBtn.textContent = isVacuum ? 'Book a Free Demo' : 'Book an Appointment';
       bookDemoBtn.onclick = (e) => {
         e.preventDefault();
-        // IMPORTANT: Replace with your actual Calendly link
-        const calendlyUrl = 'https://calendly.com/your-link/30min';
-        Calendly.initPopupWidget({
-          url: calendlyUrl,
-          prefill: {
-            name: '',
-            email: '',
-            customAnswers: {
-              a1: `Product of Interest: ${title}`,
-            },
-          },
-        });
-        return false;
+        const actionText = isVacuum ? 'book a free home demonstration' : 'book an appointment';
+        const message = `Hello Paras, I am interested in the ${title} and would like to ${actionText}. Please share the details.`;
+        const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodeURIComponent(message)}`;
+        window.open(waUrl, '_blank');
       };
       btnContainer.appendChild(bookDemoBtn);
+
+      // Download Leaflet Button
+      const leafletSrc = this.dataset.leaflet;
+      if (leafletSrc) {
+        const leafletBtn = document.createElement('a');
+        leafletBtn.href = leafletSrc;
+        leafletBtn.target = '_blank';
+        leafletBtn.className = 'product-btn product-btn-secondary';
+        leafletBtn.innerHTML =
+          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span data-i18n="btn_leaflet">Download Leaflet</span>';
+        btnContainer.appendChild(leafletBtn);
+      }
 
       // Native Share Button
       const shareBtn = document.createElement('button');
@@ -426,6 +406,10 @@ document.addEventListener('DOMContentLoaded', function () {
       pdpModal.scrollTop = 0;
       document.body.style.overflow = 'hidden';
       if (typeof updateWishlistUI === 'function') updateWishlistUI();
+
+      // Apply translations instantly to the newly created button
+      if (typeof window.applyTranslations === 'function')
+        window.applyTranslations(document.documentElement.lang || 'en');
     });
   });
 
@@ -574,10 +558,10 @@ document.addEventListener('DOMContentLoaded', function () {
       if (card) {
         const title = card.querySelector('h3').textContent;
         const price = card.querySelector('.price').textContent;
-        const img = card.querySelector('img').src;
+        const category = card.querySelector('.product-tag').textContent;
         const item = document.createElement('div');
         item.className = 'wishlist-item';
-        item.innerHTML = `<img src="${img}" alt="${title}"><div class="wishlist-item-details"><div class="wishlist-item-title">${title}</div><div class="wishlist-item-price">${price}</div></div><button class="wishlist-item-remove" data-sku="${sku}">×</button>`;
+        item.innerHTML = `<div class="wishlist-item-details"><div style="font-size:0.8rem; color:var(--color-primary-light); font-weight:700; margin-bottom:2px;">${category}</div><div class="wishlist-item-title">${title}</div><div class="wishlist-item-price">${price}</div></div><button class="wishlist-item-remove" data-sku="${sku}">×</button>`;
 
         item.querySelector('.wishlist-item-title').addEventListener('click', () => {
           wishlistModal.classList.remove('active');
@@ -648,23 +632,6 @@ document.addEventListener('DOMContentLoaded', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
-
-  // ============= 12. PRODUCT CARD BUTTONS (CALENDLY) =============
-  // Ensure all "Book a Demo" buttons on the main grid open the Calendly widget
-  document.querySelectorAll('.product-card .product-btn').forEach((btn) => {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation(); // Prevents the product details modal from opening simultaneously
-      const title = this.closest('.product-card').querySelector('h3').textContent;
-      const calendlyUrl = 'https://calendly.com/paraschausali48/30min'; // IMPORTANT: Replace with your link
-      if (typeof Calendly !== 'undefined') {
-        Calendly.initPopupWidget({
-          url: calendlyUrl,
-          prefill: { customAnswers: { a1: `Product of Interest: ${title}` } },
-        });
-      }
-    });
-  });
 
   // Apply default filtering state on load
   applyFilters();

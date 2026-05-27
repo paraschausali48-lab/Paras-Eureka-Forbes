@@ -56,12 +56,13 @@ const translations = {
     filter_air: 'Air Purifiers',
     filter_vacuum: 'Vacuum Cleaners',
     filter_softener: 'Water Softeners',
-    btn_ask: 'Book a Demo',
+    btn_ask: 'Book a Free Demo',
     btn_check_suitability: 'Check Suitability',
     btn_check_hard_water: 'Check Hard Water Solution',
     btn_get_best_offer: 'Get Best Offer',
     btn_get_recommendation: 'Get Recommendation',
     btn_get_details: 'Get Details',
+    btn_leaflet: 'Download Leaflet',
     btn_exchange: 'Exchange Offer',
     btn_more_info: 'More Info',
     btn_sort: 'Sort',
@@ -137,7 +138,7 @@ const translations = {
     // ============================================
     // HEADER
     // ============================================
-    header_rep_title: 'Customer Sales Specialist',
+    header_rep_title: 'Paras Eureka Forbes',
     header_rep_badge: 'Independent Authorized Direct Sales Representative',
 
     // ============================================
@@ -187,7 +188,7 @@ const translations = {
       'This is a built-in safety feature. If the dust bag is completely full, or if the filters or hoses are severely clogged with hair or debris, the motor works harder and heats up. Emptying the dust cup and cleaning the filter regularly will prevent this and ensure maximum suction power.',
     faq_q13: 'How do I book a free home demonstration?',
     faq_a13:
-      'Simply click the "Book a Demo" button on any product. A calendar will pop up, allowing you to select a date and time that works best for you. As your authorized local specialist, I will then confirm the appointment and bring the selected models to your home.',
+      'Simply click the "Book an Appointment" or "Book a Free Demo" button on any product. A calendar will pop up, allowing you to select a date and time that works best for you. As your authorized local specialist, I will then confirm the appointment and bring the selected models to your home.',
     faq_q14: 'What is covered under the Eureka Forbes AMC (Annual Maintenance Contract)?',
     faq_a14:
       'A genuine Aquaguard AMC gives you complete peace of mind. It generally includes up to 3 scheduled maintenance visits a year, annual filter replacement, tank cleaning, unlimited breakdown repair visits, and free replacement of spare parts (including electronics and pumps) depending on the plan you choose.',
@@ -274,12 +275,13 @@ const translations = {
     filter_air: 'वायु शुद्धिकरण',
     filter_vacuum: 'वैक्यूम क्लीनर',
     filter_softener: 'जल सॉफ़्टनर',
-    btn_ask: 'डेमो बुक करें',
+    btn_ask: 'मुफ्त डेमो बुक करें',
     btn_check_suitability: 'उपयुक्तता जांचें',
     btn_check_hard_water: 'कठोर जल समाधान जांचें',
     btn_get_best_offer: 'सर्वोत्तम ऑफर प्राप्त करें',
     btn_get_recommendation: 'सिफारिश प्राप्त करें',
     btn_get_details: 'विवरण प्राप्त करें',
+    btn_leaflet: 'लीफलेट डाउनलोड करें',
     btn_exchange: 'एक्सचेंज ऑफर',
     btn_more_info: 'अधिक जानकारी',
     btn_sort: 'क्रमबद्ध करें',
@@ -350,7 +352,7 @@ const translations = {
     footer_legal_link: 'कानूनी और कॉपीराइट जानकारी',
     footer_disclaimer_text:
       'अस्वीकरण: यह वेबसाइट पारस सिंह चावसाली द्वारा स्वतंत्र रूप से संचालित की जाती है, जो यूरेका फोर्ब्स के लिए एक अधिकृत प्रत्यक्ष बिक्री प्रतिनिधि हैं। यह यूरेका फोर्ब्स लिमिटेड की आधिकारिक वेबसाइट नहीं है। इस साइट पर प्रदर्शित या संदर्भित सभी उत्पाद नाम, लोगो, ब्रांड, ट्रेडमार्क और चित्र यूरेका फोर्ब्स लिमिटेड की एकमात्र संपत्ति हैं और प्रत्यक्ष बिक्री की सुविधा के लिए केवल सूचनात्मक और प्रदर्शन उद्देश्यों के लिए उपयोग किए जाते हैं। यह प्लेटफ़ॉर्म केवल उत्पाद प्रदर्शन और पूछताछ उत्पन्न करने के लिए है। इस वेबसाइट के माध्यम से कोई भुगतान या वित्तीय लेन-देन नहीं किया जाता है। सभी अंतिम खरीद, बिलिंग और इंस्टॉलेशन पूरी तरह से आधिकारिक यूरेका फोर्ब्स चैनलों के माध्यम से निपटाए जाते हैं।',
-    header_rep_title: 'ग्राहक बिक्री विशेषज्ञ',
+    header_rep_title: 'Paras Eureka Forbes',
     header_rep_badge: 'स्वतंत्र अधिकृत प्रत्यक्ष बिक्री प्रतिनिधि',
 
     // ============================================
@@ -400,7 +402,7 @@ const translations = {
       'यह एक अंतर्निहित सुरक्षा सुविधा है। यदि डस्ट बैग पूरी तरह से भर गया है, या यदि फिल्टर या होसेस बालों या मलबे से गंभीर रूप से बंद हो गए हैं, तो मोटर अधिक मेहनत करती है और गर्म हो जाती है। डस्ट कप को खाली करना और फिल्टर को नियमित रूप से साफ करना इसे रोकेगा और अधिकतम सक्शन पावर सुनिश्चित करेगा।',
     faq_q13: 'मैं मुफ्त होम डेमो कैसे बुक करूं?',
     faq_a13:
-      'किसी भी उत्पाद पर "डेमो बुक करें" बटन पर क्लिक करें। एक कैलेंडर पॉप अप होगा, जिससे आप अपनी सुविधानुसार तारीख और समय चुन सकते हैं। आपके अधिकृत स्थानीय विशेषज्ञ के रूप में, मैं फिर अपॉइंटमेंट की पुष्टि करूंगा और चयनित मॉडल आपके घर लाऊंगा।',
+      'किसी भी उत्पाद पर "अपॉइंटमेंट बुक करें" या "मुफ्त डेमो बुक करें" बटन पर क्लिक करें। एक कैलेंडर पॉप अप होगा, जिससे आप अपनी सुविधानुसार तारीख और समय चुन सकते हैं। आपके अधिकृत स्थानीय विशेषज्ञ के रूप में, मैं फिर अपॉइंटमेंट की पुष्टि करूंगा और चयनित मॉडल आपके घर लाऊंगा।',
     faq_q14: 'यूरेका फोर्ब्स AMC (वार्षिक रखरखाव अनुबंध) के तहत क्या कवर किया गया है?',
     faq_a14:
       'एक वास्तविक एक्वागार्ड AMC आपको पूरी मानसिक शांति देता है। इसमें आम तौर पर साल में 3 निर्धारित रखरखाव दौरे, वार्षिक फिल्टर प्रतिस्थापन, टैंक की सफाई, असीमित ब्रेकडाउन मरम्मत दौरे, और आपके द्वारा चुने गए प्लान के आधार पर स्पेयर पार्ट्स (इलेक्ट्रॉनिक्स और पंप सहित) का मुफ्त प्रतिस्थापन शामिल होता है।',
@@ -484,12 +486,13 @@ const translations = {
     filter_air: 'वायु शुद्धिकरणे',
     filter_vacuum: 'व्हॅक्यूम क्लीनर',
     filter_softener: 'जल कोमल करणे',
-    btn_ask: 'डेमो बुक करा',
+    btn_ask: 'मोफत डेमो बुक करा',
     btn_check_suitability: 'सुसंगतता तपासा',
     btn_check_hard_water: 'कठोर पाण्याचे समाधान तपासा',
     btn_get_best_offer: 'सर्वोत्तम ऑफर मिळवा',
     btn_get_recommendation: 'शिफारस मिळवा',
     btn_get_details: 'तपशील मिळवा',
+    btn_leaflet: 'माहितीपत्रक डाउनलोड करा',
     btn_exchange: 'एक्सचेंज ऑफर',
     btn_more_info: 'अधिक माहिती',
     btn_sort: 'क्रमानुसार',
@@ -561,7 +564,7 @@ const translations = {
     footer_legal_link: 'कायदेशीर आणि कॉपीराइट माहिती',
     footer_disclaimer_text:
       'अस्वीकरण: ही वेबसाइट पारस सिंग चावसाली यांच्याद्वारे स्वतंत्रपणे संचालित केली जाते, जे युरोका फोर्ब्ससाठी अधिकृत थेट विक्री प्रतिनिधी आहेत. ही युरोका फोर्ब्स लिमिटेडची अधिकृत वेबसाइट नाही. या साइटवर वैशिष्ट्यीकृत किंवा संदर्भित केलेली सर्व उत्पादन नावे, लोगो, ब्रँड, ट्रेडमार्क आणि प्रतिमा या युरोका फोर्ब्स लिमिटेडची एकमेव मालमत्ता आहेत आणि थेट विक्री सुलभ करण्यासाठी केवळ माहितीपूर्ण आणि प्रात्यक्षिक हेतूंसाठी वापरली जातात. हे प्लॅटफॉर्म केवळ उत्पादन प्रदर्शन आणि चौकशी निर्मितीसाठी आहे. या वेबसाइटद्वारे कोणतेही पेमेंट किंवा आर्थिक व्यवहार प्रक्रिया केली जात नाही. सर्व अंतिम खरेदी, बिलिंग आणि इंस्टॉलेशन पूर्णपणे अधिकृत युरोका फोर्ब्स चॅनेलद्वारे हाताळले जातात.',
-    header_rep_title: 'ग्राहक विक्री विशेषज्ञ',
+    header_rep_title: 'Paras Eureka Forbes',
     header_rep_badge: 'स्वतंत्र अधिकृत थेट विक्री प्रतिनिधी',
 
     // ============================================
@@ -611,7 +614,7 @@ const translations = {
       'ही एक अंगभूत सुरक्षा सुविधा आहे. जर डस्ट बॅग पूर्णपणे भरलेली असेल, किंवा फिल्टर किंवा होसेस केस किंवा कचऱ्याने गंभीरपणे ब्लॉक झाले असतील, तर मोटर जास्त काम करते आणि गरम होते. डस्ट कप रिकामा करणे आणि फिल्टर नियमितपणे स्वच्छ केल्याने हे टाळता येईल आणि जास्तीत जास्त सक्शन पॉवर सुनिश्चित होईल.',
     faq_q13: 'मी मोफत होम डेमो कसे बुक करू?',
     faq_a13:
-      'कोणत्याही उत्पादनावरील "डेमो बुक करा" बटणावर क्लिक करा. एक कॅलेंडर उघडेल, जे तुम्हाला तुमच्यासाठी सोयीस्कर असलेली तारीख आणि वेळ निवडण्याची परवानगी देईल. तुमचा अधिकृत स्थानिक विशेषज्ञ म्हणून, मी भेटीची वेळ निश्चित करेन आणि निवडलेली मॉडेल्स तुमच्या घरी आणेन.',
+      'कोणत्याही उत्पादनावरील "अपॉइंटमेंट बुक करा" किंवा "मोफत डेमो बुक करा" बटणावर क्लिक करा. एक कॅलेंडर उघडेल, जे तुम्हाला तुमच्यासाठी सोयीस्कर असलेली तारीख आणि वेळ निवडण्याची परवानगी देईल. तुमचा अधिकृत स्थानिक विशेषज्ञ म्हणून, मी भेटीची वेळ निश्चित करेन आणि निवडलेली मॉडेल्स तुमच्या घरी आणेन.',
     faq_q14: 'युरेका फोर्ब्स AMC (वार्षिक देखभाल करार) अंतर्गत काय समाविष्ट आहे?',
     faq_a14:
       'एक अस्सल ॲक्वागार्ड AMC तुम्हाला पूर्ण मानसिक शांती देते. यात साधारणपणे वर्षातून 3 नियोजित देखभाल भेटी, वार्षिक फिल्टर बदलणे, टाकीची स्वच्छता, अमर्याद ब्रेकडाउन दुरुस्ती भेटी आणि तुम्ही निवडलेल्या योजनेनुसार स्पेअर पार्ट्स (इलेक्ट्रॉनिक्स आणि पंपसह) मोफत बदलणे समाविष्ट असते.',
