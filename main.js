@@ -71,22 +71,23 @@ document.addEventListener('DOMContentLoaded', function () {
   overlay.className = 'filter-overlay';
   document.body.appendChild(overlay);
 
-  function closeFilters() {
+  function closeAllOverlays() {
     if (filterSidebar) filterSidebar.classList.remove('open');
+    if (sortModal) sortModal.classList.remove('active');
     overlay.classList.remove('active');
     document.body.style.overflow = '';
   }
 
   if (filterToggle) {
     filterToggle.addEventListener('click', () => {
-      filterSidebar.classList.add('open');
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      if (filterSidebar) filterSidebar.classList.add('open');
+      if (overlay) overlay.classList.add('active');
+      if (document.body) document.body.style.overflow = 'hidden';
     });
   }
 
-  if (filterClose) filterClose.addEventListener('click', closeFilters);
-  overlay.addEventListener('click', closeFilters);
+  if (filterClose) filterClose.addEventListener('click', closeAllOverlays);
+  if (overlay) overlay.addEventListener('click', closeAllOverlays);
 
   function getCardCategory(card) {
     return card.querySelector('.product-tag')?.dataset.category || '';
@@ -198,6 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (sortMobileToggle && sortModal) {
     sortMobileToggle.addEventListener('click', () => {
       sortModal.classList.add('active');
+      overlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
     document.querySelectorAll('input[name="mobile-sort"]').forEach((radio) => {
@@ -205,8 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (desktopSort) desktopSort.value = e.target.value;
         sortProducts(e.target.value);
         setTimeout(() => {
-          sortModal.classList.remove('active');
-          document.body.style.overflow = '';
+          closeAllOverlays();
         }, 300);
       });
     });
@@ -244,6 +245,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.visual-filter-btn').forEach((btn) => {
     btn.addEventListener('click', function () {
       document.getElementById('products').style.display = '';
+      document.body.classList.add('products-visible');
       const navCat = this.dataset.navCategory;
       const filterVal = this.dataset.filter;
 
@@ -283,6 +285,8 @@ document.addEventListener('DOMContentLoaded', function () {
       // Remove active highlights when returning to the main category menu
       document.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
       if (clearAllBtn) clearAllBtn.click();
+      document.getElementById('products').style.display = 'none';
+      document.body.classList.remove('products-visible');
     });
   });
 

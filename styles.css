@@ -487,6 +487,12 @@ a {
   pointer-events: none;
 }
 
+body.products-visible .whatsapp-float {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(100px);
+}
+
 .btn:hover::after {
   transform: rotate(45deg) translateY(100%);
 }
@@ -2457,19 +2463,6 @@ html:lang(mr) .product-card.out-of-stock::after {
   .pdp-page-overlay .pdp-pricing .price {
     font-size: 1.8rem;
   }
-
-  #sort-modal .pdp-content {
-    height: auto;
-    max-height: 60vh;
-    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-    transform: translateY(100%);
-    position: absolute;
-    bottom: 0;
-  }
-
-  #sort-modal.active .pdp-content {
-    transform: translateY(0);
-  }
 }
 
 /* =========================================
@@ -2808,6 +2801,18 @@ html:lang(mr) .product-card.out-of-stock::after {
     border-radius: var(--radius-full);
     background: var(--color-white);
     padding: 6px;
+  }
+
+  #sort-modal .pdp-content {
+    height: auto;
+    max-height: 60vh;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    transform: translateY(100%);
+    position: absolute;
+    bottom: 0;
+  }
+  #sort-modal.active .pdp-content {
+    transform: translateY(0);
   }
 
   .mobile-actions-wrapper .mobile-action-btn {
