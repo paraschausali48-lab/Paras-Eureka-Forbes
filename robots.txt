@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.eurekaforbes-specialist.com/sitemap.xml
+Sitemap: https://paraschausali48-lab.github.io/Paras-Eureka-Forbes/sitemap.xml

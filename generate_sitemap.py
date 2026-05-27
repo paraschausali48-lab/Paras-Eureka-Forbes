@@ -3,7 +3,7 @@ import re
 from datetime import datetime
 
 def generate_sitemap(html_file="index.html", output_file="sitemap.xml"):
-    base_url = "https://www.eurekaforbes-specialist.com"
+    base_url = "https://paraschausali48-lab.github.io/Paras-Eureka-Forbes"
     today = datetime.now().strftime("%Y-%m-%d")
 
     print("--- 🗺️ Eureka Forbes Sitemap Generator ---")
