@@ -2,6 +2,28 @@ document.addEventListener('DOMContentLoaded', function () {
   const productCards = document.querySelectorAll('.product-card');
   const vendorWhatsApp = '918928002642';
 
+  // Set original order for relevance sorting
+  productCards.forEach((card, index) => {
+    card.dataset.originalOrder = index;
+  });
+
+  // ============= SCROLL REVEAL ANIMATION =============
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Stop tracking once revealed to save memory
+        }
+      });
+    },
+    { rootMargin: '0px 0px -50px 0px', threshold: 0.05 },
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => {
+    revealObserver.observe(el);
+  });
+
   // ============= FACETED FILTERING ENGINE =============
   const filterSidebar = document.getElementById('filter-sidebar');
   const filterToggle = document.getElementById('filter-mobile-toggle');
@@ -25,14 +47,25 @@ document.addEventListener('DOMContentLoaded', function () {
     if (filterSidebar) filterSidebar.style.display = '';
   }
 
+  // Show products when tapping on Mobile bottom navigation
+  document.querySelectorAll('a[href="#products"]').forEach((link) => {
+    link.addEventListener('click', function () {
+      revealProductsSection();
+    });
+  });
+
   // ============= HEADER SCROLL EFFECT =============
   const siteHeader = document.querySelector('.site-header');
+  const bottomNavBar = document.querySelector('.mobile-bottom-nav');
   if (siteHeader) {
     let isScrolled = false;
+    let lastScrollTop = 0;
     window.addEventListener(
       'scroll',
       () => {
         const currentScroll = window.scrollY;
+
+        // Styling for scrolled state
         if (!isScrolled && currentScroll > 20) {
           isScrolled = true;
           siteHeader.classList.add('scrolled');
@@ -40,6 +73,25 @@ document.addEventListener('DOMContentLoaded', function () {
           isScrolled = false;
           siteHeader.classList.remove('scrolled');
         }
+
+        // Hide/Show header and bottom nav on scroll
+        if (currentScroll <= 0) {
+          // Bouncing at the top (iOS rubber-band fix)
+          siteHeader.classList.remove('hidden');
+          document.body.classList.remove('header-hidden');
+          if (bottomNavBar) bottomNavBar.classList.remove('hidden');
+        } else if (currentScroll > lastScrollTop && currentScroll > 100) {
+          // Scrolling down (and scrolled past the top 100px)
+          siteHeader.classList.add('hidden');
+          document.body.classList.add('header-hidden');
+          if (bottomNavBar) bottomNavBar.classList.add('hidden');
+        } else if (currentScroll < lastScrollTop) {
+          // Scrolling up
+          siteHeader.classList.remove('hidden');
+          document.body.classList.remove('header-hidden');
+          if (bottomNavBar) bottomNavBar.classList.remove('hidden');
+        }
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
       },
       { passive: true },
     );
@@ -63,8 +115,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   overlay.addEventListener('click', closeFilterDrawer);
   function closeFilterDrawer() {
-    filterSidebar.classList.remove('open');
-    overlay.classList.remove('active');
+    if (filterSidebar) filterSidebar.classList.remove('open');
+    if (overlay) overlay.classList.remove('active');
     document.body.style.overflow = '';
   }
 
@@ -78,6 +130,83 @@ document.addEventListener('DOMContentLoaded', function () {
   // Get card category
   function getCardCategory(card) {
     return card.querySelector('.product-tag')?.dataset.category || '';
+  }
+
+  // ============= SORTING LOGIC =============
+  const desktopSortSelect = document.getElementById('desktop-sort-select');
+  const mobileSortRadios = document.querySelectorAll('input[name="mobile-sort"]');
+  const sortModal = document.getElementById('sort-modal');
+  const sortMobileToggle = document.getElementById('sort-mobile-toggle');
+
+  function sortProductCards() {
+    const sortValue = desktopSortSelect ? desktopSortSelect.value : 'relevance';
+    const productGrid = document.getElementById('product-grid');
+    if (!productGrid) return;
+
+    const cardsArray = Array.from(productCards);
+    cardsArray.sort((a, b) => {
+      if (sortValue === 'price-low-high') {
+        return getCardPrice(a) - getCardPrice(b);
+      } else if (sortValue === 'price-high-low') {
+        return getCardPrice(b) - getCardPrice(a);
+      } else {
+        return parseInt(a.dataset.originalOrder) - parseInt(b.dataset.originalOrder);
+      }
+    });
+
+    cardsArray.forEach((card) => productGrid.appendChild(card));
+  }
+
+  function handleSortChange(val) {
+    if (desktopSortSelect) desktopSortSelect.value = val;
+    mobileSortRadios.forEach((radio) => {
+      radio.checked = radio.value === val;
+    });
+    sortProductCards();
+  }
+
+  if (desktopSortSelect) {
+    desktopSortSelect.addEventListener('change', function () {
+      handleSortChange(this.value);
+    });
+  }
+
+  mobileSortRadios.forEach((radio) => {
+    radio.addEventListener('change', function () {
+      if (this.checked) {
+        handleSortChange(this.value);
+        if (sortModal) {
+          sortModal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+  });
+
+  if (sortMobileToggle) {
+    sortMobileToggle.addEventListener('click', function () {
+      if (sortModal) {
+        sortModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  }
+
+  const sortCloseBtn = sortModal?.querySelector('.sort-close');
+  if (sortCloseBtn) {
+    sortCloseBtn.addEventListener('click', function () {
+      sortModal.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
+
+  if (sortModal) {
+    sortModal.addEventListener('click', function (e) {
+      if (e.target === sortModal) {
+        sortModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
   }
 
   function getSkuCode(title) {
@@ -207,8 +336,13 @@ document.addEventListener('DOMContentLoaded', function () {
     return subs.includes(facetValue);
   }
 
+  let isInitialFilterRun = true;
+
   // Apply all filters
   function applyFilters() {
+    const lang = document.documentElement.lang || 'en';
+    const t = typeof translations !== 'undefined' && translations[lang] ? translations[lang] : {};
+
     const checkedCats = document.querySelectorAll('.filter-cat:checked');
     const checkedFacets = document.querySelectorAll('.filter-facet:checked');
     const searchQuery = (document.getElementById('product-search')?.value || '').toLowerCase().trim();
@@ -332,7 +466,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Batch DOM writes to prevent layout thrashing
-    toHide.forEach((card) => (card.style.display = 'none'));
+    toHide.forEach((card) => {
+      card.style.display = 'none';
+      card.classList.remove('active');
+      revealObserver.observe(card); // Re-observe hidden cards so they animate if revealed later
+    });
     toShow.forEach((card) => {
       card.style.display = 'flex';
       card.style.animation = 'none';
@@ -348,9 +486,9 @@ document.addEventListener('DOMContentLoaded', function () {
         emptyState.className = 'empty-state';
         emptyState.innerHTML = `
           <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--color-gray-400); margin-bottom: 16px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-          <h3>No products found</h3>
-          <p>Try adjusting your filters or search query to find what you're looking for.</p>
-          <button type="button" class="btn btn-outline filter-clear-all-empty" style="margin-top: 20px; border-color: var(--color-primary); color: var(--color-primary); padding: 10px 24px;">Clear All Filters</button>
+          <h3 data-i18n="empty_title">${t.empty_title || 'No products found'}</h3>
+          <p data-i18n="empty_desc">${t.empty_desc || "Try adjusting your filters or search query to find what you're looking for."}</p>
+          <button type="button" class="btn btn-outline filter-clear-all-empty" data-i18n="empty_btn" style="margin-top: 20px; border-color: var(--color-primary); color: var(--color-primary); padding: 10px 24px;">${t.empty_btn || 'Clear All Filters'}</button>
         `;
         productGrid.parentNode.insertBefore(emptyState, productGrid);
 
@@ -368,8 +506,18 @@ document.addEventListener('DOMContentLoaded', function () {
     // Restart animations cleanly in the next frame
     requestAnimationFrame(() => {
       toShow.forEach((card, idx) => {
-        card.style.animation = `filterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards ${Math.min(idx, 15) * 0.04}s`;
+        if (!isInitialFilterRun) {
+          card.classList.remove('active');
+          card.style.animation = `filterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards ${Math.min(idx, 15) * 0.04}s`;
+          setTimeout(() => {
+            card.style.animation = '';
+            card.classList.add('active');
+          }, 800);
+        } else {
+          card.style.animation = '';
+        }
       });
+      isInitialFilterRun = false;
     });
 
     // Update category counts
@@ -429,15 +577,6 @@ document.addEventListener('DOMContentLoaded', function () {
     cb.addEventListener('change', applyFilters);
   });
 
-  // Debounce utility to prevent layout thrashing on fast typing
-  function debounce(func, wait) {
-    let timeout;
-    return function (...args) {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-  }
-
   // Search input event listener
   const searchInput = document.getElementById('product-search');
   const searchBtn = document.querySelector('.header-search button');
@@ -452,7 +591,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const productsSection = document.getElementById('products');
     if (productsSection) {
-      const y = productsSection.getBoundingClientRect().top + window.scrollY - 80;
+      const offset = window.innerWidth <= 768 ? 160 : 80;
+      const y = productsSection.getBoundingClientRect().top + window.scrollY - offset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   }
@@ -469,7 +609,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (productsSection) {
           const rect = productsSection.getBoundingClientRect();
           if (rect.top > window.innerHeight * 0.6 || rect.bottom < 0) {
-            window.scrollTo({ top: rect.top + window.scrollY - 120, behavior: 'smooth' });
+            const offset = window.innerWidth <= 768 ? 160 : 120;
+            window.scrollTo({ top: rect.top + window.scrollY - offset, behavior: 'smooth' });
           }
         }
       }, 300);
@@ -504,6 +645,10 @@ document.addEventListener('DOMContentLoaded', function () {
       if (vfMain) {
         document.getElementById('vf-water').style.display = 'none';
         document.getElementById('vf-vacuum').style.display = 'none';
+        const vfAir = document.getElementById('vf-air');
+        if (vfAir) vfAir.style.display = 'none';
+        const vfSoftener = document.getElementById('vf-softener');
+        if (vfSoftener) vfSoftener.style.display = 'none';
         vfMain.style.display = 'flex';
       }
 
@@ -527,10 +672,14 @@ document.addEventListener('DOMContentLoaded', function () {
           const vfMain = document.getElementById('vf-main');
           const vfWater = document.getElementById('vf-water');
           const vfVacuum = document.getElementById('vf-vacuum');
+          const vfAir = document.getElementById('vf-air');
+          const vfSoftener = document.getElementById('vf-softener');
 
           if (vfMain) vfMain.style.display = 'none';
           if (cat === 'Water Purifier' && vfWater) vfWater.style.display = 'flex';
           if (cat === 'Vacuum Cleaner' && vfVacuum) vfVacuum.style.display = 'flex';
+          if (cat === 'Air Purifier' && vfAir) vfAir.style.display = 'flex';
+          if (cat === 'Water Softener' && vfSoftener) vfSoftener.style.display = 'flex';
 
           document.querySelectorAll('.filter-cat, .filter-facet').forEach((cb) => (cb.checked = false));
           const searchInput = document.getElementById('product-search');
@@ -547,7 +696,8 @@ document.addEventListener('DOMContentLoaded', function () {
           applyFilters();
           const productsSection = document.getElementById('products');
           if (productsSection) {
-            const y = productsSection.getBoundingClientRect().top + window.scrollY - 150;
+            const offset = window.innerWidth <= 768 ? 160 : 150;
+            const y = productsSection.getBoundingClientRect().top + window.scrollY - offset;
             window.scrollTo({ top: y, behavior: 'smooth' });
           }
           return; // Stop standard filter logic
@@ -594,7 +744,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // Auto-scroll to the product section so the user can see the filtered results
         const productsSection = document.getElementById('products');
         if (productsSection) {
-          const y = productsSection.getBoundingClientRect().top + window.scrollY - 150;
+          const offset = window.innerWidth <= 768 ? 160 : 150;
+          const y = productsSection.getBoundingClientRect().top + window.scrollY - offset;
           window.scrollTo({ top: y, behavior: 'smooth' });
         }
       });
@@ -606,9 +757,17 @@ document.addEventListener('DOMContentLoaded', function () {
   if (backBtns.length > 0) {
     backBtns.forEach((btn) => {
       btn.addEventListener('click', function () {
-        document.getElementById('vf-water').style.display = 'none';
-        document.getElementById('vf-vacuum').style.display = 'none';
-        document.getElementById('vf-main').style.display = 'flex';
+        const vfWater = document.getElementById('vf-water');
+        if (vfWater) vfWater.style.display = 'none';
+        const vfVacuum = document.getElementById('vf-vacuum');
+        if (vfVacuum) vfVacuum.style.display = 'none';
+        const vfAir = document.getElementById('vf-air');
+        if (vfAir) vfAir.style.display = 'none';
+        const vfSoftener = document.getElementById('vf-softener');
+        if (vfSoftener) vfSoftener.style.display = 'none';
+
+        const vfMain = document.getElementById('vf-main');
+        if (vfMain) vfMain.style.display = 'flex';
 
         document.querySelectorAll('.filter-cat, .filter-facet').forEach((cb) => (cb.checked = false));
         document.querySelector('.filter-cat[value="all"]').checked = true;
@@ -616,6 +775,11 @@ document.addEventListener('DOMContentLoaded', function () {
         document.querySelectorAll('.vacuum-filter').forEach((el) => (el.style.display = ''));
 
         applyFilters();
+
+        const productsSection = document.getElementById('products');
+        if (productsSection) {
+          productsSection.style.display = 'none';
+        }
       });
     });
   }
@@ -704,74 +868,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  function getCardCtaLabelKey(category) {
-    switch (category) {
-      case 'Water Purifier':
-        return 'btn_check_suitability';
-      case 'Water Softener':
-        return 'btn_check_hard_water';
-      case 'Vacuum Cleaner':
-        return 'btn_get_best_offer';
-      case 'Air Purifier':
-        return 'btn_get_recommendation';
-      default:
-        return 'btn_get_details';
-    }
-  }
-
-  function getModalActions(category, title, isOutOfStock = false) {
-    const stockMsg = isOutOfStock
-      ? ' I understand it is currently out of stock, could you let me know when it will be available?'
-      : '';
-
-    switch (category) {
-      case 'Water Purifier':
-        return [
-          {
-            label: 'Book Free TDS Test',
-            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please help me book a free TDS test and check if this purifier is suitable for my home water.`,
-          },
-          {
-            label: 'Check Exchange Value',
-            secondary: true,
-            message: `Hello Paras, I want to exchange my old water purifier for the ${title}.${stockMsg} Please let me know the exchange value and offers.`,
-          },
-        ];
-      case 'Water Softener':
-        return [
-          {
-            label: 'Book Hard Water Check',
-            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please help me check if this water softener is suitable for my hard water issue and home usage.`,
-          },
-        ];
-      case 'Vacuum Cleaner':
-        return [
-          {
-            label: 'Book Home Demo',
-            isDemo: true,
-            productTitle: title,
-          },
-          {
-            label: 'Get Best Offer on WhatsApp',
-            secondary: true,
-            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please share the best current offer and demo availability.`,
-          },
-        ];
-      case 'Air Purifier':
-        return [
-          {
-            label: 'Check Room Coverage',
-            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please help me check if it is suitable for my room size and air quality needs.`,
-          },
-        ];
-      default:
-        return [
-          {
-            label: 'Get Details on WhatsApp',
-            message: `Hello Paras, I am interested in ${title}.${stockMsg} Please share details, offer, and availability.`,
-          },
-        ];
-    }
+  function getCardCtaLabelKey() {
+    return 'btn_ask';
   }
 
   function openWhatsAppMessage(message) {
@@ -782,80 +880,21 @@ document.addEventListener('DOMContentLoaded', function () {
     window.open(`https://wa.me/${vendorWhatsApp}?text=${encodedMessage}`, '_blank');
   }
 
-  function createModalActionButton(action) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = action.label;
-    button.className = action.secondary ? 'product-btn product-btn-secondary' : 'product-btn';
-    button.addEventListener('click', function () {
-      if (action.isDemo) {
-        const demoModal = document.getElementById('demo-modal');
-        const demoProduct = document.getElementById('demo-product-name');
-        if (demoModal && demoProduct) {
-          demoProduct.textContent = `Product: ${action.productTitle}`;
-          demoModal.classList.add('active');
-        }
-      } else {
-        openWhatsAppMessage(action.message);
-      }
-    });
-    return button;
-  }
-
   function updateProductActionLabels() {
     const lang = document.documentElement.lang || 'en';
     productCards.forEach((card) => {
-      const category = getCardCategory(card);
       let button = card.querySelector('.product-btn:not(.exchange-btn)');
       if (!button) {
         button = card.querySelector(':scope > .product-btn');
       }
       if (!button) return;
 
-      const key = getCardCtaLabelKey(category);
+      const key = getCardCtaLabelKey();
       button.setAttribute('data-i18n', key);
       button.setAttribute('href', '#');
 
       if (typeof translations !== 'undefined' && translations[lang] && translations[lang][key]) {
         button.textContent = translations[lang][key];
-      }
-
-      // Add Exchange Button for Water Purifiers dynamically
-      if (category === 'Water Purifier' && !card.querySelector('.exchange-btn')) {
-        const exchangeBtn = document.createElement('button');
-        exchangeBtn.type = 'button';
-        exchangeBtn.className = 'product-btn product-btn-secondary exchange-btn';
-
-        const exchangeLabel =
-          typeof translations !== 'undefined' && translations[lang] && translations[lang]['btn_exchange']
-            ? translations[lang]['btn_exchange']
-            : 'Exchange Offer';
-
-        exchangeBtn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px; flex-shrink:0;"><path d="M17 1l4 4-4 4"></path><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><path d="M7 23l-4-4 4-4"></path><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg><span data-i18n="btn_exchange">${exchangeLabel}</span>`;
-
-        exchangeBtn.addEventListener('click', function (e) {
-          e.stopPropagation(); // prevent modal from opening
-          const title = card.querySelector('h3')?.textContent || '';
-          const isOutOfStock = card.classList.contains('out-of-stock');
-          const stockMsg = isOutOfStock
-            ? ' I understand it is currently out of stock, could you let me know when it will be available?'
-            : '';
-          const message = `Hello Paras, I want to exchange my old water purifier for the ${title}.${stockMsg} Please let me know the exchange value and offers.`;
-          const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodeURIComponent(message)}`;
-
-          if (typeof gtag === 'function') {
-            gtag('event', 'exchange_click', { event_category: 'WhatsApp', event_label: title });
-          }
-          window.open(waUrl, '_blank');
-        });
-
-        if (!button.parentElement.classList.contains('card-actions')) {
-          const actionsContainer = document.createElement('div');
-          actionsContainer.className = 'card-actions';
-          button.parentNode.insertBefore(actionsContainer, button);
-          actionsContainer.appendChild(button);
-        }
-        button.parentElement.appendChild(exchangeBtn);
       }
     });
   }
@@ -1261,34 +1300,37 @@ document.addEventListener('DOMContentLoaded', function () {
 
       // Align buttons side by side
       btnContainer.style.display = 'flex';
-      btnContainer.style.gap = '10px';
+      btnContainer.style.gap = '12px';
       btnContainer.style.flexWrap = 'wrap';
 
       const isOutOfStock = this.classList.contains('out-of-stock');
+      const stockMsg = isOutOfStock
+        ? ' I understand it is currently out of stock, could you let me know when it will be available?'
+        : '';
 
-      getModalActions(categoryKey, title, isOutOfStock).forEach((action) => {
-        btnContainer.appendChild(createModalActionButton(action));
+      const lang = document.documentElement.lang || 'en';
+      const t = typeof translations !== 'undefined' && translations[lang] ? translations[lang] : {};
+
+      // 1. Book an Appointment Button
+      const appointmentMsg = `Hello Paras, I would like to book an appointment for ${title}.${stockMsg} Please let me know the available slots.`;
+      const appointmentBtn = document.createElement('button');
+      appointmentBtn.type = 'button';
+      appointmentBtn.className = 'product-btn';
+      const appointmentLabel = t.btn_book_appointment || 'Book an Appointment';
+      appointmentBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg><span data-i18n="btn_book_appointment">${appointmentLabel}</span>`;
+      appointmentBtn.addEventListener('click', function () {
+        openWhatsAppMessage(appointmentMsg);
       });
+      btnContainer.appendChild(appointmentBtn);
 
-      const leafletUrl = this.dataset.leaflet;
-      if (leafletUrl) {
-        const leafletBtn = document.createElement('a');
-        leafletBtn.href = leafletUrl;
-        leafletBtn.target = '_blank';
-        leafletBtn.rel = 'noopener noreferrer';
-        leafletBtn.textContent = 'View Product Leaflet';
-        leafletBtn.className = 'product-btn product-btn-secondary';
-        btnContainer.appendChild(leafletBtn);
-      }
-
-      // Add Unified Native Share Button
+      // 2. Modern Share Button
       const nativeShareBtn = document.createElement('button');
       nativeShareBtn.type = 'button';
       nativeShareBtn.className = 'product-btn product-btn-secondary';
-      const lang = document.documentElement.lang || 'en';
-      const shareLabel = 'Share';
 
-      nativeShareBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg><span>${shareLabel}</span>`;
+      // Modern share icon (arrow out of box)
+      const shareLabel = t.btn_share || 'Share';
+      nativeShareBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg><span data-i18n="btn_share">${shareLabel}</span>`;
 
       nativeShareBtn.addEventListener('click', async function () {
         const baseUrl = window.location.href.split('#')[0];
@@ -1305,7 +1347,7 @@ document.addEventListener('DOMContentLoaded', function () {
           navigator.clipboard.writeText(productUrl).then(() => {
             const span = nativeShareBtn.querySelector('span');
             const originalText = span.textContent;
-            span.textContent = 'Link Copied!';
+            span.textContent = t.toast_link_copied || 'Link Copied!';
             setTimeout(() => {
               span.textContent = originalText;
             }, 2000);
@@ -1314,50 +1356,42 @@ document.addEventListener('DOMContentLoaded', function () {
       });
       btnContainer.appendChild(nativeShareBtn);
 
-      // Add Wishlist Button
-      const wishlistBtn = document.createElement('button');
-      wishlistBtn.type = 'button';
-      wishlistBtn.className = 'product-btn product-btn-secondary';
+      // 3. Wishlist Heart (Beside Title)
+      const wishlistBtn = document.getElementById('pdp-wishlist-btn');
+      if (wishlistBtn) {
+        const getWishlist = () => JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
 
-      const getWishlist = () => JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
+        const updateWishlistUI = (wished) => {
+          wishlistBtn.innerHTML = `<svg width="28" height="28" viewBox="0 0 24 24" fill="${wished ? '#e63946' : 'none'}" stroke="${wished ? '#e63946' : 'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`;
+        };
 
-      const updateWishlistUI = (wished) => {
-        wishlistBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="${wished ? '#e63946' : 'none'}" stroke="${wished ? '#e63946' : 'currentColor'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg><span>${wished ? 'Saved' : 'Wishlist'}</span>`;
-        if (wished) {
-          wishlistBtn.style.color = '#e63946';
-          wishlistBtn.style.borderColor = '#e63946';
-          wishlistBtn.style.background = '#fff0f2';
-        } else {
-          wishlistBtn.style.color = '';
-          wishlistBtn.style.borderColor = '';
-          wishlistBtn.style.background = '';
-        }
-      };
-
-      let currentWished = getWishlist().includes(sku);
-      updateWishlistUI(currentWished);
-
-      wishlistBtn.addEventListener('click', function () {
-        let wishlist = getWishlist();
-        const index = wishlist.indexOf(sku);
-        if (index > -1) {
-          wishlist.splice(index, 1);
-          currentWished = false;
-          showToast('Removed from Wishlist', false);
-        } else {
-          wishlist.push(sku);
-          currentWished = true;
-          showToast('Added to Wishlist!', true);
-        }
-        localStorage.setItem('ef_wishlist', JSON.stringify(wishlist));
+        let currentWished = getWishlist().includes(sku);
         updateWishlistUI(currentWished);
-        if (typeof updateWishlistBadgeDisplay === 'function') updateWishlistBadgeDisplay();
-      });
-      btnContainer.appendChild(wishlistBtn);
+
+        wishlistBtn.onclick = function () {
+          let wishlist = getWishlist();
+          const index = wishlist.indexOf(sku);
+          if (index > -1) {
+            wishlist.splice(index, 1);
+            currentWished = false;
+            showToast(t.toast_wishlist_remove || 'Removed from Wishlist', false);
+          } else {
+            wishlist.push(sku);
+            currentWished = true;
+            showToast(t.toast_wishlist_add || 'Added to Wishlist!', true);
+          }
+          localStorage.setItem('ef_wishlist', JSON.stringify(wishlist));
+          updateWishlistUI(currentWished);
+          if (typeof updateWishlistBadgeDisplay === 'function') updateWishlistBadgeDisplay();
+        };
+      }
 
       // Show the modal
       pdpModal.classList.add('active');
-      pdpModal.scrollTop = 0; // Scroll to top for the full-page view
+      const pdpLayout = pdpModal.querySelector('.pdp-layout');
+      if (pdpLayout) pdpLayout.scrollTop = 0;
+      const pdpScroll = pdpModal.querySelector('.pdp-scrollable-content');
+      if (pdpScroll) pdpScroll.scrollTop = 0;
       document.body.style.overflow = 'hidden';
 
       // Focus the close button for accessibility
@@ -1451,15 +1485,18 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!wishlistContainer) return;
     wishlistContainer.innerHTML = '';
     const wishlist = JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
+    const lang = document.documentElement.lang || 'en';
+    const t = typeof translations !== 'undefined' && translations[lang] ? translations[lang] : {};
 
     if (wishlist.length === 0) {
       if (wishlistClearAllBtn) wishlistClearAllBtn.style.display = 'none';
+      const emptyText = t.wishlist_empty || 'Your wishlist is currently empty.';
       wishlistContainer.innerHTML = `
         <div class="wishlist-empty">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px; opacity: 0.5;">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
-          <p>Your wishlist is currently empty.</p>
+          <p data-i18n="wishlist_empty">${emptyText}</p>
         </div>`;
       return;
     }
@@ -1507,7 +1544,7 @@ document.addEventListener('DOMContentLoaded', function () {
           localStorage.setItem('ef_wishlist', JSON.stringify(wl));
           renderWishlist();
           updateWishlistBadgeDisplay();
-          showToast('Removed from Wishlist', false);
+          showToast(t.toast_wishlist_remove || 'Removed from Wishlist', false);
         });
 
         wishlistContainer.appendChild(itemEl);
@@ -1526,10 +1563,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (wishlistClearAllBtn) {
     wishlistClearAllBtn.addEventListener('click', () => {
+      const lang = document.documentElement.lang || 'en';
+      const t = typeof translations !== 'undefined' && translations[lang] ? translations[lang] : {};
       localStorage.setItem('ef_wishlist', '[]');
       renderWishlist();
       updateWishlistBadgeDisplay();
-      showToast('Wishlist cleared', false);
+      showToast(t.toast_wishlist_clear || 'Wishlist cleared', false);
     });
   }
 
@@ -1688,23 +1727,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // 6. Scroll Animation Logic
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target); // Stop tracking once revealed to save memory
-        }
-      });
-    },
-    { rootMargin: '0px 0px -50px 0px', threshold: 0.05 },
-  );
-
-  document.querySelectorAll('.reveal').forEach((el) => {
-    revealObserver.observe(el);
-  });
-
   // ============= COUNTDOWN TIMER LOGIC =============
   const countDownDate = new Date('May 31, 2026 23:59:59').getTime();
 
@@ -1717,7 +1739,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (distance < 0) {
       clearInterval(countdownInterval);
-      elCountdown.style.display = 'none';
+      if (elCountdown) elCountdown.style.display = 'none';
       return;
     }
 

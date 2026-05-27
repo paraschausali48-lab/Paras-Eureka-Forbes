@@ -29,8 +29,8 @@ def push_to_github():
     if commit_process.returncode != 0:
         output = commit_process.stdout.lower() + commit_process.stderr.lower()
         if "nothing to commit" in output:
-            print("⚠️ No changes detected. Your repository is already up to date!")
-            return
+            print("⚠️ No new changes to commit. Proceeding to check for unpushed commits...")
+            # We do not return here, so the script can still push any pending local commits
         else:
             print(f"❌ Error during commit:\n{commit_process.stderr or commit_process.stdout}")
             sys.exit(1)

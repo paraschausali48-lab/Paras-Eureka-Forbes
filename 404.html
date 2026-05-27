@@ -25,17 +25,20 @@
         color: var(--color-gray-200);
         line-height: 1;
         margin-bottom: 20px;
+        animation: loadFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
       }
       .error-title {
         font-size: 2rem;
         color: var(--color-gray-800);
         margin-bottom: 20px;
+        animation: loadFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
       }
       .error-desc {
         font-size: 1.1rem;
         color: var(--color-gray-600);
         max-width: 500px;
         margin-bottom: 40px;
+        animation: loadFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
       }
       @media (max-width: 600px) {
         .error-code {
@@ -54,13 +57,13 @@
     <header class="site-header">
       <div class="container header-inner">
         <div class="brand">
-          <h1>Eureka Forbes & Aquaguard Specialist in Mumbai & Navi Mumbai</h1>
           <span class="badge-rep" data-i18n="header_rep_badge">Independent Authorized Direct Sales Representative</span>
         </div>
         <form class="header-search" action="index.html" method="GET">
           <input
             type="search"
             name="q"
+            data-i18n="search_placeholder"
             placeholder="Search for products, brands and more..."
             aria-label="Search products"
           />
@@ -125,14 +128,5 @@
         strictly through official Eureka Forbes channels.
       </div>
     </footer>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const wishlist = JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
-        const badge = document.querySelector('.header-wishlist-badge');
-        if (badge && wishlist.length > 0) {
-          badge.style.display = 'block';
-        }
-      });
-    </script>
   </body>
 </html>
