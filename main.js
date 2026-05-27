@@ -71,23 +71,37 @@ document.addEventListener('DOMContentLoaded', function () {
   overlay.className = 'filter-overlay';
   document.body.appendChild(overlay);
 
-  function closeAllOverlays() {
+  function forceCloseAllOverlays() {
     if (filterSidebar) filterSidebar.classList.remove('open');
     if (sortModal) sortModal.classList.remove('active');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
+    if (wishlistModal) wishlistModal.classList.remove('active');
+    if (pdpModal) pdpModal.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    if (document.body) document.body.style.overflow = '';
+    if (lastFocused) {
+      lastFocused.focus();
+      lastFocused = null;
+    }
+  }
+
+  function closeActiveOverlay() {
+    const hash = window.location.hash;
+    // If the hash is tied to a modal or product view, trigger a native back event
+    if (['#view-filter', '#view-sort', '#view-wishlist'].includes(hash) || hash.startsWith('#EF-')) {
+      window.history.back();
+    } else {
+      forceCloseAllOverlays();
+    }
   }
 
   if (filterToggle) {
     filterToggle.addEventListener('click', () => {
-      if (filterSidebar) filterSidebar.classList.add('open');
-      if (overlay) overlay.classList.add('active');
-      if (document.body) document.body.style.overflow = 'hidden';
+      window.location.hash = 'view-filter';
     });
   }
 
-  if (filterClose) filterClose.addEventListener('click', closeAllOverlays);
-  if (overlay) overlay.addEventListener('click', closeAllOverlays);
+  if (filterClose) filterClose.addEventListener('click', closeActiveOverlay);
+  if (overlay) overlay.addEventListener('click', closeActiveOverlay);
 
   function getCardCategory(card) {
     return card.querySelector('.product-tag')?.dataset.category || '';
@@ -198,16 +212,14 @@ document.addEventListener('DOMContentLoaded', function () {
   const sortModal = document.getElementById('sort-modal');
   if (sortMobileToggle && sortModal) {
     sortMobileToggle.addEventListener('click', () => {
-      sortModal.classList.add('active');
-      overlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      window.location.hash = 'view-sort';
     });
     document.querySelectorAll('input[name="mobile-sort"]').forEach((radio) => {
       radio.addEventListener('change', (e) => {
         if (desktopSort) desktopSort.value = e.target.value;
         sortProducts(e.target.value);
         setTimeout(() => {
-          closeAllOverlays();
+          closeActiveOverlay();
         }, 300);
       });
     });
@@ -241,9 +253,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  function hideProductsView() {
+    const prodEl = document.getElementById('products');
+    if (prodEl) prodEl.style.display = 'none';
+    document.body.classList.remove('products-visible');
+    document.querySelectorAll('.visual-filters').forEach((vf) => (vf.style.display = 'none'));
+    const vfMain = document.getElementById('vf-main');
+    if (vfMain) vfMain.style.display = 'flex';
+    document.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
+    if (clearAllBtn) clearAllBtn.click();
+  }
+
   // ============= 4. VISUAL FILTERS =============
   document.querySelectorAll('.visual-filter-btn').forEach((btn) => {
     btn.addEventListener('click', function () {
+      if (window.location.hash !== '#products') {
+        window.history.pushState(null, null, '#products');
+      }
       document.getElementById('products').style.display = '';
       document.body.classList.add('products-visible');
       const navCat = this.dataset.navCategory;
@@ -280,13 +306,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('.vf-back-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.visual-filters').forEach((vf) => (vf.style.display = 'none'));
-      document.getElementById('vf-main').style.display = 'flex';
-      // Remove active highlights when returning to the main category menu
-      document.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
-      if (clearAllBtn) clearAllBtn.click();
-      document.getElementById('products').style.display = 'none';
-      document.body.classList.remove('products-visible');
+      if (window.location.hash === '#products') {
+        window.history.back(); // Triggers the clean popstate transition
+      } else {
+        hideProductsView();
+      }
     });
   });
 
@@ -321,18 +345,9 @@ document.addEventListener('DOMContentLoaded', function () {
   const pdpModal = document.getElementById('pdp-modal');
   let lastFocused = null;
 
-  document.querySelectorAll('.pdp-close').forEach((btn) =>
-    btn.addEventListener('click', function () {
-      this.closest('.pdp-modal').classList.remove('active');
-      document.body.style.overflow = '';
-      if (this.closest('#pdp-modal')) {
-        if (lastFocused) lastFocused.focus();
-        if (window.location.hash.startsWith('#EF-')) {
-          window.history.replaceState(null, null, window.location.pathname + window.location.search);
-        }
-      }
-    }),
-  );
+  document
+    .querySelectorAll('.pdp-close, .wishlist-close, .sort-close')
+    .forEach((btn) => btn.addEventListener('click', closeActiveOverlay));
 
   productCards.forEach((card) => {
     card.addEventListener('click', function (e) {
@@ -416,7 +431,8 @@ document.addEventListener('DOMContentLoaded', function () {
       btnContainer.appendChild(shareBtn);
 
       // URL Direct linking
-      if (window.history.pushState) window.history.pushState(null, null, '#' + sku);
+      if (window.history.pushState && window.location.hash !== '#' + sku)
+        window.history.pushState(null, null, '#' + sku);
 
       pdpModal.classList.add('active');
       pdpModal.scrollTop = 0;
@@ -523,20 +539,9 @@ document.addEventListener('DOMContentLoaded', function () {
   wishlistToggleBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      renderWishlist();
-      if (wishlistModal) {
-        wishlistModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
+      window.location.hash = 'view-wishlist';
     });
   });
-
-  document.querySelectorAll('.wishlist-close, .sort-close').forEach((btn) =>
-    btn.addEventListener('click', function () {
-      this.closest('.pdp-modal').classList.remove('active');
-      document.body.style.overflow = '';
-    }),
-  );
 
   if (wishlistClearBtn) {
     wishlistClearBtn.addEventListener('click', () => {
@@ -604,10 +609,14 @@ document.addEventListener('DOMContentLoaded', function () {
   });
   updateWishlistUI();
 
-  // ============= 10. URL DIRECT LINKING (HASH ROUTING) =============
-  function checkHashForModal() {
-    if (window.location.hash.startsWith('#EF-')) {
-      const sku = window.location.hash.substring(1);
+  // ============= 10. APP-LIKE ROUTING & GESTURES =============
+  function handleAppRouting() {
+    const hash = window.location.hash;
+
+    forceCloseAllOverlays();
+
+    if (hash.startsWith('#EF-')) {
+      const sku = hash.substring(1);
       const targetCard = Array.from(productCards).find((c) => {
         const title = c.querySelector('h3').textContent;
         return (
@@ -620,14 +629,74 @@ document.addEventListener('DOMContentLoaded', function () {
           sku
         );
       });
-      if (targetCard && !pdpModal.classList.contains('active')) {
+      if (targetCard && (!pdpModal || !pdpModal.classList.contains('active'))) {
         document.getElementById('products').style.display = '';
+        document.body.classList.add('products-visible');
         targetCard.click();
       }
+    } else if (hash === '#view-filter') {
+      if (filterSidebar) filterSidebar.classList.add('open');
+      if (overlay) overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    } else if (hash === '#view-sort') {
+      if (sortModal) sortModal.classList.add('active');
+      if (overlay) overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    } else if (hash === '#view-wishlist') {
+      renderWishlist();
+      if (wishlistModal) wishlistModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    } else if (hash === '#products') {
+      document.getElementById('products').style.display = '';
+      document.body.classList.add('products-visible');
+    } else if (!hash || hash === '') {
+      hideProductsView();
     }
   }
-  window.addEventListener('hashchange', checkHashForModal);
-  setTimeout(checkHashForModal, 300);
+  window.addEventListener('hashchange', handleAppRouting);
+  setTimeout(handleAppRouting, 300);
+
+  // Swipe Gestures for Mobile
+  function enableSwipeToClose(element, closeAction, direction = 'down') {
+    if (!element) return;
+    let startPos = 0;
+    let currentPos = 0;
+    let isSwiping = false;
+    element.addEventListener(
+      'touchstart',
+      (e) => {
+        if (direction === 'down' && element.scrollTop > 0) return;
+        startPos = direction === 'down' ? e.touches[0].clientY : e.touches[0].clientX;
+        isSwiping = true;
+      },
+      { passive: true },
+    );
+    element.addEventListener(
+      'touchmove',
+      (e) => {
+        if (!isSwiping || (direction === 'down' && element.scrollTop > 0)) return;
+        currentPos = direction === 'down' ? e.touches[0].clientY : e.touches[0].clientX;
+        const diff = currentPos - startPos;
+        if (diff > 0) {
+          element.style.transform = direction === 'down' ? `translateY(${diff}px)` : `translateX(${diff}px)`;
+          element.style.transition = 'none';
+        }
+      },
+      { passive: true },
+    );
+    element.addEventListener('touchend', () => {
+      if (!isSwiping) return;
+      isSwiping = false;
+      element.style.transform = '';
+      element.style.transition = '';
+      if (currentPos - startPos > 100) closeAction();
+    });
+  }
+
+  if (sortModal) enableSwipeToClose(sortModal.querySelector('.pdp-content'), closeActiveOverlay, 'down');
+  if (filterSidebar) enableSwipeToClose(filterSidebar, closeActiveOverlay, 'down');
+  if (pdpModal) enableSwipeToClose(pdpModal.querySelector('.pdp-content'), closeActiveOverlay, 'right');
+  if (wishlistModal) enableSwipeToClose(wishlistModal.querySelector('.pdp-content'), closeActiveOverlay, 'right');
 
   // ============= 11. SCROLL TO TOP BUTTON =============
   const scrollToTopBtn = document.getElementById('scrollToTop');
