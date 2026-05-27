@@ -731,38 +731,39 @@ a {
     mask-image: linear-gradient(to right, transparent 0%, black 12px, black calc(100% - 12px), transparent 100%);
   }
   .visual-filters {
-    gap: 16px;
+    gap: 12px;
     scroll-snap-type: x mandatory;
     padding: 10px 16px 20px;
+    justify-content: flex-start;
   }
   .vf-img-wrap {
-    width: 72px;
-    height: 72px;
-    padding: 8px;
+    width: 64px;
+    height: 64px;
+    padding: 10px;
   }
   .visual-filter-btn span {
-    font-size: 0.8rem;
-    max-width: 80px;
+    font-size: 0.75rem;
+    max-width: 72px;
   }
   .visual-filter-btn {
-    min-width: 72px;
+    min-width: 64px;
     scroll-snap-align: center;
   }
   .vf-img-wrap svg {
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
   }
   .vf-back-btn {
-    min-width: 72px;
+    min-width: 64px;
     scroll-snap-align: center;
   }
   .vf-back-icon-wrap {
-    width: 72px;
-    height: 72px;
+    width: 64px;
+    height: 64px;
   }
   .vf-back-btn span {
-    font-size: 0.8rem;
-    max-width: 80px;
+    font-size: 0.75rem;
+    max-width: 72px;
   }
 }
 
@@ -2408,7 +2409,7 @@ html:lang(mr) .product-card.out-of-stock::after {
   }
 
   .pdp-info-section {
-    padding: 20px 18px 15px 18px;
+    padding: 20px 18px 120px 18px;
     overflow: visible;
   }
 
@@ -2420,10 +2421,19 @@ html:lang(mr) .product-card.out-of-stock::after {
     font-size: 1.3em;
   }
 
+  .pdp-actions {
+    gap: 8px;
+  }
+
   .pdp-actions .product-btn {
-    font-size: 0.85em;
-    padding: 12px 16px;
-    flex: 1 1 auto;
+    font-size: 0.85rem;
+    padding: 12px 10px;
+    flex: 1 1 100%;
+    margin: 0;
+  }
+
+  .pdp-actions .product-btn-secondary {
+    flex: 1 1 calc(50% - 4px);
   }
 
   .pdp-page-overlay .pdp-actions {
@@ -2446,11 +2456,6 @@ html:lang(mr) .product-card.out-of-stock::after {
   }
   .pdp-page-overlay .pdp-pricing .price {
     font-size: 1.8rem;
-  }
-
-  .pdp-info-section {
-    padding: 20px 18px 80px 18px;
-    overflow: visible;
   }
 
   #sort-modal .pdp-content {

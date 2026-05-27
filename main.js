@@ -388,8 +388,9 @@ document.addEventListener('DOMContentLoaded', function () {
       // Native Share Button
       const shareBtn = document.createElement('button');
       shareBtn.className = 'product-btn product-btn-secondary';
-      shareBtn.innerHTML =
-        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>Share';
+      const shareIcon =
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>';
+      shareBtn.innerHTML = shareIcon + '<span data-i18n="btn_share">Share</span>';
       shareBtn.onclick = async () => {
         const url = window.location.href.split('#')[0] + '#' + sku;
         if (navigator.share) {
@@ -398,13 +399,14 @@ document.addEventListener('DOMContentLoaded', function () {
           } catch (err) {}
         } else {
           navigator.clipboard.writeText(url);
-          shareBtn.innerHTML = 'Copied!';
-          setTimeout(
-            () =>
-              (shareBtn.innerHTML =
-                '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>Share'),
-            2000,
-          );
+          shareBtn.innerHTML = shareIcon + '<span data-i18n="toast_link_copied">Copied!</span>';
+          if (typeof window.applyTranslations === 'function')
+            window.applyTranslations(document.documentElement.lang || 'en');
+          setTimeout(() => {
+            shareBtn.innerHTML = shareIcon + '<span data-i18n="btn_share">Share</span>';
+            if (typeof window.applyTranslations === 'function')
+              window.applyTranslations(document.documentElement.lang || 'en');
+          }, 2000);
         }
       };
       btnContainer.appendChild(shareBtn);
