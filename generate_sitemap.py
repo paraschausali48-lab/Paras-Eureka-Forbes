@@ -36,7 +36,8 @@ def generate_sitemap(html_file="index.html", output_file="sitemap.xml"):
             content = f.read()
 
         # Match all product titles inside <article class="product-card">...<h3>Title</h3>
-        product_pattern = re.compile(r'<article class="product-card[^>]*>.*?<h3>(.*?)</h3>', re.DOTALL)
+        # Using [^>]* after <article to safely account for newlines added by HTML formatters
+        product_pattern = re.compile(r'<article[^>]*class="product-card[^>]*>.*?<h3>(.*?)</h3>', re.DOTALL)
         products = product_pattern.findall(content)
         product_count = len(products)
 
