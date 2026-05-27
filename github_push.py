@@ -35,7 +35,15 @@ def push_to_github():
             print(f"❌ Error during commit:\n{commit_process.stderr or commit_process.stdout}")
             sys.exit(1)
 
-    print("3. Pushing to GitHub (git push)...")
+    print("3. Pulling latest changes from GitHub (git pull --rebase)...")
+    pull_process = subprocess.run(["git", "pull", "--rebase"], text=True, capture_output=True)
+    if pull_process.returncode != 0:
+        if "couldn't find remote ref" not in pull_process.stderr.lower() and "no tracking information" not in pull_process.stderr.lower():
+            print(f"⚠️ Heads up: Could not pull automatically. You might need to resolve conflicts.\n{pull_process.stderr or pull_process.stdout}")
+    elif pull_process.stdout.strip():
+        print(pull_process.stdout.strip())
+
+    print("4. Pushing to GitHub (git push)...")
     if run_command(["git", "push"]):
         print("\n🎉 Code successfully pushed! GitHub Actions will now deploy your site.")
 
