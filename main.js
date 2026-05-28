@@ -1,98 +1,29 @@
 import { VENDOR_WHATSAPP } from './config.js';
-import { debounce } from './utils.js';
+import { debounce, enableSwipeToClose } from './utils.js';
 import { showToast } from './toast.js';
 import { updateWishlistUI, renderWishlist, handleWishlistToggle, saveWishlist } from './wishlist.js';
+import { applyFilters, sortProducts, getCardCategory } from './filters.js';
+import { renderProducts } from './render.js';
+import {
+  handleAppRouting,
+  closeActiveOverlay,
+  forceCloseAllOverlays,
+  hideProductsView,
+  setLastFocused,
+} from './routing.js';
+
+// ============= SERVICE WORKER REGISTRATION =============
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch((err) => {
+      console.warn('Service Worker registration failed:', err);
+    });
+  });
+}
 
 document.addEventListener('DOMContentLoaded', async function () {
-  // ============= 0. DYNAMIC PRODUCT RENDERING =============
-  function renderProducts(products) {
-    const grid = document.getElementById('product-grid');
-    if (!grid) return;
-    grid.innerHTML = '';
-
-    const categoryIcons = {
-      'Water Purifier': '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path><path d="M9 13l2 2 4-4"></path>',
-      'Vacuum Cleaner':
-        '<rect x="4" y="14" width="16" height="6" rx="2"></rect><path d="M8 14V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"></path>',
-      'Air Purifier':
-        '<path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path>',
-      'Water Softener':
-        '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M12 11l-2.5 3c0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5L12 11z"></path>',
-    };
-
-    function getProductHighlights(product) {
-      const specs = product.specs || {};
-      const candidates = [];
-
-      if (product.category === 'Water Purifier') {
-        candidates.push(specs['TDS'], specs['Storage Capacity'], specs['Filter Life'], specs['Installation Type']);
-      } else if (product.category === 'Vacuum Cleaner') {
-        candidates.push(specs['Type'], specs['Application'], specs['Dust Capacity'], specs['Run Time']);
-      } else if (product.category === 'Air Purifier') {
-        candidates.push(specs['Ideal For'], specs['Air Flow'], specs['Purification Stages']);
-      } else if (product.category === 'Water Softener') {
-        candidates.push(specs['Max. Input Hardness (ppm)'], specs['Max. Input Flow Rate (LPH)'], specs['Technology']);
-      }
-
-      return candidates
-        .filter(Boolean)
-        .map((value) => String(value).replace(/\s+/g, ' ').trim())
-        .filter((value, index, arr) => value && arr.indexOf(value) === index)
-        .slice(0, 3);
-    }
-
-    const fragment = document.createDocumentFragment();
-
-    products.forEach((product) => {
-      const article = document.createElement('article');
-      article.className = `product-card reveal ${product.outOfStock ? 'out-of-stock' : ''}`;
-      article.dataset.subcategory = product.subcategories.join(', ');
-      if (product.leaflet) article.dataset.leaflet = product.leaflet;
-
-      let specsHtml = '<ul>';
-      if (product.specs) {
-        for (const [key, value] of Object.entries(product.specs)) {
-          specsHtml += `<li><strong>${key}:</strong> ${value}</li>`;
-        }
-      }
-      specsHtml += '</ul>';
-
-      const imgHtml = product.image
-        ? `<div class="product-media"><img src="${product.image}" alt="${product.name}" loading="lazy" width="300" height="200"></div>`
-        : `<div class="product-media product-media-placeholder" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              ${categoryIcons[product.category] || categoryIcons['Water Purifier']}
-            </svg>
-            <span>${product.category}</span>
-          </div>`;
-      const highlights = getProductHighlights(product);
-      const highlightsHtml = highlights.length
-        ? `<div class="product-highlights">${highlights.map((item) => `<span>${item}</span>`).join('')}</div>`
-        : '';
-
-      article.innerHTML = `
-        ${imgHtml}
-        <div class="product-tag" data-category="${product.category}" data-i18n="${product.i18nTag}">${product.category}</div>
-        <h3>${product.name}</h3>
-        <p>${product.description}</p>
-        ${highlightsHtml}
-        <div class="price-info">
-          <div class="mrp">MRP ₹${product.mrp.toLocaleString('en-IN')}</div>
-          <div class="price">MOP ₹${product.mop.toLocaleString('en-IN')}</div>
-        </div>
-        <div class="product-trust-note">Inquiry only. Final purchase and billing through official Eureka Forbes channels.</div>
-        <a href="#contact" class="product-btn" data-i18n="btn_more_info">More Info</a>
-        <div class="hidden-specs" style="display: none">${specsHtml}</div>
-      `;
-      fragment.appendChild(article);
-    });
-
-    grid.appendChild(fragment);
-
-    if (typeof window.applyTranslations === 'function') {
-      window.applyTranslations(document.documentElement.lang || 'en');
-    }
-  }
+  let productCards;
+  let defaultOrder;
 
   try {
     const response = await fetch('products.json');
@@ -107,7 +38,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         '<p style="text-align:center; padding: 40px; grid-column: 1/-1;">Error loading products. Ensure you are running a local web server (Not file://).</p>';
   }
 
-  const productCards = document.querySelectorAll('.product-card');
+  productCards = document.querySelectorAll('.product-card');
+  defaultOrder = Array.from(productCards);
 
   // ============= 0.5 GLOBAL KEYBOARD ACCESSIBILITY =============
   // Allow users to close modals using the Escape key
@@ -236,74 +168,15 @@ document.addEventListener('DOMContentLoaded', async function () {
   const filterClose = document.getElementById('filter-sidebar-close');
   const clearAllBtn = document.getElementById('filter-clear-all');
   const searchInput = document.getElementById('product-search');
-  const productGrid = document.getElementById('product-grid');
-  const defaultOrder = Array.from(productCards);
 
   // ============= 3.5 SORTING LOGIC =============
   const desktopSort = document.getElementById('desktop-sort-select');
-  function sortProducts(sortType) {
-    const visibleCards = Array.from(productCards).filter((c) => c.style.display !== 'none');
-    const hiddenCards = Array.from(productCards).filter((c) => c.style.display === 'none');
-    let sorted = visibleCards;
-    if (sortType === 'price-low-high') {
-      sorted.sort((a, b) => {
-        const diff = getCardPrice(a) - getCardPrice(b);
-        return diff === 0 ? defaultOrder.indexOf(a) - defaultOrder.indexOf(b) : diff;
-      });
-    } else if (sortType === 'price-high-low') {
-      sorted.sort((a, b) => {
-        const diff = getCardPrice(b) - getCardPrice(a);
-        return diff === 0 ? defaultOrder.indexOf(a) - defaultOrder.indexOf(b) : diff;
-      });
-    } else {
-      sorted.sort((a, b) => defaultOrder.indexOf(a) - defaultOrder.indexOf(b));
-    }
-    if (productGrid) {
-      sorted.forEach((c) => productGrid.appendChild(c));
-      hiddenCards.forEach((c) => productGrid.appendChild(c));
-    }
-  }
-
   // Mobile Overlay
   const overlay = document.createElement('div');
   overlay.className = 'filter-overlay';
   // Lock background scroll when dragging on the overlay
   overlay.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
   document.body.appendChild(overlay);
-
-  function forceCloseAllOverlays() {
-    if (filterSidebar) filterSidebar.classList.remove('open');
-    if (sortModal) sortModal.classList.remove('active');
-    if (wishlistModal) wishlistModal.classList.remove('active');
-    if (pdpModal) pdpModal.classList.remove('active');
-    if (overlay) overlay.classList.remove('active');
-
-    const mainSidebar = document.getElementById('main-sidebar');
-    const mainSidebarOverlay = document.getElementById('main-sidebar-overlay');
-    if (mainSidebar) mainSidebar.classList.remove('active');
-    if (mainSidebarOverlay) mainSidebarOverlay.classList.remove('active');
-
-    if (document.body) document.body.style.overflow = '';
-    if (lastFocused) {
-      lastFocused.focus();
-      lastFocused = null;
-    }
-  }
-
-  function closeActiveOverlay() {
-    const hash = window.location.hash;
-    // If the hash is tied to a modal or product view, trigger a native back event
-    if (['#view-filter', '#view-sort', '#view-wishlist'].includes(hash) || hash.startsWith('#EF-')) {
-      // Prevent kicking the user off the site if they landed directly via a shared link
-      if (window.history.length > 1 && document.referrer.includes(window.location.host)) {
-        window.history.back();
-      } else {
-        window.location.hash = '#products'; // Fallback to a safe state
-      }
-    } else {
-      forceCloseAllOverlays();
-    }
-  }
 
   if (filterToggle) {
     filterToggle.addEventListener('click', () => {
@@ -314,168 +187,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (filterClose) filterClose.addEventListener('click', closeActiveOverlay);
   if (overlay) overlay.addEventListener('click', closeActiveOverlay);
 
-  function getCardCategory(card) {
-    return card.querySelector('.product-tag')?.dataset.category || '';
-  }
-
-  function getCardPrice(card) {
-    const priceEl = card.querySelector('.price');
-    return priceEl ? parseInt(priceEl.textContent.replace(/[^0-9]/g, '')) || 0 : 0;
-  }
-
-  function cardMatchesFacets(card, facetValues, category) {
-    const subs = (card.dataset.subcategory || '')
-      .toLowerCase()
-      .split(',')
-      .map((s) => s.trim());
-    const price = getCardPrice(card);
-
-    for (const val of facetValues) {
-      // Price filtering logic
-      if (val === '0-10000' && price >= 10000) return false;
-      if (val === '10000-15000' && (price < 10000 || price >= 15000)) return false;
-      if (val === '15000-20000' && (price < 15000 || price >= 20000)) return false;
-      if (val === '20000+' && price < 20000) return false;
-
-      // Generic offers
-      if (['exchange', 'free-installation', 'municipal'].includes(val)) continue;
-
-      // Spec mappings
-      const specialMappings = {
-        ro: ['ro', 'ro-uv', 'ro-uv-uf', 'ro-uv-alk', 'ro-uv-alk-ss', 'ro-uv-ss', 'ro-uv-mc'],
-        uv: ['uv', 'uv-uf', 'ro-uv', 'ro-uv-uf', 'ro-uv-alk', 'ro-uv-alk-ss', 'ro-uv-ss', 'uv-uf-ss'],
-        uf: ['uf', 'uv-uf', 'ro-uv-uf', 'uv-uf-ss'],
-        small: ['small', 'without-storage'],
-        medium: ['medium', 'storage'],
-        upright: ['upright', 'stick'],
-        bagless: ['bagless', 'cyclonic'],
-        cordless: ['cordless', 'battery'],
-      };
-
-      const mapped = specialMappings[val] || [val];
-      if (!mapped.some((m) => subs.includes(m) || category === m)) {
-        if (val === 'wall-mounted' && category === 'Water Purifier' && !subs.includes('under-counter')) continue;
-        return false;
-      }
-    }
-    return true;
-  }
-
-  function applyFilters() {
-    const checkedCats = Array.from(document.querySelectorAll('.filter-cat:checked')).map((cb) => cb.value);
-    const isAllSelected = checkedCats.includes('all');
-
-    // Dynamic Sidebar Filters - Show only relevant facet groups
-    document.querySelectorAll('.water-filter').forEach((el) => {
-      const show = isAllSelected || checkedCats.includes('Water Purifier');
-      el.style.display = show ? '' : 'none';
-      if (!show) el.querySelectorAll('.filter-facet').forEach((cb) => (cb.checked = false));
-    });
-    document.querySelectorAll('.vacuum-filter').forEach((el) => {
-      const show = isAllSelected || checkedCats.includes('Vacuum Cleaner');
-      el.style.display = show ? '' : 'none';
-      if (!show) el.querySelectorAll('.filter-facet').forEach((cb) => (cb.checked = false));
-    });
-
-    const activeFacets = Array.from(document.querySelectorAll('.filter-facet:checked')).map((cb) => cb.value);
-    const query = (searchInput?.value || '').toLowerCase().trim();
-    const searchTerms = query.split(' ').filter((t) => t.length > 0);
-
-    let visibleCount = 0;
-
-    productCards.forEach((card) => {
-      const cat = getCardCategory(card);
-      const title = (card.querySelector('h3')?.textContent || '').toLowerCase();
-      const desc = (card.querySelector('p')?.textContent || '').toLowerCase();
-
-      const matchesCat = isAllSelected || checkedCats.includes(cat);
-      const matchesSearch =
-        searchTerms.length === 0 || searchTerms.every((term) => title.includes(term) || desc.includes(term));
-      const matchesFacet = activeFacets.length === 0 || cardMatchesFacets(card, activeFacets, cat);
-
-      if (matchesCat && matchesSearch && matchesFacet) {
-        card.style.display = 'flex';
-        card.style.animation = 'none';
-        void card.offsetWidth; // trigger reflow
-        card.style.animation = `filterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards`;
-        visibleCount++;
-      } else {
-        card.style.display = 'none';
-      }
-    });
-
-    // NEW: Sync Filter State to URL for easy sharing
-    const url = new URL(window.location);
-    if (checkedCats.length && !isAllSelected) url.searchParams.set('cat', checkedCats.join(','));
-    else url.searchParams.delete('cat');
-    if (activeFacets.length) url.searchParams.set('facets', activeFacets.join(','));
-    else url.searchParams.delete('facets');
-    if (query) url.searchParams.set('q', query);
-    else url.searchParams.delete('q');
-    window.history.replaceState(null, '', url);
-
-    const currentSort = desktopSort ? desktopSort.value : 'relevance';
-    sortProducts(currentSort);
-
-    // Update empty state
-    let emptyState = document.getElementById('empty-state');
-    if (visibleCount === 0) {
-      if (!emptyState) {
-        emptyState = document.createElement('div');
-        emptyState.id = 'empty-state';
-        emptyState.className = 'empty-state';
-        emptyState.innerHTML = `<h3 data-i18n="empty_title">No products found</h3>
-                                <p data-i18n="empty_desc">Try adjusting your filters or search query to find what you're looking for.</p>
-                                <button class="btn" onclick="document.getElementById('filter-clear-all').click()" data-i18n="empty_btn">Clear All Filters</button>`;
-        if (productGrid) productGrid.appendChild(emptyState);
-        if (window.applyTranslations) window.applyTranslations(document.documentElement.lang || 'en');
-      }
-      emptyState.style.display = 'flex';
-    } else if (emptyState) {
-      emptyState.style.display = 'none';
-    }
-
-    // Update Badges and Clear All state
-    if (clearAllBtn) {
-      if (activeFacets.length > 0 || !isAllSelected || (searchInput && searchInput.value.length > 0)) {
-        clearAllBtn.classList.add('active-filters');
-      } else {
-        clearAllBtn.classList.remove('active-filters');
-      }
-    }
-
-    const filterBadge = document.getElementById('filter-badge');
-    if (filterBadge) {
-      const activeCount = activeFacets.length + (isAllSelected ? 0 : checkedCats.length);
-      filterBadge.textContent = activeCount;
-      filterBadge.style.display = activeCount > 0 ? 'inline-flex' : 'none';
-    }
-
-    document.querySelectorAll('.filter-group').forEach((group) => {
-      const checkedInGroup = Array.from(group.querySelectorAll('.filter-option input:checked')).filter(
-        (cb) => cb.value !== 'all',
-      ).length;
-      const title = group.querySelector('.filter-group-title');
-      if (title) {
-        if (checkedInGroup > 0) title.setAttribute('data-selected-count', checkedInGroup);
-        else title.removeAttribute('data-selected-count');
-      }
-    });
-
-    // Category counts update
-    ['Water Purifier', 'Air Purifier', 'Vacuum Cleaner', 'Water Softener'].forEach((catName) => {
-      const count = Array.from(productCards).filter(
-        (c) => getCardCategory(c) === catName && c.style.display !== 'none',
-      ).length;
-      const countEl = document.querySelector(`.filter-count[data-cat="${catName}"]`);
-      if (countEl) countEl.textContent = `(${count})`;
-    });
-  }
-
   // Wire up sorting events
   if (desktopSort) {
     desktopSort.addEventListener('change', (e) => {
-      sortProducts(e.target.value);
+      sortProducts(e.target.value, productCards, defaultOrder);
       // Sync with new mobile sort buttons
       document.querySelectorAll('.sort-option-btn').forEach((btn) => {
         btn.classList.toggle('active', btn.dataset.sort === e.target.value);
@@ -500,7 +215,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         // Update desktop dropdown and sort products
         if (desktopSort) desktopSort.value = sortValue;
-        sortProducts(sortValue);
+        sortProducts(sortValue, productCards, defaultOrder);
 
         // Close modal after a short delay
         setTimeout(() => {
@@ -518,11 +233,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         const allCb = document.querySelector('.filter-cat[value="all"]');
         if (allCb) allCb.checked = false;
       }
-      applyFilters();
+      applyFilters(productCards, defaultOrder);
     });
   });
 
-  document.querySelectorAll('.filter-facet').forEach((cb) => cb.addEventListener('change', applyFilters));
+  document
+    .querySelectorAll('.filter-facet')
+    .forEach((cb) => cb.addEventListener('change', () => applyFilters(productCards, defaultOrder)));
   if (searchInput) {
     searchInput.addEventListener(
       'input',
@@ -533,7 +250,7 @@ document.addEventListener('DOMContentLoaded', async function () {
           document.body.classList.add('products-visible');
           prodEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-        applyFilters();
+        applyFilters(productCards, defaultOrder);
       }, 300),
     );
   }
@@ -543,19 +260,8 @@ document.addEventListener('DOMContentLoaded', async function () {
       document.querySelectorAll('.filter-cat, .filter-facet').forEach((cb) => (cb.checked = false));
       document.querySelector('.filter-cat[value="all"]').checked = true;
       if (searchInput) searchInput.value = '';
-      applyFilters();
+      applyFilters(productCards, defaultOrder);
     });
-  }
-
-  function hideProductsView() {
-    const prodEl = document.getElementById('products');
-    if (prodEl) prodEl.style.display = 'none';
-    document.body.classList.remove('products-visible');
-    document.querySelectorAll('.visual-filters').forEach((vf) => (vf.style.display = 'none'));
-    const vfMain = document.getElementById('vf-main');
-    if (vfMain) vfMain.style.display = 'flex';
-    document.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
-    if (clearAllBtn) clearAllBtn.click();
   }
 
   // ============= 4. VISUAL FILTERS =============
@@ -593,7 +299,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       }
 
       if (searchInput) searchInput.value = '';
-      applyFilters();
+      applyFilters(productCards, defaultOrder);
       document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
@@ -637,7 +343,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   // ============= 6. PDP MODAL & DYNAMIC GALLERY =============
   const pdpModal = document.getElementById('pdp-modal');
-  let lastFocused = null;
 
   document
     .querySelectorAll('.pdp-close, .wishlist-close, .sort-close')
@@ -655,7 +360,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       const isMoreInfoBtn = e.target.closest('.product-btn[href="#contact"]');
       if (!isMoreInfoBtn && (e.target.closest('.product-btn') || e.target.closest('a'))) return;
       if (isMoreInfoBtn) e.preventDefault(); // Prevent jumping down the page, open modal instead
-      lastFocused = this;
+      setLastFocused(this);
 
       const title = this.querySelector('h3').textContent;
       const category = getCardCategory(this);
@@ -816,67 +521,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   updateWishlistUI();
 
   // ============= 10. APP-LIKE ROUTING & GESTURES =============
-  function handleAppRouting() {
-    const hash = window.location.hash;
-
-    forceCloseAllOverlays();
-
-    if (hash.startsWith('#EF-')) {
-      const sku = hash.substring(1);
-      const targetCard = Array.from(productCards).find((c) => {
-        const title = c.querySelector('h3').textContent;
-        return (
-          'EF-' +
-            title
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/^-|-$/g, '')
-              .toUpperCase() ===
-          sku
-        );
-      });
-      if (targetCard && (!pdpModal || !pdpModal.classList.contains('active'))) {
-        document.getElementById('products').style.display = '';
-        document.body.classList.add('products-visible');
-        targetCard.click();
-      }
-    } else if (hash === '#view-filter') {
-      if (filterSidebar) {
-        filterSidebar.classList.add('open');
-        setTimeout(() => filterSidebar.querySelector('.filter-sidebar-close')?.focus(), 50);
-        if (overlay) overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      }
-    } else if (hash === '#view-sort') {
-      if (sortModal) {
-        sortModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        setTimeout(() => sortModal.querySelector('.sort-close')?.focus(), 50);
-      }
-    } else if (hash === '#view-wishlist') {
-      renderWishlist(productCards, wishlistModal, wishlistContainer, wishlistClearBtn);
-      if (wishlistModal) {
-        wishlistModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        setTimeout(() => wishlistModal.querySelector('.wishlist-close')?.focus(), 50);
-      }
-    } else if (hash === '#contact' || hash === '#faq') {
-      // Close any open overlays (including the sidebar itself)
-      forceCloseAllOverlays();
-      const el = document.querySelector(hash);
-      if (el) {
-        // Use a timeout to allow closing animations to finish before scrolling
-        setTimeout(() => {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 350);
-      }
-    } else if (hash === '#products') {
-      document.getElementById('products').style.display = '';
-      document.body.classList.add('products-visible');
-    } else if (!hash || hash === '') {
-      hideProductsView();
-    }
-  }
   window.addEventListener('hashchange', handleAppRouting);
   setTimeout(handleAppRouting, 300);
 
@@ -893,43 +537,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
   window.addEventListener('hashchange', updateWaButtonVisibility);
   updateWaButtonVisibility();
-
-  // Swipe Gestures for Mobile
-  function enableSwipeToClose(element, closeAction, direction = 'down') {
-    if (!element) return;
-    let startPos = 0;
-    let currentPos = 0;
-    let isSwiping = false;
-    element.addEventListener(
-      'touchstart',
-      (e) => {
-        if (direction === 'down' && element.scrollTop > 0) return;
-        startPos = direction === 'down' ? e.touches[0].clientY : e.touches[0].clientX;
-        isSwiping = true;
-      },
-      { passive: true },
-    );
-    element.addEventListener(
-      'touchmove',
-      (e) => {
-        if (!isSwiping || (direction === 'down' && element.scrollTop > 0)) return;
-        currentPos = direction === 'down' ? e.touches[0].clientY : e.touches[0].clientX;
-        const diff = currentPos - startPos;
-        if (diff > 0) {
-          element.style.transform = direction === 'down' ? `translateY(${diff}px)` : `translateX(${diff}px)`;
-          element.style.transition = 'none';
-        }
-      },
-      { passive: true },
-    );
-    element.addEventListener('touchend', () => {
-      if (!isSwiping) return;
-      isSwiping = false;
-      element.style.transform = '';
-      element.style.transition = '';
-      if (currentPos - startPos > 100) closeAction();
-    });
-  }
 
   if (sortModal) enableSwipeToClose(sortModal.querySelector('.pdp-content'), closeActiveOverlay, 'down');
   if (filterSidebar) enableSwipeToClose(filterSidebar, closeActiveOverlay, 'down');
@@ -982,7 +589,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       window.history.replaceState(null, null, window.location.search + '#products');
   }
 
-  applyFilters();
+  applyFilters(productCards, defaultOrder);
 
   // Sidebar Menu Logic
   const sidebarToggle = document.getElementById('sidebar-toggle');
