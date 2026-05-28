@@ -1195,9 +1195,11 @@ export function initLanguageSwitcher(): void {
 }
 
 // Initialize when DOM is ready
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
-} else {
-  // DOM is already loaded
-  initLanguageSwitcher();
+if (typeof document !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
+  } else {
+    // DOM is already loaded
+    initLanguageSwitcher();
+  }
 }
