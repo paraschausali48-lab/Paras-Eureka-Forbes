@@ -1,4 +1,5 @@
 import { showToast } from './toast.js';
+import { escapeHTML } from './utils.js';
 
 export function getWishlist() {
   return JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
@@ -59,7 +60,7 @@ export function renderWishlist(productCards, wishlistModal, wishlistContainer, w
       const category = card.querySelector('.product-tag').textContent;
       const item = document.createElement('div');
       item.className = 'wishlist-item';
-      item.innerHTML = `<div class="wishlist-item-details"><div style="font-size:0.8rem; color:var(--color-primary-light); font-weight:700; margin-bottom:2px;">${category}</div><div class="wishlist-item-title">${title}</div><div class="wishlist-item-price">${price}</div></div><button class="wishlist-item-remove" data-sku="${sku}">×</button>`;
+      item.innerHTML = `<div class="wishlist-item-details"><div style="font-size:0.8rem; color:var(--color-primary-light); font-weight:700; margin-bottom:2px;">${escapeHTML(category)}</div><div class="wishlist-item-title">${escapeHTML(title)}</div><div class="wishlist-item-price">${escapeHTML(price)}</div></div><button class="wishlist-item-remove" data-sku="${escapeHTML(sku)}">×</button>`;
 
       item.querySelector('.wishlist-item-title').addEventListener('click', () => {
         wishlistModal.classList.remove('active');

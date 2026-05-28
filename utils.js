@@ -53,3 +53,23 @@ export function enableSwipeToClose(element, closeAction, direction = 'down') {
     if (currentPos - startPos > 100) closeAction();
   });
 }
+
+/**
+ * Escapes HTML characters to prevent Cross-Site Scripting (XSS)
+ * @param {string} str - The string to escape
+ * @returns {string} The escaped HTML string
+ */
+export function escapeHTML(str) {
+  if (typeof str !== 'string' && typeof str !== 'number') return str;
+  return String(str).replace(
+    /[&<>'"]/g,
+    (tag) =>
+      ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;',
+      })[tag] || tag,
+  );
+}

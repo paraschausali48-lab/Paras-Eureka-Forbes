@@ -1,3 +1,5 @@
+import { escapeHTML } from './utils.js';
+
 export function renderProducts(products) {
   const grid = document.getElementById('product-grid');
   if (!grid) return;
@@ -39,39 +41,46 @@ export function renderProducts(products) {
   products.forEach((product) => {
     const article = document.createElement('article');
     article.className = `product-card reveal ${product.outOfStock ? 'out-of-stock' : ''}`;
+    article.style.animation = `filterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards`;
     article.dataset.subcategory = product.subcategories.join(', ');
     if (product.leaflet) article.dataset.leaflet = product.leaflet;
 
     let specsHtml = '<ul>';
     if (product.specs) {
       for (const [key, value] of Object.entries(product.specs)) {
-        specsHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+        specsHtml += `<li><strong>${escapeHTML(key)}:</strong> ${escapeHTML(value)}</li>`;
       }
     }
     specsHtml += '</ul>';
 
     const imgHtml = product.image
-      ? `<div class="product-media"><img src="${product.image}" alt="${product.name}" loading="lazy" width="300" height="200"></div>`
+      ? `<div class="product-media"><img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" loading="lazy" width="300" height="200"></div>`
       : `<div class="product-media product-media-placeholder" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             ${categoryIcons[product.category] || categoryIcons['Water Purifier']}
           </svg>
-          <span>${product.category}</span>
+          <span>${escapeHTML(product.category)}</span>
         </div>`;
     const highlights = getProductHighlights(product);
     const highlightsHtml = highlights.length
-      ? `<div class="product-highlights">${highlights.map((item) => `<span>${item}</span>`).join('')}</div>`
+      ? `<div class="product-highlights">${highlights.map((item) => `<span>${escapeHTML(item)}</span>`).join('')}</div>`
       : '';
+
+    let discountHtml = '';
+    if (product.mrp > product.mop && product.mop > 0) {
+      const discount = Math.round(((product.mrp - product.mop) / product.mrp) * 100);
+      discountHtml = `<span class="discount-badge">${discount}% OFF</span>`;
+    }
 
     article.innerHTML = `
       ${imgHtml}
-      <div class="product-tag" data-category="${product.category}" data-i18n="${product.i18nTag}">${product.category}</div>
-      <h3>${product.name}</h3>
-      <p>${product.description}</p>
+      <div class="product-tag" data-category="${escapeHTML(product.category)}" data-i18n="${escapeHTML(product.i18nTag)}">${escapeHTML(product.category)}</div>
+      <h3>${escapeHTML(product.name)}</h3>
+      <p>${escapeHTML(product.description)}</p>
       ${highlightsHtml}
       <div class="price-info">
-        <div class="mrp">MRP ₹${product.mrp.toLocaleString('en-IN')}</div>
-        <div class="price">MOP ₹${product.mop.toLocaleString('en-IN')}</div>
+        <div class="mrp-wrapper"><div class="mrp">MRP ₹${escapeHTML(product.mrp.toLocaleString('en-IN'))}</div>${discountHtml}</div>
+        <div class="price">MOP ₹${escapeHTML(product.mop.toLocaleString('en-IN'))}</div>
       </div>
       <div class="product-trust-note">Inquiry only. Final purchase and billing through official Eureka Forbes channels.</div>
       <a href="#contact" class="product-btn" data-i18n="btn_more_info">More Info</a>

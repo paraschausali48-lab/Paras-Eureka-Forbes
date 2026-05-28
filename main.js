@@ -1,8 +1,9 @@
+import './translations.js';
 import { VENDOR_WHATSAPP } from './config.js';
 import { debounce, enableSwipeToClose } from './utils.js';
 import { showToast } from './toast.js';
 import { updateWishlistUI, renderWishlist, handleWishlistToggle, saveWishlist } from './wishlist.js';
-import { applyFilters, sortProducts, getCardCategory } from './filters.js';
+import { filterState, setFilterState } from './filters.js';
 import { renderProducts } from './render.js';
 import {
   handleAppRouting,
@@ -15,20 +16,19 @@ import {
 // ============= SERVICE WORKER REGISTRATION =============
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch((err) => {
+    navigator.serviceWorker.register(import.meta.env.BASE_URL + 'sw.js').catch((err) => {
       console.warn('Service Worker registration failed:', err);
     });
   });
 }
 
-document.addEventListener('DOMContentLoaded', async function () {
-  let productCards;
-  let defaultOrder;
+let productsData = [];
 
+document.addEventListener('DOMContentLoaded', async function () {
   try {
     const response = await fetch('products.json');
     if (!response.ok) throw new Error('HTTP status ' + response.status);
-    const productsData = await response.json();
+    productsData = await response.json();
     renderProducts(productsData);
   } catch (error) {
     console.error('Failed to load products.json:', error);
@@ -37,9 +37,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       grid.innerHTML =
         '<p style="text-align:center; padding: 40px; grid-column: 1/-1;">Error loading products. Ensure you are running a local web server (Not file://).</p>';
   }
-
-  productCards = document.querySelectorAll('.product-card');
-  defaultOrder = Array.from(productCards);
 
   // ============= 0.5 GLOBAL KEYBOARD ACCESSIBILITY =============
   // Allow users to close modals using the Escape key
@@ -180,7 +177,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   if (filterToggle) {
     filterToggle.addEventListener('click', () => {
-      window.location.hash = 'view-filter';
+      const url = new URL(window.location);
+      url.searchParams.set('view', 'filter');
+      window.history.pushState(null, '', url);
+      handleAppRouting();
     });
   }
 
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   // Wire up sorting events
   if (desktopSort) {
     desktopSort.addEventListener('change', (e) => {
-      sortProducts(e.target.value, productCards, defaultOrder);
+      setFilterState({ sort: e.target.value }, productsData);
       // Sync with new mobile sort buttons
       document.querySelectorAll('.sort-option-btn').forEach((btn) => {
         btn.classList.toggle('active', btn.dataset.sort === e.target.value);
@@ -202,20 +202,20 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (sortMobileToggle && sortModal) {
     sortMobileToggle.addEventListener('click', () => {
       // Set initial active state based on current sort
-      const currentSort = desktopSort ? desktopSort.value : 'relevance';
       document.querySelectorAll('.sort-option-btn').forEach((btn) => {
-        btn.classList.toggle('active', btn.dataset.sort === currentSort);
+        btn.classList.toggle('active', btn.dataset.sort === filterState.sort);
       });
-      window.location.hash = 'view-sort';
+      const url = new URL(window.location);
+      url.searchParams.set('view', 'sort');
+      window.history.pushState(null, '', url);
+      handleAppRouting();
     });
 
     document.querySelectorAll('.sort-option-btn').forEach((btn) => {
       btn.addEventListener('click', (e) => {
         const sortValue = e.currentTarget.dataset.sort;
 
-        // Update desktop dropdown and sort products
-        if (desktopSort) desktopSort.value = sortValue;
-        sortProducts(sortValue, productCards, defaultOrder);
+        setFilterState({ sort: sortValue }, productsData);
 
         // Close modal after a short delay
         setTimeout(() => {
@@ -227,19 +227,28 @@ document.addEventListener('DOMContentLoaded', async function () {
 
   document.querySelectorAll('.filter-cat').forEach((cb) => {
     cb.addEventListener('change', function () {
+      let newCats = [...filterState.categories];
       if (this.value === 'all' && this.checked) {
-        document.querySelectorAll('.filter-cat:not([value="all"])').forEach((c) => (c.checked = false));
+        newCats = ['all'];
       } else if (this.value !== 'all') {
-        const allCb = document.querySelector('.filter-cat[value="all"]');
-        if (allCb) allCb.checked = false;
+        newCats = newCats.filter((cat) => cat !== 'all');
+        if (this.checked) newCats.push(this.value);
+        else newCats = newCats.filter((cat) => cat !== this.value);
+        if (newCats.length === 0) newCats = ['all'];
       }
-      applyFilters(productCards, defaultOrder);
+      setFilterState({ categories: newCats }, productsData);
     });
   });
 
-  document
-    .querySelectorAll('.filter-facet')
-    .forEach((cb) => cb.addEventListener('change', () => applyFilters(productCards, defaultOrder)));
+  document.querySelectorAll('.filter-facet').forEach((cb) =>
+    cb.addEventListener('change', function () {
+      let newFacets = [...filterState.facets];
+      if (this.checked) newFacets.push(this.value);
+      else newFacets = newFacets.filter((f) => f !== this.value);
+      setFilterState({ facets: newFacets }, productsData);
+    }),
+  );
+
   if (searchInput) {
     searchInput.addEventListener(
       'input',
@@ -250,17 +259,14 @@ document.addEventListener('DOMContentLoaded', async function () {
           document.body.classList.add('products-visible');
           prodEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-        applyFilters(productCards, defaultOrder);
+        setFilterState({ query: searchInput.value }, productsData);
       }, 300),
     );
   }
 
   if (clearAllBtn) {
     clearAllBtn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-cat, .filter-facet').forEach((cb) => (cb.checked = false));
-      document.querySelector('.filter-cat[value="all"]').checked = true;
-      if (searchInput) searchInput.value = '';
-      applyFilters(productCards, defaultOrder);
+      setFilterState({ categories: ['all'], facets: [], query: '' }, productsData);
     });
   }
 
@@ -288,18 +294,15 @@ document.addEventListener('DOMContentLoaded', async function () {
         const targetVf = document.getElementById(vfId);
         if (targetVf) targetVf.style.display = 'flex';
 
-        document.querySelectorAll('.filter-cat').forEach((cb) => (cb.checked = cb.value === navCat));
-        document.querySelectorAll('.filter-facet').forEach((cb) => (cb.checked = false));
+        setFilterState({ categories: [navCat], facets: [], query: '' }, productsData);
       } else if (filterVal) {
-        document.querySelectorAll('.filter-facet').forEach((cb) => (cb.checked = cb.value === filterVal));
         let targetCat = 'Water Purifier';
         if (['robotic', 'canister', 'handheld', 'wet-dry'].includes(filterVal)) targetCat = 'Vacuum Cleaner';
         else if (['Air Purifier', 'Water Softener'].includes(filterVal)) targetCat = filterVal;
-        document.querySelectorAll('.filter-cat').forEach((cb) => (cb.checked = cb.value === targetCat));
+
+        setFilterState({ categories: [targetCat], facets: [filterVal], query: '' }, productsData);
       }
 
-      if (searchInput) searchInput.value = '';
-      applyFilters(productCards, defaultOrder);
       document.getElementById('products').scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
@@ -312,33 +315,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         hideProductsView();
       }
     });
-  });
-
-  // ============= 5. PRICING & DISCOUNTS =============
-  productCards.forEach((card) => {
-    const priceEl = card.querySelector('.price');
-    const mrpEl = card.querySelector('.mrp');
-    if (!priceEl || !mrpEl) return;
-
-    const mop = parseInt(priceEl.textContent.replace(/[^0-9]/g, ''));
-    const mrp = parseInt(mrpEl.textContent.replace(/[^0-9]/g, ''));
-
-    if (mrp > mop && mop > 0) {
-      const discount = Math.round(((mrp - mop) / mrp) * 100);
-      if (discount > 0 && !card.querySelector('.discount-badge')) {
-        const badge = document.createElement('span');
-        badge.className = 'discount-badge';
-        badge.textContent = `${discount}% OFF`;
-
-        if (!mrpEl.parentElement.classList.contains('mrp-wrapper')) {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'mrp-wrapper';
-          mrpEl.parentNode.insertBefore(wrapper, mrpEl);
-          wrapper.appendChild(mrpEl);
-          wrapper.appendChild(badge);
-        }
-      }
-    }
   });
 
   // ============= 6. PDP MODAL & DYNAMIC GALLERY =============
@@ -355,18 +331,22 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   });
 
-  productCards.forEach((card) => {
-    card.addEventListener('click', function (e) {
+  const productGrid = document.getElementById('product-grid');
+  if (productGrid) {
+    productGrid.addEventListener('click', function (e) {
+      const card = e.target.closest('.product-card');
+      if (!card) return;
+
       const isMoreInfoBtn = e.target.closest('.product-btn[href="#contact"]');
       if (!isMoreInfoBtn && (e.target.closest('.product-btn') || e.target.closest('a'))) return;
       if (isMoreInfoBtn) e.preventDefault(); // Prevent jumping down the page, open modal instead
-      setLastFocused(this);
+      setLastFocused(card);
 
-      const title = this.querySelector('h3').textContent;
-      const category = getCardCategory(this);
-      const priceHTML = this.querySelector('.price-info')?.innerHTML || '';
-      const specsHTML = this.querySelector('.hidden-specs')?.innerHTML || '';
-      const desc = this.querySelector('p')?.textContent || '';
+      const title = card.querySelector('h3').textContent;
+      const category = card.querySelector('.product-tag').textContent;
+      const priceHTML = card.querySelector('.price-info')?.innerHTML || '';
+      const specsHTML = card.querySelector('.hidden-specs')?.innerHTML || '';
+      const desc = card.querySelector('p')?.textContent || '';
       const sku =
         'EF-' +
         title
@@ -406,7 +386,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       btnContainer.appendChild(bookDemoBtn);
 
       // Download Leaflet Button
-      const leafletSrc = this.dataset.leaflet;
+      const leafletSrc = card.dataset.leaflet;
       if (leafletSrc) {
         const leafletBtn = document.createElement('a');
         leafletBtn.href = leafletSrc;
@@ -424,7 +404,9 @@ document.addEventListener('DOMContentLoaded', async function () {
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>';
       shareBtn.innerHTML = shareIcon + '<span data-i18n="btn_share">Share</span>';
       shareBtn.onclick = async () => {
-        const url = window.location.href.split('#')[0] + '#' + sku;
+        const shareUrl = new URL(window.location);
+        shareUrl.searchParams.set('p', sku);
+        const url = shareUrl.toString();
         if (navigator.share) {
           try {
             await navigator.share({ title, url });
@@ -444,8 +426,11 @@ document.addEventListener('DOMContentLoaded', async function () {
       btnContainer.appendChild(shareBtn);
 
       // URL Direct linking
-      if (window.history.pushState && window.location.hash !== '#' + sku)
-        window.history.pushState(null, null, '#' + sku);
+      const url = new URL(window.location);
+      if (url.searchParams.get('p') !== sku) {
+        url.searchParams.set('p', sku);
+        window.history.pushState(null, null, url);
+      }
 
       pdpModal.classList.add('active');
       const scrollableContent = pdpModal.querySelector('.pdp-scrollable-content');
@@ -458,7 +443,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       if (typeof window.applyTranslations === 'function')
         window.applyTranslations(document.documentElement.lang || 'en');
     });
-  });
+  }
 
   // ============= 7. FAQ ACCORDION LOGIC =============
   document.querySelectorAll('.faq-tab').forEach((tab) => {
@@ -502,14 +487,17 @@ document.addEventListener('DOMContentLoaded', async function () {
   wishlistToggleBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.hash = 'view-wishlist';
+      const url = new URL(window.location);
+      url.searchParams.set('view', 'wishlist');
+      window.history.pushState(null, '', url);
+      handleAppRouting();
     });
   });
 
   if (wishlistClearBtn) {
     wishlistClearBtn.addEventListener('click', () => {
       saveWishlist([]);
-      renderWishlist(productCards, wishlistModal, wishlistContainer, wishlistClearBtn);
+      renderWishlist(document.querySelectorAll('.product-card'), wishlistModal, wishlistContainer, wishlistClearBtn);
       showToast('toast_wishlist_clear');
     });
   }
@@ -521,6 +509,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   updateWishlistUI();
 
   // ============= 10. APP-LIKE ROUTING & GESTURES =============
+  window.addEventListener('popstate', handleAppRouting);
   window.addEventListener('hashchange', handleAppRouting);
   setTimeout(handleAppRouting, 300);
 
@@ -529,12 +518,14 @@ document.addEventListener('DOMContentLoaded', async function () {
     const waBtn = document.querySelector('.whatsapp-float');
     if (!waBtn) return;
     const hash = window.location.hash;
-    if (!hash || hash === '' || hash === '#home') {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('p') && (!hash || hash === '' || hash === '#home')) {
       waBtn.style.display = 'flex';
     } else {
       waBtn.style.display = 'none';
     }
   }
+  window.addEventListener('popstate', updateWaButtonVisibility);
   window.addEventListener('hashchange', updateWaButtonVisibility);
   updateWaButtonVisibility();
 
@@ -573,23 +564,23 @@ document.addEventListener('DOMContentLoaded', async function () {
   const initQ = params.get('q');
 
   if (initCats || initFacets || initQ) {
-    document.querySelector('.filter-cat[value="all"]').checked = false;
+    const newState = { categories: ['all'], facets: [], query: '' };
     if (initCats) {
-      const catArr = initCats.split(',');
-      document.querySelectorAll('.filter-cat').forEach((cb) => (cb.checked = catArr.includes(cb.value)));
+      newState.categories = initCats.split(',');
     }
     if (initFacets) {
-      const facetArr = initFacets.split(',');
-      document.querySelectorAll('.filter-facet').forEach((cb) => (cb.checked = facetArr.includes(cb.value)));
+      newState.facets = initFacets.split(',');
     }
-    if (initQ && searchInput) searchInput.value = initQ;
+    if (initQ) newState.query = initQ;
+
+    setFilterState(newState, productsData);
 
     // Automatically expand the products view to show the filtered results
     if (window.location.hash !== '#products')
       window.history.replaceState(null, null, window.location.search + '#products');
+  } else {
+    setFilterState({}, productsData);
   }
-
-  applyFilters(productCards, defaultOrder);
 
   // Sidebar Menu Logic
   const sidebarToggle = document.getElementById('sidebar-toggle');

@@ -1,0 +1,26 @@
+{
+  "name": "paras-eureka-forbes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paraschausali48-lab/Paras-Eureka-Forbes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/paraschausali48-lab/Paras-Eureka-Forbes/issues"
+  },
+  "homepage": "https://github.com/paraschausali48-lab/Paras-Eureka-Forbes#readme",
+  "devDependencies": {
+    "vite": "^8.0.14"
+  }
+}

@@ -25,12 +25,18 @@ export function forceCloseAllOverlays() {
 }
 
 export function closeActiveOverlay() {
-  const hash = window.location.hash;
-  if (['#view-filter', '#view-sort', '#view-wishlist'].includes(hash) || hash.startsWith('#EF-')) {
+  const params = new URLSearchParams(window.location.search);
+
+  if (params.has('view') || params.has('p')) {
     if (window.history.length > 1 && document.referrer.includes(window.location.host)) {
       window.history.back();
     } else {
-      window.location.hash = '#products';
+      params.delete('view');
+      params.delete('p');
+      const url = new URL(window.location);
+      url.search = params.toString();
+      window.history.replaceState(null, '', url);
+      forceCloseAllOverlays();
     }
   } else {
     forceCloseAllOverlays();
@@ -50,11 +56,14 @@ export function hideProductsView() {
 }
 
 export function handleAppRouting() {
+  const params = new URLSearchParams(window.location.search);
+  const productSku = params.get('p');
+  const view = params.get('view');
   const hash = window.location.hash;
+
   forceCloseAllOverlays();
 
-  if (hash.startsWith('#EF-')) {
-    const sku = hash.substring(1);
+  if (productSku) {
     const targetCard = Array.from(document.querySelectorAll('.product-card')).find((c) => {
       const title = c.querySelector('h3').textContent;
       return (
@@ -64,7 +73,7 @@ export function handleAppRouting() {
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/^-|-$/g, '')
             .toUpperCase() ===
-        sku
+        productSku
       );
     });
     if (targetCard && !document.getElementById('pdp-modal')?.classList.contains('active')) {
@@ -72,14 +81,14 @@ export function handleAppRouting() {
       document.body.classList.add('products-visible');
       targetCard.click();
     }
-  } else if (hash === '#view-filter') {
+  } else if (view === 'filter') {
     document.getElementById('filter-sidebar')?.classList.add('open');
     document.querySelector('.filter-overlay')?.classList.add('active');
     document.body.style.overflow = 'hidden';
-  } else if (hash === '#view-sort') {
+  } else if (view === 'sort') {
     document.getElementById('sort-modal')?.classList.add('active');
     document.body.style.overflow = 'hidden';
-  } else if (hash === '#view-wishlist') {
+  } else if (view === 'wishlist') {
     renderWishlist(
       document.querySelectorAll('.product-card'),
       document.getElementById('wishlist-modal'),
