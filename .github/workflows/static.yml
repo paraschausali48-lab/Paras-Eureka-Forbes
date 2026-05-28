@@ -38,10 +38,10 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run Unit Tests
-        run: npx vitest run
+        run: npm run test
 
       - name: Build with Vite
         run: npm run build
