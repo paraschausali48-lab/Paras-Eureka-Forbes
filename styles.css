@@ -906,6 +906,7 @@ textarea,
   box-shadow: var(--shadow-sm);
   max-height: calc(100vh - 120px);
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .filter-sidebar::-webkit-scrollbar {
@@ -1300,6 +1301,7 @@ textarea,
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
   z-index: 1999;
+  touch-action: none;
   transition:
     opacity 0.3s ease,
     visibility 0.3s ease;

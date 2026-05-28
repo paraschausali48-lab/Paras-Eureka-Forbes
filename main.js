@@ -145,6 +145,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // Mobile Overlay
   const overlay = document.createElement('div');
   overlay.className = 'filter-overlay';
+  // Lock background scroll when dragging on the overlay
+  overlay.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
   document.body.appendChild(overlay);
 
   function forceCloseAllOverlays() {
@@ -884,7 +886,8 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (sortModal) enableSwipeToClose(sortModal.querySelector('.pdp-content'), closeActiveOverlay, 'down');
-  if (filterSidebar) enableSwipeToClose(filterSidebar, closeActiveOverlay, 'down');
+  // Filter swipe-to-close removed to securely lock the side filters when opened
+  // if (filterSidebar) enableSwipeToClose(filterSidebar, closeActiveOverlay, 'down');
   if (pdpModal) enableSwipeToClose(pdpModal.querySelector('.pdp-content'), closeActiveOverlay, 'right');
   if (wishlistModal) enableSwipeToClose(wishlistModal.querySelector('.pdp-content'), closeActiveOverlay, 'right');
   const mainSidebarEl = document.getElementById('main-sidebar');
