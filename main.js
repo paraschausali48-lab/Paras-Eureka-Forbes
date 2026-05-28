@@ -1,4 +1,61 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
+  // ============= 0. DYNAMIC PRODUCT RENDERING =============
+  function renderProducts(products) {
+    const grid = document.getElementById('product-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+
+    products.forEach((product) => {
+      const article = document.createElement('article');
+      article.className = `product-card reveal ${product.outOfStock ? 'out-of-stock' : ''}`;
+      article.dataset.subcategory = product.subcategories.join(', ');
+      if (product.leaflet) article.dataset.leaflet = product.leaflet;
+
+      let specsHtml = '<ul>';
+      if (product.specs) {
+        for (const [key, value] of Object.entries(product.specs)) {
+          specsHtml += `<li><strong>${key}:</strong> ${value}</li>`;
+        }
+      }
+      specsHtml += '</ul>';
+
+      const imgHtml = product.image
+        ? `<img src="${product.image}" alt="${product.name}" loading="lazy" width="300" height="200" style="object-fit: contain; margin-bottom: 8px;">`
+        : '';
+
+      article.innerHTML = `
+        ${imgHtml}
+        <div class="product-tag" data-category="${product.category}" data-i18n="${product.i18nTag}">${product.category}</div>
+        <h3>${product.name}</h3>
+        <p>${product.description}</p>
+        <div class="price-info">
+          <div class="mrp">MRP ₹${product.mrp.toLocaleString('en-IN')}</div>
+          <div class="price">MOP ₹${product.mop.toLocaleString('en-IN')}</div>
+        </div>
+        <a href="#contact" class="product-btn" data-i18n="btn_more_info">More Info</a>
+        <div class="hidden-specs" style="display: none">${specsHtml}</div>
+      `;
+      grid.appendChild(article);
+    });
+
+    if (typeof window.applyTranslations === 'function') {
+      window.applyTranslations(document.documentElement.lang || 'en');
+    }
+  }
+
+  try {
+    const response = await fetch('products.json');
+    if (!response.ok) throw new Error('HTTP status ' + response.status);
+    const productsData = await response.json();
+    renderProducts(productsData);
+  } catch (error) {
+    console.error('Failed to load products.json:', error);
+    const grid = document.getElementById('product-grid');
+    if (grid)
+      grid.innerHTML =
+        '<p style="text-align:center; padding: 40px; grid-column: 1/-1;">Error loading products. Ensure you are running a local web server (Not file://).</p>';
+  }
+
   const productCards = document.querySelectorAll('.product-card');
   const vendorWhatsApp = '918928002642';
 
