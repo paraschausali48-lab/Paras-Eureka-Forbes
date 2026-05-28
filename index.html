@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -46,8 +46,8 @@
     />
 
     <link rel="stylesheet" href="styles.css" />
-    <script src="translations.js"></script>
-    <script defer src="main.js"></script>
+    <script defer src="translations.js"></script>
+    <script type="module" src="main.js"></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -87,7 +87,6 @@
         "sameAs": ["https://wa.me/918928002642"]
       }
     </script>
-
   </head>
   <body>
     <div class="main-sidebar-overlay" id="main-sidebar-overlay"></div>
@@ -236,21 +235,15 @@
           <button type="button" class="lang-btn active" data-lang="en">English</button>
           <button type="button" class="lang-btn" data-lang="hi">हिंदी</button>
           <button type="button" class="lang-btn" data-lang="mr">मराठी</button>
-          <button type="button" class="lang-btn" data-lang="pa">ਪੰਜਾਬੀ</button>
           <button type="button" class="lang-btn" data-lang="gu">ગુજરાતી</button>
-          <button type="button" class="lang-btn" data-lang="ml">മലയാളം</button>
-          <button type="button" class="lang-btn" data-lang="te">తెలుగు</button>
-          <button type="button" class="lang-btn" data-lang="ta">தமிழ்</button>
-          <button type="button" class="lang-btn" data-lang="kn">ಕನ್ನಡ</button>
-          <button type="button" class="lang-btn" data-lang="bn">বাংলা</button>
-          <button type="button" class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
         </div>
       </div>
     </div>
 
     <header class="site-header">
       <div class="container header-inner">
-        <button type="button"
+        <button
+          type="button"
           id="sidebar-toggle"
           class="sidebar-toggle-btn"
           aria-label="Menu"
@@ -1063,7 +1056,9 @@
               Ask Paras to confirm today's eligible campaign, exchange, installation, and product-specific offers for
               your area.
             </p>
-            <p class="offer-proof">Final eligibility, billing, and installation are confirmed through official Eureka Forbes channels.</p>
+            <p class="offer-proof">
+              Final eligibility, billing, and installation are confirmed through official Eureka Forbes channels.
+            </p>
             <a
               href="https://wa.me/918928002642?text=Hello%20Paras%2C%20I%20am%20interested%20in%20the%20Special%20Offer%20and%20would%20like%20to%20book%20an%20appointment."
               target="_blank"
@@ -1147,7 +1142,8 @@
           </div>
 
           <div class="faq-tabs" role="tablist">
-            <button type="button"
+            <button
+              type="button"
               class="faq-tab active"
               role="tab"
               aria-selected="true"
@@ -1156,10 +1152,24 @@
             >
               <span data-i18n="faq_tab_aquaguards">Aquaguards</span>
             </button>
-            <button type="button" class="faq-tab" role="tab" aria-selected="false" data-faq-tab="vacuums" id="faq-tab-vacuums">
+            <button
+              type="button"
+              class="faq-tab"
+              role="tab"
+              aria-selected="false"
+              data-faq-tab="vacuums"
+              id="faq-tab-vacuums"
+            >
               <span data-i18n="faq_tab_vacuums">Vacuum Cleaners</span>
             </button>
-            <button type="button" class="faq-tab" role="tab" aria-selected="false" data-faq-tab="service" id="faq-tab-service">
+            <button
+              type="button"
+              class="faq-tab"
+              role="tab"
+              aria-selected="false"
+              data-faq-tab="service"
+              id="faq-tab-service"
+            >
               <span data-i18n="faq_tab_service">Servicing & AMC</span>
             </button>
           </div>
@@ -1743,7 +1753,7 @@
     </footer>
 
     <!-- Product Detail Full-Page View -->
-    <div id="pdp-modal" class="pdp-modal pdp-page-overlay">
+    <div id="pdp-modal" class="pdp-modal pdp-page-overlay" role="dialog" aria-modal="true" aria-labelledby="pdp-title">
       <div class="pdp-content">
         <button type="button" class="pdp-close" aria-label="Close">&times;</button>
         <div class="pdp-layout">
@@ -1781,10 +1791,16 @@
     </div>
 
     <!-- Sort Modal -->
-    <div id="sort-modal" class="pdp-modal demo-modal-wrapper">
+    <div
+      id="sort-modal"
+      class="pdp-modal demo-modal-wrapper"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="sort-title-modal"
+    >
       <div class="pdp-content demo-modal-content">
         <button type="button" class="sort-close pdp-close" aria-label="Close">&times;</button>
-        <h2 class="demo-modal-title" data-i18n="sort_title">Sort By</h2>
+        <h2 id="sort-title-modal" class="demo-modal-title" data-i18n="sort_title">Sort By</h2>
         <div class="sort-options-new" id="mobile-sort-options">
           <button type="button" class="sort-option-btn" data-sort="relevance">
             <span data-i18n="sort_relevance">Relevance</span>
@@ -1800,11 +1816,19 @@
     </div>
 
     <!-- Wishlist Modal -->
-    <div id="wishlist-modal" class="pdp-modal demo-modal-wrapper">
+    <div
+      id="wishlist-modal"
+      class="pdp-modal demo-modal-wrapper"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="wishlist-title-modal"
+    >
       <div class="pdp-content demo-modal-content">
         <button type="button" class="wishlist-close pdp-close" aria-label="Close">&times;</button>
         <div class="wishlist-header">
-          <h2 class="demo-modal-title" style="margin-bottom: 0" data-i18n="wishlist_title">My Wishlist</h2>
+          <h2 id="wishlist-title-modal" class="demo-modal-title" style="margin-bottom: 0" data-i18n="wishlist_title">
+            My Wishlist
+          </h2>
           <button
             type="button"
             id="wishlist-clear-all"
@@ -1846,4 +1870,3 @@
     </button>
   </body>
 </html>
-

@@ -1,3 +1,8 @@
+import { VENDOR_WHATSAPP } from './config.js';
+import { debounce } from './utils.js';
+import { showToast } from './toast.js';
+import { updateWishlistUI, renderWishlist, handleWishlistToggle, saveWishlist } from './wishlist.js';
+
 document.addEventListener('DOMContentLoaded', async function () {
   // ============= 0. DYNAMIC PRODUCT RENDERING =============
   function renderProducts(products) {
@@ -6,8 +11,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     grid.innerHTML = '';
 
     const categoryIcons = {
-      'Water Purifier':
-        '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path><path d="M9 13l2 2 4-4"></path>',
+      'Water Purifier': '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path><path d="M9 13l2 2 4-4"></path>',
       'Vacuum Cleaner':
         '<rect x="4" y="14" width="16" height="6" rx="2"></rect><path d="M8 14V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"></path>',
       'Air Purifier':
@@ -36,6 +40,8 @@ document.addEventListener('DOMContentLoaded', async function () {
         .filter((value, index, arr) => value && arr.indexOf(value) === index)
         .slice(0, 3);
     }
+
+    const fragment = document.createDocumentFragment();
 
     products.forEach((product) => {
       const article = document.createElement('article');
@@ -78,8 +84,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         <a href="#contact" class="product-btn" data-i18n="btn_more_info">More Info</a>
         <div class="hidden-specs" style="display: none">${specsHtml}</div>
       `;
-      grid.appendChild(article);
+      fragment.appendChild(article);
     });
+
+    grid.appendChild(fragment);
 
     if (typeof window.applyTranslations === 'function') {
       window.applyTranslations(document.documentElement.lang || 'en');
@@ -100,20 +108,42 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   const productCards = document.querySelectorAll('.product-card');
-  const vendorWhatsApp = '918928002642';
 
-  // ============= UTILITIES =============
-  function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
-      };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
-  }
+  // ============= 0.5 GLOBAL KEYBOARD ACCESSIBILITY =============
+  // Allow users to close modals using the Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const activeOverlay = document.querySelector('.pdp-modal.active, .filter-sidebar.open, .main-sidebar.active');
+      if (activeOverlay) closeActiveOverlay();
+    }
+
+    // Focus trapping for active modals
+    const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+    if (!isTabPressed) return;
+
+    const activeModal = document.querySelector('.pdp-modal.active, .main-sidebar.active, .filter-sidebar.open');
+    if (!activeModal) return;
+
+    const focusableEls = activeModal.querySelectorAll(
+      'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    );
+    if (focusableEls.length === 0) return;
+
+    const firstFocusableEl = focusableEls[0];
+    const lastFocusableEl = focusableEls[focusableEls.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstFocusableEl || document.activeElement === document.body) {
+        lastFocusableEl.focus();
+        e.preventDefault();
+      }
+    } else {
+      if (document.activeElement === lastFocusableEl) {
+        firstFocusableEl.focus();
+        e.preventDefault();
+      }
+    }
+  });
 
   // ============= 1. SCROLL ANIMATIONS =============
   const revealObserver = new IntersectionObserver(
@@ -151,30 +181,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     { passive: true },
   );
 
-  // ============= 2.5 TOAST NOTIFICATIONS =============
-  function showToast(messageKey) {
-    let container = document.getElementById('toast-container');
-    if (!container) return;
-
-    const toast = document.createElement('div');
-    toast.className = 'toast-message';
-    toast.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span data-i18n="${messageKey}"></span>`;
-    container.appendChild(toast);
-
-    if (typeof window.applyTranslations === 'function') {
-      window.applyTranslations(document.documentElement.lang || 'en');
-    }
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => toast.classList.add('show'));
-    });
-
-    setTimeout(() => {
-      toast.classList.remove('show');
-      setTimeout(() => toast.remove(), 300);
-    }, 3000);
-  }
-
   // ============= 2.8 ACCORDION GENERATION =============
   document.querySelectorAll('.filter-group').forEach((group) => {
     const titleEl = group.querySelector('.filter-group-title');
@@ -183,6 +189,8 @@ document.addEventListener('DOMContentLoaded', async function () {
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'filter-group-toggle';
     toggleBtn.setAttribute('aria-expanded', 'true');
+    const contentId = `filter-content-${Math.random().toString(36).substr(2, 9)}`;
+    toggleBtn.setAttribute('aria-controls', contentId);
     toggleBtn.setAttribute('type', 'button');
 
     const chevron = document.createElement('span');
@@ -198,6 +206,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     const contentDiv = document.createElement('div');
     contentDiv.className = 'filter-group-content';
+    contentDiv.id = contentId;
 
     Array.from(group.children).forEach((child) => {
       if (child !== titleEl) contentDiv.appendChild(child);
@@ -285,7 +294,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     const hash = window.location.hash;
     // If the hash is tied to a modal or product view, trigger a native back event
     if (['#view-filter', '#view-sort', '#view-wishlist'].includes(hash) || hash.startsWith('#EF-')) {
-      window.history.back();
+      // Prevent kicking the user off the site if they landed directly via a shared link
+      if (window.history.length > 1 && document.referrer.includes(window.location.host)) {
+        window.history.back();
+      } else {
+        window.location.hash = '#products'; // Fallback to a safe state
+      }
     } else {
       forceCloseAllOverlays();
     }
@@ -389,6 +403,16 @@ document.addEventListener('DOMContentLoaded', async function () {
         card.style.display = 'none';
       }
     });
+
+    // NEW: Sync Filter State to URL for easy sharing
+    const url = new URL(window.location);
+    if (checkedCats.length && !isAllSelected) url.searchParams.set('cat', checkedCats.join(','));
+    else url.searchParams.delete('cat');
+    if (activeFacets.length) url.searchParams.set('facets', activeFacets.join(','));
+    else url.searchParams.delete('facets');
+    if (query) url.searchParams.set('q', query);
+    else url.searchParams.delete('q');
+    window.history.replaceState(null, '', url);
 
     const currentSort = desktopSort ? desktopSort.value : 'relevance';
     sortProducts(currentSort);
@@ -671,7 +695,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         e.preventDefault();
         const actionText = isVacuum ? 'book a free home demonstration' : 'book an appointment';
         const message = `Hello Paras, I am interested in the ${title} and would like to ${actionText}. Please share the details.`;
-        const waUrl = `https://wa.me/${vendorWhatsApp}?text=${encodeURIComponent(message)}`;
+        const waUrl = `https://wa.me/${VENDOR_WHATSAPP}?text=${encodeURIComponent(message)}`;
         window.open(waUrl, '_blank');
       };
       btnContainer.appendChild(bookDemoBtn);
@@ -723,6 +747,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       if (scrollableContent) scrollableContent.scrollTop = 0;
       document.body.style.overflow = 'hidden';
       if (typeof updateWishlistUI === 'function') updateWishlistUI();
+      setTimeout(() => pdpModal.querySelector('.pdp-close')?.focus(), 50);
 
       // Apply translations instantly to the newly created button
       if (typeof window.applyTranslations === 'function')
@@ -769,29 +794,6 @@ document.addEventListener('DOMContentLoaded', async function () {
   const wishlistContainer = document.getElementById('wishlist-items-container');
   const wishlistClearBtn = document.getElementById('wishlist-clear-all');
 
-  function getWishlist() {
-    return JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
-  }
-  function saveWishlist(list) {
-    localStorage.setItem('ef_wishlist', JSON.stringify(list));
-    updateWishlistUI();
-  }
-
-  function updateWishlistUI() {
-    const list = getWishlist();
-    document.querySelectorAll('.wishlist-badge').forEach((badge) => {
-      badge.style.display = list.length > 0 ? 'flex' : 'none';
-      badge.textContent = list.length;
-    });
-    const pdpWishBtn = document.getElementById('pdp-wishlist-btn');
-    if (pdpWishBtn) {
-      const currentSku = document.getElementById('pdp-sku').querySelector('span').textContent;
-      pdpWishBtn.innerHTML = list.includes(currentSku)
-        ? '<svg width="24" height="24" fill="#e63946" stroke="#e63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>'
-        : '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
-    }
-  }
-
   wishlistToggleBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
@@ -802,72 +804,14 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (wishlistClearBtn) {
     wishlistClearBtn.addEventListener('click', () => {
       saveWishlist([]);
-      renderWishlist();
+      renderWishlist(productCards, wishlistModal, wishlistContainer, wishlistClearBtn);
       showToast('toast_wishlist_clear');
-    });
-  }
-
-  function renderWishlist() {
-    const list = getWishlist();
-    if (!wishlistContainer) return;
-    wishlistContainer.innerHTML = '';
-    if (wishlistClearBtn) wishlistClearBtn.style.display = list.length > 0 ? 'block' : 'none';
-
-    if (list.length === 0) {
-      wishlistContainer.innerHTML =
-        '<div class="wishlist-empty"><p data-i18n="wishlist_empty">Your wishlist is currently empty.</p></div>';
-      if (window.applyTranslations) window.applyTranslations(document.documentElement.lang || 'en');
-      return;
-    }
-
-    list.forEach((sku) => {
-      const card = Array.from(productCards).find((c) => {
-        const title = c.querySelector('h3').textContent;
-        return (
-          'EF-' +
-            title
-              .toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/^-|-$/g, '')
-              .toUpperCase() ===
-          sku
-        );
-      });
-      if (card) {
-        const title = card.querySelector('h3').textContent;
-        const price = card.querySelector('.price').textContent;
-        const category = card.querySelector('.product-tag').textContent;
-        const item = document.createElement('div');
-        item.className = 'wishlist-item';
-        item.innerHTML = `<div class="wishlist-item-details"><div style="font-size:0.8rem; color:var(--color-primary-light); font-weight:700; margin-bottom:2px;">${category}</div><div class="wishlist-item-title">${title}</div><div class="wishlist-item-price">${price}</div></div><button class="wishlist-item-remove" data-sku="${sku}">×</button>`;
-
-        item.querySelector('.wishlist-item-title').addEventListener('click', () => {
-          wishlistModal.classList.remove('active');
-          document.body.style.overflow = '';
-          document.getElementById('products').style.display = '';
-          card.click();
-        });
-
-        item.querySelector('.wishlist-item-remove').addEventListener('click', (e) => {
-          saveWishlist(getWishlist().filter((s) => s !== e.target.dataset.sku));
-          renderWishlist();
-        });
-        wishlistContainer.appendChild(item);
-      }
     });
   }
 
   document.getElementById('pdp-wishlist-btn')?.addEventListener('click', function () {
     const sku = document.getElementById('pdp-sku').querySelector('span').textContent;
-    let list = getWishlist();
-    if (list.includes(sku)) {
-      list = list.filter((item) => item !== sku);
-      showToast('toast_wishlist_remove');
-    } else {
-      list.push(sku);
-      showToast('toast_wishlist_add');
-    }
-    saveWishlist(list);
+    handleWishlistToggle(sku);
   });
   updateWishlistUI();
 
@@ -899,6 +843,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     } else if (hash === '#view-filter') {
       if (filterSidebar) {
         filterSidebar.classList.add('open');
+        setTimeout(() => filterSidebar.querySelector('.filter-sidebar-close')?.focus(), 50);
         if (overlay) overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
       }
@@ -906,12 +851,14 @@ document.addEventListener('DOMContentLoaded', async function () {
       if (sortModal) {
         sortModal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        setTimeout(() => sortModal.querySelector('.sort-close')?.focus(), 50);
       }
     } else if (hash === '#view-wishlist') {
-      renderWishlist();
+      renderWishlist(productCards, wishlistModal, wishlistContainer, wishlistClearBtn);
       if (wishlistModal) {
         wishlistModal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        setTimeout(() => wishlistModal.querySelector('.wishlist-close')?.focus(), 50);
       }
     } else if (hash === '#contact' || hash === '#faq') {
       // Close any open overlays (including the sidebar itself)
@@ -1011,7 +958,30 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   }
 
-  // Apply default filtering state on load
+  // ============= 12. INITIALIZE URL STATE =============
+  // Read URL parameters on load so shared links apply the correct filters
+  const params = new URLSearchParams(window.location.search);
+  const initCats = params.get('cat');
+  const initFacets = params.get('facets');
+  const initQ = params.get('q');
+
+  if (initCats || initFacets || initQ) {
+    document.querySelector('.filter-cat[value="all"]').checked = false;
+    if (initCats) {
+      const catArr = initCats.split(',');
+      document.querySelectorAll('.filter-cat').forEach((cb) => (cb.checked = catArr.includes(cb.value)));
+    }
+    if (initFacets) {
+      const facetArr = initFacets.split(',');
+      document.querySelectorAll('.filter-facet').forEach((cb) => (cb.checked = facetArr.includes(cb.value)));
+    }
+    if (initQ && searchInput) searchInput.value = initQ;
+
+    // Automatically expand the products view to show the filtered results
+    if (window.location.hash !== '#products')
+      window.history.replaceState(null, null, window.location.search + '#products');
+  }
+
   applyFilters();
 
   // Sidebar Menu Logic
@@ -1024,6 +994,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (sidebar) sidebar.classList.add('active');
     if (sidebarOverlay) sidebarOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
+    setTimeout(() => sidebarClose?.focus(), 50);
   }
   function closeSidebar() {
     if (sidebar) sidebar.classList.remove('active');

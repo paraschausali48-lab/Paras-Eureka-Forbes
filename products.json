@@ -3,7 +3,13 @@
     "name": "AQUAGUARD SELECT DESIGNO UTC RO+UV 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["under-counter", "ro-uv", "active-copper", "medium", "food-grade plastic"],
+    "subcategories": [
+      "under-counter",
+      "ro-uv",
+      "active-copper",
+      "medium",
+      "food-grade plastic"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -14,7 +20,7 @@
       "Filter Life": "12000 Ltrs.",
       "Gross Weight": "11Kg",
       "Included in the Box": "Water Purifier, Mega Sediment Filter, Accessory (Faucet, Input pipe, Reject water pipe, Diverter valve & Warranty Card), TDS Meter",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "Upto 3 kg/cm²",
@@ -28,7 +34,6 @@
       "TDS": "Up to 2,000 mg/L++",
       "Storage Capacity": "7 liters (Approx.)",
       "Installation Type": "Under Counter",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -36,7 +41,13 @@
     "name": "AQUAGUARD SELECT DESIGNO UTC UV+UF 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["under-counter", "uv-uf", "active-copper", "medium", "food-grade plastic"],
+    "subcategories": [
+      "under-counter",
+      "uv-uf",
+      "active-copper",
+      "medium",
+      "food-grade plastic"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -47,7 +58,7 @@
       "Filter Life": "12000 Ltrs.",
       "Gross Weight": "11Kg",
       "Included in the Box": "Water Purifier, Mega Sediment Filter, Accessory (Faucet, Input pipe, Reject water pipe, Diverter valve & Warranty Card), TDS Meter",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "0.3- 2 kg/cm²",
@@ -61,7 +72,6 @@
       "TDS": "Up to 2,000 mg/L++",
       "Storage Capacity": "7 liters (Approx.)",
       "Installation Type": "Under Counter",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -69,7 +79,14 @@
     "name": "AQUAGUARD ASPIRE SLIMTECH UV STG 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["slim", "uv-uf", "active-copper", "small", "food-grade plastic", "wall-mounted"],
+    "subcategories": [
+      "slim",
+      "uv-uf",
+      "active-copper",
+      "small",
+      "food-grade plastic",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -77,11 +94,11 @@
     "mrp": 26000,
     "mop": 26000,
     "specs": {
-      "Dimensions MM (WxDxH)": "36 x 21 x 52",
+      "Dimensions": "36 x 21 x 52",
       "Filter Life": "12000 Ltrs.",
       "Gross Weight": "10 Kg",
       "Included in the Box": "1N Water Purifier, 1N Pre Filter Assy, 1N Warranty Card, 1N Installation Kit",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "0.3- 2 kg/cm²",
@@ -95,7 +112,6 @@
       "TDS": "Up to 200 mg/L++",
       "Storage Capacity": "4 L",
       "Installation Type": "Wall Mounted",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -103,7 +119,14 @@
     "name": "AQUAGUARD SLIM GLASS UV BAR INLINE 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["slim", "uv", "active-copper", "small", "without-storage", "wall-mounted"],
+    "subcategories": [
+      "slim",
+      "uv",
+      "active-copper",
+      "small",
+      "without-storage",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -111,8 +134,7 @@
     "mrp": 23500,
     "mop": 23500,
     "specs": {
-      "Carton Dimensions": "750 X 200 X 310 mm",
-      "Dimensions MM (WxDxH)": "600 x 120 x 250 mm",
+      "Dimensions": "600 x 120 x 250 mm",
       "Gross Weight": "6.2 Kgs",
       "Included In The Box": "Water Purifier, Accessory (Input pipe, Diverter valve & Warranty Card)",
       "Input Water Chlorine (Max)": "0.2 mg/L",
@@ -120,7 +142,7 @@
       "Input Water Pressure": "0.3 to 2.0 kg/cm²",
       "Input Water Temperature": "5°C – 45°C",
       "Input Water Turbidity (Max)": "5 NTU",
-      "Operating Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "230V AC, 50Hz",
       "Power Consumption": "22 watts (max)",
       "Purification Modules": "I-Filter, Chemi Block, Active Copper Cartridge, UV LED",
       "Weight": "5.8 kgs (approx)",
@@ -135,7 +157,14 @@
     "name": "AQUAGUARD ASPIRE NOVA RO+UV+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["active-copper", "stainless-steel", "ro-uv", "medium", "zero-pressure-pump", "wall-mounted"],
+    "subcategories": [
+      "active-copper",
+      "stainless-steel",
+      "ro-uv",
+      "medium",
+      "zero-pressure-pump",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -150,7 +179,14 @@
     "name": "AQUAGUARD ASPIRE NOVA UV+UF+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["active-copper", "stainless-steel", "uv-uf", "medium", "zero-pressure-pump", "wall-mounted"],
+    "subcategories": [
+      "active-copper",
+      "stainless-steel",
+      "uv-uf",
+      "medium",
+      "zero-pressure-pump",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -165,7 +201,14 @@
     "name": "AQUAGUARD ASPIRE NOVA RO+UV 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["active-copper", "medium", "ro-uv", "food-grade plastic", "zero-pressure-pump", "wall-mounted"],
+    "subcategories": [
+      "active-copper",
+      "medium",
+      "ro-uv",
+      "food-grade plastic",
+      "zero-pressure-pump",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -180,7 +223,14 @@
     "name": "AQUAGUARD ASPIRE NOVA UV+UF 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["active-copper", "medium", "uv-uf", "food-grade plastic", "zero-pressure-pump", "wall-mounted"],
+    "subcategories": [
+      "active-copper",
+      "medium",
+      "uv-uf",
+      "food-grade plastic",
+      "zero-pressure-pump",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -195,7 +245,13 @@
     "name": "AQUAGUARD ENRICH VECTOR RO+UV+MC 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["ro-uv", "medium", "food-grade plastic", "table-top", "wall-mounted"],
+    "subcategories": [
+      "ro-uv",
+      "medium",
+      "food-grade plastic",
+      "table-top",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -203,11 +259,11 @@
     "mrp": 22500,
     "mop": 22500,
     "specs": {
-      "Dimensions MM (WxDxH)": "670x340x390",
+      "Dimensions": "670x340x390",
       "Filter Life": "12000 Ltrs.",
       "Gross Weight": "8 Kg",
       "Included in the Box": "Water Purifier, Mega Sediment Filter, Accessory (Input pipe, Reject water pipe, Diverter valve & Warranty Card), TDS Meter",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "0.3- 3 kg/cm²",
@@ -221,7 +277,6 @@
       "TDS": "Up to 2,000 mg/L++",
       "Storage Capacity": "6 Litres",
       "Installation Type": "Wall Mounted / Table Top",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -229,7 +284,14 @@
     "name": "AQUAGUARD ASPIRE NOVA RO+UV ALK 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["ro-uv", "alkaline-boost", "medium", "food-grade plastic", "zero-pressure-pump", "wall-mounted"],
+    "subcategories": [
+      "ro-uv",
+      "alkaline-boost",
+      "medium",
+      "food-grade plastic",
+      "zero-pressure-pump",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -244,7 +306,14 @@
     "name": "AQUAGUARD ASPIRE NOVA RO+UV+ALK+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["ro-uv", "alkaline-boost", "stainless-steel", "medium", "zero-pressure-pump", "wall-mounted"],
+    "subcategories": [
+      "ro-uv",
+      "alkaline-boost",
+      "stainless-steel",
+      "medium",
+      "zero-pressure-pump",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -275,11 +344,11 @@
     "mrp": 39000,
     "mop": 39000,
     "specs": {
-      "Dimensions MM (WxDxH)": "420 x 420 x 685",
+      "Dimensions": "420 x 420 x 685",
       "Filter Life": "12000 Ltrs.",
       "Gross Weight": "16Kg",
       "Included in the Box": "Water Purifier, Mega Sediment Filter, Accessory (Input pipe, Reject water pipe, Diverter valve & Warranty Card), TDS Meter",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "Upto 3 kg/cm²",
@@ -293,7 +362,6 @@
       "TDS": "Up to 2,000 mg/L++",
       "Storage Capacity": "5.6 Litres",
       "Installation Type": "Wall Mounted / Table Top",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -317,11 +385,11 @@
     "mrp": 32500,
     "mop": 32500,
     "specs": {
-      "Dimensions MM (WxDxH)": "420 x 420 x 685",
+      "Dimensions": "420 x 420 x 685",
       "Filter Life": "12000 Ltrs.",
       "Gross Weight": "14Kg",
       "Included in the Box": "Water Purifier, Mega Sediment Filter, Accessory (Input pipe, Reject water pipe, Diverter valve & Warranty Card), TDS Meter",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "Upto 3 kg/cm²",
@@ -335,7 +403,6 @@
       "TDS": "Up to 2,000 mg/L++",
       "Storage Capacity": "5.6 Litres",
       "Installation Type": "Wall Mounted / Table Top",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -359,11 +426,11 @@
     "mrp": 16500,
     "mop": 14499,
     "specs": {
-      "Dimensions MM (WxDxH)": "315 x 185 x 425",
+      "Dimensions": "315 x 185 x 425",
       "Filter Life": "12000 Ltrs.",
       "Gross Weight": "4.8Kg",
       "Included in the Box": "Water Purifier, Mega Sediment Filter, Accessory (Input pipe, Diverter valve & Warranty Card)",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "0.3- 2 kg/cm²",
@@ -376,7 +443,6 @@
       "TDS": "Up to 200 mg/L++",
       "Storage Capacity": "Inline",
       "Installation Type": "Wall Mounted",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -384,7 +450,14 @@
     "name": "AQUAGUARD ENRICH BOOSTER UV 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["uv", "without-storage", "small", "active-copper", "zero-pressure-pump", "wall-mounted"],
+    "subcategories": [
+      "uv",
+      "without-storage",
+      "small",
+      "active-copper",
+      "zero-pressure-pump",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "files/aquaguard-aspire-minerva-ro-uv-ss-leaflet.pdf",
     "image": "",
@@ -392,11 +465,11 @@
     "mrp": 18500,
     "mop": 15499,
     "specs": {
-      "Dimensions MM (WxDxH)": "315 x 185 x 425",
+      "Dimensions": "315 x 185 x 425",
       "Filter Life": "12000 Ltrs.",
       "Gross Weight": "4.5kg",
       "Included in the Box": "Water Purifier, Mega Sediment Filter, Accessory (Input pipe, Diverter valve & Warranty Card)",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "0.3- 1 kg/cm²",
@@ -410,7 +483,6 @@
       "TDS": "Up to 200 mg/L++",
       "Inline Model": "Inline",
       "Installation Type": "Wall Mounted",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -434,11 +506,11 @@
     "mrp": 24500,
     "mop": 15499,
     "specs": {
-      "Dimensions MM (WxDxH)": "670 x 340 x 390",
+      "Dimensions": "670 x 340 x 390",
       "Filter Life": "6000 Ltrs.",
       "Gross Weight": "4.5Kg",
       "Included in the Box": "Water Purifier, Accessory (Input pipe, Diverter valve & Warranty Card)",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "0.3- 2 kg/cm²",
@@ -452,7 +524,6 @@
       "TDS": "Up to 200 mg/L++",
       "Storage Capacity": "6 liters (Approx.)",
       "Installation Type": "Wall Mounted / Table Top",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -460,7 +531,15 @@
     "name": "AQUAGUARD ASPIRE MINERVA RO+UV+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
-    "subcategories": ["ro-uv", "small", "stainless-steel", "smart", "active-copper", "table-top", "wall-mounted"],
+    "subcategories": [
+      "ro-uv",
+      "small",
+      "stainless-steel",
+      "smart",
+      "active-copper",
+      "table-top",
+      "wall-mounted"
+    ],
     "outOfStock": false,
     "leaflet": "files/aquaguard-aspire-minerva-ro-uv-ss-leaflet.pdf",
     "image": "",
@@ -468,11 +547,11 @@
     "mrp": 39000,
     "mop": 15499,
     "specs": {
-      "Dimensions MM (WxDxH)": "670 x 340 x 390",
+      "Dimensions": "670 x 340 x 390",
       "Filter Life": "12000 Ltrs.",
       "Gross Weight": "9.2Kg",
       "Included in the Box": "Water Purifier, Mega Sediment Filter, Accessory (Input pipe, Reject water pipe, Diverter valve & Warranty Card)",
-      "Input Voltage": "230V AC, 50Hz",
+      "Input Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Input Water Chlorine (Max)": "<0.2 mg/L",
       "Input Water Iron": "<0.1 mg/L",
       "Input Water Pressure": "Up to 3.0 kg/cm²",
@@ -486,7 +565,6 @@
       "TDS": "Up to 2,000 mg/L++",
       "Storage Capacity": "5 Liters (Approx.)",
       "Installation Type": "Wall Mounted / Table Top",
-      "Voltage": "150 VAC to 250 VAC, 50 Hz",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -494,7 +572,9 @@
     "name": "FORBES AIR PURIFIER 355 SURROUND 360° SM",
     "category": "Air Purifier",
     "i18nTag": "tag_air",
-    "subcategories": ["air"],
+    "subcategories": [
+      "air"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -502,7 +582,7 @@
     "mrp": 22000,
     "mop": 16499,
     "specs": {
-      "Dimension (HxDxW) cm": "24.3 x 24.3 x 53.5 cm",
+      "Dimensions": "30.6 x 30.8 x 64.3 cm",
       "Purification Stages": "4 stage",
       "Stages of Purification": "Pre filter, Activated Carbon Filter, True H13 HEPA filter, Plasma filtration",
       "Coverage Areas": "up to 480 sq. feet",
@@ -522,7 +602,6 @@
       "HSN": "84213920",
       "Weight": "4.3 Kg",
       "Cord Length": "205 cm",
-      "Carton Dimensions": "30.6 x 30.8 x 64.3 cm",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -530,7 +609,9 @@
     "name": "FORBES AIR PURIFIER 500 SURROUND 360° SM",
     "category": "Air Purifier",
     "i18nTag": "tag_air",
-    "subcategories": ["air"],
+    "subcategories": [
+      "air"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -538,7 +619,7 @@
     "mrp": 28000,
     "mop": 21999,
     "specs": {
-      "Dimension (HxDxW) cm": "28 x 28 x 63 cm",
+      "Dimensions": "35 x 35 x 80 cm",
       "Purification Stages": "4 stage",
       "Stages of Purification": "Pre filter, Activated Carbon Filter, True H13 HEPA filter, Plasma filtration",
       "Coverage Areas": "up to 670 sq. feet",
@@ -558,7 +639,6 @@
       "HSN": "84213920",
       "Weight": "6.3 Kg",
       "Cord Length": "185 cm",
-      "Carton Dimensions": "35 x 35 x 80 cm",
       "Warranty": "1 Year Factory Warranty"
     }
   },
@@ -566,7 +646,9 @@
     "name": "FORBES AIR PURIFIER 270 SURROUND 360°",
     "category": "Air Purifier",
     "i18nTag": "tag_air",
-    "subcategories": ["air"],
+    "subcategories": [
+      "air"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -574,7 +656,7 @@
     "mrp": 11700,
     "mop": 9499,
     "specs": {
-      "Dimension (HxDxW) cm": "36 x 22 x 22",
+      "Dimensions": "36 x 22 x 22",
       "Air Flow": "270 unit m3/hr",
       "Purification Stages": "Pre filter, Activated Carbon Filter, True H13 HEPA filter, Ionizer",
       "Timer setting": "Timer can be set for 2 HR, 4 HR, 6 HR, 8 HR",
@@ -590,7 +672,9 @@
     "name": "FORBES AIR PURIFIER 230 SURROUND 360°",
     "category": "Air Purifier",
     "i18nTag": "tag_air",
-    "subcategories": ["air"],
+    "subcategories": [
+      "air"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -598,7 +682,7 @@
     "mrp": 10400,
     "mop": 7999,
     "specs": {
-      "Dimension (HxDxW) cm": "22 x 22 x 36",
+      "Dimensions": "22 x 22 x 36",
       "Air Flow": "230 unit m3/hr",
       "Purification Stages": "Pre filter, Activated Carbon Filter, True H13 HEPA filter, Ionizer",
       "Timer setting": "Timer can be set for 2 HR, 4 HR, 6 HR, 8 HR",
@@ -614,7 +698,13 @@
     "name": "FORBES ATOM",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
-    "subcategories": ["vacuum", "handheld", "dry", "bagless", "corded"],
+    "subcategories": [
+      "vacuum",
+      "handheld",
+      "dry",
+      "bagless",
+      "corded"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -635,7 +725,13 @@
     "name": "FORBES SELECT WD X2",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
-    "subcategories": ["vacuum", "canister", "wet-dry", "bagless", "corded"],
+    "subcategories": [
+      "vacuum",
+      "canister",
+      "wet-dry",
+      "bagless",
+      "corded"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -645,7 +741,7 @@
     "specs": {
       "Type": "Canister",
       "Application": "Wet & Dry Cleaning",
-      "Dimensions MM (WxDxH)": "330 x 355 x 490 mm",
+      "Dimensions": "330 x 355 x 490 mm",
       "Weight": "6.67 kg",
       "Colour": "Orange & Black",
       "Convenience Feature": "Auto clean, Dynamic dial power control, Intelligent dust bag indicator, Smart LED indicator, Wet and dry",
@@ -654,7 +750,7 @@
       "Suction of Motor": "22.55 KPA",
       "Blower Efficiency": "1400 litres/minutes",
       "Dust Capacity": "8 litres",
-      "Voltage": "230 VAC, 50 Hz",
+      "Input Voltage": "230 VAC, 50 Hz",
       "Accessory Modules": "Floor Brush, Carpet Brush, Corner Cleaner, All Surface Cleaner, Hose Pipe, Aromiser, Car Wash Adapter, Flexi Cleaner, 3 Extension Tubes, and Floor Wet Squeegee",
       "Warranty": "1 Year Factory Warranty"
     }
@@ -663,7 +759,14 @@
     "name": "FORBES CORDLESS ZEROBEND Z15",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
-    "subcategories": ["vacuum", "upright", "stick", "dry", "bagless", "cordless"],
+    "subcategories": [
+      "vacuum",
+      "upright",
+      "stick",
+      "dry",
+      "bagless",
+      "cordless"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -691,7 +794,14 @@
     "name": "FORBES CORDLESS ZEROBEND Z21WM",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
-    "subcategories": ["vacuum", "upright", "stick", "dry", "bagless", "cordless"],
+    "subcategories": [
+      "vacuum",
+      "upright",
+      "stick",
+      "dry",
+      "bagless",
+      "cordless"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -715,7 +825,13 @@
     "name": "FORBES SMARTCLEAN FULLYAUTOMATIC STATION",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
-    "subcategories": ["vacuum", "robotic", "wet-dry", "bagless", "cordless"],
+    "subcategories": [
+      "vacuum",
+      "robotic",
+      "wet-dry",
+      "bagless",
+      "cordless"
+    ],
     "outOfStock": true,
     "leaflet": "",
     "image": "",
@@ -742,7 +858,13 @@
     "name": "FORBES SMARTCLEAN with AUTO BIN S2",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
-    "subcategories": ["vacuum", "robotic", "wet-dry", "bagless", "cordless"],
+    "subcategories": [
+      "vacuum",
+      "robotic",
+      "wet-dry",
+      "bagless",
+      "cordless"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -768,7 +890,13 @@
     "name": "FORBES TORNADO VAC",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
-    "subcategories": ["vacuum", "canister", "dry", "bagless", "corded"],
+    "subcategories": [
+      "vacuum",
+      "canister",
+      "dry",
+      "bagless",
+      "corded"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -782,7 +910,7 @@
       "Suction Power": "24 kPa*",
       "Rated Power": "1200 W",
       "Power cord length (Mtrs)": "4.8",
-      "Filteration": "4 stage (Cyclonic, Hepa+Foam, Foam)",
+      "Filtration": "4 stage (Cyclonic, Hepa+Foam, Foam)",
       "Noise Level": "<78 dB",
       "Dust Capacity": "2.5 L",
       "Warranty": "1 Year Factory Warranty"
@@ -792,7 +920,9 @@
     "name": "AQUAGUARD SELECT WATER SOFTENER AWS 5000",
     "category": "Water Softener",
     "i18nTag": "tag_water_softener",
-    "subcategories": ["water-softener"],
+    "subcategories": [
+      "water-softener"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -800,7 +930,7 @@
     "mrp": 101990,
     "mop": 82490,
     "specs": {
-      "Dimension (HxDxW) cm": "122 x 30.5 x 30.5",
+      "Dimensions": "122 x 30.5 x 30.5",
       "GeolexTM media (kg)": "15",
       "Max. Input Flow Rate (LPH)": "3000",
       "Max. Input Hardness (ppm)": "2100",
@@ -814,7 +944,7 @@
       "Salt Consumption Per Regeneration (kg)": "4.9",
       "Technology": "Ionic-Transfer Technology",
       "Regeneration Mode": "Time-based or Flow based",
-      "Total Unit Weight (kg)": "75",
+      "Weight": "75",
       "Salt Storage Capacity (kg)": "80",
       "Warranty": "1 Year Factory Warranty"
     }
@@ -823,7 +953,9 @@
     "name": "AQUAGUARD SELECT WATER SOFTENER AWS 7500",
     "category": "Water Softener",
     "i18nTag": "tag_water_softener",
-    "subcategories": ["water-softener"],
+    "subcategories": [
+      "water-softener"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -831,7 +963,7 @@
     "mrp": 107315,
     "mop": 95990,
     "specs": {
-      "Dimension (HxDxW) cm": "137 x 33 x 33",
+      "Dimensions": "137 x 33 x 33",
       "GeolexTM media (kg)": "31",
       "Max. Input Flow Rate (LPH)": "4000",
       "Max. Input Hardness (ppm)": "2200",
@@ -845,7 +977,7 @@
       "Salt Consumption Per Regeneration (kg)": "7.4",
       "Technology": "Ionic-Transfer Technology",
       "Regeneration Mode": "Time-based or Flow based",
-      "Total Unit Weight (kg)": "102",
+      "Weight": "102",
       "Salt Storage Capacity (kg)": "120",
       "Warranty": "1 Year Factory Warranty"
     }
@@ -854,7 +986,9 @@
     "name": "AQUAGUARD SELECT WATER SOFTENER I 2500",
     "category": "Water Softener",
     "i18nTag": "tag_water_softener",
-    "subcategories": ["water-softener"],
+    "subcategories": [
+      "water-softener"
+    ],
     "outOfStock": false,
     "leaflet": "",
     "image": "",
@@ -862,7 +996,7 @@
     "mrp": 64990,
     "mop": 57990,
     "specs": {
-      "Dimension (HxDxW) cm": "112 x 20 x 20",
+      "Dimensions": "112 x 20 x 20",
       "GeolexTM media (kg)": "5",
       "Max. Input Flow Rate (LPH)": "2100",
       "Max. Input Hardness (ppm)": "1900",
@@ -876,7 +1010,7 @@
       "Salt Consumption Per Regeneration (kg)": "2.5",
       "Technology": "Ionic-Transfer Technology",
       "Regeneration Mode": "Time-based or Flow based",
-      "Total Unit Weight (kg)": "35",
+      "Weight": "35",
       "Salt Storage Capacity (kg)": "50",
       "Warranty": "1 Year Factory Warranty"
     }
