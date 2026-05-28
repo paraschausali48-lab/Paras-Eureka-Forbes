@@ -1246,51 +1246,43 @@ textarea,
   border-color: var(--color-primary-light);
 }
 
-/* Sort Options for Modal */
-.sort-options {
+/* New Flipkart-style Sort Options */
+.sort-options-new {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  padding-top: 10px;
 }
-.sort-option {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: var(--transition);
-}
-.sort-option:hover {
-  background: var(--color-gray-50);
-}
-.sort-option input[type='radio'] {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--color-gray-400);
-  border-radius: 50%;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.sort-option input[type='radio']:checked {
-  border-color: var(--color-primary);
-}
-.sort-option input[type='radio']:checked::after {
-  content: '';
-  width: 10px;
-  height: 10px;
-  background: var(--color-primary);
-  border-radius: 50%;
-}
-.sort-option span {
-  font-size: 1.05rem;
-  color: var(--color-text);
+
+.sort-option-btn {
+  background: none;
+  border: none;
+  padding: 16px 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 1rem;
   font-weight: 500;
+  color: var(--color-gray-800);
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-gray-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.2s ease;
+}
+
+.sort-option-btn:hover {
+  background-color: var(--color-gray-50);
+}
+
+.sort-option-btn.active {
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.sort-option-btn.active::after {
+  content: '✔';
+  font-size: 1.2rem;
+  color: var(--color-accent);
 }
 
 /* Mobile Overlay */
@@ -1506,13 +1498,14 @@ html:lang(mr) .product-card.out-of-stock::after {
 
 .discount-badge {
   display: inline-block;
-  background: var(--color-gray-100);
-  color: var(--color-gray-600);
+  background: #2e7d32;
+  color: var(--color-white);
   font-size: 0.75rem;
   font-weight: 800;
-  padding: 2px 6px;
+  padding: 3px 7px;
   border-radius: 4px;
   line-height: 1.2;
+  animation: pulseBadge 2s infinite;
 }
 
 @keyframes pulseBadge {
@@ -2341,6 +2334,10 @@ html:lang(mr) .product-card.out-of-stock::after {
   border-radius: var(--radius-lg);
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
   z-index: 100;
+}
+
+.demo-modal-title {
+  margin-bottom: 12px;
 }
 
 .pdp-actions .product-btn {

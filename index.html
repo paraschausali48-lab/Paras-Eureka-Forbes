@@ -4181,20 +4181,17 @@
     <div id="sort-modal" class="pdp-modal demo-modal-wrapper">
       <div class="pdp-content demo-modal-content">
         <span class="sort-close pdp-close" aria-label="Close">&times;</span>
-        <h2 class="demo-modal-title" style="margin-bottom: 20px" data-i18n="sort_title">Sort By</h2>
-        <div class="sort-options" id="mobile-sort-options">
-          <label class="sort-option">
-            <input type="radio" name="mobile-sort" value="relevance" checked />
+        <h2 class="demo-modal-title" data-i18n="sort_title">Sort By</h2>
+        <div class="sort-options-new" id="mobile-sort-options">
+          <button class="sort-option-btn" data-sort="relevance">
             <span data-i18n="sort_relevance">Relevance</span>
-          </label>
-          <label class="sort-option">
-            <input type="radio" name="mobile-sort" value="price-low-high" />
+          </button>
+          <button class="sort-option-btn" data-sort="price-low-high">
             <span data-i18n="sort_price_low">Price: Low to High</span>
-          </label>
-          <label class="sort-option">
-            <input type="radio" name="mobile-sort" value="price-high-low" />
+          </button>
+          <button class="sort-option-btn" data-sort="price-high-low">
             <span data-i18n="sort_price_high">Price: High to Low</span>
-          </label>
+          </button>
         </div>
       </div>
     </div>

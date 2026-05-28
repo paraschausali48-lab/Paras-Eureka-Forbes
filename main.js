@@ -339,23 +339,36 @@ document.addEventListener('DOMContentLoaded', function () {
   if (desktopSort) {
     desktopSort.addEventListener('change', (e) => {
       sortProducts(e.target.value);
-      const mobileSort = document.querySelector(`input[name="mobile-sort"][value="${e.target.value}"]`);
-      if (mobileSort) mobileSort.checked = true;
+      // Sync with new mobile sort buttons
+      document.querySelectorAll('.sort-option-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.sort === e.target.value);
+      });
     });
   }
   const sortMobileToggle = document.getElementById('sort-mobile-toggle');
   const sortModal = document.getElementById('sort-modal');
   if (sortMobileToggle && sortModal) {
     sortMobileToggle.addEventListener('click', () => {
+      // Set initial active state based on current sort
+      const currentSort = desktopSort ? desktopSort.value : 'relevance';
+      document.querySelectorAll('.sort-option-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.sort === currentSort);
+      });
       window.location.hash = 'view-sort';
     });
-    document.querySelectorAll('input[name="mobile-sort"]').forEach((radio) => {
-      radio.addEventListener('change', (e) => {
-        if (desktopSort) desktopSort.value = e.target.value;
-        sortProducts(e.target.value);
+
+    document.querySelectorAll('.sort-option-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const sortValue = e.currentTarget.dataset.sort;
+
+        // Update desktop dropdown and sort products
+        if (desktopSort) desktopSort.value = sortValue;
+        sortProducts(sortValue);
+
+        // Close modal after a short delay
         setTimeout(() => {
           closeActiveOverlay();
-        }, 300);
+        }, 250);
       });
     });
   }
@@ -886,8 +899,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (sortModal) enableSwipeToClose(sortModal.querySelector('.pdp-content'), closeActiveOverlay, 'down');
-  // Filter swipe-to-close removed to securely lock the side filters when opened
-  // if (filterSidebar) enableSwipeToClose(filterSidebar, closeActiveOverlay, 'down');
+  if (filterSidebar) enableSwipeToClose(filterSidebar, closeActiveOverlay, 'down');
   if (pdpModal) enableSwipeToClose(pdpModal.querySelector('.pdp-content'), closeActiveOverlay, 'right');
   if (wishlistModal) enableSwipeToClose(wishlistModal.querySelector('.pdp-content'), closeActiveOverlay, 'right');
   const mainSidebarEl = document.getElementById('main-sidebar');
