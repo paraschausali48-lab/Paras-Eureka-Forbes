@@ -130,7 +130,7 @@
             <line x1="19" y1="12" x2="5" y2="12"></line>
             <polyline points="12 19 5 12 12 5"></polyline>
           </svg>
-          <span>Menu</span>
+          <span data-i18n="nav_menu">Menu</span>
         </div>
         <button id="sidebar-close" class="sidebar-close-btn" aria-label="Close Menu">
           <svg
@@ -149,7 +149,7 @@
         </button>
       </div>
       <div class="sidebar-content">
-        <div class="sidebar-section-title" style="margin-top: 0">Navigation</div>
+        <div class="sidebar-section-title" style="margin-top: 0" data-i18n="nav_nav">Navigation</div>
         <a href="#products" class="sidebar-item" onclick="document.getElementById('sidebar-close').click()">
           <svg
             width="20"
@@ -183,7 +183,7 @@
               points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
             ></polygon>
           </svg>
-          <span>Special Offers</span>
+          <span data-i18n="nav_offers">Special Offers</span>
         </a>
         <button type="button" class="wishlist-toggle-btn sidebar-item" aria-label="View Wishlist">
           <svg
@@ -209,7 +209,7 @@
             0
           </span>
         </button>
-        <div class="sidebar-section-title">Help & Information</div>
+        <div class="sidebar-section-title" data-i18n="nav_help">Help & Information</div>
         <a href="#faq" class="sidebar-item">
           <svg
             width="20"
@@ -226,7 +226,7 @@
             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
             <line x1="12" y1="17" x2="12.01" y2="17"></line>
           </svg>
-          FAQs
+          <span data-i18n="nav_faq">FAQs</span>
         </a>
         <a href="#contact" class="sidebar-item">
           <svg
@@ -243,9 +243,9 @@
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
             <polyline points="22,6 12,13 2,6"></polyline>
           </svg>
-          Contact
+          <span data-i18n="nav_contact_us">Contact</span>
         </a>
-        <div class="sidebar-section-title">Language / भाषा</div>
+        <div class="sidebar-section-title" data-i18n="nav_lang">Language / भाषा</div>
         <div class="language-switcher-sidebar">
           <button class="lang-btn active" data-lang="en">English</button>
           <button class="lang-btn" data-lang="hi">हिंदी</button>
@@ -716,8 +716,10 @@
                 <div class="filter-sidebar-header">
                   <div style="display: flex; justify-content: space-between; align-items: center; width: 100%">
                     <div style="display: flex; gap: 12px; align-items: center">
-                      <h3>Filters</h3>
-                      <button type="button" class="filter-clear-all" id="filter-clear-all">Clear All</button>
+                      <h3 data-i18n="filter_title">Filters</h3>
+                      <button type="button" class="filter-clear-all" id="filter-clear-all" data-i18n="filter_clear_all">
+                        Clear All
+                      </button>
                     </div>
                     <button type="button" class="filter-sidebar-close" id="filter-sidebar-close">&times;</button>
                   </div>
@@ -726,7 +728,7 @@
                 <div class="filter-groups-wrapper">
                   <!-- Category Filter (Always visible) -->
                   <div class="filter-group">
-                    <div class="filter-group-title">Category</div>
+                    <div class="filter-group-title" data-i18n="filter_cat_title">Category</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-cat" value="all" checked />
                       <span data-i18n="filter_all">All Products</span>
@@ -734,28 +736,28 @@
                     <label class="filter-option">
                       <input type="checkbox" class="filter-cat" value="Water Purifier" data-count="0" />
                       <span>
-                        Water Purifiers
+                        <span data-i18n="filter_water">Water Purifiers</span>
                         <span class="filter-count" data-cat="Water Purifier"></span>
                       </span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-cat" value="Air Purifier" data-count="0" />
                       <span>
-                        Air Purifiers
+                        <span data-i18n="filter_air">Air Purifiers</span>
                         <span class="filter-count" data-cat="Air Purifier"></span>
                       </span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-cat" value="Vacuum Cleaner" data-count="0" />
                       <span>
-                        Vacuum Cleaners
+                        <span data-i18n="filter_vacuum">Vacuum Cleaners</span>
                         <span class="filter-count" data-cat="Vacuum Cleaner"></span>
                       </span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-cat" value="Water Softener" data-count="0" />
                       <span>
-                        Water Softeners
+                        <span data-i18n="filter_softener">Water Softeners</span>
                         <span class="filter-count" data-cat="Water Softener"></span>
                       </span>
                     </label>
@@ -763,109 +765,111 @@
 
                   <!-- Universal: Offers -->
                   <div class="filter-group">
-                    <div class="filter-group-title">Offers</div>
+                    <div class="filter-group-title" data-i18n="filter_offer_title">Offers</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="offer" value="exchange" />
-                      <span>Exchange Eligible</span>
+                      <span data-i18n="filter_offer_exch">Exchange Eligible</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="offer" value="free-installation" />
-                      <span>Free Installation</span>
+                      <span data-i18n="filter_offer_inst">Free Installation</span>
                     </label>
                   </div>
 
                   <!-- Universal: Price Range -->
                   <div class="filter-group">
-                    <div class="filter-group-title">Price Range</div>
+                    <div class="filter-group-title" data-i18n="filter_price_title">Price Range</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="price" value="0-10000" />
-                      <span>Under ₹10,000</span>
+                      <span data-i18n="filter_price_1">Under ₹10,000</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="price" value="10000-15000" />
-                      <span>₹10,000 - ₹15,000</span>
+                      <span data-i18n="filter_price_2">₹10,000 - ₹15,000</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="price" value="15000-20000" />
-                      <span>₹15,000 - ₹20,000</span>
+                      <span data-i18n="filter_price_3">₹15,000 - ₹20,000</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="price" value="20000+" />
-                      <span>Above ₹20,000</span>
+                      <span data-i18n="filter_price_4">Above ₹20,000</span>
                     </label>
                   </div>
 
                   <!-- Water Purifier Filters -->
                   <div class="filter-group water-filter">
-                    <div class="filter-group-title">Water Source</div>
+                    <div class="filter-group-title" data-i18n="filter_ws_title">Water Source</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="water-source" value="municipal" />
-                      <span>Municipal Water (TMC / NMMC / BMC)</span>
+                      <span data-i18n="filter_ws_muni">Municipal Water (TMC / NMMC / BMC)</span>
                     </label>
-                    <span class="small-helper">Select your building's water source</span>
+                    <span class="small-helper" data-i18n="filter_ws_muni_help">
+                      Select your building's water source
+                    </span>
                   </div>
 
                   <div class="filter-group water-filter">
-                    <div class="filter-group-title">Technology</div>
+                    <div class="filter-group-title" data-i18n="filter_tech_title">Technology</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="tech" value="ro" />
-                      <span>RO (Reverse Osmosis)</span>
+                      <span data-i18n="filter_tech_ro">RO (Reverse Osmosis)</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="tech" value="uv" />
-                      <span>UV (Ultraviolet)</span>
+                      <span data-i18n="filter_tech_uv">UV (Ultraviolet)</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="tech" value="uf" />
-                      <span>UF (Ultrafiltration)</span>
+                      <span data-i18n="filter_tech_uf">UF (Ultrafiltration)</span>
                     </label>
                   </div>
 
                   <div class="filter-group water-filter">
-                    <div class="filter-group-title">Placement</div>
+                    <div class="filter-group-title" data-i18n="filter_place_title">Placement</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="placement" value="wall-mounted" />
-                      <span>Wall Mounted</span>
+                      <span data-i18n="filter_place_wall">Wall Mounted</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="placement" value="under-counter" />
-                      <span>Under Counter</span>
+                      <span data-i18n="filter_place_under">Under Counter</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="placement" value="table-top" />
-                      <span>Table Top</span>
+                      <span data-i18n="filter_place_table">Table Top</span>
                     </label>
                   </div>
 
                   <div class="filter-group water-filter">
-                    <div class="filter-group-title">Storage Capacity</div>
+                    <div class="filter-group-title" data-i18n="filter_store_title">Storage Capacity</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="storage" value="small" />
-                      <span>Up to 5 Liters</span>
+                      <span data-i18n="filter_store_s">Up to 5 Liters</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="storage" value="medium" />
-                      <span>6 to 8 Liters</span>
+                      <span data-i18n="filter_store_m">6 to 8 Liters</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="storage" value="large" />
-                      <span>Above 8 Liters</span>
+                      <span data-i18n="filter_store_l">Above 8 Liters</span>
                     </label>
                   </div>
 
                   <div class="filter-group water-filter">
-                    <div class="filter-group-title">Special Features</div>
+                    <div class="filter-group-title" data-i18n="filter_feat_title">Special Features</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="features" value="active-copper" />
-                      <span>Active Copper / Zinc Booster</span>
+                      <span data-i18n="filter_feat_copper">Active Copper / Zinc Booster</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="features" value="hot-ambient" />
-                      <span>Hot & Ambient Water</span>
+                      <span data-i18n="filter_feat_hot">Hot & Ambient Water</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="features" value="alkaline-boost" />
-                      <span>Alkaline Water Tech</span>
+                      <span data-i18n="filter_feat_alk">Alkaline Water Tech</span>
                     </label>
                     <label class="filter-option">
                       <input
@@ -874,84 +878,84 @@
                         data-facet="features"
                         value="alkaline-boost-active-copper"
                       />
-                      <span>Alkaline + Active Copper</span>
+                      <span data-i18n="filter_feat_alk_cop">Alkaline + Active Copper</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="features" value="food-grade plastic" />
-                      <span>Food-Grade Plastic Tank</span>
+                      <span data-i18n="filter_feat_plas">Food-Grade Plastic Tank</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="features" value="slim" />
-                      <span>Slim</span>
+                      <span data-i18n="filter_feat_slim">Slim</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="features" value="smart" />
-                      <span>Smart LED / Digital Display</span>
+                      <span data-i18n="filter_feat_smart">Smart LED / Digital Display</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="features" value="stainless-steel" />
-                      <span>Stainless Steel Tank</span>
+                      <span data-i18n="filter_feat_ss">Stainless Steel Tank</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="features" value="zero-pressure-pump" />
-                      <span>Zero Pressure Pump</span>
+                      <span data-i18n="filter_feat_zp">Zero Pressure Pump</span>
                     </label>
                   </div>
 
                   <!-- Vacuum Cleaner Filters -->
                   <div class="filter-group vacuum-filter">
-                    <div class="filter-group-title">Type</div>
+                    <div class="filter-group-title" data-i18n="filter_vac_type_title">Type</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-type" value="canister" />
-                      <span>Canister</span>
+                      <span data-i18n="filter_vac_type_can">Canister</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-type" value="handheld" />
-                      <span>Handheld</span>
+                      <span data-i18n="filter_vac_type_hand">Handheld</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-type" value="upright" />
-                      <span>Upright / Stick</span>
+                      <span data-i18n="filter_vac_type_stick">Upright / Stick</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-type" value="robotic" />
-                      <span>Robotic</span>
+                      <span data-i18n="filter_vac_type_rob">Robotic</span>
                     </label>
                   </div>
 
                   <div class="filter-group vacuum-filter">
-                    <div class="filter-group-title">Application</div>
+                    <div class="filter-group-title" data-i18n="filter_vac_app_title">Application</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-app" value="dry" />
-                      <span>Dry Cleaning Only</span>
+                      <span data-i18n="filter_vac_app_dry">Dry Cleaning Only</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-app" value="wet-dry" />
-                      <span>Wet & Dry Cleaning</span>
+                      <span data-i18n="filter_vac_app_wet">Wet & Dry Cleaning</span>
                     </label>
                   </div>
 
                   <div class="filter-group vacuum-filter">
-                    <div class="filter-group-title">Dust Collection</div>
+                    <div class="filter-group-title" data-i18n="filter_vac_dust_title">Dust Collection</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-dust" value="bagless" />
-                      <span>Bagless (Cyclonic)</span>
+                      <span data-i18n="filter_vac_dust_bagless">Bagless (Cyclonic)</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-dust" value="bagged" />
-                      <span>Bagged (Disposable)</span>
+                      <span data-i18n="filter_vac_dust_bagged">Bagged (Disposable)</span>
                     </label>
                   </div>
 
                   <div class="filter-group vacuum-filter">
-                    <div class="filter-group-title">Power</div>
+                    <div class="filter-group-title" data-i18n="filter_vac_pow_title">Power</div>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-power" value="corded" />
-                      <span>Corded</span>
+                      <span data-i18n="filter_vac_pow_corded">Corded</span>
                     </label>
                     <label class="filter-option">
                       <input type="checkbox" class="filter-facet" data-facet="vac-power" value="cordless" />
-                      <span>Cordless (Battery)</span>
+                      <span data-i18n="filter_vac_pow_cordless">Cordless (Battery)</span>
                     </label>
                   </div>
                 </div>
@@ -3399,19 +3403,19 @@
             <div class="offer-countdown" id="offer-countdown">
               <div class="countdown-item">
                 <span id="cd-days">00</span>
-                <small>Days</small>
+                <small data-i18n="cd_days">Days</small>
               </div>
               <div class="countdown-item">
                 <span id="cd-hours">00</span>
-                <small>Hours</small>
+                <small data-i18n="cd_hours">Hours</small>
               </div>
               <div class="countdown-item">
                 <span id="cd-minutes">00</span>
-                <small>Mins</small>
+                <small data-i18n="cd_mins">Mins</small>
               </div>
               <div class="countdown-item">
                 <span id="cd-seconds">00</span>
-                <small>Secs</small>
+                <small data-i18n="cd_secs">Secs</small>
               </div>
             </div>
             <a
@@ -3537,7 +3541,7 @@
                     </svg>
                   </span>
                 </button>
-                <div class="faq-answer" style="max-height: 800px; opacity: 1">
+                <div class="faq-answer">
                   <div class="faq-answer-content">
                     <p data-i18n="faq_a1">
                       While water is treated at the main municipal plant, it travels through kilometers of aging, rusted
@@ -3609,6 +3613,390 @@
                       the millisecond water flows, ensuring 100% safe water from the very first drop. They are
                       completely mercury-free, generate zero heat (so your water stays cool), and possess an incredible
                       durable lifespan of up to 10 years, dramatically lowering your long-term maintenance layouts.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="aquaguards">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q5">
+                    Do I really need an RO purifier if I live in Mumbai, Navi Mumbai, or Thane?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a5">
+                      It depends on your building's water source. If your society relies strictly on municipal water
+                      (NMMC, TMC, or BMC), the water is naturally soft and a UV+UF purifier is usually sufficient to
+                      remove pathogens and rust. However, if your society uses borewell water or orders private water
+                      tankers (common during summer cuts), an RO purifier is highly recommended to handle the
+                      fluctuating TDS (Total Dissolved Solids) and hardness.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="aquaguards">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q6">
+                    Will an RO purifier remove essential minerals from my drinking water?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a6">
+                      No. Modern Aquaguard RO models come equipped with patented Mineral Guard™ technology. This ensures
+                      that while heavy metals, excess salts, and harmful impurities are filtered out, essential natural
+                      minerals like calcium and magnesium are retained in your drinking water.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="aquaguards">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q8">
+                    Can I exchange my old water purifier for a new Aquaguard?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a8">
+                      Yes! We are currently running an official Aquaguard Buy-Back and Exchange campaign (valid until
+                      December 2026). You can exchange your old water purifier—regardless of the brand or condition—for
+                      a significant discount on a new, upgraded Aquaguard model. Contact me via WhatsApp to get an exact
+                      valuation for your old machine.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="faq-tab-panel"
+              role="tabpanel"
+              data-faq-panel="vacuums"
+              aria-labelledby="faq-tab-vacuums"
+              hidden
+            >
+              <div class="faq-item active" data-faq-category="vacuums">
+                <button class="faq-question" aria-expanded="true">
+                  <span class="faq-question-text" data-i18n="faq_q9">
+                    Which vacuum cleaner is better for Indian homes: Bagless or Bagged?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a9">
+                      Both are highly effective, but they serve different needs. Bagless (cyclonic) models are
+                      incredibly convenient, lightweight, and save you the cost of buying replacement bags. Bagged
+                      models, however, are often recommended for allergy sufferers as the dust is completely sealed away
+                      during disposal, preventing dust clouds.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="vacuums">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q10">
+                    Can a vacuum cleaner help if I or my family members have dust allergies?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a10">
+                      Absolutely. If you have dust allergies, look for our Forbes models equipped with a True HEPA
+                      (High-Efficiency Particulate Air) filter. These filters trap 99.9% of microscopic allergens, dust
+                      mites, and pet hair, ensuring they are not exhausted back into your room's air.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="vacuums">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q11">
+                    Does a handheld vacuum cleaner replace a standard floor vacuum?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a11">
+                      Handheld vacuums are excellent for quick cleanups, car interiors, sofas, and hard-to-reach
+                      corners. However, for deep cleaning large carpets and entire floors, a canister or robotic vacuum
+                      cleaner provides the sustained suction power and battery life required.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="vacuums">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q12">
+                    Why does my vacuum cleaner get hot and shut off?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a12">
+                      This is a built-in safety feature. If the dust bag is completely full, or if the filters or hoses
+                      are severely clogged with hair or debris, the motor works harder and heats up. Emptying the dust
+                      cup and cleaning the filter regularly will prevent this and ensure maximum suction power.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="faq-tab-panel"
+              role="tabpanel"
+              data-faq-panel="service"
+              aria-labelledby="faq-tab-service"
+              hidden
+            >
+              <div class="faq-item active" data-faq-category="service">
+                <button class="faq-question" aria-expanded="true">
+                  <span class="faq-question-text" data-i18n="faq_q4">
+                    Is an Annual Maintenance Contract (AMC) a worthwhile investment?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a4">
+                      Absolutely. Think of your purifier as a protective shield; it works by physically trapping mud,
+                      chemical particles, and heavy metals so they don't enter your body. Over 6 to 12 months, these
+                      heavy-duty carbon blocks and membranes inevitably get completely choked with the dirt they
+                      blocked. An active AMC ensures a certified technician comes straight to your doorstep to
+                      deep-clean the system and swap cartridges with genuine factory spares before they fail,
+                      guaranteeing 365 days of instant health safety.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="service">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q7">
+                    How often do I need to replace the filters in my Aquaguard?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a7">
+                      Typically, the pre-filter and carbon filters need replacement every 6 to 12 months, depending on
+                      your household's water consumption and the input water quality. If you live in an area with older
+                      GI plumbing, sediment filters may need replacing sooner. Your machine will also alert you when
+                      it's time for a filter change.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="service">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q13">How do I book a free home demonstration?</span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a13">
+                      Simply click the "Book an Appointment" or "Book a Free Demo" button on any product. A calendar
+                      will pop up, allowing you to select a date and time that works best for you. As your authorized
+                      local specialist, I will then confirm the appointment and bring the selected models to your home.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="service">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q14">
+                    What is covered under the Eureka Forbes AMC (Annual Maintenance Contract)?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a14">
+                      A genuine Aquaguard AMC gives you complete peace of mind. It generally includes up to 3 scheduled
+                      maintenance visits a year, annual filter replacement, tank cleaning, unlimited breakdown repair
+                      visits, and free replacement of spare parts (including electronics and pumps) depending on the
+                      plan you choose.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="faq-item" data-faq-category="service">
+                <button class="faq-question">
+                  <span class="faq-question-text" data-i18n="faq_q15">
+                    How soon will my product be installed after purchase?
+                  </span>
+                  <span class="faq-chevron">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </span>
+                </button>
+                <div class="faq-answer">
+                  <div class="faq-answer-content">
+                    <p data-i18n="faq_a15">
+                      Installation is incredibly fast. Once your order is confirmed, an authorized Eureka Forbes
+                      technician will arrive at your home to install the device within 24 to 48 hours.
                     </p>
                   </div>
                 </div>
@@ -3768,7 +4156,7 @@
               ></button>
             </div>
             <div class="pdp-sku" id="pdp-sku">
-              <strong>SKU:</strong>
+              <strong data-i18n="pdp_sku_label">SKU:</strong>
               <span></span>
             </div>
             <div class="pdp-pricing" id="pdp-price"></div>
@@ -3838,7 +4226,7 @@
 
     <a href="https://wa.me/918928002642" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
       <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
-      <span>Chat with Specialist</span>
+      <span data-i18n="wa_chat">Chat with Specialist</span>
     </a>
 
     <!-- Scroll to Top Button -->
