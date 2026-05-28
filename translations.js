@@ -22,7 +22,7 @@ const translations = {
     // VALUE BANNER SECTION
     // ============================================
     vb_eyebrow: "Smart Buyer's Guide",
-    vb_title: 'Why Choose a Direct Specialist Over Online Stores?',
+    vb_title: 'The Direct Specialist Advantage: Beyond the Online Store',
     vb_desc:
       'Purchasing Eureka Forbes products—such as water purifiers and vacuum cleaners—through an authorized direct sales specialist offers several distinct advantages over buying from e-commerce platforms, retail stores, or unauthorized dealers. The direct sales model is designed to provide a highly customized and secure customer experience.',
     vb_card1_title: 'Personalized Home Assessments',
@@ -241,7 +241,7 @@ const translations = {
     // VALUE BANNER SECTION
     // ============================================
     vb_eyebrow: 'स्मार्ट बायर गाइड',
-    vb_title: 'ऑनलाइन स्टोर के बजाय डायरेक्ट स्पेशलिस्ट को क्यों चुनें?',
+    vb_title: 'The Direct Specialist Advantage: Beyond the Online Store',
     vb_desc:
       'ई-कॉमर्स या रिटेल स्टोर से खरीदने की तुलना में अधिकृत डायरेक्ट सेल्स स्पेशलिस्ट के माध्यम से यूरेका फोर्ब्स उत्पाद खरीदना कई फायदे देता है। यह मॉडल अत्यधिक अनुकूलित और सुरक्षित ग्राहक अनुभव प्रदान करने के लिए डिज़ाइन किया गया है।',
     vb_card1_title: 'व्यक्तिगत होम असेसमेंट',
@@ -452,7 +452,7 @@ const translations = {
     nav_whatsapp: 'व्हाट्सअँप',
 
     // ============================================
-    vb_title: 'ऑनलाइन स्टोअरऐवजी डायरेक्ट स्पेशलिस्ट का निवडावा?',
+    vb_title: 'The Direct Specialist Advantage: Beyond the Online Store',
     vb_desc:
       'ई-कॉमर्स किंवा रिटेल स्टोअरमधून खरेदी करण्याऐवजी अधिकृत डायरेक्ट सेल्स स्पेशलिस्टद्वारे युरेका फोर्ब्स उत्पादने खरेदी केल्याने अनेक फायदे मिळतात. हे मॉडेल अत्यंत सानुकूलित आणि सुरक्षित ग्राहक अनुभव प्रदान करण्यासाठी डिझाइन केले आहे.',
     vb_card1_title: 'वैयक्तिक होम असेसमेंट',
@@ -654,6 +654,16 @@ const translations = {
   },
 };
 
+// Generate mappings for newly requested languages (falling back to English structure)
+translations.pa = Object.assign({}, translations.en, { nav_home: 'ਮੁੱਖ ਪੰਨਾ' });
+translations.gu = Object.assign({}, translations.en, { nav_home: 'મુખ્ય પૃષ્ઠ' });
+translations.ml = Object.assign({}, translations.en, { nav_home: 'ഹോം' });
+translations.te = Object.assign({}, translations.en, { nav_home: 'హోమ్' });
+translations.ta = Object.assign({}, translations.en, { nav_home: 'முகப்பு' });
+translations.kn = Object.assign({}, translations.en, { nav_home: 'ಮುಖಪುಟ' });
+translations.bn = Object.assign({}, translations.en, { nav_home: 'হোম' });
+translations.or = Object.assign({}, translations.en, { nav_home: 'ହୋମ' });
+
 /**
  * Language Switcher - Complete Implementation
  *
@@ -693,7 +703,7 @@ const translations = {
       const key = el.getAttribute('data-i18n');
       if (!key) return;
 
-      const translation = translations[lang][key];
+      const translation = translations[lang][key] || translations['en'][key];
       if (!translation) {
         // Silently skip missing translations (keeps fallback English text)
         return;
@@ -730,16 +740,17 @@ const translations = {
 
     langButtons.forEach(function (btn) {
       btn.addEventListener('click', function () {
-        // Remove active class from all buttons
+        const lang = this.getAttribute('data-lang');
+
+        // Sync active class across all corresponding language buttons
         langButtons.forEach(function (b) {
-          b.classList.remove('active');
+          if (b.getAttribute('data-lang') === lang) {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
         });
 
-        // Add active class to clicked button
-        this.classList.add('active');
-
-        // Get language code and apply translations
-        const lang = this.getAttribute('data-lang');
         if (lang) {
           applyTranslations(lang);
         }
@@ -750,11 +761,15 @@ const translations = {
     try {
       const savedLang = localStorage.getItem('preferredLanguage') || 'en';
       if (savedLang !== 'en') {
-        const savedBtn = document.querySelector(`[data-lang="${savedLang}"]`);
-        if (savedBtn) {
-          // Programmatically trigger the click to activate the saved language
-          savedBtn.click();
-        }
+        // Sync visually without triggering loop clicks
+        langButtons.forEach(function (b) {
+          if (b.getAttribute('data-lang') === savedLang) {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
+        });
+        applyTranslations(savedLang);
       }
     } catch (e) {
       // localStorage may not be available

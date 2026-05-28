@@ -104,8 +104,196 @@
     </script>
   </head>
   <body>
+    <div class="main-sidebar-overlay" id="main-sidebar-overlay"></div>
+    <div class="main-sidebar" id="main-sidebar">
+      <div class="sidebar-header">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+          "
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="19" y1="12" x2="5" y2="12"></line>
+            <polyline points="12 19 5 12 12 5"></polyline>
+          </svg>
+          <span>Menu</span>
+        </div>
+        <button id="sidebar-close" class="sidebar-close-btn" aria-label="Close Menu">
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="sidebar-content">
+        <div class="sidebar-section-title" style="margin-top: 0">Navigation</div>
+        <a href="#products" class="sidebar-item" onclick="document.getElementById('sidebar-close').click()">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="margin-right: 8px"
+          >
+            <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+            <line x1="7" y1="7" x2="7.01" y2="7"></line>
+          </svg>
+          <span data-i18n="nav_products">Products</span>
+        </a>
+        <a href="#offers" class="sidebar-item" onclick="document.getElementById('sidebar-close').click()">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="margin-right: 8px"
+          >
+            <polygon
+              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+            ></polygon>
+          </svg>
+          <span>Special Offers</span>
+        </a>
+        <button type="button" class="wishlist-toggle-btn sidebar-item" aria-label="View Wishlist">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="margin-right: 8px"
+          >
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+            ></path>
+          </svg>
+          <span data-i18n="nav_wishlist">Wishlist</span>
+          <span
+            class="wishlist-badge header-wishlist-badge"
+            style="display: none; position: relative; margin-left: 8px; top: 0; right: 0"
+          >
+            0
+          </span>
+        </button>
+        <div class="sidebar-section-title">Help & Information</div>
+        <a href="#faq" class="sidebar-item">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="margin-right: 8px"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          FAQs
+        </a>
+        <a href="#contact" class="sidebar-item">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="margin-right: 8px"
+          >
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+          Contact
+        </a>
+        <div class="sidebar-section-title">Language / भाषा</div>
+        <div class="language-switcher-sidebar">
+          <button class="lang-btn active" data-lang="en">English</button>
+          <button class="lang-btn" data-lang="hi">हिंदी</button>
+          <button class="lang-btn" data-lang="mr">मराठी</button>
+          <button class="lang-btn" data-lang="pa">ਪੰਜਾਬੀ</button>
+          <button class="lang-btn" data-lang="gu">ગુજરાતી</button>
+          <button class="lang-btn" data-lang="ml">മലയാളം</button>
+          <button class="lang-btn" data-lang="te">తెలుగు</button>
+          <button class="lang-btn" data-lang="ta">தமிழ்</button>
+          <button class="lang-btn" data-lang="kn">ಕನ್ನಡ</button>
+          <button class="lang-btn" data-lang="bn">বাংলা</button>
+          <button class="lang-btn" data-lang="or">ଓଡ଼ିଆ</button>
+        </div>
+      </div>
+    </div>
+
     <header class="site-header">
       <div class="container header-inner">
+        <button
+          id="sidebar-toggle"
+          class="sidebar-toggle-btn"
+          aria-label="Menu"
+          style="
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <svg
+            width="28"
+            height="28"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
         <div class="brand">
           <h1 data-i18n="header_rep_title">Paras Eureka Forbes</h1>
           <span class="badge-rep" data-i18n="header_rep_badge">Independent Authorized Direct Sales Representative</span>
@@ -134,30 +322,6 @@
             </svg>
           </button>
         </form>
-        <div class="header-actions">
-          <button type="button" class="wishlist-toggle-btn" aria-label="View Wishlist">
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path
-                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-              ></path>
-            </svg>
-            <span class="wishlist-badge header-wishlist-badge" style="display: none">0</span>
-          </button>
-          <div class="language-switcher">
-            <button class="lang-btn active" data-lang="en">English</button>
-            <button class="lang-btn" data-lang="hi">हिंदी</button>
-            <button class="lang-btn" data-lang="mr">मराठी</button>
-          </div>
-        </div>
       </div>
     </header>
 
@@ -1823,6 +1987,7 @@
                 <article
                   class="product-card reveal"
                   data-subcategory="uv, without-storage, small, active-copper, zero-pressure-pump, wall-mounted"
+                  data-leaflet="files/aquaguard-aspire-minerva-ro-uv-ss-leaflet.pdf"
                 >
                   <div class="product-tag" data-category="Water Purifier" data-i18n="tag_water">Water Purifier</div>
                   <h3>AQUAGUARD ENRICH BOOSTER UV 2X</h3>
@@ -3200,12 +3365,74 @@
         </div>
       </section>
 
+      <!-- Special Offer Banner -->
+      <section class="special-offer-section reveal" id="offers">
+        <div class="container offer-section">
+          <span class="eyebrow offer-eyebrow" data-i18n="offer_eyebrow">Limited Time Offer</span>
+          <h2 class="offer-title" data-i18n="offer_title">Mega May Deals!</h2>
+
+          <div class="offer-text-wrap">
+            <a
+              href="https://wa.me/918928002642?text=Hello%20Paras%2C%20I%20am%20interested%20in%20the%20Special%20Offer%20and%20would%20like%20to%20book%20an%20appointment."
+              target="_blank"
+              rel="noopener noreferrer"
+              style="display: block; cursor: pointer; text-decoration: none"
+            >
+              <img
+                src="images/may-offer.webp"
+                alt="Mega May Deals"
+                style="
+                  width: 100%;
+                  max-width: 600px;
+                  height: auto;
+                  border-radius: 12px;
+                  margin-bottom: 24px;
+                  display: block;
+                  margin-left: auto;
+                  margin-right: auto;
+                "
+              />
+            </a>
+            <p class="offer-desc" data-i18n="offer_desc">
+              Take advantage of these official Eureka Forbes Mega May Deals today. Offer valid until the end of May.
+            </p>
+            <div class="offer-countdown" id="offer-countdown">
+              <div class="countdown-item">
+                <span id="cd-days">00</span>
+                <small>Days</small>
+              </div>
+              <div class="countdown-item">
+                <span id="cd-hours">00</span>
+                <small>Hours</small>
+              </div>
+              <div class="countdown-item">
+                <span id="cd-minutes">00</span>
+                <small>Mins</small>
+              </div>
+              <div class="countdown-item">
+                <span id="cd-seconds">00</span>
+                <small>Secs</small>
+              </div>
+            </div>
+            <a
+              href="https://wa.me/918928002642?text=Hello%20Paras%2C%20I%20am%20interested%20in%20the%20Special%20Offer%20and%20would%20like%20to%20book%20an%20appointment."
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn offer-wa-btn"
+              data-i18n="offer_btn"
+            >
+              Book Now to Claim Offer
+            </a>
+          </div>
+        </div>
+      </section>
+
       <!-- Value Banner - Why Choose Direct Specialist -->
       <section class="value-banner reveal" id="why-direct">
         <div class="container">
           <div class="value-banner-header">
             <span class="eyebrow" data-i18n="vb_eyebrow">Smart Buyer's Guide</span>
-            <h2 data-i18n="vb_title">Why Choose a Direct Specialist Over Online Stores?</h2>
+            <h2 data-i18n="vb_title">The Direct Specialist Advantage: Beyond the Online Store</h2>
             <p class="value-desc" data-i18n="vb_desc">
               Purchasing Eureka Forbes products—such as water purifiers and vacuum cleaners—through an authorized direct
               sales specialist offers several distinct advantages over buying from e-commerce platforms, retail stores,
@@ -3259,48 +3486,7 @@
         </div>
       </section>
 
-      <!-- Special Offer Banner -->
-      <section class="special-offer-section reveal" id="offers">
-        <div class="container offer-section">
-          <span class="eyebrow offer-eyebrow" data-i18n="offer_eyebrow">Limited Time Offer</span>
-          <h2 class="offer-title" data-i18n="offer_title">Mega May Deals!</h2>
-
-          <div class="offer-text-wrap">
-            <p class="offer-desc" data-i18n="offer_desc">
-              Take advantage of these official Eureka Forbes Mega May Deals today. Offer valid until the end of May.
-            </p>
-            <div class="offer-countdown" id="offer-countdown">
-              <div class="countdown-item">
-                <span id="cd-days">00</span>
-                <small>Days</small>
-              </div>
-              <div class="countdown-item">
-                <span id="cd-hours">00</span>
-                <small>Hours</small>
-              </div>
-              <div class="countdown-item">
-                <span id="cd-minutes">00</span>
-                <small>Mins</small>
-              </div>
-              <div class="countdown-item">
-                <span id="cd-seconds">00</span>
-                <small>Secs</small>
-              </div>
-            </div>
-            <a
-              href="https://wa.me/918928002642?text=Hello%20Paras%2C%20I%20am%20interested%20in%20the%20Special%20Offer%20and%20would%20like%20to%20book%20an%20appointment."
-              target="_blank"
-              rel="noopener noreferrer"
-              class="btn offer-wa-btn"
-              data-i18n="offer_btn"
-            >
-              Book Now to Claim Offer
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- FAQ Section with Category Tabs and Accordion -->
+      <!-- FAQ Section -->
       <section class="faq-section reveal" id="faq">
         <div class="container">
           <div class="section-heading">
@@ -3311,7 +3497,6 @@
             </p>
           </div>
 
-          <!-- Category Tabs -->
           <div class="faq-tabs" role="tablist">
             <button
               class="faq-tab active"
@@ -3320,86 +3505,24 @@
               data-faq-tab="aquaguards"
               id="faq-tab-aquaguards"
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M2 15c6.667-6 13.333 0 20-6" />
-                <path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993" />
-                <path d="M15 22c-1.798-1.998-2.518-3.995-2.807-5.993" />
-                <path d="M22 9c-1.972-2.24-4.2-3.214-6.5-3.214" />
-                <path d="M2 9c.637-1.09 1.382-1.979 2.235-2.668" />
-              </svg>
               <span data-i18n="faq_tab_aquaguards">Aquaguards</span>
             </button>
             <button class="faq-tab" role="tab" aria-selected="false" data-faq-tab="vacuums" id="faq-tab-vacuums">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <circle cx="18" cy="5" r="3" />
-                <path d="M10 20L21 9" />
-                <path d="M5 15l4 4" />
-                <path d="M4 12l3-3 5 5-3 3z" />
-              </svg>
               <span data-i18n="faq_tab_vacuums">Vacuum Cleaners</span>
             </button>
             <button class="faq-tab" role="tab" aria-selected="false" data-faq-tab="service" id="faq-tab-service">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                <polyline points="22 4 12 14.01 9 11.01" />
-              </svg>
               <span data-i18n="faq_tab_service">Servicing & AMC</span>
             </button>
           </div>
 
-          <!-- FAQ Accordion Container -->
           <div class="faq-accordion" id="faq-accordion-container">
-            <!-- ===== AQUAGUARDS TAB (Water Purifiers) ===== -->
             <div class="faq-tab-panel" role="tabpanel" data-faq-panel="aquaguards" aria-labelledby="faq-tab-aquaguards">
-              <!-- FAQ Item 1 -->
-              <div class="faq-item" data-faq-category="aquaguards">
-                <button class="faq-question" id="faq-question-1" aria-expanded="false" aria-controls="faq-answer-1">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
+              <div class="faq-item active" data-faq-category="aquaguards">
+                <button class="faq-question" aria-expanded="true">
                   <span class="faq-question-text" data-i18n="faq_q1">
                     If the municipal corporation already treats our water, why do I need an Aquaguard?
                   </span>
-                  <span class="faq-chevron" aria-hidden="true">
+                  <span class="faq-chevron">
                     <svg
                       width="16"
                       height="16"
@@ -3414,13 +3537,7 @@
                     </svg>
                   </span>
                 </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-1"
-                  role="region"
-                  aria-labelledby="faq-question-1"
-                  aria-hidden="true"
-                >
+                <div class="faq-answer" style="max-height: 800px; opacity: 1">
                   <div class="faq-answer-content">
                     <p data-i18n="faq_a1">
                       While water is treated at the main municipal plant, it travels through kilometers of aging, rusted
@@ -3432,29 +3549,12 @@
                   </div>
                 </div>
               </div>
-
-              <!-- FAQ Item 2 -->
               <div class="faq-item" data-faq-category="aquaguards">
-                <button class="faq-question" id="faq-question-2" aria-expanded="false" aria-controls="faq-answer-2">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
+                <button class="faq-question">
                   <span class="faq-question-text" data-i18n="faq_q2">
                     We boil our water at home anyway. Doesn't that make a purifier unnecessary?
                   </span>
-                  <span class="faq-chevron" aria-hidden="true">
+                  <span class="faq-chevron">
                     <svg
                       width="16"
                       height="16"
@@ -3469,13 +3569,7 @@
                     </svg>
                   </span>
                 </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-2"
-                  role="region"
-                  aria-labelledby="faq-question-2"
-                  aria-hidden="true"
-                >
+                <div class="faq-answer">
                   <div class="faq-answer-content">
                     <p data-i18n="faq_a2">
                       Boiling is excellent for neutralizing living bacteria and viruses, but it completely fails against
@@ -3487,29 +3581,12 @@
                   </div>
                 </div>
               </div>
-
-              <!-- FAQ Item 3 -->
               <div class="faq-item" data-faq-category="aquaguards">
-                <button class="faq-question" id="faq-question-3" aria-expanded="false" aria-controls="faq-answer-3">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
+                <button class="faq-question">
                   <span class="faq-question-text" data-i18n="faq_q3">
                     What exactly is 5th Gen UV LED technology and how long does it last?
                   </span>
-                  <span class="faq-chevron" aria-hidden="true">
+                  <span class="faq-chevron">
                     <svg
                       width="16"
                       height="16"
@@ -3524,13 +3601,7 @@
                     </svg>
                   </span>
                 </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-3"
-                  role="region"
-                  aria-labelledby="faq-question-3"
-                  aria-hidden="true"
-                >
+                <div class="faq-answer">
                   <div class="faq-answer-content">
                     <p data-i18n="faq_a3">
                       5th Generation UV LED is the absolute pinnacle of modern water sterilization, replacing older
@@ -3542,677 +3613,17 @@
                   </div>
                 </div>
               </div>
-
-              <!-- FAQ Item 5 -->
-              <div class="faq-item" data-faq-category="aquaguards">
-                <button class="faq-question" id="faq-question-5" aria-expanded="false" aria-controls="faq-answer-5">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q5">
-                    Do I really need an RO purifier if I live in Mumbai, Navi Mumbai, or Thane?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-5"
-                  role="region"
-                  aria-labelledby="faq-question-5"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a5">
-                      It depends on your building's water source. If your society relies strictly on municipal water
-                      (NMMC, TMC, or BMC), the water is naturally soft and a UV+UF purifier is usually sufficient to
-                      remove pathogens and rust. However, if your society uses borewell water or orders private water
-                      tankers (common during summer cuts), an RO purifier is highly recommended to handle the
-                      fluctuating TDS (Total Dissolved Solids) and hardness.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FAQ Item 6 -->
-              <div class="faq-item" data-faq-category="aquaguards">
-                <button class="faq-question" id="faq-question-6" aria-expanded="false" aria-controls="faq-answer-6">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q6">
-                    Will an RO purifier remove essential minerals from my drinking water?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-6"
-                  role="region"
-                  aria-labelledby="faq-question-6"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a6">
-                      No. Modern Aquaguard RO models come equipped with patented Mineral Guard™ technology. This ensures
-                      that while heavy metals, excess salts, and harmful impurities are filtered out, essential natural
-                      minerals like calcium and magnesium are retained in your drinking water.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FAQ Item 7 -->
-              <div class="faq-item" data-faq-category="aquaguards">
-                <button class="faq-question" id="faq-question-7" aria-expanded="false" aria-controls="faq-answer-7">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q7">
-                    How often do I need to replace the filters in my Aquaguard?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-7"
-                  role="region"
-                  aria-labelledby="faq-question-7"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a7">
-                      Typically, the pre-filter and carbon filters need replacement every 6 to 12 months, depending on
-                      your household's water consumption and the input water quality. If you live in an area with older
-                      GI plumbing, sediment filters may need replacing sooner. Your machine will also alert you when
-                      it's time for a filter change.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FAQ Item 8 -->
-              <div class="faq-item" data-faq-category="aquaguards">
-                <button class="faq-question" id="faq-question-8" aria-expanded="false" aria-controls="faq-answer-8">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q8">
-                    Can I exchange my old water purifier for a new Aquaguard?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-8"
-                  role="region"
-                  aria-labelledby="faq-question-8"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a8">
-                      Yes! We are currently running an official Aquaguard Buy-Back and Exchange campaign (valid until
-                      December 2026). You can exchange your old water purifier&mdash;regardless of the brand or
-                      condition&mdash;for a significant discount on a new, upgraded Aquaguard model. Contact me via
-                      WhatsApp to get an exact valuation for your old machine.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ===== VACUUM CLEANERS TAB ===== -->
-            <div
-              class="faq-tab-panel"
-              role="tabpanel"
-              data-faq-panel="vacuums"
-              aria-labelledby="faq-tab-vacuums"
-              hidden
-            >
-              <!-- FAQ Item 9 -->
-              <div class="faq-item" data-faq-category="vacuums">
-                <button class="faq-question" id="faq-question-9" aria-expanded="false" aria-controls="faq-answer-9">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q9">
-                    Which vacuum cleaner is better for Indian homes: Bagless or Bagged?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-9"
-                  role="region"
-                  aria-labelledby="faq-question-9"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a9">
-                      Both are highly effective, but they serve different needs. Bagless (cyclonic) models are
-                      incredibly convenient, lightweight, and save you the cost of buying replacement bags. Bagged
-                      models, however, are often recommended for allergy sufferers as the dust is completely sealed away
-                      during disposal, preventing dust clouds.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FAQ Item 10 -->
-              <div class="faq-item" data-faq-category="vacuums">
-                <button class="faq-question" id="faq-question-10" aria-expanded="false" aria-controls="faq-answer-10">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q10">
-                    Can a vacuum cleaner help if I or my family members have dust allergies?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-10"
-                  role="region"
-                  aria-labelledby="faq-question-10"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a10">
-                      Absolutely. If you have dust allergies, look for our Forbes models equipped with a True HEPA
-                      (High-Efficiency Particulate Air) filter. These filters trap 99.9% of microscopic allergens, dust
-                      mites, and pet hair, ensuring they are not exhausted back into your room's air.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FAQ Item 11 -->
-              <div class="faq-item" data-faq-category="vacuums">
-                <button class="faq-question" id="faq-question-11" aria-expanded="false" aria-controls="faq-answer-11">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q11">
-                    Does a handheld vacuum cleaner replace a standard floor vacuum?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-11"
-                  role="region"
-                  aria-labelledby="faq-question-11"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a11">
-                      Handheld vacuums are excellent for quick cleanups, car interiors, sofas, and hard-to-reach
-                      corners. However, for deep cleaning large carpets and entire floors, a canister or robotic vacuum
-                      cleaner provides the sustained suction power and battery life required.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FAQ Item 12 -->
-              <div class="faq-item" data-faq-category="vacuums">
-                <button class="faq-question" id="faq-question-12" aria-expanded="false" aria-controls="faq-answer-12">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q12">
-                    Why does my vacuum cleaner get hot and shut off?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-12"
-                  role="region"
-                  aria-labelledby="faq-question-12"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a12">
-                      This is a built-in safety feature. If the dust bag is completely full, or if the filters or hoses
-                      are severely clogged with hair or debris, the motor works harder and heats up. Emptying the dust
-                      cup and cleaning the filter regularly will prevent this and ensure maximum suction power.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- ===== SERVICING & AMC TAB ===== -->
-            <div
-              class="faq-tab-panel"
-              role="tabpanel"
-              data-faq-panel="service"
-              aria-labelledby="faq-tab-service"
-              hidden
-            >
-              <!-- FAQ Item 4 (Previous AMC question moved here) -->
-              <div class="faq-item" data-faq-category="service">
-                <button class="faq-question" id="faq-question-4" aria-expanded="false" aria-controls="faq-answer-4">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q4">
-                    Is an Annual Maintenance Contract (AMC) a worthwhile investment?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-4"
-                  role="region"
-                  aria-labelledby="faq-question-4"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a4">
-                      Absolutely. Think of your purifier as a protective shield; it works by physically trapping mud,
-                      chemical particles, and heavy metals so they don't enter your body. Over 6 to 12 months, these
-                      heavy-duty carbon blocks and membranes inevitably get completely choked with the dirt they
-                      blocked. An active AMC ensures a certified technician comes straight to your doorstep to
-                      deep-clean the system and swap cartridges with genuine factory spares before they fail,
-                      guaranteeing 365 days of instant health safety.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FAQ Item 13 -->
-              <div class="faq-item" data-faq-category="service">
-                <button class="faq-question" id="faq-question-13" aria-expanded="false" aria-controls="faq-answer-13">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q13">How do I book a free home demonstration?</span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-13"
-                  role="region"
-                  aria-labelledby="faq-question-13"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a13">
-                      Simply click the "Book a Demo" button or message me directly on WhatsApp. Since I am your
-                      authorized local Eureka Forbes specialist for Navi Mumbai and Thane, I will bring the selected
-                      models to your home so you can see exactly how they perform in your own space before making a
-                      decision.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FAQ Item 14 -->
-              <div class="faq-item" data-faq-category="service">
-                <button class="faq-question" id="faq-question-14" aria-expanded="false" aria-controls="faq-answer-14">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q14">
-                    What is covered under the Eureka Forbes AMC (Annual Maintenance Contract)?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-14"
-                  role="region"
-                  aria-labelledby="faq-question-14"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a14">
-                      A genuine Aquaguard AMC gives you complete peace of mind. It generally includes up to 3 scheduled
-                      maintenance visits a year, annual filter replacement, tank cleaning, unlimited breakdown repair
-                      visits, and free replacement of spare parts (including electronics and pumps) depending on the
-                      plan you choose.
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- FAQ Item 15 -->
-              <div class="faq-item" data-faq-category="service">
-                <button class="faq-question" id="faq-question-15" aria-expanded="false" aria-controls="faq-answer-15">
-                  <span class="faq-q-icon" aria-hidden="true">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <line x1="12" y1="5" x2="12" y2="19"></line>
-                      <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                  </span>
-                  <span class="faq-question-text" data-i18n="faq_q15">
-                    How soon will my product be installed after purchase?
-                  </span>
-                  <span class="faq-chevron" aria-hidden="true">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="2.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  class="faq-answer"
-                  id="faq-answer-15"
-                  role="region"
-                  aria-labelledby="faq-question-15"
-                  aria-hidden="true"
-                >
-                  <div class="faq-answer-content">
-                    <p data-i18n="faq_a15">
-                      Installation is incredibly fast. Once your order is confirmed, an authorized Eureka Forbes
-                      technician will arrive at your home to install the device within 24 to 48 hours.
-                    </p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- Contact Section -->
       <section class="contact reveal" id="contact">
         <div class="container contact-card">
           <div>
             <span class="eyebrow" data-i18n="contact_eyebrow">Contact Your Specialist</span>
-            <h2 data-i18n="contact_title">Ready to place an order?</h2>
+            <h2 data-i18n="contact_title">Have a Question?</h2>
             <p data-i18n="contact_desc">
               Send a message, call, or WhatsApp directly to book products or schedule a free home demonstration.
             </p>
@@ -4249,10 +3660,7 @@
               </a>
             </p>
 
-            <div
-              class="official-care"
-              style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.2)"
-            >
+            <div class="official-care" style="border-top: 1px solid var(--color-gray-200)">
               <h3 data-i18n="contact_official_title" style="margin-top: 0; margin-bottom: 12px; font-size: 1.2rem">
                 Eureka Forbes Customer Care
               </h3>
@@ -4270,7 +3678,7 @@
               </p>
             </div>
 
-            <div style="margin-top: 25px; display: flex; gap: 10px; flex-wrap: wrap">
+            <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 10px">
               <a href="mailto:customercare@eurekaforbes.com" class="btn btn-outline" data-i18n="contact_email_btn">
                 Email Support
               </a>
@@ -4365,10 +3773,14 @@
             </div>
             <div class="pdp-pricing" id="pdp-price"></div>
 
+            <p id="pdp-desc" class="pdp-desc"></p>
+
             <div class="pdp-scrollable-content">
               <div class="pdp-features">
-                <h3>Technical Specifications</h3>
-                <div id="pdp-specs"></div>
+                <details class="pdp-specs-details">
+                  <summary data-i18n="pdp_specs_summary">Technical Specifications</summary>
+                  <div id="pdp-specs"></div>
+                </details>
               </div>
             </div>
             <div class="pdp-actions" id="pdp-action-btn"></div>
