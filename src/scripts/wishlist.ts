@@ -1,6 +1,8 @@
 import { navigate } from 'astro:transitions/client';
 import { showToast } from './toast';
-import { escapeHTML } from './utils';
+import { escapeHTML, getSku } from './utils';
+import { allProducts } from './filters';
+import { handleAppRouting } from './routing';
 
 export function getWishlist(): string[] {
   return JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
@@ -46,13 +48,18 @@ export function renderWishlist(
   }
 
   list.forEach((sku) => {
-    // Query the pre-rendered DOM elements instead of needing products.json
+    const product = allProducts.find((p) => getSku(p.name) === sku);
+    // Fallback to DOM in case allProducts hasn't hydrated yet (e.g., immediate page load race condition)
     const card = document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`);
 
-    if (card) {
-      const title = card.querySelector('h3')?.textContent || sku;
-      const category = card.querySelector('.product-tag')?.getAttribute('data-category') || '';
-      const priceText = card.querySelector('.price')?.textContent || '';
+    if (product || card) {
+      const title = product ? product.name : card?.querySelector('h3')?.textContent || sku;
+      const category = product
+        ? product.category
+        : card?.querySelector('.product-tag')?.getAttribute('data-category') || '';
+      const priceText = product
+        ? `₹${product.mop.toLocaleString('en-IN')}`
+        : card?.querySelector('.price')?.textContent || '';
 
       const item = document.createElement('div');
       item.className = 'wishlist-item';
@@ -93,4 +100,39 @@ export function handleWishlistToggle(sku: string) {
     showToast(document.body.dataset.toastAdd || 'Added to Wishlist!');
   }
   saveWishlist(list);
+}
+
+export function initWishlistEvents() {
+  const wishlistToggleBtns = document.querySelectorAll<HTMLElement>('.wishlist-toggle-btn');
+  const wishlistModal = document.getElementById('wishlist-modal');
+  const wishlistContainer = document.getElementById('wishlist-items-container');
+  const wishlistClearBtn = document.getElementById('wishlist-clear-all');
+
+  wishlistToggleBtns.forEach((btn) => {
+    btn.addEventListener('click', (e: Event) => {
+      e.preventDefault();
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', 'wishlist');
+      window.history.pushState(null, '', url);
+      handleAppRouting();
+    });
+  });
+
+  if (wishlistClearBtn) {
+    wishlistClearBtn.addEventListener('click', () => {
+      saveWishlist([]);
+      renderWishlist(wishlistModal, wishlistContainer, wishlistClearBtn);
+      showToast(document.body.dataset.toastClear || 'Wishlist cleared');
+    });
+  }
+
+  document.getElementById('pdp-wishlist-btn')?.addEventListener('click', function () {
+    const pdpSkuEl = document.getElementById('pdp-sku');
+    if (pdpSkuEl) {
+      const sku = pdpSkuEl.querySelector('span')!.textContent!;
+      handleWishlistToggle(sku);
+    }
+  });
+
+  updateWishlistUI();
 }

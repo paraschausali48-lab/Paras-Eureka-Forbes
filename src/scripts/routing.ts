@@ -1,5 +1,3 @@
-import { renderWishlist } from './wishlist';
-
 export let lastFocused: HTMLElement | null = null;
 export function setLastFocused(el: HTMLElement | null) {
   lastFocused = el;
@@ -79,11 +77,13 @@ export function handleAppRouting() {
     document.getElementById('sort-modal')?.classList.add('active');
     document.body.style.overflow = 'hidden';
   } else if (view === 'wishlist') {
-    renderWishlist(
-      document.getElementById('wishlist-modal'),
-      document.getElementById('wishlist-items-container'),
-      document.getElementById('wishlist-clear-all'),
-    );
+    import('./wishlist').then(({ renderWishlist }) => {
+      renderWishlist(
+        document.getElementById('wishlist-modal'),
+        document.getElementById('wishlist-items-container'),
+        document.getElementById('wishlist-clear-all'),
+      );
+    });
     document.getElementById('wishlist-modal')?.classList.add('active');
     document.body.style.overflow = 'hidden';
   } else if (hash === '#products') {

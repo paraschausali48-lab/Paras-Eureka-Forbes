@@ -1,4 +1,5 @@
 import { applyFiltersAndSort } from './render';
+import type { Product } from './types';
 
 export interface FilterState {
   categories: string[];
@@ -13,6 +14,11 @@ export let filterState: FilterState = Object.freeze({
   query: '',
   sort: 'relevance',
 });
+
+export let allProducts: Product[] = [];
+export function setProductsData(products: Product[]) {
+  allProducts = products;
+}
 
 type StateListener = (state: FilterState) => void;
 const listeners: StateListener[] = [];
@@ -62,6 +68,43 @@ const FACET_DOMAINS: Record<string, string[]> = {
   ],
 };
 
+const SPECIAL_MAPPINGS: Record<string, string[]> = {
+  ro: ['ro', 'ro-uv', 'ro-uv-uf', 'ro-uv-alk', 'ro-uv-alk-ss', 'ro-uv-ss', 'ro-uv-mc'],
+  uv: ['uv', 'uv-uf', 'ro-uv', 'ro-uv-uf', 'ro-uv-alk', 'ro-uv-alk-ss', 'ro-uv-ss', 'uv-uf-ss'],
+  uf: ['uf', 'uv-uf', 'ro-uv-uf', 'uv-uf-ss'],
+  small: ['small', 'without-storage'],
+  medium: ['medium', 'storage'],
+  upright: ['upright', 'stick'],
+  bagless: ['bagless', 'cyclonic'],
+  cordless: ['cordless', 'battery'],
+};
+
+export function productMatchesFacets(product: Product, facets: string[]): boolean {
+  if (facets.length === 0) return true;
+  const subcategories = product.subcategories.map((s) => s.toLowerCase());
+  const cat = product.category.toLowerCase();
+
+  for (const val of facets) {
+    if (['0-10000', '10000-15000', '15000-20000', '20000+'].includes(val)) {
+      if (val === '0-10000' && product.mop >= 10000) return false;
+      if (val === '10000-15000' && (product.mop < 10000 || product.mop >= 15000)) return false;
+      if (val === '15000-20000' && (product.mop < 15000 || product.mop >= 20000)) return false;
+      if (val === '20000+' && product.mop < 20000) return false;
+      continue;
+    }
+    if (['exchange', 'free-installation', 'municipal'].includes(val)) continue;
+
+    const mapped = SPECIAL_MAPPINGS[val] || [val];
+    const hasMatch = mapped.some((m) => subcategories.includes(m) || cat === m);
+
+    if (!hasMatch) {
+      if (val === 'wall-mounted' && cat === 'water purifier' && !subcategories.includes('under-counter')) continue;
+      return false;
+    }
+  }
+  return true;
+}
+
 export function setFilterState(newState: Partial<FilterState>) {
   // 1. Create a shallow copy and apply updates
   let updatedState = { ...filterState, ...newState };
@@ -90,7 +133,8 @@ export function setFilterState(newState: Partial<FilterState>) {
 /**
  * SIDE EFFECT: Updates the DOM to reflect the new filter state.
  */
-export function updateFilterUI(state: FilterState, visibleCount: number) {
+export function updateFilterUI(state: FilterState, visibleProducts: Product[]) {
+  const visibleCount = visibleProducts.length;
   const { categories: checkedCats, facets: activeFacets, query } = state;
   const isAllSelected = checkedCats.includes('all');
   const clearAllBtn = document.getElementById('filter-clear-all');
@@ -176,17 +220,9 @@ export function updateFilterUI(state: FilterState, visibleCount: number) {
     }
   });
 
-  // Category counts update
+  // Category counts update (Pure Data calculation)
   ['Water Purifier', 'Air Purifier', 'Vacuum Cleaner', 'Water Softener'].forEach((catName) => {
-    let count = 0;
-    document.querySelectorAll('.product-card').forEach((card) => {
-      if (
-        (card as HTMLElement).style.display !== 'none' &&
-        card.querySelector('.product-tag')?.getAttribute('data-category') === catName
-      ) {
-        count++;
-      }
-    });
+    const count = visibleProducts.filter((p) => p.category === catName).length;
     const countEl = document.querySelector(`.filter-count[data-cat="${catName}"]`);
     if (countEl) countEl.textContent = `(${count})`;
   });
@@ -197,6 +233,6 @@ export function updateFilterUI(state: FilterState, visibleCount: number) {
  * Automatically triggers the render pipeline whenever the filter state changes.
  */
 subscribeToFilters((newState) => {
-  const visibleCount = applyFiltersAndSort(newState);
-  updateFilterUI(newState, visibleCount);
+  const visibleProducts = applyFiltersAndSort(newState, allProducts);
+  updateFilterUI(newState, visibleProducts);
 });

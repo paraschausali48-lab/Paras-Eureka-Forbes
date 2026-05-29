@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import Layout from '../../layouts/Layout.astro';
+import Layout from '../../scripts/Layout.astro';
 import { translations } from '../../scripts/translations';
 import fs from 'node:fs';
 
@@ -83,7 +83,7 @@ const localImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/im
               <div class="product-media">
                 {localImages[`/src/assets/images/${product.image}`] ? (
                   <Image
-                    src={localImages`/src/assets/images/${product.image}`}
+                src={localImages`/src/assets/images/${product.image}`}
                     alt={product.name}
                     width={300}
                     height={200}

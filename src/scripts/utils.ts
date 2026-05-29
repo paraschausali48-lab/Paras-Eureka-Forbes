@@ -79,6 +79,21 @@ export function escapeHTML(str: string | number | boolean | null | undefined): s
 }
 
 /**
+ * Generates a standardized SKU from a product title.
+ * Must remain perfectly synced with the pre-rendering implementation in vite.config.js
+ */
+export function getSku(title: string): string {
+  return (
+    'EF-' +
+    title
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '')
+      .toUpperCase()
+  );
+}
+
+/**
  * Traps keyboard focus within a specified DOM element to improve accessibility.
  * Prevents screen-reader or keyboard users from tabbing outside an active modal.
  */

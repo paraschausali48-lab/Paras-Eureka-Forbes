@@ -1,33 +1,90 @@
 import { navigate } from 'astro:transitions/client';
 import { debounce, enableSwipeToClose, handleFocusTrap } from './utils';
 import { showToast } from './toast';
-import { updateWishlistUI, renderWishlist, handleWishlistToggle, saveWishlist } from './wishlist';
-import { filterState, setFilterState } from './filters';
+import { filterState, setFilterState, setProductsData } from './filters';
 import { handleAppRouting, closeActiveOverlay, hideProductsView } from './routing';
-import { initScrollAnimations, initHeaderScroll, initAccordions, initFaq } from './ui';
+import { initScrollAnimations, initHeaderScroll, initAccordions } from './ui';
 import { initProductNavigation } from './pdp';
 
 // ============= SERVICE WORKER REGISTRATION =============
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register((import.meta as any).env?.BASE_URL + 'sw.js').catch((err) => {
+  // Defer service worker registration until after the page has fully loaded
+  window.addEventListener('load', async () => {
+    try {
+      await navigator.serviceWorker.register((import.meta as any).env?.BASE_URL + 'sw.js');
+    } catch (err) {
       console.warn('Service Worker registration failed:', err);
-    });
+    }
   });
 }
+
+// ============= GLOBAL EVENT LISTENERS (Run Once) =============
+// Top-level module code only runs once per session, safely avoiding duplicate
+// bindings during Astro View Transitions without polluting the window object.
+
+const closePDPAndCleanURL = () => {
+  closeActiveOverlay();
+  const url = new URL(window.location.href);
+  if (url.searchParams.has('p')) {
+    url.searchParams.delete('p');
+    window.history.pushState(null, '', url);
+  }
+};
+
+function updateWaButtonVisibility() {
+  const waBtn = document.querySelector<HTMLElement>('.whatsapp-float');
+  if (!waBtn) return;
+  const hash = window.location.hash;
+  const params = new URLSearchParams(window.location.search);
+  if (!params.has('p') && (!hash || hash === '' || hash === '#home')) {
+    waBtn.style.display = 'flex';
+  } else {
+    waBtn.style.display = 'none';
+  }
+}
+
+document.addEventListener('keydown', (e: KeyboardEvent) => {
+  if (e.key === 'Escape') {
+    const activeOverlay = document.querySelector('.pdp-modal.active, .filter-sidebar.open, .main-sidebar.active');
+    if (activeOverlay) {
+      activeOverlay.id === 'pdp-modal' ? closePDPAndCleanURL() : closeActiveOverlay();
+    }
+  }
+  const activeModal = document.querySelector('.pdp-modal.active, .main-sidebar.active, .filter-sidebar.open');
+  if (activeModal) handleFocusTrap(e, activeModal as HTMLElement);
+});
+
+window.addEventListener('popstate', () => {
+  handleAppRouting();
+  updateWaButtonVisibility();
+
+  const sku = new URLSearchParams(window.location.search).get('p');
+  if (sku) {
+    setTimeout(() => document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`)?.click(), 100);
+  } else if (document.getElementById('pdp-modal')?.classList.contains('active')) {
+    closeActiveOverlay();
+  }
+});
+
+window.addEventListener('hashchange', () => {
+  handleAppRouting();
+  updateWaButtonVisibility();
+});
+
+window.addEventListener(
+  'scroll',
+  () => {
+    const dynamicBtn = document.getElementById('scrollToTop');
+    if (dynamicBtn) {
+      window.scrollY > 300 ? dynamicBtn.classList.add('show') : dynamicBtn.classList.remove('show');
+    }
+  },
+  { passive: true },
+);
 
 // Use Astro's page-load event instead of DOMContentLoaded to ensure JS
 // re-runs and attaches to the new DOM elements when using View Transitions.
 document.addEventListener('astro:page-load', function () {
-  const closePDPAndCleanURL = () => {
-    closeActiveOverlay();
-    const url = new URL(window.location.href);
-    if (url.searchParams.has('p')) {
-      url.searchParams.delete('p');
-      window.history.pushState(null, '', url);
-    }
-  };
-
   // ============= 0.1 LANGUAGE SWITCHER =============
   const langButtons = document.querySelectorAll<HTMLElement>('.lang-btn[data-lang]');
   const docLang = document.documentElement.lang || 'en';
@@ -53,31 +110,6 @@ document.addEventListener('astro:page-load', function () {
       }
     });
   });
-
-  // ============= 0.5 GLOBAL KEYBOARD ACCESSIBILITY =============
-  // Allow users to close modals using the Escape key
-  // Check if listener already exists to avoid memory leaks during Astro View Transitions
-  if (!(window as any).__keydownListenerAdded) {
-    document.addEventListener('keydown', (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        const activeOverlay = document.querySelector('.pdp-modal.active, .filter-sidebar.open, .main-sidebar.active');
-        if (activeOverlay) {
-          if (activeOverlay.id === 'pdp-modal') {
-            closePDPAndCleanURL();
-          } else {
-            closeActiveOverlay();
-          }
-        }
-      }
-
-      // Focus trapping for active modals
-      const activeModal = document.querySelector('.pdp-modal.active, .main-sidebar.active, .filter-sidebar.open');
-      if (activeModal) {
-        handleFocusTrap(e, activeModal as HTMLElement);
-      }
-    });
-    (window as any).__keydownListenerAdded = true;
-  }
 
   // ============= 1. SCROLL ANIMATIONS =============
   initScrollAnimations();
@@ -282,82 +314,18 @@ document.addEventListener('astro:page-load', function () {
 
   initProductNavigation();
 
-  // ============= 7. FAQ ACCORDION LOGIC =============
-  initFaq();
-
-  // ============= 9. WISHLIST & SECONDARY MODALS =============
-  const wishlistToggleBtns = document.querySelectorAll<HTMLElement>('.wishlist-toggle-btn');
-  const wishlistModal = document.getElementById('wishlist-modal');
-  const wishlistContainer = document.getElementById('wishlist-items-container');
-  const wishlistClearBtn = document.getElementById('wishlist-clear-all');
-
-  wishlistToggleBtns.forEach((btn) => {
-    btn.addEventListener('click', (e: Event) => {
-      e.preventDefault();
-      const url = new URL(window.location.href);
-      url.searchParams.set('view', 'wishlist');
-      window.history.pushState(null, '', url);
-      handleAppRouting();
-    });
-  });
-
-  if (wishlistClearBtn) {
-    wishlistClearBtn.addEventListener('click', () => {
-      saveWishlist([]);
-      renderWishlist(wishlistModal, wishlistContainer, wishlistClearBtn);
-      showToast(document.body.dataset.toastClear || 'Wishlist cleared');
-    });
+  // ============= 7. FAQ ACCORDION LOGIC (Lazy Loaded) =============
+  if (document.querySelector('.faq-tab')) {
+    import('./faq').then((module) => module.initFaq());
   }
 
-  document.getElementById('pdp-wishlist-btn')?.addEventListener('click', function () {
-    const sku = document.getElementById('pdp-sku')!.querySelector('span')!.textContent!;
-    handleWishlistToggle(sku);
-  });
-  updateWishlistUI();
-
-  // ============= 10. APP-LIKE ROUTING & GESTURES =============
-  // Protect global window listeners from being duplicated on Astro View Transitions
-  if (!(window as any).__routingListenersAdded) {
-    window.addEventListener('popstate', () => {
-      handleAppRouting();
-
-      // Handle History API for Product Detail Modal
-      const urlParams = new URLSearchParams(window.location.search);
-      const sku = urlParams.get('p');
-      const pdpModal = document.getElementById('pdp-modal');
-
-      if (sku) {
-        setTimeout(() => {
-          const card = document.querySelector(`.product-card[data-sku="${sku}"]`) as HTMLElement;
-          if (card && !pdpModal?.classList.contains('active')) card.click();
-        }, 100);
-      } else if (pdpModal?.classList.contains('active')) {
-        closeActiveOverlay();
-      }
-    });
-    window.addEventListener('hashchange', () => handleAppRouting());
-
-    window.addEventListener('popstate', updateWaButtonVisibility);
-    window.addEventListener('hashchange', updateWaButtonVisibility);
-
-    (window as any).__routingListenersAdded = true;
-  }
-
-  function updateWaButtonVisibility() {
-    const waBtn = document.querySelector<HTMLElement>('.whatsapp-float');
-    if (!waBtn) return;
-    const hash = window.location.hash;
-    const params = new URLSearchParams(window.location.search);
-    if (!params.has('p') && (!hash || hash === '' || hash === '#home')) {
-      waBtn.style.display = 'flex';
-    } else {
-      waBtn.style.display = 'none';
-    }
-  }
+  // ============= 9. WISHLIST & SECONDARY MODALS (Lazy Loaded) =============
+  import('./wishlist').then((module) => module.initWishlistEvents());
 
   // Always execute once on current page load to ensure correct initial state
   updateWaButtonVisibility();
 
+  const wishlistModal = document.getElementById('wishlist-modal');
   if (sortModal) enableSwipeToClose(sortModal.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'down');
   if (filterSidebar) enableSwipeToClose(filterSidebar, closeActiveOverlay, 'down');
   if (pdpModal) enableSwipeToClose(pdpModal.querySelector<HTMLElement>('.pdp-content'), closePDPAndCleanURL, 'right');
@@ -369,29 +337,23 @@ document.addEventListener('astro:page-load', function () {
   // ============= 11. SCROLL TO TOP BUTTON =============
   const scrollToTopBtn = document.getElementById('scrollToTop');
   if (scrollToTopBtn) {
-    // Protect global scroll listener from leaking
-    if (!(window as any).__scrollListenerAdded) {
-      window.addEventListener(
-        'scroll',
-        () => {
-          const dynamicBtn = document.getElementById('scrollToTop');
-          if (!dynamicBtn) return;
-
-          if (window.scrollY > 300) dynamicBtn.classList.add('show');
-          else dynamicBtn.classList.remove('show');
-        },
-        { passive: true },
-      );
-      (window as any).__scrollListenerAdded = true;
-    }
-
     scrollToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
   // ============= 12. DATA HYDRATION & URL STATE =============
-  const hydrateCatalog = async () => {
+  const hydrateCatalog = () => {
+    try {
+      // Hydrate instantly from the DOM to eliminate network race conditions
+      const dataScript = document.getElementById('product-data');
+      if (dataScript) {
+        setProductsData(JSON.parse(dataScript.textContent || '[]'));
+      }
+    } catch (err) {
+      console.error('Failed to parse product data:', err);
+    }
+
     // Now that data is loaded, apply shared link parameters
     const params = new URLSearchParams(window.location.search);
     const initCats = params.get('cat');
@@ -414,13 +376,11 @@ document.addEventListener('astro:page-load', function () {
 
     const initProduct = params.get('p');
     if (initProduct) {
-      setTimeout(() => {
-        const card = document.querySelector(`.product-card[data-sku="${initProduct}"]`) as HTMLElement;
-        if (card) card.click();
-      }, 100);
+      // Since data is now synchronous, we can safely invoke this via routing
+      handleAppRouting();
     }
   };
-  hydrateCatalog(); // Execute without blocking the thread
+  hydrateCatalog();
 
   // Sidebar Menu Logic
   const sidebarToggle = document.getElementById('sidebar-toggle');
