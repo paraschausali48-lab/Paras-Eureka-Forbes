@@ -4,10 +4,6 @@ import { getSku } from './utils';
 
 // Accept the actual product data model as an argument
 export function applyFiltersAndSort(state: FilterState, allProducts: Product[]): Product[] {
-  const grid = document.getElementById('product-grid');
-  if (!grid) return [];
-
-  const currentCards = Array.from(grid.children) as HTMLElement[];
   const { categories, facets, query, sort } = state;
   const isAllSelected = categories.includes('all');
   const searchTerms = query
@@ -34,33 +30,6 @@ export function applyFiltersAndSort(state: FilterState, allProducts: Product[]):
     }
     return sort === 'price-low-high' ? a.mop - b.mop : b.mop - a.mop;
   });
-
-  // 3. Update the DOM to map the filtered/sorted data exactly
-  const cardMap = new Map<string, HTMLElement>();
-  currentCards.forEach((card) => {
-    if (!card.classList.contains('product-card')) return;
-    if (card.dataset.sku) cardMap.set(card.dataset.sku, card);
-    // Hide everything by default
-    card.style.display = 'none';
-    card.classList.remove('reveal', 'active');
-  });
-
-  // Use a DocumentFragment to batch DOM insertions and prevent multiple reflows
-  const fragment = document.createDocumentFragment();
-
-  visibleProducts.forEach((product) => {
-    const sku = getSku(product.name);
-    const card = cardMap.get(sku);
-    if (card) {
-      card.style.display = '';
-      // Add a slight delay for the CSS transition reveal to kick in
-      requestAnimationFrame(() => card.classList.add('reveal', 'active'));
-      fragment.appendChild(card);
-    }
-  });
-
-  // Append all elements to the DOM in a single operation
-  grid.appendChild(fragment);
 
   return visibleProducts;
 }

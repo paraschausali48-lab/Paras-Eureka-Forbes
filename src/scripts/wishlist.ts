@@ -18,6 +18,7 @@ export function saveWishlist(list: string[]) {
     localStorage.setItem('ef_wishlist', JSON.stringify(list));
     updateWishlistUI();
   } catch (e) {
+    showToast(document.body.dataset.toastError || 'Unable to save wishlist. Storage may be restricted.');
     console.warn('Failed to save wishlist to local storage', e);
   }
 }
@@ -120,6 +121,8 @@ export function initWishlistEvents() {
   const wishlistClearBtn = document.getElementById('wishlist-clear-all');
 
   wishlistToggleBtns.forEach((btn) => {
+    if (btn.hasAttribute('data-evt-bound')) return;
+    btn.setAttribute('data-evt-bound', 'true');
     btn.addEventListener('click', (e: Event) => {
       e.preventDefault();
       const url = new URL(window.location.href);
@@ -130,20 +133,27 @@ export function initWishlistEvents() {
   });
 
   if (wishlistClearBtn) {
-    wishlistClearBtn.addEventListener('click', () => {
-      saveWishlist([]);
-      renderWishlist(wishlistModal, wishlistContainer, wishlistClearBtn);
-      showToast(document.body.dataset.toastClear || 'Wishlist cleared');
-    });
+    if (!wishlistClearBtn.hasAttribute('data-evt-bound')) {
+      wishlistClearBtn.setAttribute('data-evt-bound', 'true');
+      wishlistClearBtn.addEventListener('click', () => {
+        saveWishlist([]);
+        renderWishlist(wishlistModal, wishlistContainer, wishlistClearBtn);
+        showToast(document.body.dataset.toastClear || 'Wishlist cleared');
+      });
+    }
   }
 
-  document.getElementById('pdp-wishlist-btn')?.addEventListener('click', function () {
-    const pdpSkuEl = document.getElementById('pdp-sku');
-    if (pdpSkuEl) {
-      const sku = pdpSkuEl.querySelector('span')!.textContent!;
-      handleWishlistToggle(sku);
-    }
-  });
+  const pdpWishBtn = document.getElementById('pdp-wishlist-btn');
+  if (pdpWishBtn && !pdpWishBtn.hasAttribute('data-evt-bound')) {
+    pdpWishBtn.setAttribute('data-evt-bound', 'true');
+    pdpWishBtn.addEventListener('click', function () {
+      const pdpSkuEl = document.getElementById('pdp-sku');
+      if (pdpSkuEl) {
+        const sku = pdpSkuEl.querySelector('span')!.textContent!;
+        handleWishlistToggle(sku);
+      }
+    });
+  }
 
   updateWishlistUI();
 }

@@ -1,5 +1,9 @@
+let revealObserver: IntersectionObserver | null = null;
+
 export function initScrollAnimations() {
-  const revealObserver = new IntersectionObserver(
+  if (revealObserver) revealObserver.disconnect();
+
+  revealObserver = new IntersectionObserver(
     (entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -14,9 +18,19 @@ export function initScrollAnimations() {
   document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
 }
 
+let headerScrollInitialized = false;
+
 export function initHeaderScroll() {
-  const siteHeader = document.querySelector('.site-header');
+  if (headerScrollInitialized) return;
+  headerScrollInitialized = true;
+
   let lastScrollY = window.scrollY;
+  let siteHeader = document.querySelector('.site-header');
+
+  // Safely refresh the cached DOM node on Astro page transitions
+  document.addEventListener('astro:page-load', () => {
+    siteHeader = document.querySelector('.site-header');
+  });
 
   window.addEventListener(
     'scroll',

@@ -52,8 +52,8 @@ export function enableSwipeToClose(
   element.addEventListener('touchend', () => {
     if (!isSwiping) return;
     isSwiping = false;
-    element.style.transform = '';
-    element.style.transition = '';
+    element.style.removeProperty('transform');
+    element.style.removeProperty('transition');
     if (currentPos - startPos > 100) closeAction();
   });
 }

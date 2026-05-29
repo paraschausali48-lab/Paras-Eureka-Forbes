@@ -4,13 +4,32 @@ import { filterState, setFilterState, setProductsData } from './filters';
 import { handleAppRouting, closeActiveOverlay, hideProductsView } from './routing';
 import { initScrollAnimations, initHeaderScroll, initAccordions } from './ui';
 import { initProductNavigation } from './pdp';
+import { initTelemetry } from './telemetry';
+
+// ============= OBSERVABILITY =============
+initTelemetry();
 
 // ============= SERVICE WORKER REGISTRATION =============
 if ('serviceWorker' in navigator) {
   // Defer service worker registration until after the page has fully loaded
   window.addEventListener('load', async () => {
     try {
-      await navigator.serviceWorker.register((import.meta as any).env?.BASE_URL + 'sw.js');
+      const registration = await navigator.serviceWorker.register(import.meta.env.BASE_URL + 'sw.js');
+
+      // Automatically check for deployment updates every hour
+      setInterval(() => registration.update(), 1000 * 60 * 60);
+
+      registration.addEventListener('updatefound', () => {
+        const newWorker = registration.installing;
+        if (newWorker) {
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.info('[Service Worker] New update found. Forcing activation...');
+              window.location.reload();
+            }
+          });
+        }
+      });
     } catch (err) {
       console.warn('Service Worker registration failed:', err);
     }
@@ -59,7 +78,9 @@ window.addEventListener('popstate', () => {
 
   const sku = new URLSearchParams(window.location.search).get('p');
   if (sku) {
-    setTimeout(() => document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`)?.click(), 100);
+    requestAnimationFrame(() => {
+      document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`)?.click();
+    });
   } else if (document.getElementById('pdp-modal')?.classList.contains('active')) {
     closeActiveOverlay();
   }
@@ -81,18 +102,73 @@ window.addEventListener(
   { passive: true },
 );
 
-// Use Astro's page-load event instead of DOMContentLoaded to ensure JS
-// re-runs and attaches to the new DOM elements when using View Transitions.
-document.addEventListener('astro:page-load', function () {
-  // ============= 0.1 LANGUAGE SWITCHER =============
-  const langButtons = document.querySelectorAll<HTMLElement>('.lang-btn[data-lang]');
-  const docLang = document.documentElement.lang || 'en';
+// Initialize global debounced search handler outside of lifecycles
+const handleSearchInput = debounce((e: Event) => {
+  const target = e.target as HTMLInputElement;
+  if (target.id !== 'product-search') return;
 
-  langButtons.forEach((b) => b.classList.toggle('active', b.getAttribute('data-lang') === docLang));
+  const prodEl = document.getElementById('products');
+  if (prodEl && prodEl.style.display === 'none') {
+    prodEl.style.display = '';
+    document.body.classList.add('products-visible');
+    prodEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  setFilterState({ query: target.value });
+}, 300);
 
-  langButtons.forEach((btn) => {
-    btn.addEventListener('click', function () {
-      const lang = this.getAttribute('data-lang');
+document.addEventListener('input', handleSearchInput);
+
+// ============= TOP-LEVEL EVENT DELEGATION =============
+// Attach once to the document. Survives Astro view transitions automatically.
+
+// Action Map for Global Clicks (Command Pattern)
+const clickHandlers = [
+  {
+    selector: '.visual-filter-btn',
+    handle: (el: HTMLElement) => {
+      if (window.location.hash !== '#products') {
+        window.history.pushState(null, '', '#products');
+      }
+      const productsEl = document.getElementById('products');
+      if (productsEl) productsEl.style.display = '';
+      document.body.classList.add('products-visible');
+
+      const navCat = el.dataset.navCategory;
+      const filterVal = el.dataset.filter;
+
+      const parentContainer = el.closest('.visual-filters');
+      if (parentContainer) {
+        parentContainer.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
+      }
+      el.classList.add('active');
+
+      if (navCat) {
+        document.querySelectorAll<HTMLElement>('.visual-filters').forEach((vf) => (vf.style.display = 'none'));
+        const vfId = navCat === 'Water Softener' ? 'vf-softener' : `vf-${navCat.split(' ')[0].toLowerCase()}`;
+        const targetVf = document.getElementById(vfId);
+        if (targetVf) targetVf.style.display = 'flex';
+        setFilterState({ categories: [navCat], facets: [], query: '' });
+      } else if (filterVal) {
+        let targetCat = 'Water Purifier';
+        if (['robotic', 'canister', 'handheld', 'wet-dry'].includes(filterVal)) targetCat = 'Vacuum Cleaner';
+        else if (['Air Purifier', 'Water Softener'].includes(filterVal)) targetCat = filterVal;
+        setFilterState({ categories: [targetCat], facets: [filterVal], query: '' });
+      }
+
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    },
+  },
+  {
+    selector: '.pdp-close, .wishlist-close, .sort-close',
+    handle: (el: HTMLElement) => {
+      el.closest('#pdp-modal') ? closePDPAndCleanURL() : closeActiveOverlay();
+    },
+  },
+  {
+    selector: '.lang-btn',
+    handle: (el: HTMLElement) => {
+      const lang = el.getAttribute('data-lang');
+      const docLang = document.documentElement.lang || 'en';
       if (lang && lang !== docLang) {
         try {
           localStorage.setItem('preferredLanguage', lang);
@@ -107,8 +183,129 @@ document.addEventListener('astro:page-load', function () {
         }
         navigate(url.pathname + url.search + url.hash);
       }
+      const mainSidebar = document.getElementById('main-sidebar');
+      if (mainSidebar?.classList.contains('active')) document.getElementById('sidebar-close')?.click();
+    },
+  },
+  {
+    selector: '#filter-mobile-toggle',
+    handle: () => {
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', 'filter');
+      window.history.pushState(null, '', url);
+      handleAppRouting();
+    },
+  },
+  {
+    selector: '#sort-mobile-toggle',
+    handle: () => {
+      document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.sort === filterState.sort);
+      });
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', 'sort');
+      window.history.pushState(null, '', url);
+      handleAppRouting();
+    },
+  },
+  {
+    selector: '.sort-option-btn',
+    handle: (el: HTMLElement) => {
+      const sortValue = el.dataset.sort;
+      if (sortValue) setFilterState({ sort: sortValue });
+      setTimeout(() => closeActiveOverlay(), 250);
+    },
+  },
+  {
+    selector: '#filter-sidebar-close, .filter-overlay',
+    handle: () => closeActiveOverlay(),
+  },
+  {
+    selector: '#filter-clear-all',
+    handle: () => setFilterState({ categories: ['all'], facets: [], query: '' }),
+  },
+  {
+    selector: '.vf-back-btn',
+    handle: () => (window.location.hash === '#products' ? window.history.back() : hideProductsView()),
+  },
+  {
+    selector: '#sidebar-toggle',
+    handle: () => {
+      document.getElementById('main-sidebar')?.classList.add('active');
+      document.getElementById('main-sidebar-overlay')?.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => document.getElementById('sidebar-close')?.focus(), 50);
+    },
+  },
+  {
+    selector: '#sidebar-close, #main-sidebar-overlay',
+    handle: () => {
+      document.getElementById('main-sidebar')?.classList.remove('active');
+      document.getElementById('main-sidebar-overlay')?.classList.remove('active');
+      if (!document.querySelector('.pdp-modal.active, .filter-sidebar.open')) {
+        document.body.style.overflow = '';
+      }
+      if (window.location.hash === '#faq' || window.location.hash === '#contact') {
+        window.history.pushState(null, '', window.location.pathname + window.location.search);
+      }
+    },
+  },
+  {
+    selector: '#scrollToTop',
+    handle: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+  },
+];
+
+document.addEventListener('click', (e: Event) => {
+  const target = e.target as HTMLElement;
+
+  // Special case: clicking the backdrop of a modal directly
+  const pdpModal = target.closest('.pdp-modal');
+  if (pdpModal && target === pdpModal) {
+    pdpModal.id === 'pdp-modal' ? closePDPAndCleanURL() : closeActiveOverlay();
+    return;
+  }
+
+  // Declarative Event Router
+  for (const action of clickHandlers) {
+    const matchedEl = target.closest(action.selector) as HTMLElement;
+    if (matchedEl) {
+      action.handle(matchedEl);
+      return; // Ensure only one handler executes per click
+    }
+  }
+});
+
+document.addEventListener('change', (e: Event) => {
+  const target = e.target as HTMLSelectElement;
+  if (target.id === 'desktop-sort-select') {
+    setFilterState({ sort: target.value });
+    document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.sort === target.value);
     });
-  });
+  }
+});
+
+document.addEventListener('submit', (e: Event) => {
+  const target = e.target as HTMLElement;
+  if (target.closest('.header-search')) {
+    e.preventDefault();
+    document.getElementById('product-search')?.blur();
+  }
+});
+
+// Manage lifecycle teardowns across Astro page transitions
+let pageTransitionController: AbortController | null = null;
+
+// Use Astro's page-load event instead of DOMContentLoaded to ensure JS
+// re-runs and attaches to the new DOM elements when using View Transitions.
+document.addEventListener('astro:page-load', function () {
+  const langButtons = document.querySelectorAll<HTMLElement>('.lang-btn[data-lang]');
+  const docLang = document.documentElement.lang || 'en';
+  langButtons.forEach((b) => b.classList.toggle('active', b.getAttribute('data-lang') === docLang));
+
+  if (pageTransitionController) pageTransitionController.abort();
+  pageTransitionController = new AbortController();
 
   // ============= 1. SCROLL ANIMATIONS =============
   initScrollAnimations();
@@ -119,197 +316,27 @@ document.addEventListener('astro:page-load', function () {
   // ============= 2.8 ACCORDION GENERATION =============
   initAccordions();
 
-  const searchForm = document.querySelector('.header-search');
-  if (searchForm) {
-    searchForm.addEventListener('submit', (e: Event) => {
-      e.preventDefault();
-      if (searchInput) searchInput.blur();
-    });
-  }
-
   // ============= 3. FACETED FILTERING ENGINE =============
   const filterSidebar = document.getElementById('filter-sidebar');
-  const filterToggle = document.getElementById('filter-mobile-toggle');
-  const filterClose = document.getElementById('filter-sidebar-close');
-  const clearAllBtn = document.getElementById('filter-clear-all');
-  const searchInput = document.getElementById('product-search');
+  const sortModal = document.getElementById('sort-modal');
 
-  // ============= 3.5 SORTING LOGIC =============
-  const desktopSort = document.getElementById('desktop-sort-select');
   // Mobile Overlay
   let overlay = document.querySelector('.filter-overlay');
   if (!overlay) {
     overlay = document.createElement('div');
     overlay.className = 'filter-overlay';
-    // Lock background scroll when dragging on the overlay
-    overlay.addEventListener('touchmove', (e: Event) => e.preventDefault(), { passive: false });
     document.body.appendChild(overlay);
   }
 
-  if (filterToggle) {
-    filterToggle.addEventListener('click', () => {
-      const url = new URL(window.location.href);
-      url.searchParams.set('view', 'filter');
-      window.history.pushState(null, '', url);
-      handleAppRouting();
-    });
-  }
-
-  if (filterClose) filterClose.addEventListener('click', closeActiveOverlay);
-  if (overlay) overlay.addEventListener('click', closeActiveOverlay);
-
-  // Wire up sorting events
-  if (desktopSort) {
-    desktopSort.addEventListener('change', (e: Event) => {
-      setFilterState({ sort: (e.target as HTMLSelectElement).value });
-      // Sync with new mobile sort buttons
-      document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
-        btn.classList.toggle('active', (btn as HTMLElement).dataset.sort === (e.target as HTMLSelectElement).value);
-      });
-    });
-  }
-  const sortMobileToggle = document.getElementById('sort-mobile-toggle');
-  const sortModal = document.getElementById('sort-modal');
-  if (sortMobileToggle && sortModal) {
-    sortMobileToggle.addEventListener('click', () => {
-      // Set initial active state based on current sort
-      document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
-        btn.classList.toggle('active', btn.dataset.sort === filterState.sort);
-      });
-      const url = new URL(window.location.href);
-      url.searchParams.set('view', 'sort');
-      window.history.pushState(null, '', url);
-      handleAppRouting();
-    });
-
-    document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
-      btn.addEventListener('click', (e: Event) => {
-        const sortValue = (e.currentTarget as HTMLElement).dataset.sort;
-
-        if (sortValue) setFilterState({ sort: sortValue });
-
-        // Close modal after a short delay
-        setTimeout(() => {
-          closeActiveOverlay();
-        }, 250);
-      });
-    });
-  }
-
-  document.querySelectorAll<HTMLInputElement>('.filter-cat').forEach((cb) => {
-    cb.addEventListener('change', function () {
-      let newCats: string[] = [...filterState.categories];
-      if (this.value === 'all' && this.checked) {
-        newCats = ['all'];
-      } else if (this.value !== 'all') {
-        newCats = newCats.filter((cat) => cat !== 'all');
-        if (this.checked) newCats.push(this.value);
-        else newCats = newCats.filter((cat) => cat !== this.value);
-        if (newCats.length === 0) newCats = ['all'];
-      }
-      setFilterState({ categories: newCats });
-    });
-  });
-
-  document.querySelectorAll<HTMLInputElement>('.filter-facet').forEach((cb) =>
-    cb.addEventListener('change', function () {
-      let newFacets: string[] = [...filterState.facets];
-      if (this.checked) newFacets.push(this.value);
-      else newFacets = newFacets.filter((f) => f !== this.value);
-      setFilterState({ facets: newFacets });
-    }),
-  );
-
-  if (searchInput) {
-    searchInput.addEventListener(
-      'input',
-      debounce(() => {
-        const prodEl = document.getElementById('products');
-        if (prodEl && prodEl.style.display === 'none') {
-          prodEl.style.display = '';
-          document.body.classList.add('products-visible');
-          prodEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        setFilterState({ query: (searchInput as HTMLInputElement).value });
-      }, 300),
-    );
-  }
-
-  if (clearAllBtn) {
-    clearAllBtn.addEventListener('click', () => {
-      setFilterState({ categories: ['all'], facets: [], query: '' });
-    });
-  }
-
-  // ============= 4. VISUAL FILTERS =============
-  document.querySelectorAll<HTMLElement>('.visual-filter-btn').forEach((btn) => {
-    btn.addEventListener('click', function () {
-      if (window.location.hash !== '#products') {
-        window.history.pushState(null, '', '#products');
-      }
-      document.getElementById('products')!.style.display = '';
-      document.body.classList.add('products-visible');
-      const navCat = this.dataset.navCategory;
-      const filterVal = this.dataset.filter;
-
-      // Update visual active state highlight
-      const parentContainer = this.closest('.visual-filters');
-      if (parentContainer) {
-        parentContainer.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
-      }
-      this.classList.add('active');
-
-      if (navCat) {
-        document.querySelectorAll<HTMLElement>('.visual-filters').forEach((vf) => (vf.style.display = 'none'));
-        const vfId = navCat === 'Water Softener' ? 'vf-softener' : `vf-${navCat.split(' ')[0].toLowerCase()}`;
-        const targetVf = document.getElementById(vfId);
-        if (targetVf) targetVf.style.display = 'flex';
-
-        setFilterState({ categories: [navCat], facets: [], query: '' });
-      } else if (filterVal) {
-        let targetCat = 'Water Purifier';
-        if (['robotic', 'canister', 'handheld', 'wet-dry'].includes(filterVal)) targetCat = 'Vacuum Cleaner';
-        else if (['Air Purifier', 'Water Softener'].includes(filterVal)) targetCat = filterVal;
-
-        setFilterState({ categories: [targetCat], facets: [filterVal], query: '' });
-      }
-
-      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
-
-  document.querySelectorAll<HTMLElement>('.vf-back-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      if (window.location.hash === '#products') {
-        window.history.back(); // Triggers the clean popstate transition
-      } else {
-        hideProductsView();
-      }
-    });
+  // Keep touchmove block since it strictly prevents mobile scroll bleed.
+  // Use AbortSignal to cleanly and automatically detach the listener on page transitions.
+  overlay.addEventListener('touchmove', (e: Event) => e.preventDefault(), {
+    passive: false,
+    signal: pageTransitionController.signal,
   });
 
   // ============= 6. PDP MODAL & DYNAMIC GALLERY =============
   const pdpModal = document.getElementById('pdp-modal');
-
-  document.querySelectorAll('.pdp-close, .wishlist-close, .sort-close').forEach((btn) =>
-    btn.addEventListener('click', (e) => {
-      if ((e.target as HTMLElement).closest('#pdp-modal')) {
-        closePDPAndCleanURL();
-      } else {
-        closeActiveOverlay();
-      }
-    }),
-  );
-
-  // Allow closing any modal by tapping its dark background
-  document.querySelectorAll<HTMLElement>('.pdp-modal').forEach((modal) => {
-    modal.addEventListener('click', (e: Event) => {
-      if (e.target === modal) {
-        if (modal.id === 'pdp-modal') closePDPAndCleanURL();
-        else closeActiveOverlay();
-      }
-    });
-  });
 
   initProductNavigation();
 
@@ -333,14 +360,6 @@ document.addEventListener('astro:page-load', function () {
   const mainSidebarEl = document.getElementById('main-sidebar');
   if (mainSidebarEl) enableSwipeToClose(mainSidebarEl, () => document.getElementById('sidebar-close')?.click(), 'left');
 
-  // ============= 11. SCROLL TO TOP BUTTON =============
-  const scrollToTopBtn = document.getElementById('scrollToTop');
-  if (scrollToTopBtn) {
-    scrollToTopBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  }
-
   // ============= 12. DATA HYDRATION & URL STATE =============
   const hydrateCatalog = () => {
     try {
@@ -360,7 +379,7 @@ document.addEventListener('astro:page-load', function () {
     const initQ = params.get('q');
 
     if (initCats || initFacets || initQ) {
-      const newState: any = { categories: ['all'], facets: [], query: '' };
+      const newState: Partial<typeof filterState> = { categories: ['all'], facets: [], query: '' };
       if (initCats) newState.categories = initCats.split(',');
       if (initFacets) newState.facets = initFacets.split(',');
       if (initQ) newState.query = initQ;
@@ -380,36 +399,4 @@ document.addEventListener('astro:page-load', function () {
     }
   };
   hydrateCatalog();
-
-  // Sidebar Menu Logic
-  const sidebarToggle = document.getElementById('sidebar-toggle');
-  const sidebar = document.getElementById('main-sidebar');
-  const sidebarOverlay = document.getElementById('main-sidebar-overlay');
-  const sidebarClose = document.getElementById('sidebar-close');
-
-  function openSidebar() {
-    if (sidebar) sidebar.classList.add('active');
-    if (sidebarOverlay) sidebarOverlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => sidebarClose?.focus(), 50);
-  }
-  function closeSidebar() {
-    if (sidebar) sidebar.classList.remove('active');
-    if (sidebarOverlay) sidebarOverlay.classList.remove('active');
-
-    if (!document.querySelector('.pdp-modal.active, .filter-sidebar.open')) {
-      document.body.style.overflow = '';
-    }
-    if (window.location.hash === '#faq' || window.location.hash === '#contact') {
-      window.history.pushState(null, '', window.location.pathname + window.location.search);
-    }
-  }
-  if (sidebarToggle) sidebarToggle.addEventListener('click', openSidebar);
-  if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
-  if (sidebarOverlay) sidebarOverlay.addEventListener('click', closeSidebar);
-
-  // Close sidebar when clicking a language button
-  document
-    .querySelectorAll<HTMLElement>('.language-switcher-sidebar .lang-btn')
-    .forEach((btn) => btn.addEventListener('click', closeSidebar));
 });
