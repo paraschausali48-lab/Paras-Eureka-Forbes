@@ -1,15 +1,11 @@
 ---
 // 1. SERVER-SIDE LOGIC (Runs only during the build process)
-import fs from 'node:fs';
 import { translations } from '../../../scripts/translations';
 import Layout from '../../../scripts/Layout.astro';
+import products from '../../../../public/products.json';
 
 // getStaticPaths tells Astro exactly which URLs to generate at build time.
-export async function getStaticPaths() {
-  // Read your existing products.json
-  const rawData = fs.readFileSync(new URL('../../../../public/products.json', import.meta.url));
-  const products = JSON.parse(rawData.toString());
-
+export function getStaticPaths() {
   const languages = ['en', 'hi', 'mr', 'gu'];
   const paths: any[] = [];
 
