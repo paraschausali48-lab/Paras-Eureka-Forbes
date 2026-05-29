@@ -4,5 +4,6 @@ import preact from '@astrojs/preact';
 export default defineConfig({
   site: 'https://paraschausali48-lab.github.io',
   base: '/Paras-Eureka-Forbes',
+  prefetch: true,
   integrations: [preact()],
 });
