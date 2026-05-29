@@ -174,12 +174,13 @@ const clickHandlers = [
           localStorage.setItem('preferredLanguage', lang);
         } catch (e) {}
         const url = new URL(window.location.href);
-        const pathParts = url.pathname.split('/').filter(Boolean);
+        const baseUrl = import.meta.env.BASE_URL;
+        const pathParts = url.pathname.replace(baseUrl, '').split('/').filter(Boolean);
         if (pathParts.length > 0 && ['en', 'hi', 'mr', 'gu'].includes(pathParts[0])) {
           pathParts[0] = lang;
-          url.pathname = '/' + pathParts.join('/');
+          url.pathname = baseUrl + pathParts.join('/');
         } else {
-          url.pathname = `/${lang}${url.pathname}`;
+          url.pathname = baseUrl + lang + '/' + pathParts.join('/');
         }
         navigate(url.pathname + url.search + url.hash);
       }

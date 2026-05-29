@@ -28,9 +28,13 @@ export default function ProductGrid({ initialProducts, lang = 'en' }: ProductGri
 
         return (
           <article key={sku} className="product-card reveal active" data-sku={sku} data-prefetched="false">
-            <a href={`/${lang}/products/${sku}`} className="product-link">
+            <a href={`${import.meta.env.BASE_URL}${lang}/products/${sku}`} className="product-link">
               <div className="product-image-wrapper">
-                <img src={product.image || '/placeholder.png'} alt={product.name} loading="lazy" />
+                <img
+                  src={product.image || `${import.meta.env.BASE_URL}placeholder.png`}
+                  alt={product.name}
+                  loading="lazy"
+                />
               </div>
               <div className="product-info">
                 <span className="product-tag" data-category={product.category}>

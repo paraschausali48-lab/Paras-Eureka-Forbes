@@ -9,11 +9,13 @@ interface Props {
   lang?: string;
 }
 
+const baseUrl = import.meta.env.BASE_URL;
+
 const {
-  title = "Paras Eureka Forbes | Authorized Direct Sales Specialist",
-  description = "Authorized Eureka Forbes direct sales specialist in Mumbai, Navi Mumbai & Thane.",
-  ogImage = "/images/current-offer.webp",
-  lang = "en"
+  title = 'Paras Eureka Forbes | Authorized Direct Sales Specialist',
+  description = 'Authorized Eureka Forbes direct sales specialist in Mumbai, Navi Mumbai & Thane.',
+  ogImage = baseUrl + 'images/current-offer.webp',
+  lang = 'en',
 } = Astro.props;
 
 // Helper function to get translations at build time
@@ -38,10 +40,13 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
     <!-- Enable Astro View Transitions -->
     <ClientRouter />
     <!-- PWA & Fonts -->
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="manifest" href={`${baseUrl}site.webmanifest`} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body
     data-toast-add={t('toast_wishlist_add')}
@@ -54,7 +59,8 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
       <!-- ... copy from index.html ... -->
     </header>
 
-    <slot /> <!-- This is where index.astro or [sku].astro gets injected -->
+    <slot />
+    <!-- This is where index.astro or [sku].astro gets injected -->
 
     <!-- Your exact Footer HTML goes here -->
     <footer class="site-footer">

@@ -89,7 +89,7 @@ export function renderWishlist(
         } else {
           // Fallback if item is filtered out: redirect to item URL
           const lang = document.documentElement.lang || 'en';
-          navigate(`/${lang}/products/${sku}`);
+          navigate(`${import.meta.env.BASE_URL}${lang}/products/${sku}`);
         }
       });
 
