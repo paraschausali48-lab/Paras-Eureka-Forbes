@@ -1,4 +1,16 @@
 ---
-// Redirect the root domain to the default language route
-return Astro.redirect(import.meta.env.BASE_URL + 'en/');
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+  <!-- Fallback meta redirect -->
+  <meta http-equiv="refresh" content={`0;url=${import.meta.env.BASE_URL}en/`} />
+  <!-- Immediate JavaScript redirect -->
+  <script>window.location.replace(`${import.meta.env.BASE_URL}en/`);</script>
+</head>
+<body>
+  <p>Redirecting to <a href={`${import.meta.env.BASE_URL}en/`}>your catalog</a>...</p>
+</body>
+</html>

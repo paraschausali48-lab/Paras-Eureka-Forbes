@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ef-catalog-v1';
+const CACHE_NAME = 'ef-catalog-v2';
 
 self.addEventListener('install', () => {
   self.skipWaiting();
