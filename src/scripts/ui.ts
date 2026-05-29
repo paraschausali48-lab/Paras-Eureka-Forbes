@@ -15,7 +15,9 @@ export function initScrollAnimations() {
     { rootMargin: '0px 0px -50px 0px', threshold: 0.05 },
   );
 
-  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
+  document.querySelectorAll('.reveal').forEach((el) => {
+    if (revealObserver) revealObserver.observe(el);
+  });
 }
 
 let headerScrollInitialized = false;

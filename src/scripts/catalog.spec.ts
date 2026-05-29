@@ -1,7 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 test.describe('Catalog Filtering & Routing', () => {
-  test('should sync visual filter selection to the URL and update the Preact grid', async ({ page }) => {
+  test('should sync visual filter selection to the URL and update the Preact grid', async ({
+    page,
+  }: {
+    page: Page;
+  }) => {
     // Navigate to the index
     await page.goto('/');
 

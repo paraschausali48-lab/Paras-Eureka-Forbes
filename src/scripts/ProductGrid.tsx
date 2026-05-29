@@ -1,4 +1,3 @@
-import { h } from 'preact';
 import { useState, useEffect } from 'preact/hooks';
 import { subscribeToFilters, allProducts } from '../scripts/filters';
 import { applyFiltersAndSort } from '../scripts/render';

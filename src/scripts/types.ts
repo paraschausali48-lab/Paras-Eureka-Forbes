@@ -9,5 +9,5 @@ export interface Product {
   description: string;
   mrp: number;
   mop: number;
-  specs?: Record<string, string | number>;
+  specs?: Record<string, any>;
 }

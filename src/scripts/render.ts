@@ -1,6 +1,5 @@
 import { productMatchesFacets, type FilterState } from './filters';
 import type { Product } from './types';
-import { getSku } from './utils';
 
 // Accept the actual product data model as an argument
 export function applyFiltersAndSort(state: FilterState, allProducts: Product[]): Product[] {
