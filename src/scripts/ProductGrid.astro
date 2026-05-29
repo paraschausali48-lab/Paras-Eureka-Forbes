@@ -77,8 +77,8 @@ const t = (key: string) => translations[lang as keyof typeof translations]?.[key
           </div>
         )}
 
-        <div class="product-tag" data-category={product.category} data-i18n={product.i18nTag}>
-          {product.category}
+        <div class="product-tag" data-category={product.category}>
+          {t(product.i18nTag)}
         </div>
 
         <h3>{product.name}</h3>
@@ -100,7 +100,7 @@ const t = (key: string) => translations[lang as keyof typeof translations]?.[key
 
         <div class="product-trust-note">Inquiry only. Final purchase and billing through official Eureka Forbes channels.</div>
 
-        <a href="#contact" class="product-btn" data-i18n="btn_more_info">More Info</a>
+        <a href="#contact" class="product-btn">{t('btn_more_info')}</a>
 
         {product.specs && (
           <div class="hidden-specs" style="display: none;">

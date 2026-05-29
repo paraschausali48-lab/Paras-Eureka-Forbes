@@ -1,3 +1,4 @@
+import { navigate } from 'astro:transitions/client';
 import { showToast } from './toast';
 import { escapeHTML } from './utils';
 
@@ -68,10 +69,8 @@ export function renderWishlist(
           card.click();
         } else {
           // Fallback if item is filtered out: redirect to item URL
-          const url = new URL(window.location.href);
-          url.searchParams.delete('view');
-          url.searchParams.set('p', sku);
-          window.location.href = url.toString();
+          const lang = document.documentElement.lang || 'en';
+          navigate(`/${lang}/products/${sku}`);
         }
       });
 

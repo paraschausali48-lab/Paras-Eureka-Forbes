@@ -1,18 +1,11 @@
 import { navigate } from 'astro:transitions/client';
-import { VENDOR_WHATSAPP } from './config';
 import { debounce, enableSwipeToClose, handleFocusTrap } from './utils';
 import { showToast } from './toast';
 import { updateWishlistUI, renderWishlist, handleWishlistToggle, saveWishlist } from './wishlist';
 import { filterState, setFilterState } from './filters';
-import {
-  handleAppRouting,
-  closeActiveOverlay,
-  forceCloseAllOverlays,
-  hideProductsView,
-  setLastFocused,
-} from './routing';
+import { handleAppRouting, closeActiveOverlay, hideProductsView } from './routing';
 import { initScrollAnimations, initHeaderScroll, initAccordions, initFaq } from './ui';
-import { initProductModal } from './pdp';
+import { initProductNavigation } from './pdp';
 
 // ============= SERVICE WORKER REGISTRATION =============
 if ('serviceWorker' in navigator) {
@@ -287,7 +280,7 @@ document.addEventListener('astro:page-load', function () {
     });
   });
 
-  initProductModal();
+  initProductNavigation();
 
   // ============= 7. FAQ ACCORDION LOGIC =============
   initFaq();
