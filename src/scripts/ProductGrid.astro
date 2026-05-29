@@ -1,0 +1,124 @@
+---
+import productsJson from '../../public/products.json';
+import type { Product } from '../scripts/types';
+import { translations } from '../scripts/translations';
+
+// Cast the JSON to your strict TypeScript interface
+const products = productsJson as Product[];
+
+// 1. Helper to generate SKU (Matches your existing JS exactly)
+const getSku = (title: string) =>
+  'EF-' + title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').toUpperCase();
+
+// 2. Category Icons Map
+const categoryIcons: Record<string, string> = {
+  'Water Purifier': '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path><path d="M9 13l2 2 4-4"></path>',
+  'Vacuum Cleaner': '<rect x="4" y="14" width="16" height="6" rx="2"></rect><path d="M8 14V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"></path>',
+  'Air Purifier': '<path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path>',
+  'Water Softener': '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M12 11l-2.5 3c0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5L12 11z"></path>',
+};
+
+// 3. Extract Highlights (Top 3 Specs)
+function getProductHighlights(product: Product): string[] {
+  const specs = product.specs || {};
+  const candidates: (string | number | undefined)[] = [];
+
+  if (product.category === 'Water Purifier') {
+    candidates.push(specs['TDS'], specs['Storage Capacity'], specs['Filter Life'], specs['Installation Type']);
+  } else if (product.category === 'Vacuum Cleaner') {
+    candidates.push(specs['Type'], specs['Application'], specs['Dust Capacity'], specs['Run Time']);
+  } else if (product.category === 'Air Purifier') {
+    candidates.push(specs['Ideal For'], specs['Air Flow'], specs['Purification Stages']);
+  } else if (product.category === 'Water Softener') {
+    candidates.push(specs['Max. Input Hardness (ppm)'], specs['Max. Input Flow Rate (LPH)'], specs['Technology']);
+  }
+
+  return candidates
+    .filter(Boolean)
+    .map((value) => String(value!).replace(/\s+/g, ' ').trim())
+    .filter((value, index, arr) => value && arr.indexOf(value) === index)
+    .slice(0, 3);
+}
+
+// 4. Server-Side Translations
+const pathLang = Astro.url.pathname.split('/')[1];
+const lang = ['en', 'hi', 'mr', 'gu'].includes(pathLang) ? pathLang : 'en';
+const t = (key: string) => translations[lang as keyof typeof translations]?.[key] || translations['en'][key] || key;
+---
+
+<div id="product-grid" class="product-grid">
+  {products.map((product, index) => {
+    const sku = getSku(product.name);
+    const highlights = getProductHighlights(product);
+    const discount = (product.mrp > product.mop && product.mop > 0)
+      ? Math.round(((product.mrp - product.mop) / product.mrp) * 100)
+      : 0;
+    const searchString = `${product.name} ${product.description}`.toLowerCase();
+
+    return (
+      <article
+        class={`product-card reveal active ${product.outOfStock ? 'out-of-stock' : ''}`}
+        data-sku={sku}
+        data-index={index}
+        data-price={product.mop}
+        data-category={product.category}
+        data-search={searchString}
+        data-subcategory={product.subcategories.join(', ')}
+        data-leaflet={product.leaflet || ''}
+      >
+        {product.image ? (
+          <div class="product-media">
+            <img src={product.image} alt={product.name} loading="lazy" width="300" height="200" />
+          </div>
+        ) : (
+          <div class="product-media product-media-placeholder" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={categoryIcons[product.category] || categoryIcons['Water Purifier']} />
+            <span>{product.category}</span>
+          </div>
+        )}
+
+        <div class="product-tag" data-category={product.category} data-i18n={product.i18nTag}>
+          {product.category}
+        </div>
+
+        <h3>{product.name}</h3>
+        <p>{product.description}</p>
+
+        {highlights.length > 0 && (
+          <div class="product-highlights">
+            {highlights.map(item => <span>{item}</span>)}
+          </div>
+        )}
+
+        <div class="price-info">
+          <div class="mrp-wrapper">
+            <div class="mrp">MRP ₹{product.mrp.toLocaleString('en-IN')}</div>
+            {discount > 0 && <span class="discount-badge">{discount}% OFF</span>}
+          </div>
+          <div class="price">MOP ₹{product.mop.toLocaleString('en-IN')}</div>
+        </div>
+
+        <div class="product-trust-note">Inquiry only. Final purchase and billing through official Eureka Forbes channels.</div>
+
+        <a href="#contact" class="product-btn" data-i18n="btn_more_info">More Info</a>
+
+        {product.specs && (
+          <div class="hidden-specs" style="display: none;">
+            <ul>
+              {Object.entries(product.specs).map(([key, value]) => (
+                <li><strong>{key}:</strong> {value}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </article>
+    );
+  })}
+
+  <!-- Pre-rendered Empty State -->
+  <div id="empty-state" class="empty-state" style="display: none;">
+    <h3>{t('empty_title')}</h3>
+    <p>{t('empty_desc')}</p>
+    <button class="btn" onclick="document.getElementById('filter-clear-all').click()">{t('empty_btn')}</button>
+  </div>
+</div>

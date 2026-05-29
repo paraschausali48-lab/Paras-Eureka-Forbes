@@ -13,6 +13,8 @@ import {
   setLastFocused,
 } from './routing';
 import type { Product } from './types';
+import { initScrollAnimations, initHeaderScroll, initAccordions, initFaq } from './ui';
+import { initProductNavigation } from './pdp';
 
 // ============= SERVICE WORKER REGISTRATION =============
 if ('serviceWorker' in navigator) {
@@ -24,142 +26,30 @@ if ('serviceWorker' in navigator) {
 }
 
 let productsData: Product[] = [];
+let globalsInitialized = false;
 
-document.addEventListener('DOMContentLoaded', async function () {
-  try {
-    const response = await fetch('products.json');
-    if (!response.ok) throw new Error('HTTP status ' + response.status);
-    productsData = await response.json();
-  } catch (error) {
-    console.error('Failed to load products.json:', error);
-    const grid = document.getElementById('product-grid');
-    if (grid)
-      grid.innerHTML =
-        '<p style="text-align:center; padding: 40px; grid-column: 1/-1;">Error loading products. Ensure you are running a local web server (Not file://).</p>';
-  }
-
+document.addEventListener('astro:page-load', function () {
   // ============= 0.5 GLOBAL KEYBOARD ACCESSIBILITY =============
   // Allow users to close modals using the Escape key
-  document.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      const activeOverlay = document.querySelector('.pdp-modal.active, .filter-sidebar.open, .main-sidebar.active');
-      if (activeOverlay) closeActiveOverlay();
-    }
-
-    // Focus trapping for active modals
-    const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-    if (!isTabPressed) return;
-
-    const activeModal = document.querySelector('.pdp-modal.active, .main-sidebar.active, .filter-sidebar.open');
-    if (!activeModal) return;
-
-    const focusableEls = activeModal.querySelectorAll(
-      'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
-    ) as NodeListOf<HTMLElement>;
-    if (focusableEls.length === 0) return;
-
-    const firstFocusableEl = focusableEls[0];
-    const lastFocusableEl = focusableEls[focusableEls.length - 1];
-
-    if (e.shiftKey) {
-      if (document.activeElement === firstFocusableEl || document.activeElement === document.body) {
-        lastFocusableEl.focus();
-        e.preventDefault();
-      }
-    } else {
-      if (document.activeElement === lastFocusableEl) {
-        firstFocusableEl.focus();
-        e.preventDefault();
-      }
-    }
-  });
-
-  // ============= 1. SCROLL ANIMATIONS =============
-  const revealObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-          observer.unobserve(entry.target); // Stop tracking once revealed to save memory
-        }
-      });
-    },
-    { rootMargin: '0px 0px -50px 0px', threshold: 0.05 },
-  );
-
-  document.querySelectorAll('.reveal').forEach((el) => revealObserver.observe(el));
-
-  // ============= 2. HEADER SCROLL EFFECT =============
-  const siteHeader = document.querySelector('.site-header');
-  let lastScrollY = window.scrollY;
-
-  window.addEventListener(
-    'scroll',
-    () => {
-      if (siteHeader) {
-        if (window.scrollY > 20) siteHeader.classList.add('scrolled');
-        else siteHeader.classList.remove('scrolled');
-
-        // Auto-hide header on scroll down, show on scroll up
-        if (window.scrollY > lastScrollY && window.scrollY > 150) {
-          siteHeader.classList.add('hidden');
-        } else {
-          siteHeader.classList.remove('hidden');
+  if (!globalsInitialized) {
+    document.addEventListener('keydown', (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        const activeOverlay = document.querySelector('.filter-sidebar.open, .main-sidebar.active');
+        if (activeOverlay) {
+          closeActiveOverlay();
         }
       }
-      lastScrollY = window.scrollY;
-    },
-    { passive: true },
-  );
-
-  // ============= 2.8 ACCORDION GENERATION =============
-  document.querySelectorAll('.filter-group').forEach((group) => {
-    const titleEl = group.querySelector('.filter-group-title');
-    if (!titleEl || group.querySelector('.filter-group-toggle')) return;
-
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'filter-group-toggle';
-    toggleBtn.setAttribute('aria-expanded', 'true');
-    const contentId = `filter-content-${Math.random().toString(36).substr(2, 9)}`;
-    toggleBtn.setAttribute('aria-controls', contentId);
-    toggleBtn.setAttribute('type', 'button');
-
-    const chevron = document.createElement('span');
-    chevron.className = 'filter-chevron';
-    chevron.innerHTML =
-      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
-
-    const newTitle = document.createElement('div');
-    newTitle.className = 'filter-group-title';
-    newTitle.textContent = titleEl.textContent;
-    toggleBtn.appendChild(newTitle);
-    toggleBtn.appendChild(chevron);
-
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'filter-group-content';
-    contentDiv.id = contentId;
-
-    Array.from(group.children).forEach((child) => {
-      if (child !== titleEl) contentDiv.appendChild(child);
-    });
-
-    titleEl.remove();
-    group.appendChild(toggleBtn);
-    group.appendChild(contentDiv);
-
-    toggleBtn.addEventListener('click', () => {
-      const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-      toggleBtn.setAttribute('aria-expanded', String(!expanded));
-    });
-  });
-
-  const searchForm = document.querySelector('.header-search');
-  if (searchForm) {
-    searchForm.addEventListener('submit', (e: Event) => {
-      e.preventDefault();
-      if (searchInput) searchInput.blur();
     });
   }
+
+  // ============= 1. SCROLL ANIMATIONS =============
+  initScrollAnimations();
+
+  // ============= 2. HEADER SCROLL EFFECT =============
+  initHeaderScroll();
+
+  // ============= 2.8 ACCORDION GENERATION =============
+  initAccordions();
 
   // ============= 3. FACETED FILTERING ENGINE =============
   const filterSidebar = document.getElementById('filter-sidebar');
@@ -167,6 +57,14 @@ document.addEventListener('DOMContentLoaded', async function () {
   const filterClose = document.getElementById('filter-sidebar-close');
   const clearAllBtn = document.getElementById('filter-clear-all');
   const searchInput = document.getElementById('product-search');
+
+  const searchForm = document.getElementById('header-search-form');
+  if (searchForm) {
+    searchForm.addEventListener('submit', (e: Event) => {
+      e.preventDefault();
+      if (searchInput) searchInput.blur();
+    });
+  }
 
   // ============= 3.5 SORTING LOGIC =============
   const desktopSort = document.getElementById('desktop-sort-select');
@@ -320,160 +218,14 @@ document.addEventListener('DOMContentLoaded', async function () {
   });
 
   // ============= 6. PDP MODAL & DYNAMIC GALLERY =============
-  const pdpModal = document.getElementById('pdp-modal');
-
   document
-    .querySelectorAll('.pdp-close, .wishlist-close, .sort-close')
+    .querySelectorAll('.wishlist-close, .sort-close')
     .forEach((btn) => btn.addEventListener('click', closeActiveOverlay));
 
-  // Allow closing any modal by tapping its dark background
-  document.querySelectorAll<HTMLElement>('.pdp-modal').forEach((modal) => {
-    modal.addEventListener('click', (e: Event) => {
-      if (e.target === modal) closeActiveOverlay();
-    });
-  });
-
-  const productGrid = document.getElementById('product-grid');
-  if (productGrid) {
-    productGrid.addEventListener('click', function (e: Event) {
-      const card = (e.target as HTMLElement).closest('.product-card') as HTMLElement;
-      if (!card) return;
-
-      const isMoreInfoBtn = (e.target as HTMLElement).closest('.product-btn[href="#contact"]');
-      if (
-        !isMoreInfoBtn &&
-        ((e.target as HTMLElement).closest('.product-btn') || (e.target as HTMLElement).closest('a'))
-      )
-        return;
-      if (isMoreInfoBtn) e.preventDefault(); // Prevent jumping down the page, open modal instead
-      setLastFocused(card);
-
-      const title = card.querySelector('h3')!.textContent!;
-      const category = card.querySelector('.product-tag')!.textContent!;
-      const priceHTML = card.querySelector('.price-info')?.innerHTML || '';
-      const specsHTML = card.querySelector('.hidden-specs')?.innerHTML || '';
-      const desc = card.querySelector('p')?.textContent || '';
-      const sku = card.dataset.sku!;
-
-      document.getElementById('pdp-title')!.textContent = title;
-      document.getElementById('pdp-category')!.textContent = category;
-      document.getElementById('pdp-sku')!.querySelector('span')!.textContent = sku;
-      document.getElementById('pdp-price')!.innerHTML = priceHTML;
-      document.getElementById('pdp-specs')!.innerHTML = specsHTML;
-      if (document.getElementById('pdp-desc')) document.getElementById('pdp-desc')!.textContent = desc;
-
-      const specsDetails = document.querySelector<HTMLElement>('.pdp-specs-details');
-      if (specsDetails) {
-        specsDetails.style.display = specsHTML.trim() ? 'block' : 'none';
-      }
-
-      // Action Buttons
-      const btnContainer = document.getElementById('pdp-action-btn')!;
-      btnContainer.innerHTML = '';
-
-      const bookDemoBtn = document.createElement('button');
-      bookDemoBtn.className = 'product-btn';
-      const isVacuum = category === 'Vacuum Cleaner';
-      bookDemoBtn.setAttribute('data-i18n', isVacuum ? 'btn_ask' : 'btn_book_appointment');
-      bookDemoBtn.textContent = isVacuum ? 'Book a Free Demo' : 'Book an Appointment';
-      bookDemoBtn.onclick = (e: Event) => {
-        e.preventDefault();
-        const actionText = isVacuum ? 'book a free home demonstration' : 'book an appointment';
-        const message = `Hello Paras, I am interested in the ${title} and would like to ${actionText}. Please share the details.`;
-        const waUrl = `https://wa.me/${VENDOR_WHATSAPP}?text=${encodeURIComponent(message)}`;
-        window.open(waUrl, '_blank');
-      };
-      btnContainer.appendChild(bookDemoBtn);
-
-      // Download Leaflet Button
-      const leafletSrc = card.dataset.leaflet;
-      if (leafletSrc) {
-        const leafletBtn = document.createElement('a');
-        leafletBtn.href = leafletSrc;
-        leafletBtn.target = '_blank';
-        leafletBtn.className = 'product-btn product-btn-secondary';
-        leafletBtn.innerHTML =
-          '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span data-i18n="btn_leaflet">Download Leaflet</span>';
-        btnContainer.appendChild(leafletBtn);
-      }
-
-      // Native Share Button
-      const shareBtn = document.createElement('button');
-      shareBtn.className = 'product-btn product-btn-secondary';
-      const shareIcon =
-        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>';
-      shareBtn.innerHTML = shareIcon + '<span data-i18n="btn_share">Share</span>';
-      shareBtn.onclick = async () => {
-        const shareUrl = new URL(window.location.href);
-        shareUrl.searchParams.set('p', sku);
-        const url = shareUrl.toString();
-        if (navigator.share) {
-          try {
-            await navigator.share({ title, url });
-          } catch (err) {}
-        } else {
-          navigator.clipboard.writeText(url);
-          shareBtn.innerHTML = shareIcon + '<span data-i18n="toast_link_copied">Copied!</span>';
-          applyTranslations(document.documentElement.lang || 'en');
-          setTimeout(() => {
-            shareBtn.innerHTML = shareIcon + '<span data-i18n="btn_share">Share</span>';
-            applyTranslations(document.documentElement.lang || 'en');
-          }, 2000);
-        }
-      };
-      btnContainer.appendChild(shareBtn);
-
-      // URL Direct linking
-      const url = new URL(window.location.href);
-      if (url.searchParams.get('p') !== sku) {
-        url.searchParams.set('p', sku);
-        window.history.pushState(null, '', url);
-      }
-
-      pdpModal!.classList.add('active');
-      const scrollableContent = pdpModal?.querySelector('.pdp-scrollable-content');
-      if (scrollableContent) scrollableContent.scrollTop = 0;
-      document.body.style.overflow = 'hidden';
-      if (typeof updateWishlistUI === 'function') updateWishlistUI();
-      setTimeout(() => (pdpModal?.querySelector('.pdp-close') as HTMLElement)?.focus(), 50);
-
-      // Apply translations instantly to the newly created button
-      applyTranslations(document.documentElement.lang || 'en');
-    });
-  }
+  initProductNavigation();
 
   // ============= 7. FAQ ACCORDION LOGIC =============
-  document.querySelectorAll<HTMLElement>('.faq-tab').forEach((tab) => {
-    tab.addEventListener('click', function () {
-      document.querySelectorAll<HTMLElement>('.faq-tab').forEach((t) => {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      document.querySelectorAll<HTMLElement>('.faq-tab-panel').forEach((p) => (p.hidden = true));
-      this.classList.add('active');
-      this.setAttribute('aria-selected', 'true');
-      const panel = document.querySelector<HTMLElement>(`.faq-tab-panel[data-faq-panel="${this.dataset.faqTab}"]`);
-      if (panel) panel.hidden = false;
-    });
-  });
-
-  document.querySelectorAll<HTMLElement>('.faq-question').forEach((btn) => {
-    btn.addEventListener('click', function () {
-      const item = this.closest('.faq-item')!;
-      const isActive = item.classList.contains('active');
-      item
-        .closest('.faq-tab-panel')!
-        .querySelectorAll('.faq-item')
-        .forEach((i) => {
-          i.classList.remove('active');
-          i.querySelector('.faq-question')?.setAttribute('aria-expanded', 'false');
-        });
-      if (!isActive) {
-        item.classList.add('active');
-        this.setAttribute('aria-expanded', 'true');
-      }
-    });
-  });
+  initFaq();
 
   // ============= 9. WISHLIST & SECONDARY MODALS =============
   const wishlistToggleBtns = document.querySelectorAll<HTMLElement>('.wishlist-toggle-btn');
@@ -506,9 +258,12 @@ document.addEventListener('DOMContentLoaded', async function () {
   updateWishlistUI();
 
   // ============= 10. APP-LIKE ROUTING & GESTURES =============
-  window.addEventListener('popstate', () => handleAppRouting(productsData));
-  window.addEventListener('hashchange', () => handleAppRouting(productsData));
-  setTimeout(() => handleAppRouting(productsData), 300);
+  if (!globalsInitialized) {
+    window.addEventListener('popstate', () => {
+      handleAppRouting(productsData);
+    });
+    window.addEventListener('hashchange', () => handleAppRouting(productsData));
+  }
 
   // Handle WA button visibility based on hash
   function updateWaButtonVisibility() {
@@ -522,13 +277,14 @@ document.addEventListener('DOMContentLoaded', async function () {
       waBtn.style.display = 'none';
     }
   }
-  window.addEventListener('popstate', updateWaButtonVisibility);
-  window.addEventListener('hashchange', updateWaButtonVisibility);
+  if (!globalsInitialized) {
+    window.addEventListener('popstate', updateWaButtonVisibility);
+    window.addEventListener('hashchange', updateWaButtonVisibility);
+  }
   updateWaButtonVisibility();
 
   if (sortModal) enableSwipeToClose(sortModal.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'down');
   if (filterSidebar) enableSwipeToClose(filterSidebar, closeActiveOverlay, 'down');
-  if (pdpModal) enableSwipeToClose(pdpModal.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'right');
   if (wishlistModal)
     enableSwipeToClose(wishlistModal.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'right');
   const mainSidebarEl = document.getElementById('main-sidebar');
@@ -554,31 +310,41 @@ document.addEventListener('DOMContentLoaded', async function () {
     });
   }
 
-  // ============= 12. INITIALIZE URL STATE =============
-  // Read URL parameters on load so shared links apply the correct filters
-  const params = new URLSearchParams(window.location.search);
-  const initCats = params.get('cat');
-  const initFacets = params.get('facets');
-  const initQ = params.get('q');
-
-  if (initCats || initFacets || initQ) {
-    const newState: any = { categories: ['all'], facets: [], query: '' };
-    if (initCats) {
-      newState.categories = initCats.split(',');
+  // ============= 12. DATA HYDRATION & URL STATE =============
+  const hydrateCatalog = async () => {
+    try {
+      const response = await fetch('products.json');
+      if (!response.ok) throw new Error('HTTP status ' + response.status);
+      productsData = await response.json();
+    } catch (error) {
+      console.error('Failed to load products.json:', error);
+      const grid = document.getElementById('product-grid');
+      if (grid)
+        grid.innerHTML = '<p style="text-align:center; padding: 40px; grid-column: 1/-1;">Error loading products.</p>';
+      return;
     }
-    if (initFacets) {
-      newState.facets = initFacets.split(',');
+
+    // Now that data is loaded, apply shared link parameters
+    const params = new URLSearchParams(window.location.search);
+    const initCats = params.get('cat');
+    const initFacets = params.get('facets');
+    const initQ = params.get('q');
+
+    if (initCats || initFacets || initQ) {
+      const newState: any = { categories: ['all'], facets: [], query: '' };
+      if (initCats) newState.categories = initCats.split(',');
+      if (initFacets) newState.facets = initFacets.split(',');
+      if (initQ) newState.query = initQ;
+      setFilterState(newState, productsData);
+      if (window.location.hash !== '#products')
+        window.history.replaceState(null, '', window.location.search + '#products');
+    } else {
+      setFilterState({}, productsData);
     }
-    if (initQ) newState.query = initQ;
 
-    setFilterState(newState, productsData);
-
-    // Automatically expand the products view to show the filtered results
-    if (window.location.hash !== '#products')
-      window.history.replaceState(null, '', window.location.search + '#products');
-  } else {
-    setFilterState({}, productsData);
-  }
+    handleAppRouting(productsData);
+  };
+  hydrateCatalog(); // Execute without blocking the thread
 
   // Sidebar Menu Logic
   const sidebarToggle = document.getElementById('sidebar-toggle');
@@ -596,7 +362,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (sidebar) sidebar.classList.remove('active');
     if (sidebarOverlay) sidebarOverlay.classList.remove('active');
 
-    if (!document.querySelector('.pdp-modal.active, .filter-sidebar.open')) {
+    if (!document.querySelector('.filter-sidebar.open')) {
       document.body.style.overflow = '';
     }
     if (window.location.hash === '#faq' || window.location.hash === '#contact') {
@@ -611,4 +377,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   document
     .querySelectorAll<HTMLElement>('.language-switcher-sidebar .lang-btn')
     .forEach((btn) => btn.addEventListener('click', closeSidebar));
+
+  document.querySelectorAll<HTMLElement>('.sidebar-link').forEach((link) => {
+    link.addEventListener('click', () => document.getElementById('sidebar-close')?.click());
+  });
+
+  globalsInitialized = true;
 });

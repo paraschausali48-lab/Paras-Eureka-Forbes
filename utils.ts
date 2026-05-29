@@ -77,3 +77,28 @@ export function escapeHTML(str: string | number | boolean | null | undefined): s
       })[tag] || tag,
   );
 }
+
+/**
+ * Traps keyboard focus within a specified DOM element to improve accessibility.
+ * Prevents screen-reader or keyboard users from tabbing outside an active modal.
+ */
+export function handleFocusTrap(e: KeyboardEvent, activeElement: HTMLElement) {
+  const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+  if (!isTabPressed) return;
+
+  const focusableEls = activeElement.querySelectorAll<HTMLElement>(
+    'a[href]:not([disabled]), button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])',
+  );
+  if (focusableEls.length === 0) return;
+
+  const firstFocusableEl = focusableEls[0];
+  const lastFocusableEl = focusableEls[focusableEls.length - 1];
+
+  if (e.shiftKey && (document.activeElement === firstFocusableEl || document.activeElement === document.body)) {
+    lastFocusableEl.focus();
+    e.preventDefault();
+  } else if (!e.shiftKey && document.activeElement === lastFocusableEl) {
+    firstFocusableEl.focus();
+    e.preventDefault();
+  }
+}
