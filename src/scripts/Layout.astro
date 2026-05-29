@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import { translations } from '../scripts/translations';
 
 interface Props {
@@ -36,7 +36,7 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
     <meta property="og:image" content={ogImage} />
 
     <!-- Enable Astro View Transitions -->
-    <ViewTransitions />
+    <ClientRouter />
     <!-- PWA & Fonts -->
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />

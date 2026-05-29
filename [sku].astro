@@ -1,7 +1,7 @@
 ---
 // 1. SERVER-SIDE LOGIC (Runs only during the build process)
 import fs from 'node:fs';
-import { translations } from '../../../../scripts/translations';
+import { translations } from '../../../scripts/translations';
 import Layout from '../../../../layouts/Layout.astro';
 
 // getStaticPaths tells Astro exactly which URLs to generate at build time.
@@ -11,12 +11,12 @@ export async function getStaticPaths() {
   const products = JSON.parse(rawData.toString());
 
   const languages = ['en', 'hi', 'mr', 'gu'];
-  const paths = [];
+ const paths: any[] = [];
 
   // Generate a physical URL for EVERY product in EVERY language
   // e.g., /hi/products/EF-AQUAGUARD-SELECT
   languages.forEach((lang) => {
-    products.forEach((product) => {
+    products.forEach((product: any) => {
       const sku = 'EF-' + product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').toUpperCase();
       paths.push({
         params: { lang, sku }, // Generates the URL

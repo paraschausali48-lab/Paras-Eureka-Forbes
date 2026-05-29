@@ -46,7 +46,7 @@ export function initAccordions() {
     const toggleBtn = document.createElement('button');
     toggleBtn.className = 'filter-group-toggle';
     toggleBtn.setAttribute('aria-expanded', 'true');
-    const contentId = `filter-content-${Math.random().toString(36).substr(2, 9)}`;
+    const contentId = `filter-content-${Math.random().toString(36).substring(2, 11)}`;
     toggleBtn.setAttribute('aria-controls', contentId);
     toggleBtn.setAttribute('type', 'button');
 

@@ -1,4 +1,4 @@
-import { FilterState, productMatchesFacets } from './filters';
+import { productMatchesFacets, type FilterState } from './filters';
 import type { Product } from './types';
 import { getSku } from './utils';
 

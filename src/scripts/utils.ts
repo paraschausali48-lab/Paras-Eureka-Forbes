@@ -98,7 +98,7 @@ export function getSku(title: string): string {
  * Prevents screen-reader or keyboard users from tabbing outside an active modal.
  */
 export function handleFocusTrap(e: KeyboardEvent, activeElement: HTMLElement) {
-  const isTabPressed = e.key === 'Tab' || e.keyCode === 9;
+  const isTabPressed = e.key === 'Tab';
   if (!isTabPressed) return;
 
   const focusableEls = activeElement.querySelectorAll<HTMLElement>(
