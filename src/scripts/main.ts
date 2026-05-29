@@ -363,16 +363,6 @@ document.addEventListener('astro:page-load', function () {
 
   // ============= 12. DATA HYDRATION & URL STATE =============
   const hydrateCatalog = () => {
-    try {
-      // Hydrate instantly from the DOM to eliminate network race conditions
-      const dataScript = document.getElementById('product-data');
-      if (dataScript) {
-        setProductsData(JSON.parse(dataScript.textContent || '[]'));
-      }
-    } catch (err) {
-      console.error('Failed to parse product data:', err);
-    }
-
     // Now that data is loaded, apply shared link parameters
     const params = new URLSearchParams(window.location.search);
     const initCats = params.get('cat');

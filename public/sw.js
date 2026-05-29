@@ -28,23 +28,6 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(event.request.url);
 
-  // DATA STRATEGY: Network First, Fallback to Cache
-  // Ensures customers always see the latest products if online
-  if (url.pathname.endsWith('products.json')) {
-    event.respondWith(
-      fetch(event.request)
-        .then((networkResponse) => {
-          if (networkResponse && networkResponse.ok) {
-            const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          }
-          return networkResponse;
-        })
-        .catch(() => caches.match(event.request)),
-    );
-    return;
-  }
-
   // ASSET STRATEGY: Stale-While-Revalidate
   // Instant loading for HTML, CSS, JS, and Images
   event.respondWith(

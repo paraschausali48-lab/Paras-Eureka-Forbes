@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'preact/hooks';
-import { subscribeToFilters, allProducts } from '../scripts/filters';
+import { subscribeToFilters, allProducts, setProductsData } from '../scripts/filters';
 import { applyFiltersAndSort } from '../scripts/render';
 import { getSku } from '../scripts/utils';
 import type { Product } from '../scripts/types';
@@ -13,6 +13,9 @@ export default function ProductGrid({ initialProducts, lang = 'en' }: ProductGri
   const [products, setProducts] = useState<Product[]>(initialProducts);
 
   useEffect(() => {
+    // Hydrate the global vanilla store with the data from the server
+    if (allProducts.length === 0) setProductsData(initialProducts);
+
     // Bridge the Vanilla JS State to Preact's Lifecycle!
     // Whenever filterState changes globally, Preact will automatically re-render the grid.
     subscribeToFilters((newState) => {
