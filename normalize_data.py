@@ -27,7 +27,8 @@ def normalize_keys(specs):
             new_specs[k] = v
     return new_specs
 
-file_path = 'products.json'
+base_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(base_dir, 'products.json')
 
 if os.path.exists(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
