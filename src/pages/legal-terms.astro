@@ -1,0 +1,92 @@
+---
+import Layout from '../scripts/Layout.astro';
+import { translations } from '../scripts/translations';
+
+const lang = 'en'; // Defaults to English, ready for i18n
+const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
+---
+
+<Layout title={t('legal_title')} description={t('legal_subtitle')} lang={lang}>
+  <main class="legal-page">
+    <div class="container legal-container">
+      <a href="/" class="legal-back">{t('btn_back_home')}</a>
+
+      <div class="legal-title">
+        <h1>{t('legal_title')}</h1>
+        <p>{t('legal_subtitle')}</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>{t('legal_s1_title')}</h2>
+        <p>{t('legal_s1_text')}</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>{t('legal_s2_title')}</h2>
+        <p>{t('legal_s2_text')}</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>{t('legal_s3_title')}</h2>
+        <p>{t('legal_s3_text')}</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>{t('legal_s4_title')}</h2>
+        <p>{t('legal_s4_text')}</p>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .legal-page {
+    padding: 64px 0;
+    background: var(--color-white);
+  }
+  .legal-container {
+    max-width: 850px;
+    margin: 0 auto;
+  }
+  .legal-section {
+    margin-bottom: 48px;
+  }
+  .legal-section h2 {
+    font-size: 1.75rem;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--color-primary-light);
+  }
+  .legal-section p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-gray-700);
+  }
+  .legal-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: var(--color-primary-light);
+    font-weight: 600;
+    transition: var(--transition);
+  }
+  .legal-back:hover {
+    color: var(--color-primary-dark);
+    transform: translateX(-3px);
+  }
+  .legal-title {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .legal-title h1 {
+    font-size: 2.3rem;
+    color: var(--color-primary);
+    margin-bottom: 12px;
+  }
+  .legal-title p {
+    color: var(--color-gray-600);
+    font-size: 1.1rem;
+  }
+</style>

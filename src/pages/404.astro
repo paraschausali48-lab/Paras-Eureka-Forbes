@@ -1,0 +1,52 @@
+---
+import Layout from '../scripts/Layout.astro';
+import { translations } from '../scripts/translations';
+
+const lang = 'en';
+const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
+---
+
+<Layout title={t('error_title')} description={t('error_desc')} lang={lang}>
+  <main class="error-page">
+    <div class="error-code">404</div>
+    <h2 class="error-title">{t('error_title')}</h2>
+    <p class="error-desc">{t('error_desc')}</p>
+    <a href="/" class="btn">{t('error_btn')}</a>
+  </main>
+</Layout>
+
+<style>
+  .error-page {
+    padding: 80px 20px;
+    text-align: center;
+    background: var(--color-white);
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .error-code {
+    font-size: 8rem;
+    font-weight: 900;
+    color: var(--color-gray-200);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+  .error-title {
+    font-size: 2rem;
+    color: var(--color-gray-800);
+    margin-bottom: 20px;
+  }
+  .error-desc {
+    font-size: 1.1rem;
+    color: var(--color-gray-600);
+    max-width: 500px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 600px) {
+    .error-code { font-size: 6rem; }
+    .error-title { font-size: 1.6rem; }
+    .error-desc { font-size: 1rem; }
+  }
+</style>

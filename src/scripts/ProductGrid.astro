@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import productsJson from '../../public/products.json';
 import type { Product } from '../scripts/types';
 import { translations } from '../scripts/translations';
@@ -44,6 +45,10 @@ function getProductHighlights(product: Product): string[] {
 const pathLang = Astro.url.pathname.split('/')[1];
 const lang = ['en', 'hi', 'mr', 'gu'].includes(pathLang) ? pathLang : 'en';
 const t = (key: string) => translations[lang as keyof typeof translations]?.[key] || translations['en'][key] || key;
+
+// 5. Tell Astro to dynamically find all local images in the assets folder
+// (This safely ignores the folder if it doesn't exist yet!)
+const localImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpeg,jpg,png,gif,webp}');
 ---
 
 <div id="product-grid" class="product-grid">
@@ -68,7 +73,16 @@ const t = (key: string) => translations[lang as keyof typeof translations]?.[key
       >
         {product.image ? (
           <div class="product-media">
-            <img src={product.image} alt={product.name} loading="lazy" width="300" height="200" />
+            {localImages[`/src/assets/images/${product.image}`] ? (
+              <Image
+                src={localImages`/src/assets/images/${product.image}`}
+                alt={product.name}
+                width={300}
+                height={200}
+              />
+            ) : (
+              <img src={product.image} alt={product.name} loading="lazy" width="300" height="200" />
+            )}
           </div>
         ) : (
           <div class="product-media product-media-placeholder" aria-hidden="true">

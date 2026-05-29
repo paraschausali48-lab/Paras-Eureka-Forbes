@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
 import { translations } from '../../scripts/translations';
 import fs from 'node:fs';
@@ -52,6 +53,10 @@ const getProductHighlights = (product: any) => {
     .filter((value, index, arr) => value && arr.indexOf(value) === index)
     .slice(0, 3);
 };
+
+// Tell Astro to dynamically find all local images in the assets folder
+// (This safely ignores the folder if it doesn't exist yet!)
+const localImages = import.meta.glob<{ default: ImageMetadata }>('/src/assets/images/*.{jpeg,jpg,png,gif,webp}');
 ---
 
 <Layout title={title} description={description} lang={lang}>
@@ -76,7 +81,16 @@ const getProductHighlights = (product: any) => {
           >
             {product.image ? (
               <div class="product-media">
-                <img src={product.image} alt={product.name} loading="lazy" width="300" height="200" />
+                {localImages[`/src/assets/images/${product.image}`] ? (
+                  <Image
+                    src={localImages`/src/assets/images/${product.image}`}
+                    alt={product.name}
+                    width={300}
+                    height={200}
+                  />
+                ) : (
+                  <img src={product.image} alt={product.name} loading="lazy" width="300" height="200" />
+                )}
               </div>
             ) : (
               <div class="product-media product-media-placeholder" aria-hidden="true">

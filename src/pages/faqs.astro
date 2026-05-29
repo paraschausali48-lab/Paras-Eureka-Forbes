@@ -1,0 +1,145 @@
+---
+import Layout from '../scripts/Layout.astro';
+import { translations } from '../scripts/translations';
+
+const lang = 'en';
+const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
+---
+
+<Layout title={t('faq_title') + " | Paras Eureka Forbes"} description={t('faq_desc')} lang={lang}>
+  <main class="py-main">
+    <section class="faq-section" id="faq">
+      <div class="container">
+        <div class="section-heading">
+          <span class="eyebrow">{t('faq_eyebrow')}</span>
+          <h2>{t('faq_title')}</h2>
+          <p>{t('faq_desc')}</p>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="faq-tabs" role="tablist">
+          <button class="faq-tab active" role="tab" aria-selected="true" data-faq-tab="aquaguards" id="faq-tab-aquaguards">
+            <span>{t('faq_tab_aquaguards')}</span>
+          </button>
+          <button class="faq-tab" role="tab" aria-selected="false" data-faq-tab="vacuums" id="faq-tab-vacuums">
+            <span>{t('faq_tab_vacuums')}</span>
+          </button>
+          <button class="faq-tab" role="tab" aria-selected="false" data-faq-tab="service" id="faq-tab-service">
+            <span>{t('faq_tab_service')}</span>
+          </button>
+        </div>
+
+        <!-- FAQ Accordion Container -->
+        <div class="faq-accordion" id="faq-accordion-container">
+          <!-- ===== AQUAGUARDS TAB ===== -->
+          <div class="faq-tab-panel" role="tabpanel" data-faq-panel="aquaguards" aria-labelledby="faq-tab-aquaguards">
+
+            <div class="faq-item active" data-faq-category="aquaguards">
+              <button class="faq-question" aria-expanded="true">
+                <span class="faq-question-text">{t('faq_q1')}</span>
+                <span class="faq-chevron">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+              <div class="faq-answer" style="max-height: 800px; opacity: 1">
+                <div class="faq-answer-content">
+                  <p>{t('faq_a1')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item" data-faq-category="aquaguards">
+              <button class="faq-question">
+                <span class="faq-question-text">{t('faq_q2')}</span>
+                <span class="faq-chevron">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  <p>{t('faq_a2')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item" data-faq-category="aquaguards">
+              <button class="faq-question">
+                <span class="faq-question-text">{t('faq_q3')}</span>
+                <span class="faq-chevron">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  <p>{t('faq_a3')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item" data-faq-category="aquaguards">
+              <button class="faq-question">
+                <span class="faq-question-text">{t('faq_q5')}</span>
+                <span class="faq-chevron">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  <p>{t('faq_a5')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item" data-faq-category="aquaguards">
+              <button class="faq-question">
+                <span class="faq-question-text">{t('faq_q6')}</span>
+                <span class="faq-chevron">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  <p>{t('faq_a6')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item" data-faq-category="aquaguards">
+              <button class="faq-question">
+                <span class="faq-question-text">{t('faq_q7')}</span>
+                <span class="faq-chevron">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  <p>{t('faq_a7')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="faq-item" data-faq-category="aquaguards">
+              <button class="faq-question">
+                <span class="faq-question-text">{t('faq_q8')}</span>
+                <span class="faq-chevron">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                </span>
+              </button>
+              <div class="faq-answer">
+                <div class="faq-answer-content">
+                  <p>{t('faq_a8')}</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Ensure the JavaScript powers the accordions -->
+  <script src="../scripts/main.ts"></script>
+</Layout>
