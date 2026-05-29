@@ -19,6 +19,13 @@ def run_script(script_name):
 
 def main():
     print("🚀 Starting Eureka Forbes Automation Pipeline...")
+
+    print("\n--- ⏳ Building Astro Project (npm run build) ---")
+    build_result = subprocess.run("npm run build", shell=True)
+    if build_result.returncode != 0:
+        print("❌ Error building the Astro project. Pipeline stopped.")
+        sys.exit(1)
+
     scripts_to_run = ["normalize_data.py", "clean_html.py", "generate_sitemap.py", "github_push.py"]
 
     for script in scripts_to_run:
