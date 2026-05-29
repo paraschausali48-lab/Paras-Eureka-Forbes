@@ -1,5 +1,6 @@
 ---
-
+const base = import.meta.env.BASE_URL;
+const targetUrl = base.endsWith('/') ? `${base}en/` : `${base}/en/`;
 ---
 
 <!doctype html>
@@ -9,13 +10,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Redirecting...</title>
     <!-- Fallback meta redirect -->
-    <meta http-equiv="refresh" content={`0;url=${import.meta.env.BASE_URL}en/`} />
+    <meta http-equiv="refresh" content={`0;url=${targetUrl}`} />
     <!-- Immediate JavaScript redirect -->
-    <script>
-      window.location.replace(`${import.meta.env.BASE_URL}en/`);
+    <script is:inline define:vars={{ targetUrl }}>
+      window.location.replace(targetUrl);
     </script>
   </head>
   <body>
-    <p>Redirecting to <a href={`${import.meta.env.BASE_URL}en/`}>your catalog</a>...</p>
+    <p>Redirecting to <a href={targetUrl}>your catalog</a>...</p>
   </body>
 </html>
