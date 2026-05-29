@@ -45,7 +45,9 @@ export function applyFiltersAndSort(state: FilterState, allProducts: Product[]):
     card.classList.remove('reveal', 'active');
   });
 
-  // Re-append to the grid in the newly sorted order, making them visible
+  // Use a DocumentFragment to batch DOM insertions and prevent multiple reflows
+  const fragment = document.createDocumentFragment();
+
   visibleProducts.forEach((product) => {
     const sku = getSku(product.name);
     const card = cardMap.get(sku);
@@ -53,9 +55,12 @@ export function applyFiltersAndSort(state: FilterState, allProducts: Product[]):
       card.style.display = '';
       // Add a slight delay for the CSS transition reveal to kick in
       requestAnimationFrame(() => card.classList.add('reveal', 'active'));
-      grid.appendChild(card);
+      fragment.appendChild(card);
     }
   });
+
+  // Append all elements to the DOM in a single operation
+  grid.appendChild(fragment);
 
   return visibleProducts;
 }

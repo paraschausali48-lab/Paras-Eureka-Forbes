@@ -5,12 +5,21 @@ import { allProducts } from './filters';
 import { handleAppRouting } from './routing';
 
 export function getWishlist(): string[] {
-  return JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
+  try {
+    return JSON.parse(localStorage.getItem('ef_wishlist') || '[]');
+  } catch (e) {
+    console.warn('Failed to read wishlist from local storage', e);
+    return [];
+  }
 }
 
 export function saveWishlist(list: string[]) {
-  localStorage.setItem('ef_wishlist', JSON.stringify(list));
-  updateWishlistUI();
+  try {
+    localStorage.setItem('ef_wishlist', JSON.stringify(list));
+    updateWishlistUI();
+  } catch (e) {
+    console.warn('Failed to save wishlist to local storage', e);
+  }
 }
 
 export function updateWishlistUI() {
@@ -23,10 +32,12 @@ export function updateWishlistUI() {
   if (pdpWishBtn) {
     const pdpSkuEl = document.getElementById('pdp-sku');
     if (pdpSkuEl) {
-      const currentSku = pdpSkuEl.querySelector('span')!.textContent!;
-      pdpWishBtn.innerHTML = list.includes(currentSku)
-        ? '<svg width="24" height="24" fill="#e63946" stroke="#e63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>'
-        : '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
+      const currentSku = pdpSkuEl.querySelector('span')?.textContent?.trim();
+      if (currentSku) {
+        pdpWishBtn.innerHTML = list.includes(currentSku)
+          ? '<svg width="24" height="24" fill="#e63946" stroke="#e63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>'
+          : '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
+      }
     }
   }
 }
