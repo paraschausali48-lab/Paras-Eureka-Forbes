@@ -1,6 +1,11 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { getWishlist, saveWishlist } from './wishlist';
 
+// Mock Astro router since it's a virtual module
+vi.mock('astro:transitions/client', () => ({
+  navigate: vi.fn(),
+}));
+
 // Mock dependencies that rely on the DOM to prevent test suite errors
 vi.mock('./toast', () => ({
   showToast: vi.fn(),
