@@ -35,17 +35,17 @@ export default {
   // PRODUCTS SECTION
   // ============================================
   products_eyebrow: 'Featured Products',
-  products_title: 'Selected SKUs and offline-only offers',
+  products_title: 'Curated Collections & Special Pricing',
   products_desc:
-    'Choose from top-quality products that are available through direct sales and exclusive offline channels.',
+    'Explore top-tier models and unlock exclusive direct sales discounts, backed by personalized guidance and free home demonstrations.',
   intro_badge1: 'Authorized Direct Sales',
   intro_badge2: 'Free Home Demo',
   intro_badge3: 'Exclusive Offers',
   filter_all: 'All Products',
-  filter_water: 'Water Purifiers',
-  filter_air: 'Air Purifiers',
-  filter_vacuum: 'Vacuum Cleaners',
-  filter_softener: 'Water Softeners',
+  filter_water: 'Aquaguard Purifiers',
+  filter_air: 'Eureka Forbes Air',
+  filter_vacuum: 'Eureka Forbes Vacuums',
+  filter_softener: 'Aquaguard Softeners',
   btn_ask: 'Book a Free Demo',
   btn_check_suitability: 'Check Suitability',
   btn_check_hard_water: 'Check Hard Water Solution',
@@ -76,13 +76,13 @@ export default {
   empty_btn: 'Clear All Filters',
   btn_back_home: '← Back to Home',
 
-  cat_water: 'Water Purifiers',
+  cat_water: 'Aquaguard Water Purifiers',
   cat_water_desc: 'RO, UV, UF & Copper',
-  cat_vacuum: 'Vacuum Cleaners',
+  cat_vacuum: 'Eureka Forbes Vacuum Cleaners',
   cat_vacuum_desc: 'Robotic, Cordless & Dry/Wet',
-  cat_air: 'Air Purifiers',
+  cat_air: 'Eureka Forbes Air Purifiers',
   cat_air_desc: 'HEPA & Smart Sensors',
-  cat_softener: 'Water Softeners',
+  cat_softener: 'Aquaguard Water Softeners',
   cat_softener_desc: 'Whole House Solutions',
   btn_back_categories: 'Back to Categories',
 
@@ -177,7 +177,7 @@ export default {
     'To ensure customer security and adhere to authorized sales protocols, this website does not feature any payment gateways. Visitors cannot buy products directly on this site. If you wish to purchase a product after reviewing the information here, I will personally assist you with the official documentation and payment process as dictated by Eureka Forbes Limited.',
   legal_s3_title: 'Privacy & Data Collection',
   legal_s3_text:
-    'Any personal information submitted through forms on this website (such as name, phone number, and address) is used strictly for the purpose of scheduling demonstrations, water tests, or providing product information. Your data is never sold or shared with unauthorized third parties.',
+    "Any personal information submitted through this website (such as name, phone number, and address) is encrypted and used strictly for scheduling demonstrations, water tests, or providing product information. We adhere to strict data protection standards and local privacy laws (including India's DPDP Act). Your data is never sold, rented, or shared with unauthorized third parties. All personal data is securely deleted once the inquiry is fulfilled or upon your request.",
   legal_s4_title: 'Limitation of Liability',
   legal_s4_text:
     'While every effort is made to ensure product specifications, features, and prices are accurate, these details are subject to change by Eureka Forbes Limited without prior notice. The operator of this website shall not be held liable for any discrepancies.',

@@ -20,8 +20,22 @@ export function ProductCard({ product, t }: Props) {
       data-sku={sku}
       data-category={product.category}
     >
-      <div className="product-image">
-        <img src={`${import.meta.env.BASE_URL}images/products/${sku}.webp`} alt={product.name} loading="lazy" />
+      <div className="product-image skeleton-wrapper">
+        <img
+          src={`${import.meta.env.BASE_URL}images/products/${sku}.webp`}
+          alt={product.name}
+          width="300"
+          height="300"
+          loading="lazy"
+          decoding="async"
+          onLoad={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.style.opacity = '1';
+            target.parentElement?.classList.remove('skeleton-wrapper');
+          }}
+          onError={(e) => ((e.target as HTMLImageElement).style.display = 'none')}
+          style={{ opacity: 0, transition: 'opacity 0.3s ease-in' }}
+        />
         <div className="product-tags">
           <span className="product-tag" data-category={product.category}>
             {t(product.i18nTag)}
@@ -40,11 +54,13 @@ export function ProductCard({ product, t }: Props) {
           </button>
           <button
             className="action-btn wishlist-card-btn"
-            aria-label={t('nav_wishlist')}
+            aria-label={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+            aria-pressed={isWishlisted}
             onClick={() => handleWishlistToggle(sku)}
           >
             {isWishlisted ? (
               <svg
+                aria-hidden="true"
                 width="24"
                 height="24"
                 fill="#e63946"
@@ -58,6 +74,7 @@ export function ProductCard({ product, t }: Props) {
               </svg>
             ) : (
               <svg
+                aria-hidden="true"
                 width="24"
                 height="24"
                 fill="none"

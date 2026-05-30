@@ -80,7 +80,11 @@ export default function Wishlist() {
               </div>
               <div class="wishlist-item-price">{priceText}</div>
             </div>
-            <button class="wishlist-item-remove" onClick={() => handleRemove(sku)}>
+            <button
+              class="wishlist-item-remove"
+              onClick={() => handleRemove(sku)}
+              aria-label={`Remove ${title} from wishlist`}
+            >
               ×
             </button>
           </div>

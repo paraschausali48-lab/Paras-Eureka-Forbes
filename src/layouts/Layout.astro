@@ -50,13 +50,11 @@ const t = await useTranslations(lang);
       rel="stylesheet"
     />
 
-    <!-- Nuclear Service Worker Kill Switch -->
-    <script is:inline>
+    <!-- PWA Service Worker Registration -->
+    <script define:vars={{ baseUrl }}>
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function (registrations) {
-          for (let registration of registrations) {
-            registration.unregister();
-          }
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register(baseUrl + 'sw.js').catch(() => {});
         });
       }
     </script>
@@ -93,6 +91,7 @@ const t = await useTranslations(lang);
     data-toast-add={t('toast_wishlist_add')}
     data-toast-remove={t('toast_wishlist_remove')}
     data-toast-clear={t('toast_wishlist_clear')}
+    data-toast-link-copied={t('toast_link_copied')}
     data-wishlist-empty={t('wishlist_empty')}
   >
     <!-- Main Sidebar Menu -->

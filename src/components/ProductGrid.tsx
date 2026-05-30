@@ -31,11 +31,11 @@ export default function ProductGrid({ products, translations }: Props) {
   const t = (key: string) => translations[key] || key;
 
   return (
-    <div id="product-grid">
+    <div id="product-grid" class="product-grid">
       {visibleProducts.map((product) => (
         <ProductCard key={product.sku} product={product} t={t} />
       ))}
-      <div id="empty-state" style={{ display: visibleCount === 0 ? 'flex' : 'none' }}>
+      <div id="empty-state" class="empty-state" style={{ display: visibleCount === 0 ? 'flex' : 'none' }}>
         <div class="empty-state-content">
           <h3>{t('empty_title')}</h3>
           <p>{t('empty_desc')}</p>

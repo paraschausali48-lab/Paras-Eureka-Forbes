@@ -176,6 +176,25 @@ registerClickAction({
   handle: () => setFilterState({ categories: ['all'], facets: [], query: '' }),
 });
 
+registerClickAction({
+  selector: '.share-btn, #share-btn, .share-action-btn',
+  handle: async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: document.title,
+          url: window.location.href,
+        });
+      } catch (e) {
+        // User dismissed share sheet gracefully
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      import('./toast').then(({ showToast }) => showToast(document.body.dataset.toastLinkCopied || 'Link Copied!'));
+    }
+  },
+});
+
 document.addEventListener('change', (e: Event) => {
   const target = e.target as HTMLSelectElement;
   if (target.id === 'desktop-sort-select') {
