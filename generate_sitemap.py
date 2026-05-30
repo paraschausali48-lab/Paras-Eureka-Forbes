@@ -53,7 +53,7 @@ def generate_sitemap(data_file="products.json", output_file="public/sitemap.xml"
             sku = f"EF-{slug_base}"
 
             xml_content.append('  <url>')
-            xml_content.append(f'    <loc>{base_url}/#{sku}</loc>')
+            xml_content.append(f'    <loc>{base_url}/en/products/{sku}/</loc>')
             xml_content.append(f'    <lastmod>{today}</lastmod>')
             xml_content.append('    <changefreq>monthly</changefreq>')
             xml_content.append('    <priority>0.8</priority>')
