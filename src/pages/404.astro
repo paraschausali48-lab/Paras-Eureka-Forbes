@@ -1,5 +1,5 @@
 ---
-import Layout from '../scripts/Layout.astro';
+import Layout from '../layouts/Layout.astro';
 import { translations } from '../scripts/translations';
 
 const lang = 'en';
@@ -45,8 +45,14 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
     margin-bottom: 40px;
   }
   @media (max-width: 600px) {
-    .error-code { font-size: 6rem; }
-    .error-title { font-size: 1.6rem; }
-    .error-desc { font-size: 1rem; }
+    .error-code {
+      font-size: 6rem;
+    }
+    .error-title {
+      font-size: 1.6rem;
+    }
+    .error-desc {
+      font-size: 1rem;
+    }
   }
 </style>

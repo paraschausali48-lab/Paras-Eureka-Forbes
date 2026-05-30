@@ -1,12 +1,12 @@
 ---
-import Layout from '../scripts/Layout.astro';
+import Layout from '../layouts/Layout.astro';
 import { translations } from '../scripts/translations';
 
 const lang = 'en';
 const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
 ---
 
-<Layout title={t('faq_title') + " | Paras Eureka Forbes"} description={t('faq_desc')} lang={lang}>
+<Layout title={t('faq_title') + ' | Paras Eureka Forbes'} description={t('faq_desc')} lang={lang}>
   <main class="py-main">
     <section class="faq-section" id="faq">
       <div class="container">
@@ -18,7 +18,13 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
 
         <!-- Category Tabs -->
         <div class="faq-tabs" role="tablist">
-          <button class="faq-tab active" role="tab" aria-selected="true" data-faq-tab="aquaguards" id="faq-tab-aquaguards">
+          <button
+            class="faq-tab active"
+            role="tab"
+            aria-selected="true"
+            data-faq-tab="aquaguards"
+            id="faq-tab-aquaguards"
+          >
             <span>{t('faq_tab_aquaguards')}</span>
           </button>
           <button class="faq-tab" role="tab" aria-selected="false" data-faq-tab="vacuums" id="faq-tab-vacuums">
@@ -33,12 +39,20 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
         <div class="faq-accordion" id="faq-accordion-container">
           <!-- ===== AQUAGUARDS TAB ===== -->
           <div class="faq-tab-panel" role="tabpanel" data-faq-panel="aquaguards" aria-labelledby="faq-tab-aquaguards">
-
             <div class="faq-item active" data-faq-category="aquaguards">
               <button class="faq-question" aria-expanded="true">
                 <span class="faq-question-text">{t('faq_q1')}</span>
                 <span class="faq-chevron">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 </span>
@@ -54,7 +68,18 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
               <button class="faq-question">
                 <span class="faq-question-text">{t('faq_q2')}</span>
                 <span class="faq-chevron">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
                 </span>
               </button>
               <div class="faq-answer">
@@ -68,7 +93,18 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
               <button class="faq-question">
                 <span class="faq-question-text">{t('faq_q3')}</span>
                 <span class="faq-chevron">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
                 </span>
               </button>
               <div class="faq-answer">
@@ -82,7 +118,18 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
               <button class="faq-question">
                 <span class="faq-question-text">{t('faq_q5')}</span>
                 <span class="faq-chevron">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
                 </span>
               </button>
               <div class="faq-answer">
@@ -96,7 +143,18 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
               <button class="faq-question">
                 <span class="faq-question-text">{t('faq_q6')}</span>
                 <span class="faq-chevron">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
                 </span>
               </button>
               <div class="faq-answer">
@@ -110,7 +168,18 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
               <button class="faq-question">
                 <span class="faq-question-text">{t('faq_q7')}</span>
                 <span class="faq-chevron">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
                 </span>
               </button>
               <div class="faq-answer">
@@ -124,7 +193,18 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
               <button class="faq-question">
                 <span class="faq-question-text">{t('faq_q8')}</span>
                 <span class="faq-chevron">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
                 </span>
               </button>
               <div class="faq-answer">
@@ -133,7 +213,6 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import productsData from '../../../public/products.json';
 
 import type { Product } from '../../scripts/types';
 const currentLang = Astro.currentLocale || 'en';
-import Layout from '../../scripts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 import { translations } from '../../scripts/translations';
 
 export async function getStaticPaths() {

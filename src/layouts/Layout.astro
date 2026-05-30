@@ -1,0 +1,70 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { translations } from '../scripts/translations';
+import '../styles.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  lang?: string;
+}
+
+const baseUrl = import.meta.env.BASE_URL;
+
+const {
+  title = 'Paras Eureka Forbes | Authorized Direct Sales Specialist',
+  description = 'Authorized Eureka Forbes direct sales specialist in Mumbai, Navi Mumbai & Thane.',
+  ogImage = baseUrl + 'images/current-offer.webp',
+  lang = 'en',
+} = Astro.props;
+
+// Helper function to get translations at build time
+const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#012d5a" />
+    <ClientRouter />
+
+    <!-- OpenGraph SEO -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- PWA & Fonts -->
+    <link rel="manifest" href={`${baseUrl}site.webmanifest`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body
+    data-toast-add={t('toast_wishlist_add')}
+    data-toast-remove={t('toast_wishlist_remove')}
+    data-toast-clear={t('toast_wishlist_clear')}
+    data-wishlist-empty={t('wishlist_empty')}
+  >
+    <!-- Your exact Header HTML goes here -->
+    <header class="site-header">
+      <!-- ... copy from index.html ... -->
+    </header>
+
+    <slot />
+    <!-- This is where index.astro or [sku].astro gets injected -->
+
+    <!-- Your exact Footer HTML goes here -->
+    <footer class="site-footer">
+      <!-- ... copy from index.html ... -->
+    </footer>
+  </body>
+</html>

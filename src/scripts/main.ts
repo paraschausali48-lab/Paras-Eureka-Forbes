@@ -1,6 +1,6 @@
 import { navigate } from 'astro:transitions/client';
 import { debounce, enableSwipeToClose, handleFocusTrap } from './utils';
-import { filterState, setFilterState, setProductsData } from './filters';
+import { filterState, setFilterState } from './filters';
 import { handleAppRouting, closeActiveOverlay, hideProductsView } from './routing';
 import { initScrollAnimations, initHeaderScroll, initAccordions } from './ui';
 import { initProductNavigation } from './pdp';
