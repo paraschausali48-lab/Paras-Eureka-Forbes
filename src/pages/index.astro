@@ -1,12 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { useTranslations, getTranslations } from '../../scripts/translations';
-import products from '../../../public/products.json';
+import Layout from '../layouts/Layout.astro';
+import { useTranslations, getTranslations } from '../scripts/translations';
+import products from '../../public/products.json';
 // @ts-ignore - TS complains about .tsx, but Astro requires it to resolve the Preact island
-import ProductGrid from '../../components/ProductGrid.tsx';
+import ProductGrid from '../components/ProductGrid.tsx';
 // @ts-ignore
-import { FilterSidebar } from '../../components/FilterSidebar.tsx';
-import { setProductsData } from '../../scripts/filters';
+import { FilterSidebar } from '../components/FilterSidebar.tsx';
+import { setProductsData } from '../scripts/filters';
 
 export async function getStaticPaths() {
   const languages = ['en', 'hi', 'mr', 'gu'];
@@ -268,7 +268,7 @@ setProductsData(products as any);
   </div>
 
   <!-- Connect the page logic -->
-  <script src="../../scripts/main.ts"></script>
+  <script src="../scripts/main.ts"></script>
 </Layout>
 
 <style>
