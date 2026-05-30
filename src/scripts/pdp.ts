@@ -17,7 +17,7 @@ export function initProductNavigation() {
     card.setAttribute('data-prefetched', 'true'); // Ensure we only prefetch once per card
     const sku = card.dataset.sku!;
     const lang = document.documentElement.lang || 'en';
-    prefetch(`${baseUrl}${lang}/products/${sku}`);
+    prefetch(`${baseUrl}${lang}/products/${sku}/`);
   };
 
   productGrid.addEventListener('mouseover', handlePrefetch, { passive: true });
@@ -35,6 +35,6 @@ export function initProductNavigation() {
 
     const sku = card.dataset.sku!;
     const lang = document.documentElement.lang || 'en';
-    navigate(`${baseUrl}${lang}/products/${sku}`);
+    navigate(`${baseUrl}${lang}/products/${sku}/`);
   });
 }

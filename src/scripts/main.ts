@@ -178,6 +178,7 @@ const clickHandlers = [
         } else {
           url.pathname = baseUrl + lang + '/' + pathParts.join('/');
         }
+        if (!url.pathname.endsWith('/')) url.pathname += '/';
         navigate(url.pathname + url.search + url.hash);
       }
       const mainSidebar = document.getElementById('main-sidebar');
