@@ -9,16 +9,6 @@ import { initTelemetry } from './telemetry';
 // ============= OBSERVABILITY =============
 initTelemetry();
 
-// ============= SERVICE WORKER REGISTRATION =============
-if ('serviceWorker' in navigator) {
-  // Temporarily disable and unregister the Service Worker to prevent aggressive 404 caching on new routes
-  navigator.serviceWorker.getRegistrations().then((registrations) => {
-    for (let registration of registrations) {
-      registration.unregister();
-    }
-  });
-}
-
 // ============= GLOBAL EVENT LISTENERS (Run Once) =============
 // Top-level module code only runs once per session, safely avoiding duplicate
 // bindings during Astro View Transitions without polluting the window object.

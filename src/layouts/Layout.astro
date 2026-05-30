@@ -47,6 +47,17 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+
+    <!-- Nuclear Service Worker Kill Switch -->
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function (registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        });
+      }
+    </script>
   </head>
   <body
     data-toast-add={t('toast_wishlist_add')}
