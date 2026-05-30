@@ -45,9 +45,6 @@ export function hideProductsView() {
   const prodEl = document.getElementById('products');
   if (prodEl) prodEl.style.display = 'none';
   document.body.classList.remove('products-visible');
-  document.querySelectorAll<HTMLElement>('.visual-filters').forEach((vf) => (vf.style.display = 'none'));
-  const vfMain = document.getElementById('vf-main');
-  if (vfMain) vfMain.style.display = 'flex';
   document.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
   const clearAllBtn = document.getElementById('filter-clear-all');
   if (clearAllBtn) clearAllBtn.click();

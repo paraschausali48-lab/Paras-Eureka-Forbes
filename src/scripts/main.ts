@@ -143,10 +143,6 @@ const clickHandlers = [
       el.classList.add('active');
 
       if (navCat) {
-        document.querySelectorAll<HTMLElement>('.visual-filters').forEach((vf) => (vf.style.display = 'none'));
-        const vfId = navCat === 'Water Softener' ? 'vf-softener' : `vf-${navCat.split(' ')[0].toLowerCase()}`;
-        const targetVf = document.getElementById(vfId);
-        if (targetVf) targetVf.style.display = 'flex';
         setFilterState({ categories: [navCat], facets: [], query: '' });
       } else if (filterVal) {
         let targetCat = 'Water Purifier';
