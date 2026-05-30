@@ -19,46 +19,6 @@ const baseUrl = import.meta.env.BASE_URL;
 
 // Pass the full product dataset to the client-side filter store
 setProductsData(products as any);
-
-// ==========================================
-// BUILD-TIME SSR LOGIC
-// ==========================================
-const getSku = (title: string) =>
-  'EF-' +
-  title
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-|-$/g, '')
-    .toUpperCase();
-
-const categoryIcons: Record<string, string> = {
-  'Water Purifier': '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path><path d="M9 13l2 2 4-4"></path>',
-  'Vacuum Cleaner':
-    '<rect x="4" y="14" width="16" height="6" rx="2"></rect><path d="M8 14V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"></path>',
-  'Air Purifier':
-    '<path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path>',
-  'Water Softener':
-    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M12 11l-2.5 3c0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5L12 11z"></path>',
-};
-
-const getProductHighlights = (product: any) => {
-  const specs = product.specs || {};
-  const candidates: (string | number | undefined)[] = [];
-  if (product.category === 'Water Purifier') {
-    candidates.push(specs['TDS'], specs['Storage Capacity'], specs['Filter Life'], specs['Installation Type']);
-  } else if (product.category === 'Vacuum Cleaner') {
-    candidates.push(specs['Type'], specs['Application'], specs['Dust Capacity'], specs['Run Time']);
-  } else if (product.category === 'Air Purifier') {
-    candidates.push(specs['Ideal For'], specs['Air Flow'], specs['Purification Stages']);
-  } else if (product.category === 'Water Softener') {
-    candidates.push(specs['Max. Input Hardness (ppm)'], specs['Max. Input Flow Rate (LPH)'], specs['Technology']);
-  }
-  return candidates
-    .filter(Boolean)
-    .map((value) => String(value!).replace(/\s+/g, ' ').trim())
-    .filter((value, index, arr) => value && arr.indexOf(value) === index)
-    .slice(0, 3);
-};
 ---
 
 <Layout title={t('header_rep_title')} description={t('vb_desc')} lang={lang}>
