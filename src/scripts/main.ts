@@ -11,27 +11,10 @@ initTelemetry();
 
 // ============= SERVICE WORKER REGISTRATION =============
 if ('serviceWorker' in navigator) {
-  // Defer service worker registration until after the page has fully loaded
-  window.addEventListener('load', async () => {
-    try {
-      const registration = await navigator.serviceWorker.register(import.meta.env.BASE_URL + 'sw.js');
-
-      // Automatically check for deployment updates every hour
-      setInterval(() => registration.update(), 1000 * 60 * 60);
-
-      registration.addEventListener('updatefound', () => {
-        const newWorker = registration.installing;
-        if (newWorker) {
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              console.info('[Service Worker] New update found. Forcing activation...');
-              window.location.reload();
-            }
-          });
-        }
-      });
-    } catch (err) {
-      console.warn('Service Worker registration failed:', err);
+  // Temporarily disable and unregister the Service Worker to prevent aggressive 404 caching on new routes
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (let registration of registrations) {
+      registration.unregister();
     }
   });
 }

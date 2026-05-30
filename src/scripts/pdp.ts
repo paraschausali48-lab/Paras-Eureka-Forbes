@@ -27,10 +27,9 @@ export function initProductNavigation() {
     const card = (e.target as HTMLElement).closest('.product-card') as HTMLElement;
     if (!card) return;
 
-    const isMoreInfoBtn = (e.target as HTMLElement).closest('.product-btn[href="#contact"]');
-    if (!isMoreInfoBtn && ((e.target as HTMLElement).closest('.product-btn') || (e.target as HTMLElement).closest('a')))
-      return;
-    if (isMoreInfoBtn) e.preventDefault(); // Prevent jumping down the page, open modal instead
+    // If they clicked a button or a native link (like More Info), let it behave naturally
+    if ((e.target as HTMLElement).closest('button') || (e.target as HTMLElement).closest('a')) return;
+
     setLastFocused(card);
 
     const sku = card.dataset.sku!;
