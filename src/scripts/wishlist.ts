@@ -1,6 +1,7 @@
 import { navigate } from 'astro:transitions/client';
+import { atom } from 'nanostores';
 import { showToast } from './toast';
-import { escapeHTML, getSku } from './utils';
+import { escapeHTML } from './utils';
 import { allProducts } from './filters';
 import { handleAppRouting } from './routing';
 
@@ -13,9 +14,14 @@ export function getWishlist(): string[] {
   }
 }
 
+// 1. Create a reactive store for the wishlist so Preact components can subscribe to it natively.
+// We initialize it safely on the client side to avoid Astro SSR mismatch.
+export const $wishlist = atom<string[]>(typeof window !== 'undefined' ? getWishlist() : []);
+
 export function saveWishlist(list: string[]) {
   try {
     localStorage.setItem('ef_wishlist', JSON.stringify(list));
+    $wishlist.set(list);
     updateWishlistUI();
   } catch (e) {
     showToast(document.body.dataset.toastError || 'Unable to save wishlist. Storage may be restricted.');
@@ -60,7 +66,7 @@ export function renderWishlist(
   }
 
   list.forEach((sku) => {
-    const product = allProducts.find((p) => getSku(p.name) === sku);
+    const product = allProducts.find((p) => p.sku === sku);
     // Fallback to DOM in case allProducts hasn't hydrated yet (e.g., immediate page load race condition)
     const card = document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`);
 

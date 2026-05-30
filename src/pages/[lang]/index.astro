@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import { translations } from '../../scripts/translations';
 import products from '../../../public/products.json';
 import ProductGrid from '../../components/ProductGrid.tsx';
+import { FilterSidebar } from '../../components/FilterSidebar.tsx';
 import { setProductsData } from '../../scripts/filters';
 
 export async function getStaticPaths() {
@@ -120,92 +121,7 @@ setProductsData(products as any);
       <!-- 3. Main Products Area (Filters & Grid) -->
       <section id="products" class="products-layout reveal">
         <!-- Filter Sidebar -->
-        <aside class="filter-sidebar" id="filter-sidebar">
-          <div class="filter-sidebar-header">
-            <h3>{t('filter_title')}</h3>
-            <button class="filter-clear-all" id="filter-clear-all">{t('filter_clear_all')}</button>
-            <button class="filter-sidebar-close" id="filter-sidebar-close">&times;</button>
-          </div>
-          <div class="filter-sidebar-inner">
-            <div class="filter-groups-wrapper">
-              <!-- Main Category Filters -->
-              <div class="filter-group">
-                <button class="filter-group-toggle" aria-expanded="true">
-                  <div class="filter-group-title">{t('filter_cat_title')}</div>
-                  <svg
-                    class="filter-chevron"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                </button>
-                <div class="filter-group-content">
-                  <label class="filter-option">
-                    <input type="checkbox" class="filter-cat" value="all" checked />
-                    {t('filter_all')}
-                  </label>
-                  <label class="filter-option">
-                    <input type="checkbox" class="filter-cat" value="Water Purifier" />
-                    {t('filter_water')}
-                    <span class="filter-count" data-cat="Water Purifier"></span>
-                  </label>
-                  <label class="filter-option">
-                    <input type="checkbox" class="filter-cat" value="Vacuum Cleaner" />
-                    {t('filter_vacuum')}
-                    <span class="filter-count" data-cat="Vacuum Cleaner"></span>
-                  </label>
-                  <label class="filter-option">
-                    <input type="checkbox" class="filter-cat" value="Air Purifier" />
-                    {t('filter_air')}
-                    <span class="filter-count" data-cat="Air Purifier"></span>
-                  </label>
-                  <label class="filter-option">
-                    <input type="checkbox" class="filter-cat" value="Water Softener" />
-                    {t('filter_softener')}
-                    <span class="filter-count" data-cat="Water Softener"></span>
-                  </label>
-                </div>
-              </div>
-
-              <!-- Sub-Technology Filters -->
-              <div class="filter-group water-filter">
-                <button class="filter-group-toggle" aria-expanded="true">
-                  <div class="filter-group-title">{t('filter_tech_title')}</div>
-                  <svg
-                    class="filter-chevron"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                  >
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                </button>
-                <div class="filter-group-content">
-                  <label class="filter-option">
-                    <input type="checkbox" class="filter-facet" value="ro" />
-                    {t('filter_tech_ro')}
-                  </label>
-                  <label class="filter-option">
-                    <input type="checkbox" class="filter-facet" value="uv" />
-                    {t('filter_tech_uv')}
-                  </label>
-                  <label class="filter-option">
-                    <input type="checkbox" class="filter-facet" value="uf" />
-                    {t('filter_tech_uf')}
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
+        <FilterSidebar client:load translations={translations[lang] || {}} />
 
         <!-- Main Grid Area -->
         <div class="products-main">

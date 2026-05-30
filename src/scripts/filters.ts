@@ -16,6 +16,17 @@ export const $filterState = map<FilterState>({
   sort: 'relevance',
 });
 
+// 2. Create a metadata store so Preact can broadcast catalog stats
+// without imperatively calling legacy Vanilla JS functions.
+export interface CatalogMeta {
+  visibleCount: number;
+  categoryCounts: Record<string, number>;
+}
+export const $catalogMeta = map<CatalogMeta>({
+  visibleCount: 0,
+  categoryCounts: {},
+});
+
 export let allProducts: Product[] = [];
 export function setProductsData(products: Product[]) {
   allProducts = products;
@@ -172,99 +183,18 @@ export function setFilterState(newState: Partial<FilterState>) {
   $filterState.set(updatedState);
 }
 
-/**
- * SIDE EFFECT: Updates the DOM to reflect the new filter state.
- */
-export function updateFilterUI(state: FilterState, visibleCount: number, categoryCounts: Record<string, number>) {
-  const { categories: checkedCats, facets: activeFacets, query } = state;
-  const isAllSelected = checkedCats.includes('all');
-  const clearAllBtn = document.getElementById('filter-clear-all');
+// 3. Decouple Environment Side Effects (URL Sync) from UI Rendering
+if (typeof window !== 'undefined') {
+  $filterState.subscribe((state) => {
+    const url = new URL(window.location.href);
+    const isAllSelected = state.categories.includes('all');
 
-  // Sync DOM inputs to match the state
-  document.querySelectorAll<HTMLInputElement>('.filter-cat').forEach((cb) => {
-    cb.checked = state.categories.includes(cb.value);
-  });
-  document.querySelectorAll<HTMLInputElement>('.filter-facet').forEach((cb) => {
-    cb.checked = state.facets.includes(cb.value);
-  });
-  const searchInput = document.getElementById('product-search') as HTMLInputElement | null;
-  if (searchInput && searchInput.value !== state.query) {
-    searchInput.value = state.query;
-  }
-  const desktopSort = document.getElementById('desktop-sort-select') as HTMLSelectElement | null;
-  if (desktopSort && desktopSort.value !== state.sort) {
-    desktopSort.value = state.sort;
-  }
-
-  // Dynamic Sidebar Filters - Show only relevant facet groups
-  document.querySelectorAll<HTMLElement>('.water-filter').forEach((el) => {
-    const show = isAllSelected || checkedCats.includes('Water Purifier');
-    el.style.display = show ? '' : 'none';
-  });
-  document.querySelectorAll<HTMLElement>('.vacuum-filter').forEach((el) => {
-    const show = isAllSelected || checkedCats.includes('Vacuum Cleaner');
-    el.style.display = show ? '' : 'none';
-  });
-
-  // Announce results to screen readers
-  const announcer = document.getElementById('search-announcer');
-  if (announcer) {
-    announcer.textContent = `Showing ${visibleCount} product${visibleCount !== 1 ? 's' : ''}`;
-  }
-
-  // Sync Filter State to URL for easy sharing
-  const url = new URL(window.location.href);
-  if (checkedCats.length && !isAllSelected) url.searchParams.set('cat', checkedCats.join(','));
-  else url.searchParams.delete('cat');
-  if (activeFacets.length) url.searchParams.set('facets', activeFacets.join(','));
-  else url.searchParams.delete('facets');
-  if (query) url.searchParams.set('q', query);
-  else url.searchParams.delete('q');
-  window.history.replaceState(null, '', url);
-
-  // Update empty state
-  let emptyState = document.getElementById('empty-state');
-  if (visibleCount === 0) {
-    if (emptyState) emptyState.style.display = 'flex';
-  } else if (emptyState) {
-    emptyState.style.display = 'none';
-  }
-
-  // Update Badges and Clear All state
-  if (clearAllBtn) {
-    if (activeFacets.length > 0 || !isAllSelected || query.length > 0) {
-      clearAllBtn.classList.add('active-filters');
-    } else {
-      clearAllBtn.classList.remove('active-filters');
-    }
-  }
-
-  const filterBadge = document.getElementById('filter-badge');
-  if (filterBadge) {
-    const activeCount = activeFacets.length + (isAllSelected ? 0 : checkedCats.length);
-    filterBadge.textContent = activeCount.toString();
-    filterBadge.style.display = activeCount > 0 ? 'inline-flex' : 'none';
-  }
-
-  document.querySelectorAll('.filter-group').forEach((group) => {
-    const groupInputs = Array.from(group.querySelectorAll<HTMLInputElement>('.filter-option input')).map(
-      (cb) => cb.value,
-    );
-    const checkedInGroup =
-      activeFacets.filter((facet) => groupInputs.includes(facet)).length +
-      checkedCats.filter((cat) => groupInputs.includes(cat) && cat !== 'all').length;
-
-    const title = group.querySelector('.filter-group-title');
-    if (title) {
-      if (checkedInGroup > 0) title.setAttribute('data-selected-count', checkedInGroup.toString());
-      else title.removeAttribute('data-selected-count');
-    }
-  });
-
-  // Category counts update
-  ['Water Purifier', 'Air Purifier', 'Vacuum Cleaner', 'Water Softener'].forEach((catName) => {
-    const count = categoryCounts[catName] || 0;
-    const countEl = document.querySelector(`.filter-count[data-cat="${catName}"]`);
-    if (countEl) countEl.textContent = `(${count})`;
+    if (state.categories.length && !isAllSelected) url.searchParams.set('cat', state.categories.join(','));
+    else url.searchParams.delete('cat');
+    if (state.facets.length) url.searchParams.set('facets', state.facets.join(','));
+    else url.searchParams.delete('facets');
+    if (state.query) url.searchParams.set('q', state.query);
+    else url.searchParams.delete('q');
+    window.history.replaceState(null, '', url);
   });
 }

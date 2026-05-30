@@ -1,5 +1,6 @@
 [
   {
+    "sku": "EF-AQUAGUARD-SELECT-DESIGNO-UTC-RO-UV-2X",
     "name": "AQUAGUARD SELECT DESIGNO UTC RO+UV 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -38,6 +39,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-SELECT-DESIGNO-UTC-UV-UF-2X",
     "name": "AQUAGUARD SELECT DESIGNO UTC UV+UF 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -76,6 +78,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-SLIMTECH-UV-STG-2X",
     "name": "AQUAGUARD ASPIRE SLIMTECH UV STG 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -116,6 +119,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-SLIM-GLASS-UV-BAR-INLINE-2X",
     "name": "AQUAGUARD SLIM GLASS UV BAR INLINE 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -154,6 +158,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-SS-2X",
     "name": "AQUAGUARD ASPIRE NOVA RO+UV+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -176,6 +181,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-NOVA-UV-UF-SS-2X",
     "name": "AQUAGUARD ASPIRE NOVA UV+UF+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -198,6 +204,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-2X",
     "name": "AQUAGUARD ASPIRE NOVA RO+UV 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -220,6 +227,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-NOVA-UV-UF-2X",
     "name": "AQUAGUARD ASPIRE NOVA UV+UF 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -242,6 +250,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ENRICH-VECTOR-RO-UV-MC-2X",
     "name": "AQUAGUARD ENRICH VECTOR RO+UV+MC 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -281,6 +290,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-ALK-2X",
     "name": "AQUAGUARD ASPIRE NOVA RO+UV ALK 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -303,6 +313,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-ALK-SS-2X",
     "name": "AQUAGUARD ASPIRE NOVA RO+UV+ALK+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -325,6 +336,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-BLAZE-RO-UV-SS-2X",
     "name": "AQUAGUARD ASPIRE BLAZE RO+UV+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -366,6 +378,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-BLAZE-UV-UF-SS-2X",
     "name": "AQUAGUARD ASPIRE BLAZE UV+UF+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -407,6 +420,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ENRICH-CREST-UV-DUO-2X",
     "name": "AQUAGUARD ENRICH CREST UV DUO 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -447,6 +461,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ENRICH-BOOSTER-UV-2X",
     "name": "AQUAGUARD ENRICH BOOSTER UV 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -487,6 +502,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ENRICH-CRYSTAL-BOOSTER-UV-UF-2X",
     "name": "AQUAGUARD ENRICH CRYSTAL BOOSTER UV+UF 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -528,6 +544,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-ASPIRE-MINERVA-RO-UV-SS-2X",
     "name": "AQUAGUARD ASPIRE MINERVA RO+UV+SS 2X",
     "category": "Water Purifier",
     "i18nTag": "tag_water",
@@ -569,6 +586,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-AIR-PURIFIER-355-SURROUND-360-SM",
     "name": "FORBES AIR PURIFIER 355 SURROUND 360° SM",
     "category": "Air Purifier",
     "i18nTag": "tag_air",
@@ -606,6 +624,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-AIR-PURIFIER-500-SURROUND-360-SM",
     "name": "FORBES AIR PURIFIER 500 SURROUND 360° SM",
     "category": "Air Purifier",
     "i18nTag": "tag_air",
@@ -643,6 +662,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-AIR-PURIFIER-270-SURROUND-360",
     "name": "FORBES AIR PURIFIER 270 SURROUND 360°",
     "category": "Air Purifier",
     "i18nTag": "tag_air",
@@ -669,6 +689,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-AIR-PURIFIER-230-SURROUND-360",
     "name": "FORBES AIR PURIFIER 230 SURROUND 360°",
     "category": "Air Purifier",
     "i18nTag": "tag_air",
@@ -695,6 +716,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-ATOM",
     "name": "FORBES ATOM",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
@@ -722,6 +744,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-SELECT-WD-X2",
     "name": "FORBES SELECT WD X2",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
@@ -756,6 +779,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-CORDLESS-ZEROBEND-Z15",
     "name": "FORBES CORDLESS ZEROBEND Z15",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
@@ -791,6 +815,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-CORDLESS-ZEROBEND-Z21WM",
     "name": "FORBES CORDLESS ZEROBEND Z21WM",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
@@ -822,6 +847,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-SMARTCLEAN-FULLYAUTOMATIC-STATION",
     "name": "FORBES SMARTCLEAN FULLYAUTOMATIC STATION",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
@@ -855,6 +881,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-SMARTCLEAN-WITH-AUTO-BIN-S2",
     "name": "FORBES SMARTCLEAN with AUTO BIN S2",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
@@ -887,6 +914,7 @@
     }
   },
   {
+    "sku": "EF-FORBES-TORNADO-VAC",
     "name": "FORBES TORNADO VAC",
     "category": "Vacuum Cleaner",
     "i18nTag": "tag_vacuum",
@@ -917,6 +945,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-SELECT-WATER-SOFTENER-AWS-5000",
     "name": "AQUAGUARD SELECT WATER SOFTENER AWS 5000",
     "category": "Water Softener",
     "i18nTag": "tag_water_softener",
@@ -950,6 +979,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-SELECT-WATER-SOFTENER-AWS-7500",
     "name": "AQUAGUARD SELECT WATER SOFTENER AWS 7500",
     "category": "Water Softener",
     "i18nTag": "tag_water_softener",
@@ -983,6 +1013,7 @@
     }
   },
   {
+    "sku": "EF-AQUAGUARD-SELECT-WATER-SOFTENER-I-2500",
     "name": "AQUAGUARD SELECT WATER SOFTENER I 2500",
     "category": "Water Softener",
     "i18nTag": "tag_water_softener",

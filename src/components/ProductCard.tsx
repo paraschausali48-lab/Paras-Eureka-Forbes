@@ -1,5 +1,6 @@
+import { useStore } from '@nanostores/preact';
 import type { Product } from '../scripts/types';
-import { getSku } from '../scripts/utils';
+import { $wishlist, handleWishlistToggle } from '../scripts/wishlist';
 
 interface Props {
   product: Product;
@@ -7,9 +8,11 @@ interface Props {
 }
 
 export function ProductCard({ product, t }: Props) {
-  const sku = getSku(product.name);
+  const sku = product.sku;
   const price = `₹${product.mop.toLocaleString('en-IN')}`;
   const mrp = `₹${product.mrp.toLocaleString('en-IN')}`;
+  const wishlist = useStore($wishlist);
+  const isWishlisted = wishlist.includes(sku);
 
   return (
     <div
@@ -35,8 +38,38 @@ export function ProductCard({ product, t }: Props) {
           <button className="action-btn primary" data-sku={sku}>
             {t('btn_more_info')}
           </button>
-          <button className="action-btn wishlist-card-btn" data-sku={sku} aria-label={t('nav_wishlist')}>
-            {/* SVG icon will be updated by wishlist.ts */}
+          <button
+            className="action-btn wishlist-card-btn"
+            aria-label={t('nav_wishlist')}
+            onClick={() => handleWishlistToggle(sku)}
+          >
+            {isWishlisted ? (
+              <svg
+                width="24"
+                height="24"
+                fill="#e63946"
+                stroke="#e63946"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            ) : (
+              <svg
+                width="24"
+                height="24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            )}
           </button>
         </div>
       </div>

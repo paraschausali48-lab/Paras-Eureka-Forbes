@@ -1,7 +1,6 @@
 import { useStore } from '@nanostores/preact';
 import { useMemo, useEffect } from 'preact/hooks';
-import { $filterState, productMatchesFacets, updateFilterUI } from '../scripts/filters';
-import { getSku } from '../scripts/utils';
+import { $filterState, productMatchesFacets, $catalogMeta, setFilterState } from '../scripts/filters';
 import type { Product } from '../scripts/types';
 import { ProductCard } from './ProductCard';
 
@@ -54,22 +53,21 @@ export default function ProductGrid({ products, translations }: Props) {
     return { visibleProducts: filtered, visibleCount: filtered.length, categoryCounts: counts };
   }, [state, products]);
 
-  // This effect is the bridge that communicates UI updates (like counts)
-  // back to our vanilla JS helper that updates the sidebar, URL, etc.
+  // This effect broadcasts UI updates (like counts) to the reactive store
   useEffect(() => {
-    updateFilterUI(state, visibleCount, categoryCounts);
-  }, [state, visibleCount, categoryCounts]);
+    $catalogMeta.set({ visibleCount, categoryCounts });
+  }, [visibleCount, categoryCounts]);
 
   return (
     <div id="product-grid">
       {visibleProducts.map((product) => (
-        <ProductCard key={getSku(product.name)} product={product} t={t} />
+        <ProductCard key={product.sku} product={product} t={t} />
       ))}
       <div id="empty-state" style={{ display: visibleCount === 0 ? 'flex' : 'none' }}>
         <div class="empty-state-content">
           <h3>{t('empty_title')}</h3>
           <p>{t('empty_desc')}</p>
-          <button id="filter-clear-all" class="primary-btn">
+          <button class="primary-btn" onClick={() => setFilterState({ categories: ['all'], facets: [], query: '' })}>
             {t('empty_btn')}
           </button>
         </div>

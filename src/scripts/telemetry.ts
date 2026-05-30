@@ -28,20 +28,14 @@ function flushQueue() {
   // Use an absolute APM endpoint. GitHub Pages does not support relative /api routes.
   const endpoint = import.meta.env.PUBLIC_TELEMETRY_ENDPOINT || 'https://api.your-apm-service.com/v1/telemetry';
 
-  // Use sendBeacon for reliable delivery even if the user navigates away
-  if (navigator.sendBeacon) {
-    // Force text/plain to prevent CORS preflight failures, which sendBeacon cannot handle.
-    const blob = new Blob([payload], { type: 'text/plain' });
-    navigator.sendBeacon(endpoint, blob);
-  } else {
-    // Fallback for unsupported browsers
-    fetch(endpoint, {
-      method: 'POST',
-      body: payload,
-      keepalive: true,
-      headers: { 'Content-Type': 'application/json' },
-    }).catch(() => {});
-  }
+  // Modern Observability: fetch with `keepalive: true` replaces sendBeacon.
+  // It natively supports CORS preflight for 'application/json' and guarantees delivery.
+  fetch(endpoint, {
+    method: 'POST',
+    body: payload,
+    keepalive: true,
+    headers: { 'Content-Type': 'application/json' },
+  }).catch(() => {});
 
   eventQueue.length = 0;
 }

@@ -5,6 +5,7 @@ import type { Product } from './types';
 describe('Filtering Logic: productMatchesFacets', () => {
   // Define a mock product to test against
   const mockProduct: Product = {
+    sku: 'EF-AQUAGUARD-TEST-RO',
     name: 'AQUAGUARD TEST RO',
     category: 'Water Purifier',
     i18nTag: 'tag_water',
