@@ -76,7 +76,7 @@ export function handleWishlistToggle(sku: string) {
 
 registerClickAction({
   selector: '.wishlist-toggle-btn',
-  handle: (el: HTMLElement, e: Event) => {
+  handle: (_el: HTMLElement, e: Event) => {
     e.preventDefault();
     const url = new URL(window.location.href);
     url.searchParams.set('view', 'wishlist');

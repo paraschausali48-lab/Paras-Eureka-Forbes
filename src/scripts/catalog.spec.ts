@@ -44,10 +44,6 @@ test.describe('Catalog Filtering & Routing', () => {
     // 1. Locate the first product's wishlist toggle button
     const firstWishlistBtn = page.locator('.wishlist-toggle-btn').first();
 
-    // Get the SKU of the first product to verify it later
-    const productCard = firstWishlistBtn.locator('closest=.product-card');
-    const expectedSku = await productCard.getAttribute('data-sku');
-
     // 2. Add to wishlist
     await firstWishlistBtn.click();
 

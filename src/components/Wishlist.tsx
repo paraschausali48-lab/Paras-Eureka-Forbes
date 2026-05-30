@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/preact';
 import { navigate } from 'astro:transitions/client';
 import { $wishlist, saveWishlist } from '../scripts/wishlist';
-import { allProducts } from '../scripts/filters';
+import { $allProducts } from '../scripts/filters';
 import { showToast } from '../scripts/toast';
 
 export default function Wishlist() {
@@ -50,7 +50,7 @@ export default function Wishlist() {
   return (
     <div class="wishlist-container">
       {list.map((sku) => {
-        const product = allProducts.find((p) => p.sku === sku);
+        const product = $allProducts.get().find((p) => p.sku === sku);
         const card =
           typeof document !== 'undefined'
             ? document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`)
