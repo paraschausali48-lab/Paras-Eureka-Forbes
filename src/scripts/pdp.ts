@@ -7,6 +7,8 @@ export function initProductNavigation() {
 
   if (!productGrid) return;
 
+  const baseUrl = import.meta.env.BASE_URL;
+
   // Intent-based preloading handler for both Desktop (hover) and Mobile (touch)
   const handlePrefetch = (e: Event) => {
     const card = (e.target as HTMLElement).closest('.product-card') as HTMLElement;
@@ -15,7 +17,7 @@ export function initProductNavigation() {
     card.setAttribute('data-prefetched', 'true'); // Ensure we only prefetch once per card
     const sku = card.dataset.sku!;
     const lang = document.documentElement.lang || 'en';
-    prefetch(`/${lang}/products/${sku}`);
+    prefetch(`${baseUrl}${lang}/products/${sku}`);
   };
 
   productGrid.addEventListener('mouseover', handlePrefetch, { passive: true });
@@ -33,6 +35,6 @@ export function initProductNavigation() {
 
     const sku = card.dataset.sku!;
     const lang = document.documentElement.lang || 'en';
-    navigate(`/${lang}/products/${sku}`);
+    navigate(`${baseUrl}${lang}/products/${sku}`);
   });
 }

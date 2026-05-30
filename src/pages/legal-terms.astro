@@ -9,7 +9,7 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
 <Layout title={t('legal_title')} description={t('legal_subtitle')} lang={lang}>
   <main class="legal-page">
     <div class="container legal-container">
-      <a href="/" class="legal-back">{t('btn_back_home')}</a>
+      <a href={import.meta.env.BASE_URL} class="legal-back">{t('btn_back_home')}</a>
 
       <div class="legal-title">
         <h1>{t('legal_title')}</h1>

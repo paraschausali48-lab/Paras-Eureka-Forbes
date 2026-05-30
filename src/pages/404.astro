@@ -11,7 +11,7 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
     <div class="error-code">404</div>
     <h2 class="error-title">{t('error_title')}</h2>
     <p class="error-desc">{t('error_desc')}</p>
-    <a href="/" class="btn">{t('error_btn')}</a>
+    <a href={import.meta.env.BASE_URL} class="btn">{t('error_btn')}</a>
   </main>
 </Layout>
 
