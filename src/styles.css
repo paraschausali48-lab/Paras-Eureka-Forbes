@@ -1396,6 +1396,11 @@ html:lang(mr) .product-card.out-of-stock::after {
   z-index: 2;
 }
 
+/* Dynamic Filtering State */
+.product-card.is-hidden {
+  display: none !important;
+}
+
 /* Premium Image Shine Effect */
 .product-card::before {
   content: '';

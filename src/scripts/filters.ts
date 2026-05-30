@@ -1,4 +1,3 @@
-import { applyFiltersAndSort } from './render';
 import type { Product } from './types';
 
 export interface FilterState {
@@ -133,8 +132,7 @@ export function setFilterState(newState: Partial<FilterState>) {
 /**
  * SIDE EFFECT: Updates the DOM to reflect the new filter state.
  */
-export function updateFilterUI(state: FilterState, visibleProducts: Product[]) {
-  const visibleCount = visibleProducts.length;
+export function updateFilterUI(state: FilterState, visibleCount: number, categoryCounts: Record<string, number>) {
   const { categories: checkedCats, facets: activeFacets, query } = state;
   const isAllSelected = checkedCats.includes('all');
   const clearAllBtn = document.getElementById('filter-clear-all');
@@ -220,19 +218,101 @@ export function updateFilterUI(state: FilterState, visibleProducts: Product[]) {
     }
   });
 
-  // Category counts update (Pure Data calculation)
+  // Category counts update
   ['Water Purifier', 'Air Purifier', 'Vacuum Cleaner', 'Water Softener'].forEach((catName) => {
-    const count = visibleProducts.filter((p) => p.category === catName).length;
+    const count = categoryCounts[catName] || 0;
     const countEl = document.querySelector(`.filter-count[data-cat="${catName}"]`);
     if (countEl) countEl.textContent = `(${count})`;
   });
 }
 
 /**
+ * DOM-based Facet Matcher (For SSR Hydration)
+ */
+function domMatchesFacets(card: HTMLElement, cat: string, facets: string[]): boolean {
+  if (facets.length === 0) return true;
+  const subcategoriesStr = (card.dataset.subcategory || '').toLowerCase();
+  const subcategories = subcategoriesStr.split(',').map((s) => s.trim());
+  const catLower = cat.toLowerCase();
+  const priceText = card.querySelector('.price')?.textContent || '0';
+  const mop = parseInt(priceText.replace(/[^\d]/g, ''), 10) || 0;
+
+  for (const val of facets) {
+    if (['0-10000', '10000-15000', '15000-20000', '20000+'].includes(val)) {
+      if (val === '0-10000' && mop >= 10000) return false;
+      if (val === '10000-15000' && (mop < 10000 || mop >= 15000)) return false;
+      if (val === '15000-20000' && (mop < 15000 || mop >= 20000)) return false;
+      if (val === '20000+' && mop < 20000) return false;
+      continue;
+    }
+    if (['exchange', 'free-installation', 'municipal'].includes(val)) continue;
+
+    const mapped = SPECIAL_MAPPINGS[val] || [val];
+    const hasMatch = mapped.some((m) => subcategories.includes(m) || catLower === m);
+
+    if (!hasMatch) {
+      if (val === 'wall-mounted' && catLower === 'water purifier' && !subcategories.includes('under-counter')) continue;
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
  * Core application subscription:
- * Automatically triggers the render pipeline whenever the filter state changes.
+ * Directly manipulates DOM classes for blazingly fast filtering without re-rendering HTML.
  */
 subscribeToFilters((newState) => {
-  const visibleProducts = applyFiltersAndSort(newState, allProducts);
-  updateFilterUI(newState, visibleProducts);
+  const { categories, facets, query, sort } = newState;
+  const isAllSelected = categories.includes('all');
+  const searchTerms = query
+    .toLowerCase()
+    .trim()
+    .split(' ')
+    .filter((t) => t.length > 0);
+
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('.product-card'));
+  let visibleCount = 0;
+  const catCounts: Record<string, number> = {
+    'Water Purifier': 0,
+    'Air Purifier': 0,
+    'Vacuum Cleaner': 0,
+    'Water Softener': 0,
+  };
+
+  const visibleCards: HTMLElement[] = [];
+
+  cards.forEach((card) => {
+    const tag = card.querySelector('.product-tag') as HTMLElement;
+    const cat = tag?.dataset.category || '';
+    const title = card.querySelector('h3')?.textContent || '';
+    const desc = card.querySelector('p')?.textContent || '';
+    const searchString = `${title} ${desc}`.toLowerCase();
+
+    const matchesCat = isAllSelected || categories.includes(cat);
+    const matchesSearch = searchTerms.length === 0 || searchTerms.every((term) => searchString.includes(term));
+    const matchesFacet = domMatchesFacets(card, cat, facets);
+
+    if (matchesCat && matchesSearch && matchesFacet) {
+      card.classList.remove('is-hidden');
+      visibleCount++;
+      if (catCounts[cat] !== undefined) catCounts[cat]++;
+      visibleCards.push(card);
+    } else {
+      card.classList.add('is-hidden');
+    }
+  });
+
+  if (sort === 'relevance') {
+    cards.forEach((card, idx) => (card.style.order = idx.toString()));
+  } else {
+    visibleCards.sort((a, b) => {
+      const priceA = parseInt(a.querySelector('.price')?.textContent?.replace(/[^\d]/g, '') || '0', 10);
+      const priceB = parseInt(b.querySelector('.price')?.textContent?.replace(/[^\d]/g, '') || '0', 10);
+      return sort === 'price-low' ? priceA - priceB : priceB - priceA;
+    });
+    visibleCards.forEach((card, idx) => (card.style.order = idx.toString()));
+  }
+
+  updateFilterUI(newState, visibleCount, catCounts);
 });
