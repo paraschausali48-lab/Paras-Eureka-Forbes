@@ -1,6 +1,7 @@
 import { atom } from 'nanostores';
 import { showToast } from './toast';
 import { handleAppRouting } from './routing';
+import { registerClickAction } from './events';
 
 export function getWishlist(): string[] {
   try {
@@ -50,9 +51,12 @@ export function updateWishlistUI() {
     if (pdpSkuEl) {
       const currentSku = pdpSkuEl.querySelector('span')?.textContent?.trim();
       if (currentSku) {
-        pdpWishBtn.innerHTML = list.includes(currentSku)
-          ? '<svg width="24" height="24" fill="#e63946" stroke="#e63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>'
-          : '<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
+        const isAdded = list.includes(currentSku);
+        pdpWishBtn.setAttribute('aria-pressed', String(isAdded));
+        pdpWishBtn.setAttribute('aria-label', isAdded ? 'Remove from Wishlist' : 'Add to Wishlist');
+        pdpWishBtn.innerHTML = isAdded
+          ? '<svg aria-hidden="true" width="24" height="24" fill="#e63946" stroke="#e63946" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>'
+          : '<svg aria-hidden="true" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>';
       }
     }
   }
@@ -70,32 +74,28 @@ export function handleWishlistToggle(sku: string) {
   saveWishlist(list);
 }
 
+registerClickAction({
+  selector: '.wishlist-toggle-btn',
+  handle: (el: HTMLElement, e: Event) => {
+    e.preventDefault();
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', 'wishlist');
+    window.history.pushState(null, '', url);
+    handleAppRouting();
+  },
+});
+
+registerClickAction({
+  selector: '#pdp-wishlist-btn',
+  handle: () => {
+    const pdpSkuEl = document.getElementById('pdp-sku');
+    if (pdpSkuEl) {
+      const sku = pdpSkuEl.querySelector('span')!.textContent!;
+      handleWishlistToggle(sku);
+    }
+  },
+});
+
 export function initWishlistEvents() {
-  const wishlistToggleBtns = document.querySelectorAll<HTMLElement>('.wishlist-toggle-btn');
-
-  wishlistToggleBtns.forEach((btn) => {
-    if (btn.hasAttribute('data-evt-bound')) return;
-    btn.setAttribute('data-evt-bound', 'true');
-    btn.addEventListener('click', (e: Event) => {
-      e.preventDefault();
-      const url = new URL(window.location.href);
-      url.searchParams.set('view', 'wishlist');
-      window.history.pushState(null, '', url);
-      handleAppRouting();
-    });
-  });
-
-  const pdpWishBtn = document.getElementById('pdp-wishlist-btn');
-  if (pdpWishBtn && !pdpWishBtn.hasAttribute('data-evt-bound')) {
-    pdpWishBtn.setAttribute('data-evt-bound', 'true');
-    pdpWishBtn.addEventListener('click', function () {
-      const pdpSkuEl = document.getElementById('pdp-sku');
-      if (pdpSkuEl) {
-        const sku = pdpSkuEl.querySelector('span')!.textContent!;
-        handleWishlistToggle(sku);
-      }
-    });
-  }
-
   updateWishlistUI();
 }

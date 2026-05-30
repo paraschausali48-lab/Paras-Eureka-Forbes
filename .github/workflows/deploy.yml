@@ -38,6 +38,17 @@ jobs:
     steps:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run pre-build scripts
+        run: |
+          python normalize_data.py
+          python generate_sitemap.py
+
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         with:

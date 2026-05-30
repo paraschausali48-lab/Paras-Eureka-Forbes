@@ -1,4 +1,4 @@
-import { map } from 'nanostores';
+import { map, atom, computed } from 'nanostores';
 import type { Product } from './types';
 
 export interface FilterState {
@@ -16,18 +16,53 @@ export const $filterState = map<FilterState>({
   sort: 'relevance',
 });
 
-// 2. Create a metadata store so Preact can broadcast catalog stats
-// without imperatively calling legacy Vanilla JS functions.
+export const $allProducts = atom<Product[]>([]);
+
+// 2. Pure business logic: Compute the catalog strictly from the state.
+// This completely removes the Preact useEffect cascade.
+export const $filteredCatalog = computed([$allProducts, $filterState], (products, state) => {
+  const { categories, facets, query, sort } = state;
+  const isAllSelected = categories.includes('all');
+  const searchTerms = query.toLowerCase().trim().split(' ').filter(Boolean);
+
+  const filtered: Product[] = [];
+  const counts: Record<string, number> = {
+    'Water Purifier': 0,
+    'Air Purifier': 0,
+    'Vacuum Cleaner': 0,
+    'Water Softener': 0,
+  };
+
+  products.forEach((product) => {
+    const matchesCat = isAllSelected || categories.includes(product.category);
+    const searchString = `${product.name} ${product.description}`.toLowerCase();
+    const matchesSearch = searchTerms.length === 0 || searchTerms.every((term) => searchString.includes(term));
+    const matchesFacet = productMatchesFacets(product, facets);
+
+    if (matchesCat && matchesSearch && matchesFacet) {
+      if (counts[product.category] !== undefined) {
+        counts[product.category]++;
+      }
+      filtered.push(product);
+    }
+  });
+
+  if (sort !== 'relevance') {
+    filtered.sort((a, b) => (sort === 'price-low' ? a.mop - b.mop : b.mop - a.mop));
+  }
+
+  return { visibleProducts: filtered, visibleCount: filtered.length, categoryCounts: counts };
+});
+
 export interface CatalogMeta {
   visibleCount: number;
   categoryCounts: Record<string, number>;
 }
-export const $catalogMeta = map<CatalogMeta>({
-  visibleCount: 0,
-  categoryCounts: {},
-});
 
-export let allProducts: Product[] = [];
+export const $catalogMeta = computed($filteredCatalog, (catalog) => ({
+  visibleCount: catalog.visibleCount,
+  categoryCounts: catalog.categoryCounts,
+}));
 
 /**
  * Domain Knowledge Dictionary: Defines which facets belong exclusively to which categories.
@@ -45,7 +80,7 @@ const SPECIAL_MAPPINGS: Record<string, string[]> = {
 };
 
 export function setProductsData(products: Product[]) {
-  allProducts = products;
+  $allProducts.set(products);
 
   // Dynamically generate FACET_DOMAINS and tech SPECIAL_MAPPINGS to decouple business logic
   FACET_DOMAINS = {};
@@ -177,6 +212,9 @@ export function setFilterState(newState: Partial<FilterState>) {
 // 3. Decouple Environment Side Effects (URL Sync) from UI Rendering
 if (typeof window !== 'undefined') {
   $filterState.subscribe((state) => {
+    // Prevent URL pollution on non-catalog pages (e.g., Legal Terms) during View Transitions
+    if (!document.getElementById('product-grid')) return;
+
     const url = new URL(window.location.href);
     const isAllSelected = state.categories.includes('all');
 

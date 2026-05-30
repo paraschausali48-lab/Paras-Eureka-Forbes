@@ -29,35 +29,41 @@ export function enableSwipeToClose(
   let startPos = 0;
   let currentPos = 0;
   let isSwiping = false;
-  element.addEventListener(
-    'touchstart',
-    (e: TouchEvent) => {
-      if (direction === 'down' && element.scrollTop > 0) return;
-      startPos = direction === 'down' ? e.touches[0].clientY : e.touches[0].clientX;
-      isSwiping = true;
-    },
-    { passive: true },
-  );
-  element.addEventListener(
-    'touchmove',
-    (e: TouchEvent) => {
-      if (!isSwiping || (direction === 'down' && element.scrollTop > 0)) return;
-      currentPos = direction === 'down' ? e.touches[0].clientY : e.touches[0].clientX;
-      const diff = currentPos - startPos;
-      if (diff > 0) {
-        element.style.transform = direction === 'down' ? `translateY(${diff}px)` : `translateX(${diff}px)`;
-        element.style.transition = 'none';
-      }
-    },
-    { passive: true },
-  );
-  element.addEventListener('touchend', () => {
+
+  const handleTouchStart = (e: TouchEvent) => {
+    if (direction === 'down' && element.scrollTop > 0) return;
+    startPos = direction === 'down' ? e.touches[0].clientY : e.touches[0].clientX;
+    isSwiping = true;
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (!isSwiping || (direction === 'down' && element.scrollTop > 0)) return;
+    currentPos = direction === 'down' ? e.touches[0].clientY : e.touches[0].clientX;
+    const diff = currentPos - startPos;
+    if (diff > 0) {
+      element.style.transform = direction === 'down' ? `translateY(${diff}px)` : `translateX(${diff}px)`;
+      element.style.transition = 'none';
+    }
+  };
+
+  const handleTouchEnd = () => {
     if (!isSwiping) return;
     isSwiping = false;
     element.style.removeProperty('transform');
     element.style.removeProperty('transition');
     if (currentPos - startPos > 100) closeAction();
-  });
+  };
+
+  element.addEventListener('touchstart', handleTouchStart, { passive: true });
+  element.addEventListener('touchmove', handleTouchMove, { passive: true });
+  element.addEventListener('touchend', handleTouchEnd);
+
+  return () => {
+    element.removeEventListener('touchstart', handleTouchStart);
+    element.removeEventListener('touchmove', handleTouchMove);
+    element.removeEventListener('touchend', handleTouchEnd);
+    element.removeAttribute('data-swipe-bound');
+  };
 }
 
 /**

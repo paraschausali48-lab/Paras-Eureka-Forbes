@@ -27,9 +27,9 @@ export default {
   vb_card4_title: 'Guaranteed Authenticity',
   vb_card4_desc:
     'Buying directly guarantees that the product is 100% genuine and factory-fresh. It completely eliminates the risk of refurbished units and ensures your warranty is correctly registered.',
-  vb_card5_title: 'Dedicated After-Sales Support',
+  vb_card5_title: 'A Dedicated Point of Contact for After-Sales Support',
   vb_card5_desc:
-    'Instead of navigating generic hotlines, you gain a trusted relationship with a dedicated specialist for prompt installation, AMC setups, and efficient troubleshooting.',
+    'Instead of navigating generic customer service hotlines or automated chat bots, customers gain a trusted relationship with a dedicated specialist. This provides a direct line for coordinating prompt installation, setting up Annual Maintenance Contracts (AMCs), and troubleshooting any future service requirements efficiently.',
 
   // ============================================
   // PRODUCTS SECTION
@@ -75,11 +75,6 @@ export default {
   empty_desc: "Try adjusting your filters or search query to find what you're looking for.",
   empty_btn: 'Clear All Filters',
   btn_back_home: '← Back to Home',
-
-  offer_eyebrow: 'Limited Time Offer',
-  offer_title: 'Mega May Deals!',
-  offer_desc: 'Take advantage of these official Eureka Forbes Mega May Deals today. Offer valid until the end of May.',
-  offer_btn: 'Book Now to Claim Offer',
 
   cat_water: 'Water Purifiers',
   cat_water_desc: 'RO, UV, UF & Copper',
@@ -198,7 +193,6 @@ export default {
 
   nav_menu: 'Menu',
   nav_nav: 'Navigation',
-  nav_offers: 'Special Offers',
   nav_help: 'Help & Information',
   nav_faq: 'FAQs',
   nav_contact_us: 'Contact',
@@ -253,10 +247,6 @@ export default {
   filter_vac_pow_title: 'Power',
   filter_vac_pow_corded: 'Corded',
   filter_vac_pow_cordless: 'Cordless (Battery)',
-  cd_days: 'Days',
-  cd_hours: 'Hours',
-  cd_mins: 'Mins',
-  cd_secs: 'Secs',
   pdp_sku_label: 'SKU:',
   pdp_specs_summary: 'Technical Specifications',
   wa_chat: 'Chat with Specialist',

@@ -1911,102 +1911,6 @@ html:lang(mr) .product-card.out-of-stock::after {
 }
 
 /* =========================================
-   Special Offer Section
-   ========================================= */
-.special-offer-section {
-  padding: 64px 0 24px;
-  background: #ffffff;
-}
-
-.offer-section {
-  text-align: center;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.offer-eyebrow {
-  color: var(--color-accent);
-}
-
-.offer-title {
-  color: var(--color-gray-900);
-  margin-bottom: 30px;
-  font-size: 2.2rem;
-  letter-spacing: -0.03em;
-}
-
-.offer-text-wrap {
-  margin-top: 30px;
-}
-
-.offer-desc {
-  color: #4b5874;
-  font-size: 1.1rem;
-  margin-bottom: 20px;
-}
-
-.offer-countdown {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-.countdown-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: var(--color-white);
-  border: 1px solid var(--color-gray-200);
-  border-radius: var(--radius-sm);
-  padding: 10px 15px;
-  min-width: 70px;
-}
-
-.countdown-item span {
-  font-size: 1.8rem;
-  font-weight: 800;
-  color: var(--color-gray-900);
-  line-height: 1;
-}
-
-.countdown-item small {
-  font-size: 0.75rem;
-  color: var(--color-gray-600);
-  text-transform: uppercase;
-  font-weight: 700;
-  margin-top: 4px;
-}
-
-/* Countdown Timer ending soon (under 24h) styling */
-.offer-countdown.ending-soon .countdown-item {
-  background: #fff0f0;
-  border-color: #ffe0e0;
-}
-
-.offer-countdown.ending-soon .countdown-item span {
-  color: #d32f2f;
-}
-.offer-countdown.ending-soon .countdown-item small {
-  color: #c62828;
-}
-
-.special-offer-section .btn.offer-wa-btn {
-  background: var(--color-gray-900);
-  color: var(--color-white);
-  border: none;
-  padding: 16px 36px;
-  font-size: 1.1rem;
-  border-radius: 8px;
-}
-
-.special-offer-section .btn.offer-wa-btn:hover {
-  background: var(--color-gray-800);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
-}
-
-/* =========================================
    Scroll Reveal Animation
    ========================================= */
 .reveal {
@@ -2959,36 +2863,6 @@ html:lang(mr) .product-card.out-of-stock::after {
     justify-content: center;
   }
 
-  /* Special Offer Mobile */
-  .special-offer-section {
-    padding: 40px 0 16px;
-  }
-
-  .offer-title {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-  }
-
-  .offer-desc {
-    font-size: 1rem;
-  }
-
-  .special-offer-section .btn.offer-wa-btn {
-    padding: 14px 24px;
-    font-size: 1rem;
-  }
-
-  .offer-countdown {
-    gap: 8px;
-  }
-  .countdown-item {
-    min-width: 60px;
-    padding: 8px 10px;
-  }
-  .countdown-item span {
-    font-size: 1.4rem;
-  }
-
   /* Value Cards Mobile */
   .value-banner {
     padding: 32px 0;
@@ -3127,10 +3001,6 @@ html:lang(mr) .product-card.out-of-stock::after {
   }
 
   .section-heading h2 {
-    font-size: 1.4rem;
-  }
-
-  .offer-title {
     font-size: 1.4rem;
   }
 

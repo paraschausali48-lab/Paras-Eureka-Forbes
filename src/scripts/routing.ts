@@ -7,15 +7,28 @@ export function setLastFocused(el: HTMLElement | null) {
 }
 
 export function forceCloseAllOverlays() {
-  document.getElementById('filter-sidebar')?.classList.remove('open');
-  document.getElementById('sort-modal')?.classList.remove('active');
-  document.getElementById('wishlist-modal')?.classList.remove('active');
-  document.getElementById('pdp-modal')?.classList.remove('active');
+  const overlays = [
+    { id: 'filter-sidebar', class: 'open' },
+    { id: 'sort-modal', class: 'active' },
+    { id: 'wishlist-modal', class: 'active' },
+    { id: 'pdp-modal', class: 'active' },
+  ];
+
+  overlays.forEach((overlay) => {
+    const el = document.getElementById(overlay.id);
+    if (el) {
+      el.classList.remove(overlay.class);
+      el.setAttribute('aria-hidden', 'true');
+    }
+  });
   document.querySelector('.filter-overlay')?.classList.remove('active');
 
   const mainSidebar = document.getElementById('main-sidebar');
   const mainSidebarOverlay = document.getElementById('main-sidebar-overlay');
-  if (mainSidebar) mainSidebar.classList.remove('active');
+  if (mainSidebar) {
+    mainSidebar.classList.remove('active');
+    mainSidebar.setAttribute('aria-hidden', 'true');
+  }
   if (mainSidebarOverlay) mainSidebarOverlay.classList.remove('active');
 
   if (document.body) document.body.style.overflow = '';
@@ -78,14 +91,47 @@ export function handleAppRouting() {
       navigate(`${baseUrl}${lang}/products/${productSku}/`, { history: 'replace' });
     }
   } else if (view === 'filter') {
-    document.getElementById('filter-sidebar')?.classList.add('open');
+    const el = document.getElementById('filter-sidebar');
+    if (el) {
+      el.classList.add('open');
+      el.setAttribute('aria-hidden', 'false');
+      setTimeout(
+        () =>
+          el
+            .querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+            ?.focus(),
+        50,
+      );
+    }
     document.querySelector('.filter-overlay')?.classList.add('active');
     document.body.style.overflow = 'hidden';
   } else if (view === 'sort') {
-    document.getElementById('sort-modal')?.classList.add('active');
+    const el = document.getElementById('sort-modal');
+    if (el) {
+      el.classList.add('active');
+      el.setAttribute('aria-hidden', 'false');
+      setTimeout(
+        () =>
+          el
+            .querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+            ?.focus(),
+        50,
+      );
+    }
     document.body.style.overflow = 'hidden';
   } else if (view === 'wishlist') {
-    document.getElementById('wishlist-modal')?.classList.add('active');
+    const el = document.getElementById('wishlist-modal');
+    if (el) {
+      el.classList.add('active');
+      el.setAttribute('aria-hidden', 'false');
+      setTimeout(
+        () =>
+          el
+            .querySelector<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')
+            ?.focus(),
+        50,
+      );
+    }
     document.body.style.overflow = 'hidden';
   } else if (hash === '#products') {
     const productsEl = document.getElementById('products');
@@ -131,13 +177,28 @@ registerClickAction({
 
 registerClickAction({
   selector: '.vf-back-btn',
-  handle: () => (window.location.hash === '#products' ? window.history.back() : hideProductsView()),
+  handle: () => {
+    if (window.location.hash === '#products') {
+      if (window.history.length > 1 && document.referrer.includes(window.location.host)) {
+        window.history.back();
+      } else {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+        hideProductsView();
+      }
+    } else {
+      hideProductsView();
+    }
+  },
 });
 
 registerClickAction({
   selector: '#sidebar-toggle',
   handle: () => {
-    document.getElementById('main-sidebar')?.classList.add('active');
+    const el = document.getElementById('main-sidebar');
+    if (el) {
+      el.classList.add('active');
+      el.setAttribute('aria-hidden', 'false');
+    }
     document.getElementById('main-sidebar-overlay')?.classList.add('active');
     document.body.style.overflow = 'hidden';
     setTimeout(() => document.getElementById('sidebar-close')?.focus(), 50);

@@ -196,6 +196,7 @@ document.addEventListener('submit', (e: Event) => {
 
 // Manage lifecycle teardowns across Astro page transitions
 let pageTransitionController: AbortController | null = null;
+let swipeCleanupFns: Array<() => void> = [];
 
 // Use Astro's page-load event instead of DOMContentLoaded to ensure JS
 // re-runs and attaches to the new DOM elements when using View Transitions.
@@ -206,6 +207,10 @@ document.addEventListener('astro:page-load', function () {
 
   if (pageTransitionController) pageTransitionController.abort();
   pageTransitionController = new AbortController();
+
+  // Clean up any dangling swipe listeners from the previous page
+  swipeCleanupFns.forEach((cleanup) => cleanup());
+  swipeCleanupFns = [];
 
   // ============= 1. SCROLL ANIMATIONS =============
   initScrollAnimations();
@@ -252,13 +257,19 @@ document.addEventListener('astro:page-load', function () {
   updateWaButtonVisibility();
 
   const wishlistModal = document.getElementById('wishlist-modal');
-  if (sortModal) enableSwipeToClose(sortModal.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'down');
-  if (filterSidebar) enableSwipeToClose(filterSidebar, closeActiveOverlay, 'down');
-  if (pdpModal) enableSwipeToClose(pdpModal.querySelector<HTMLElement>('.pdp-content'), closePDPAndCleanURL, 'right');
-  if (wishlistModal)
-    enableSwipeToClose(wishlistModal.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'right');
   const mainSidebarEl = document.getElementById('main-sidebar');
-  if (mainSidebarEl) enableSwipeToClose(mainSidebarEl, () => document.getElementById('sidebar-close')?.click(), 'left');
+
+  const bindSwipe = (el: HTMLElement | null | undefined, action: () => void, dir: 'down' | 'left' | 'right') => {
+    if (el) {
+      const cleanup = enableSwipeToClose(el, action, dir);
+      if (cleanup) swipeCleanupFns.push(cleanup);
+    }
+  };
+  bindSwipe(sortModal?.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'down');
+  bindSwipe(filterSidebar, closeActiveOverlay, 'down');
+  bindSwipe(pdpModal?.querySelector<HTMLElement>('.pdp-content'), closePDPAndCleanURL, 'right');
+  bindSwipe(wishlistModal?.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'right');
+  bindSwipe(mainSidebarEl, () => document.getElementById('sidebar-close')?.click(), 'left');
 
   // ============= 12. DATA HYDRATION & URL STATE =============
   const hydrateCatalog = () => {

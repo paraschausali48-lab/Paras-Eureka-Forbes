@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { useTranslations, getTranslations } from '../scripts/translations';
-import products from '../../public/products.json';
+import products from '../data/products.json';
 // @ts-ignore - TS complains about .tsx, but Astro requires it to resolve the Preact island
 import ProductGrid from '../components/ProductGrid.tsx';
 // @ts-ignore
@@ -160,25 +160,7 @@ setProductsData(products as any);
       </section>
     </div>
 
-    <!-- 4. Special Offer Banner -->
-    <section class="special-offer-section reveal">
-      <div class="container offer-section">
-        <span class="eyebrow offer-eyebrow">{t('offer_eyebrow')}</span>
-        <h2 class="offer-title">{t('offer_title')}</h2>
-        <div class="offer-countdown" id="offer-countdown">
-          <div class="countdown-item"><span id="cd-days">00</span><small>{t('cd_days')}</small></div>
-          <div class="countdown-item"><span id="cd-hours">00</span><small>{t('cd_hours')}</small></div>
-          <div class="countdown-item"><span id="cd-mins">00</span><small>{t('cd_mins')}</small></div>
-          <div class="countdown-item"><span id="cd-secs">00</span><small>{t('cd_secs')}</small></div>
-        </div>
-        <p class="offer-desc">{t('offer_desc')}</p>
-        <a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="btn offer-wa-btn">
-          {t('offer_btn')}
-        </a>
-      </div>
-    </section>
-
-    <!-- 5. Value Banner Section -->
+    <!-- 4. Value Banner Section -->
     <section class="value-banner reveal">
       <div class="container">
         <div class="value-banner-header">
@@ -207,11 +189,16 @@ setProductsData(products as any);
             <h3>{t('vb_card4_title')}</h3>
             <p>{t('vb_card4_desc')}</p>
           </div>
+          <div class="value-card">
+            <span class="value-card-icon">📞</span>
+            <h3>{t('vb_card5_title')}</h3>
+            <p>{t('vb_card5_desc')}</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- 6. Contact Section -->
+    <!-- 5. Contact Section -->
     <section class="contact reveal" id="contact">
       <div class="container">
         <div class="contact-card">
@@ -222,10 +209,10 @@ setProductsData(products as any);
             <div class="contact-details" style="margin-top: 24px;">
               <p><strong>{t('contact_name')}</strong> Paras Singh Chawsali</p>
               <p><strong>{t('contact_service_area')}</strong> Mumbai, Navi Mumbai & Thane</p>
-              <p><strong>{t('contact_phone')}</strong> <a href="tel:+919999999999">+91 99999 99999</a></p>
+              <p><strong>{t('contact_phone')}</strong> <a href="tel:+918928002642">+91 8928002642</a></p>
             </div>
             <div class="card-actions" style="margin-top: 32px; max-width: 400px;">
-              <a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="btn">{t('contact_wa_btn')}</a>
+              <a href="https://wa.me/918928002642" target="_blank" rel="noopener" class="btn">{t('contact_wa_btn')}</a>
               <a href="mailto:contact@example.com" class="btn btn-outline">{t('contact_email_btn')}</a>
             </div>
           </div>

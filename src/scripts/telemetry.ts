@@ -23,7 +23,12 @@ function queueEvent(type: TelemetryEvent['type'], payload: any) {
 
 function flushQueue() {
   if (eventQueue.length === 0) return;
-  const payload = JSON.stringify(eventQueue);
+
+  // Copy the queue to safely flush without losing events that arrive during fetch
+  const eventsToFlush = [...eventQueue];
+  eventQueue.length = 0;
+
+  const payload = JSON.stringify(eventsToFlush);
 
   // Use an absolute APM endpoint. GitHub Pages does not support relative /api routes.
   const endpoint = import.meta.env.PUBLIC_TELEMETRY_ENDPOINT || 'https://api.your-apm-service.com/v1/telemetry';
@@ -35,9 +40,12 @@ function flushQueue() {
     body: payload,
     keepalive: true,
     headers: { 'Content-Type': 'application/json' },
-  }).catch(() => {});
-
-  eventQueue.length = 0;
+  }).catch(() => {
+    // If network fails, re-queue events, but cap size to prevent memory leaks
+    if (eventQueue.length < 50) {
+      eventQueue.unshift(...eventsToFlush);
+    }
+  });
 }
 
 export function initTelemetry() {
