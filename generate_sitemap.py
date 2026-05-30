@@ -3,7 +3,7 @@ import re
 import json
 from datetime import datetime
 
-def generate_sitemap(data_file="products.json", output_file="public/sitemap.xml"):
+def generate_sitemap(data_file="public/products.json", output_file="public/sitemap.xml"):
     base_dir = os.path.dirname(os.path.abspath(__file__))
     data_file = os.path.join(base_dir, data_file)
     output_file = os.path.join(base_dir, output_file)
