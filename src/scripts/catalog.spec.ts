@@ -28,9 +28,9 @@ test.describe('Catalog Filtering & Routing', () => {
     // 2. Assert UI State: ensure the button gets the active CSS highlight
     await expect(roFilterBtn).toHaveClass(/active/);
 
-    // 3. Assert DOM Update: With Preact, the DOM is re-rendered with a new set of products.
-    // We assert that the number of products has changed correctly.
-    const finalProductCount = await page.locator('.product-card').count();
+    // 3. Assert DOM Update: The Vanilla JS engine hides non-matching products via CSS.
+    // We assert that the number of *visible* products has changed correctly.
+    const finalProductCount = await page.locator('.product-card:not(.is-hidden)').count();
 
     // The number of filtered products should be less than the total, but more than zero.
     expect(finalProductCount).toBeLessThan(initialProductCount);

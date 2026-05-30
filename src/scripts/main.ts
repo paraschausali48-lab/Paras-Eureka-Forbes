@@ -1,10 +1,11 @@
 import { navigate } from 'astro:transitions/client';
 import { debounce, enableSwipeToClose, handleFocusTrap } from './utils';
-import { filterState, setFilterState } from './filters';
-import { handleAppRouting, closeActiveOverlay, hideProductsView } from './routing';
+import { $filterState, setFilterState, type FilterState } from './filters';
+import { handleAppRouting, closeActiveOverlay, closePDPAndCleanURL } from './routing';
 import { initScrollAnimations, initHeaderScroll, initAccordions } from './ui';
 import { initProductNavigation } from './pdp';
 import { initTelemetry } from './telemetry';
+import { registerClickAction, initGlobalEventRouter } from './events';
 
 // ============= OBSERVABILITY =============
 initTelemetry();
@@ -12,15 +13,6 @@ initTelemetry();
 // ============= GLOBAL EVENT LISTENERS (Run Once) =============
 // Top-level module code only runs once per session, safely avoiding duplicate
 // bindings during Astro View Transitions without polluting the window object.
-
-const closePDPAndCleanURL = () => {
-  closeActiveOverlay();
-  const url = new URL(window.location.href);
-  if (url.searchParams.has('p')) {
-    url.searchParams.delete('p');
-    window.history.pushState(null, '', url);
-  }
-};
 
 function updateWaButtonVisibility() {
   const waBtn = document.querySelector<HTMLElement>('.whatsapp-float');
@@ -52,7 +44,9 @@ window.addEventListener('popstate', () => {
   const sku = new URLSearchParams(window.location.search).get('p');
   if (sku) {
     requestAnimationFrame(() => {
-      document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`)?.click();
+      const lang = document.documentElement.lang || 'en';
+      const baseUrl = import.meta.env.BASE_URL;
+      navigate(`${baseUrl}${lang}/products/${sku}/`, { history: 'replace' });
     });
   } else if (document.getElementById('pdp-modal')?.classList.contains('active')) {
     closeActiveOverlay();
@@ -94,157 +88,92 @@ document.addEventListener('input', handleSearchInput);
 // ============= TOP-LEVEL EVENT DELEGATION =============
 // Attach once to the document. Survives Astro view transitions automatically.
 
-// Action Map for Global Clicks (Command Pattern)
-const clickHandlers = [
-  {
-    selector: '.visual-filter-btn',
-    handle: (el: HTMLElement) => {
-      if (window.location.hash !== '#products') {
-        window.history.pushState(null, '', '#products');
-      }
-      const productsEl = document.getElementById('products');
-      if (productsEl) productsEl.style.display = '';
-      document.body.classList.add('products-visible');
+initGlobalEventRouter();
 
-      const navCat = el.dataset.navCategory;
-      const filterVal = el.dataset.filter;
-
-      const parentContainer = el.closest('.visual-filters');
-      if (parentContainer) {
-        parentContainer.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
-      }
-      el.classList.add('active');
-
-      if (navCat) {
-        setFilterState({ categories: [navCat], facets: [], query: '' });
-      } else if (filterVal) {
-        let targetCat = 'Water Purifier';
-        if (['robotic', 'canister', 'handheld', 'wet-dry'].includes(filterVal)) targetCat = 'Vacuum Cleaner';
-        else if (['Air Purifier', 'Water Softener'].includes(filterVal)) targetCat = filterVal;
-        setFilterState({ categories: [targetCat], facets: [filterVal], query: '' });
-      }
-
-      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    },
-  },
-  {
-    selector: '.pdp-close, .wishlist-close, .sort-close',
-    handle: (el: HTMLElement) => {
-      el.closest('#pdp-modal') ? closePDPAndCleanURL() : closeActiveOverlay();
-    },
-  },
-  {
-    selector: '.lang-btn',
-    handle: (el: HTMLElement) => {
-      const lang = el.getAttribute('data-lang');
-      const docLang = document.documentElement.lang || 'en';
-      if (lang && lang !== docLang) {
-        try {
-          localStorage.setItem('preferredLanguage', lang);
-        } catch (e) {}
-        const url = new URL(window.location.href);
-        const baseUrl = import.meta.env.BASE_URL;
-        const pathParts = url.pathname.replace(baseUrl, '').split('/').filter(Boolean);
-        if (pathParts.length > 0 && ['en', 'hi', 'mr', 'gu'].includes(pathParts[0])) {
-          pathParts[0] = lang;
-          url.pathname = baseUrl + pathParts.join('/');
-        } else {
-          url.pathname = baseUrl + lang + '/' + pathParts.join('/');
-        }
-        if (!url.pathname.endsWith('/')) url.pathname += '/';
-        navigate(url.pathname + url.search + url.hash);
-      }
-      const mainSidebar = document.getElementById('main-sidebar');
-      if (mainSidebar?.classList.contains('active')) document.getElementById('sidebar-close')?.click();
-    },
-  },
-  {
-    selector: '#filter-mobile-toggle',
-    handle: () => {
-      const url = new URL(window.location.href);
-      url.searchParams.set('view', 'filter');
-      window.history.pushState(null, '', url);
-      handleAppRouting();
-    },
-  },
-  {
-    selector: '#sort-mobile-toggle',
-    handle: () => {
-      document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
-        btn.classList.toggle('active', btn.dataset.sort === filterState.sort);
-      });
-      const url = new URL(window.location.href);
-      url.searchParams.set('view', 'sort');
-      window.history.pushState(null, '', url);
-      handleAppRouting();
-    },
-  },
-  {
-    selector: '.sort-option-btn',
-    handle: (el: HTMLElement) => {
-      const sortValue = el.dataset.sort;
-      if (sortValue) setFilterState({ sort: sortValue });
-      setTimeout(() => closeActiveOverlay(), 250);
-    },
-  },
-  {
-    selector: '#filter-sidebar-close, .filter-overlay',
-    handle: () => closeActiveOverlay(),
-  },
-  {
-    selector: '#filter-clear-all',
-    handle: () => setFilterState({ categories: ['all'], facets: [], query: '' }),
-  },
-  {
-    selector: '.vf-back-btn',
-    handle: () => (window.location.hash === '#products' ? window.history.back() : hideProductsView()),
-  },
-  {
-    selector: '#sidebar-toggle',
-    handle: () => {
-      document.getElementById('main-sidebar')?.classList.add('active');
-      document.getElementById('main-sidebar-overlay')?.classList.add('active');
-      document.body.style.overflow = 'hidden';
-      setTimeout(() => document.getElementById('sidebar-close')?.focus(), 50);
-    },
-  },
-  {
-    selector: '#sidebar-close, #main-sidebar-overlay',
-    handle: () => {
-      document.getElementById('main-sidebar')?.classList.remove('active');
-      document.getElementById('main-sidebar-overlay')?.classList.remove('active');
-      if (!document.querySelector('.pdp-modal.active, .filter-sidebar.open')) {
-        document.body.style.overflow = '';
-      }
-      if (window.location.hash === '#faq' || window.location.hash === '#contact') {
-        window.history.pushState(null, '', window.location.pathname + window.location.search);
-      }
-    },
-  },
-  {
-    selector: '#scrollToTop',
-    handle: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
-  },
-];
-
-document.addEventListener('click', (e: Event) => {
-  const target = e.target as HTMLElement;
-
-  // Special case: clicking the backdrop of a modal directly
-  const pdpModal = target.closest('.pdp-modal');
-  if (pdpModal && target === pdpModal) {
-    pdpModal.id === 'pdp-modal' ? closePDPAndCleanURL() : closeActiveOverlay();
-    return;
-  }
-
-  // Declarative Event Router
-  for (const action of clickHandlers) {
-    const matchedEl = target.closest(action.selector) as HTMLElement;
-    if (matchedEl) {
-      action.handle(matchedEl);
-      return; // Ensure only one handler executes per click
+registerClickAction({
+  selector: '.visual-filter-btn',
+  handle: (el: HTMLElement) => {
+    if (window.location.hash !== '#products') {
+      window.history.pushState(null, '', '#products');
     }
-  }
+    const productsEl = document.getElementById('products');
+    if (productsEl) productsEl.style.display = '';
+    document.body.classList.add('products-visible');
+
+    const navCat = el.dataset.navCategory;
+    const filterVal = el.dataset.filter;
+
+    const parentContainer = el.closest('.visual-filters');
+    if (parentContainer) {
+      parentContainer.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
+    }
+    el.classList.add('active');
+
+    if (navCat) {
+      setFilterState({ categories: [navCat], facets: [], query: '' });
+    } else if (filterVal) {
+      let targetCat = 'Water Purifier';
+      if (['robotic', 'canister', 'handheld', 'wet-dry'].includes(filterVal)) targetCat = 'Vacuum Cleaner';
+      else if (['Air Purifier', 'Water Softener'].includes(filterVal)) targetCat = filterVal;
+      setFilterState({ categories: [targetCat], facets: [filterVal], query: '' });
+    }
+
+    document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  },
+});
+
+registerClickAction({
+  selector: '.lang-btn',
+  handle: (el: HTMLElement) => {
+    const lang = el.getAttribute('data-lang');
+    const docLang = document.documentElement.lang || 'en';
+    if (lang && lang !== docLang) {
+      try {
+        localStorage.setItem('preferredLanguage', lang);
+      } catch (e) {}
+      const url = new URL(window.location.href);
+      const baseUrl = import.meta.env.BASE_URL;
+      const pathParts = url.pathname.replace(baseUrl, '').split('/').filter(Boolean);
+      if (pathParts.length > 0 && ['en', 'hi', 'mr', 'gu'].includes(pathParts[0])) {
+        pathParts[0] = lang;
+        url.pathname = baseUrl + pathParts.join('/');
+      } else {
+        url.pathname = baseUrl + lang + '/' + pathParts.join('/');
+      }
+      if (!url.pathname.endsWith('/')) url.pathname += '/';
+      navigate(url.pathname + url.search + url.hash);
+    }
+    const mainSidebar = document.getElementById('main-sidebar');
+    if (mainSidebar?.classList.contains('active')) document.getElementById('sidebar-close')?.click();
+  },
+});
+
+registerClickAction({
+  selector: '#sort-mobile-toggle',
+  handle: () => {
+    const currentState = $filterState.get();
+    document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.sort === currentState.sort);
+    });
+    const url = new URL(window.location.href);
+    url.searchParams.set('view', 'sort');
+    window.history.pushState(null, '', url);
+    handleAppRouting();
+  },
+});
+
+registerClickAction({
+  selector: '.sort-option-btn',
+  handle: (el: HTMLElement) => {
+    const sortValue = el.dataset.sort;
+    if (sortValue) setFilterState({ sort: sortValue });
+    setTimeout(() => closeActiveOverlay(), 250);
+  },
+});
+
+registerClickAction({
+  selector: '#filter-clear-all',
+  handle: () => setFilterState({ categories: ['all'], facets: [], query: '' }),
 });
 
 document.addEventListener('change', (e: Event) => {
@@ -340,7 +269,7 @@ document.addEventListener('astro:page-load', function () {
     const initQ = params.get('q');
 
     if (initCats || initFacets || initQ) {
-      const newState: Partial<typeof filterState> = { categories: ['all'], facets: [], query: '' };
+      const newState: Partial<FilterState> = { categories: ['all'], facets: [], query: '' };
       if (initCats) newState.categories = initCats.split(',');
       if (initFacets) newState.facets = initFacets.split(',');
       if (initQ) newState.query = initQ;
@@ -350,6 +279,10 @@ document.addEventListener('astro:page-load', function () {
     } else {
       setFilterState({});
     }
+
+    // Remove the SSG Anti-FOUC style now that JS state has successfully hydrated
+    const antiFoucStyle = document.getElementById('anti-fouc-style');
+    if (antiFoucStyle) antiFoucStyle.remove();
 
     handleAppRouting();
 

@@ -27,6 +27,11 @@ describe('Filtering Logic: productMatchesFacets', () => {
     expect(productMatchesFacets(mockProduct, ['20000+'])).toBe(false);
   });
 
+  it('should correctly evaluate multiple price ranges with OR logic', () => {
+    // The product price is 12,500. Selecting BOTH "Under 10k" and "10k-15k" should return true.
+    expect(productMatchesFacets(mockProduct, ['0-10000', '10000-15000'])).toBe(true);
+  });
+
   it('should correctly map and match complex subcategories (e.g., RO technology)', () => {
     // The product has 'ro-uv' in its subcategories. The filter engine maps 'ro' to 'ro-uv', so this should pass.
     expect(productMatchesFacets(mockProduct, ['ro'])).toBe(true);

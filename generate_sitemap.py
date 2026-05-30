@@ -21,10 +21,14 @@ def generate_sitemap(data_file="public/products.json", output_file="public/sitem
     ]
 
     # Add static pages
-    static_pages = [
-        {"loc": f"{base_url}/", "changefreq": "weekly", "priority": "1.0"},
-        {"loc": f"{base_url}/legal-terms.html", "changefreq": "monthly", "priority": "0.5"}
-    ]
+    languages = ["en", "hi", "mr", "gu"]
+    static_pages = [{"loc": f"{base_url}/", "changefreq": "weekly", "priority": "1.0"}]
+
+    for lang in languages:
+        static_pages.extend([
+            {"loc": f"{base_url}/{lang}/", "changefreq": "weekly", "priority": "1.0"},
+            {"loc": f"{base_url}/{lang}/legal-terms.html", "changefreq": "monthly", "priority": "0.5"}
+        ])
 
     for page in static_pages:
         xml_content.append('  <url>')
@@ -52,12 +56,13 @@ def generate_sitemap(data_file="public/products.json", output_file="public/sitem
             slug_base = re.sub(r'[^a-z0-9]+', '-', title.lower()).strip('-').upper()
             sku = f"EF-{slug_base}"
 
-            xml_content.append('  <url>')
-            xml_content.append(f'    <loc>{base_url}/en/products/{sku}/</loc>')
-            xml_content.append(f'    <lastmod>{today}</lastmod>')
-            xml_content.append('    <changefreq>monthly</changefreq>')
-            xml_content.append('    <priority>0.8</priority>')
-            xml_content.append('  </url>')
+            for lang in languages:
+                xml_content.append('  <url>')
+                xml_content.append(f'    <loc>{base_url}/{lang}/products/{sku}/</loc>')
+                xml_content.append(f'    <lastmod>{today}</lastmod>')
+                xml_content.append('    <changefreq>monthly</changefreq>')
+                xml_content.append('    <priority>0.8</priority>')
+                xml_content.append('  </url>')
     else:
         print(f"⚠️ Warning: {data_file} not found. Only static pages will be added.")
 

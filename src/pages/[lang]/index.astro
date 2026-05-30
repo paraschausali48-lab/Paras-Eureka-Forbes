@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import { translations } from '../../scripts/translations';
 import products from '../../../public/products.json';
+import ProductGrid from '../../components/ProductGrid.tsx';
+import { setProductsData } from '../../scripts/filters';
 
 export async function getStaticPaths() {
   const languages = ['en', 'hi', 'mr', 'gu'];
@@ -14,6 +16,9 @@ export async function getStaticPaths() {
 const { lang } = Astro.props;
 const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
 const baseUrl = import.meta.env.BASE_URL;
+
+// Pass the full product dataset to the client-side filter store
+setProductsData(products as any);
 
 // ==========================================
 // BUILD-TIME SSR LOGIC
@@ -270,109 +275,8 @@ const getProductHighlights = (product: any) => {
             </select>
           </div>
 
-          <!-- The Product Grid (SSR Hydrated from your logic!) -->
-          <div class="product-grid" id="product-grid">
-            {
-              products.map((product: any) => {
-                const sku = getSku(product.name);
-                const highlights = getProductHighlights(product);
-                const discount =
-                  product.mrp > product.mop && product.mop > 0
-                    ? Math.round(((product.mrp - product.mop) / product.mrp) * 100)
-                    : 0;
-
-                return (
-                  <article
-                    class={`product-card reveal active ${product.outOfStock ? 'out-of-stock' : ''}`}
-                    style="animation: filterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;"
-                    data-sku={sku}
-                    data-subcategory={(product.subcategories || []).join(', ')}
-                    data-leaflet={product.leaflet || undefined}
-                  >
-                    {product.image ? (
-                      <div class="product-media">
-                        <img src={product.image} alt={product.name} loading="lazy" width="300" height="200" />
-                      </div>
-                    ) : (
-                      <div class="product-media product-media-placeholder" aria-hidden="true">
-                        <svg
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.8"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          set:html={categoryIcons[product.category] || categoryIcons['Water Purifier']}
-                        />
-                        <span>{product.category}</span>
-                      </div>
-                    )}
-
-                    <div class="product-tag" data-category={product.category} data-i18n={product.i18nTag}>
-                      {t(product.i18nTag) || product.category}
-                    </div>
-
-                    <h3>{product.name}</h3>
-                    <p>{product.description}</p>
-
-                    {highlights.length > 0 && (
-                      <div class="product-highlights">
-                        {highlights.map((item) => (
-                          <span>{item}</span>
-                        ))}
-                      </div>
-                    )}
-
-                    <div class="price-info">
-                      <div class="mrp-wrapper">
-                        <div class="mrp">MRP ₹{product.mrp.toLocaleString('en-IN')}</div>
-                        {discount > 0 && <span class="discount-badge">{discount}% OFF</span>}
-                      </div>
-                      <div class="price">MOP ₹{product.mop.toLocaleString('en-IN')}</div>
-                    </div>
-
-                    <div class="product-trust-note">
-                      Inquiry only. Final purchase and billing through official Eureka Forbes channels.
-                    </div>
-
-                    <a href={`${baseUrl}${lang}/products/${sku}/`} class="product-btn" data-i18n="btn_more_info">
-                      {t('btn_more_info')}
-                    </a>
-
-                    <div class="hidden-specs" style="display: none">
-                      {product.specs && (
-                        <ul>
-                          {Object.entries(product.specs).map(([key, value]) => (
-                            <li>
-                              <strong>{key}:</strong> {value as string}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
-                    </div>
-                  </article>
-                );
-              })
-            }
-          </div>
-
-          <!-- Empty Search State -->
-          <div class="empty-state" id="empty-state" style="display: none;">
-            <svg
-              width="64"
-              height="64"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              style="color:var(--color-gray-400); margin-bottom:16px;"
-            >
-              <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-            <h3>{t('empty_title')}</h3>
-            <p>{t('empty_desc')}</p>
-            <button class="btn btn-outline" id="empty-clear-btn" style="margin-top:16px;">{t('empty_btn')}</button>
-          </div>
+          <!-- The Preact Product Grid Island -->
+          <ProductGrid client:load products={products as any} translations={translations[lang] || {}} />
         </div>
       </section>
     </div>

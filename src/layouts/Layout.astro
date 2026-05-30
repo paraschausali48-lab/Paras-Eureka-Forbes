@@ -58,6 +58,34 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
         });
       }
     </script>
+
+    <!-- SSG Anti-FOUC Script: Runs synchronously before the DOM paints -->
+    <script is:inline>
+      (function () {
+        try {
+          const params = new URLSearchParams(window.location.search);
+          const cat = params.get('cat');
+          const facets = params.get('facets');
+          const q = params.get('q');
+
+          if ((cat && cat !== 'all') || facets || q) {
+            const style = document.createElement('style');
+            style.id = 'anti-fouc-style';
+
+            // If only category is selected, we specifically show just those cards
+            if (cat && cat !== 'all' && !facets && !q) {
+              const categories = cat.split(',').map((c) => c.trim());
+              const selectors = categories.map((c) => `#product-grid .product-card[data-category="${c}"]`).join(', ');
+              style.innerHTML = `#product-grid .product-card { display: none !important; } ${selectors} { display: flex !important; }`;
+            } else {
+              // If facets or search are used, hide the grid temporarily until JS loads
+              style.innerHTML = `#product-grid { opacity: 0 !important; pointer-events: none !important; }`;
+            }
+            document.head.appendChild(style);
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body
     data-toast-add={t('toast_wishlist_add')}

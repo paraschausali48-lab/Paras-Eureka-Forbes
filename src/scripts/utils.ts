@@ -7,7 +7,6 @@ export function debounce<T extends (...args: any[]) => void>(func: T, wait: numb
   let timeout: ReturnType<typeof setTimeout>;
   return function executedFunction(this: any, ...args: Parameters<T>) {
     const later = () => {
-      clearTimeout(timeout);
       func.apply(this, args);
     };
     clearTimeout(timeout);
@@ -24,6 +23,9 @@ export function enableSwipeToClose(
   direction: 'down' | 'left' | 'right' = 'down',
 ) {
   if (!element) return;
+  if (element.hasAttribute('data-swipe-bound')) return;
+  element.setAttribute('data-swipe-bound', 'true');
+
   let startPos = 0;
   let currentPos = 0;
   let isSwiping = false;

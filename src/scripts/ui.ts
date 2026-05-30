@@ -1,3 +1,5 @@
+import { registerClickAction } from './events';
+
 let revealObserver: IntersectionObserver | null = null;
 
 export function initScrollAnimations() {
@@ -95,3 +97,9 @@ export function initAccordions() {
     });
   });
 }
+
+// ============= UI EVENT BINDINGS =============
+registerClickAction({
+  selector: '#scrollToTop',
+  handle: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
+});
