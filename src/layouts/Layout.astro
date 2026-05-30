@@ -1,6 +1,8 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import { translations } from '../scripts/translations';
+import { useTranslations } from '../scripts/translations';
+// @ts-ignore - TS complains about .tsx, but Astro requires it to resolve the Preact island
+import Wishlist from '../components/Wishlist.tsx';
 import '../styles.css';
 
 interface Props {
@@ -19,8 +21,8 @@ const {
   lang = 'en',
 } = Astro.props;
 
-// Helper function to get translations at build time
-const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
+// Asynchronously load the exact language dictionary needed for this page
+const t = await useTranslations(lang);
 ---
 
 <!doctype html>
@@ -228,6 +230,40 @@ const t = (key: string) => translations[lang]?.[key] || translations['en'][key] 
         </div>
       </div>
     </footer>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="pdp-modal">
+      <div class="pdp-content">
+        <div
+          class="pdp-header"
+          style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--border-color, #eee); padding-bottom: 1rem;"
+        >
+          <h2 style="margin: 0; font-size: 1.25rem;">{t('wishlist_title')}</h2>
+          <button
+            class="wishlist-close"
+            aria-label="Close"
+            style="background: none; border: none; cursor: pointer; padding: 4px;"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Preact Wishlist Island -->
+        <Wishlist client:load />
+      </div>
+    </div>
 
     <!-- Floating Elements -->
     <a

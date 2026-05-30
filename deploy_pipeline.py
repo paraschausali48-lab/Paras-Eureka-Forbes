@@ -23,12 +23,6 @@ def main():
     # Run data normalization BEFORE the build, so Astro compiles with clean data
     run_script("normalize_data.py")
 
-    print("\n--- ⏳ Building Astro Project (npm run build) ---")
-    build_result = subprocess.run("npm run build", shell=True)
-    if build_result.returncode != 0:
-        print("❌ Error building the Astro project. Pipeline stopped.")
-        sys.exit(1)
-
     scripts_to_run = ["generate_sitemap.py", "github_push.py"]
 
     for script in scripts_to_run:

@@ -28,61 +28,52 @@ export const $catalogMeta = map<CatalogMeta>({
 });
 
 export let allProducts: Product[] = [];
-export function setProductsData(products: Product[]) {
-  allProducts = products;
-}
 
 /**
  * Domain Knowledge Dictionary: Defines which facets belong exclusively to which categories.
  * This completely replaces the need to query the DOM to validate filter state cleanup.
  * (Note: Ensure these match the exact 'value' attributes of your HTML inputs)
  */
-const FACET_DOMAINS: Record<string, string[]> = {
-  'Water Purifier': [
-    'ro',
-    'uv',
-    'uf',
-    'wall-mounted',
-    'under-counter',
-    'table-top',
-    'small',
-    'medium',
-    'large',
-    'active-copper',
-    'hot',
-    'alkaline',
-    'alkaline-copper',
-    'plastic',
-    'slim',
-    'smart',
-    'stainless-steel',
-    'zero-pressure',
-    'municipal',
-  ],
-  'Vacuum Cleaner': [
-    'canister',
-    'handheld',
-    'upright',
-    'robotic',
-    'dry',
-    'wet-dry',
-    'bagless',
-    'bagged',
-    'corded',
-    'cordless',
-  ],
-};
+let FACET_DOMAINS: Record<string, string[]> = {};
 
 const SPECIAL_MAPPINGS: Record<string, string[]> = {
-  ro: ['ro', 'ro-uv', 'ro-uv-uf', 'ro-uv-alk', 'ro-uv-alk-ss', 'ro-uv-ss', 'ro-uv-mc'],
-  uv: ['uv', 'uv-uf', 'ro-uv', 'ro-uv-uf', 'ro-uv-alk', 'ro-uv-alk-ss', 'ro-uv-ss', 'uv-uf-ss'],
-  uf: ['uf', 'uv-uf', 'ro-uv-uf', 'uv-uf-ss'],
   small: ['small', 'without-storage'],
   medium: ['medium', 'storage'],
   upright: ['upright', 'stick'],
   bagless: ['bagless', 'cyclonic'],
   cordless: ['cordless', 'battery'],
 };
+
+export function setProductsData(products: Product[]) {
+  allProducts = products;
+
+  // Dynamically generate FACET_DOMAINS and tech SPECIAL_MAPPINGS to decouple business logic
+  FACET_DOMAINS = {};
+  const roSet = new Set<string>(['ro']);
+  const uvSet = new Set<string>(['uv']);
+  const ufSet = new Set<string>(['uf']);
+
+  products.forEach((p) => {
+    if (!FACET_DOMAINS[p.category]) {
+      // Initialize with base tech facets so UI state cleanup works properly
+      FACET_DOMAINS[p.category] = p.category === 'Water Purifier' ? ['ro', 'uv', 'uf'] : [];
+    }
+
+    p.subcategories.forEach((sub) => {
+      const s = sub.toLowerCase();
+      if (!FACET_DOMAINS[p.category].includes(s)) {
+        FACET_DOMAINS[p.category].push(s);
+      }
+      if (s.includes('ro')) roSet.add(s);
+      if (s.includes('uv')) uvSet.add(s);
+      if (s.includes('uf')) ufSet.add(s);
+    });
+  });
+
+  SPECIAL_MAPPINGS['ro'] = Array.from(roSet);
+  SPECIAL_MAPPINGS['uv'] = Array.from(uvSet);
+  SPECIAL_MAPPINGS['uf'] = Array.from(ufSet);
+}
 
 // Configuration object for generic facet groupings.
 // This moves business logic out of the core filtering algorithm.

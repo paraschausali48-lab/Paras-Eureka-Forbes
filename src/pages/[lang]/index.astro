@@ -1,8 +1,10 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import { translations } from '../../scripts/translations';
+import { useTranslations, getTranslations } from '../../scripts/translations';
 import products from '../../../public/products.json';
+// @ts-ignore - TS complains about .tsx, but Astro requires it to resolve the Preact island
 import ProductGrid from '../../components/ProductGrid.tsx';
+// @ts-ignore
 import { FilterSidebar } from '../../components/FilterSidebar.tsx';
 import { setProductsData } from '../../scripts/filters';
 
@@ -15,7 +17,8 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.props;
-const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
+const t = await useTranslations(lang);
+const langData = await getTranslations(lang);
 const baseUrl = import.meta.env.BASE_URL;
 
 // Pass the full product dataset to the client-side filter store
@@ -121,7 +124,7 @@ setProductsData(products as any);
       <!-- 3. Main Products Area (Filters & Grid) -->
       <section id="products" class="products-layout reveal">
         <!-- Filter Sidebar -->
-        <FilterSidebar client:load translations={translations[lang] || {}} />
+        <FilterSidebar client:load translations={langData} />
 
         <!-- Main Grid Area -->
         <div class="products-main">
@@ -152,7 +155,7 @@ setProductsData(products as any);
           </div>
 
           <!-- The Preact Product Grid Island -->
-          <ProductGrid client:load products={products as any} translations={translations[lang] || {}} />
+          <ProductGrid client:load products={products as any} translations={langData} />
         </div>
       </section>
     </div>
@@ -261,19 +264,6 @@ setProductsData(products as any);
         <button class="sort-option-btn" data-sort="price-high">{t('sort_price_high')}</button>
       </div>
       <button class="btn btn-outline sort-close" style="width: 100%; margin-top: 20px;">Cancel</button>
-    </div>
-  </div>
-
-  <div class="filter-overlay pdp-modal" id="wishlist-modal">
-    <div class="demo-modal-content pdp-content" style="max-width: 450px; padding: 24px;">
-      <div class="wishlist-header">
-        <h3 class="demo-modal-title" style="margin:0;">{t('wishlist_title')}</h3>
-        <button class="wishlist-clear-btn" id="wishlist-clear-btn">{t('wishlist_clear')}</button>
-      </div>
-      <div class="wishlist-container" id="wishlist-container">
-        <div class="wishlist-empty">{t('wishlist_empty')}</div>
-      </div>
-      <button class="btn btn-outline wishlist-close" style="width: 100%; margin-top: 20px;">Close</button>
     </div>
   </div>
 

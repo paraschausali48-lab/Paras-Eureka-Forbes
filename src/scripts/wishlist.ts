@@ -14,23 +14,35 @@ export function getWishlist(): string[] {
   }
 }
 
-// 1. Create a reactive store for the wishlist so Preact components can subscribe to it natively.
-// We initialize it safely on the client side to avoid Astro SSR mismatch.
-export const $wishlist = atom<string[]>(typeof window !== 'undefined' ? getWishlist() : []);
+// 1. Initialize with an empty array so the server and client start with the same state.
+export const $wishlist = atom<string[]>([]);
+
+// 2. Check if we are running in the browser (client-side)
+if (typeof window !== 'undefined') {
+  // Read the existing wishlist from localStorage after the script loads
+  const storedWishlist = getWishlist();
+  if (storedWishlist.length > 0) {
+    $wishlist.set(storedWishlist);
+  }
+
+  // 3. Automatically sync the store back to localStorage whenever it changes
+  $wishlist.listen((newWishlist) => {
+    localStorage.setItem('ef_wishlist', JSON.stringify(newWishlist));
+  });
+}
 
 export function saveWishlist(list: string[]) {
   try {
-    localStorage.setItem('ef_wishlist', JSON.stringify(list));
     $wishlist.set(list);
     updateWishlistUI();
   } catch (e) {
     showToast(document.body.dataset.toastError || 'Unable to save wishlist. Storage may be restricted.');
-    console.warn('Failed to save wishlist to local storage', e);
+    console.warn('Failed to update wishlist state', e);
   }
 }
 
 export function updateWishlistUI() {
-  const list = getWishlist();
+  const list = $wishlist.get();
   document.querySelectorAll<HTMLElement>('.wishlist-badge').forEach((badge) => {
     badge.style.display = list.length > 0 ? 'flex' : 'none';
     badge.textContent = list.length.toString();
@@ -49,67 +61,8 @@ export function updateWishlistUI() {
   }
 }
 
-export function renderWishlist(
-  wishlistModal: HTMLElement | null,
-  wishlistContainer: HTMLElement | null,
-  wishlistClearBtn: HTMLElement | null,
-) {
-  const list = getWishlist();
-  if (!wishlistContainer) return;
-  wishlistContainer.innerHTML = '';
-  if (wishlistClearBtn) wishlistClearBtn.style.display = list.length > 0 ? 'block' : 'none';
-
-  if (list.length === 0) {
-    const emptyText = document.body.dataset.wishlistEmpty || 'Your wishlist is currently empty.';
-    wishlistContainer.innerHTML = `<div class="wishlist-empty"><p>${emptyText}</p></div>`;
-    return;
-  }
-
-  list.forEach((sku) => {
-    const product = allProducts.find((p) => p.sku === sku);
-    // Fallback to DOM in case allProducts hasn't hydrated yet (e.g., immediate page load race condition)
-    const card = document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`);
-
-    if (product || card) {
-      const title = product ? product.name : card?.querySelector('h3')?.textContent || sku;
-      const category = product
-        ? product.category
-        : card?.querySelector('.product-tag')?.getAttribute('data-category') || '';
-      const priceText = product
-        ? `₹${product.mop.toLocaleString('en-IN')}`
-        : card?.querySelector('.price')?.textContent || '';
-
-      const item = document.createElement('div');
-      item.className = 'wishlist-item';
-      item.innerHTML = `<div class="wishlist-item-details"><div style="font-size:0.8rem; color:var(--color-primary-light); font-weight:700; margin-bottom:2px;">${escapeHTML(category)}</div><div class="wishlist-item-title">${escapeHTML(title)}</div><div class="wishlist-item-price">${escapeHTML(priceText)}</div></div><button class="wishlist-item-remove" data-sku="${escapeHTML(sku)}">×</button>`;
-
-      item.querySelector('.wishlist-item-title')!.addEventListener('click', () => {
-        if (wishlistModal) wishlistModal.classList.remove('active');
-        document.body.style.overflow = '';
-        const productsEl = document.getElementById('products');
-        if (productsEl) productsEl.style.display = '';
-
-        const card = document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`);
-        if (card) {
-          card.click();
-        } else {
-          // Fallback if item is filtered out: redirect to item URL
-          const lang = document.documentElement.lang || 'en';
-          navigate(`${import.meta.env.BASE_URL}${lang}/products/${sku}`);
-        }
-      });
-
-      item.querySelector('.wishlist-item-remove')!.addEventListener('click', (e: Event) => {
-        saveWishlist(getWishlist().filter((s) => s !== (e.target as HTMLElement).dataset.sku));
-        renderWishlist(wishlistModal, wishlistContainer, wishlistClearBtn);
-      });
-      wishlistContainer.appendChild(item);
-    }
-  });
-}
-
 export function handleWishlistToggle(sku: string) {
-  let list = getWishlist();
+  let list = $wishlist.get();
   if (list.includes(sku)) {
     list = list.filter((item) => item !== sku);
     showToast(document.body.dataset.toastRemove || 'Removed from Wishlist');
@@ -122,9 +75,6 @@ export function handleWishlistToggle(sku: string) {
 
 export function initWishlistEvents() {
   const wishlistToggleBtns = document.querySelectorAll<HTMLElement>('.wishlist-toggle-btn');
-  const wishlistModal = document.getElementById('wishlist-modal');
-  const wishlistContainer = document.getElementById('wishlist-items-container');
-  const wishlistClearBtn = document.getElementById('wishlist-clear-all');
 
   wishlistToggleBtns.forEach((btn) => {
     if (btn.hasAttribute('data-evt-bound')) return;
@@ -137,17 +87,6 @@ export function initWishlistEvents() {
       handleAppRouting();
     });
   });
-
-  if (wishlistClearBtn) {
-    if (!wishlistClearBtn.hasAttribute('data-evt-bound')) {
-      wishlistClearBtn.setAttribute('data-evt-bound', 'true');
-      wishlistClearBtn.addEventListener('click', () => {
-        saveWishlist([]);
-        renderWishlist(wishlistModal, wishlistContainer, wishlistClearBtn);
-        showToast(document.body.dataset.toastClear || 'Wishlist cleared');
-      });
-    }
-  }
 
   const pdpWishBtn = document.getElementById('pdp-wishlist-btn');
   if (pdpWishBtn && !pdpWishBtn.hasAttribute('data-evt-bound')) {
