@@ -1,5 +1,5 @@
 // Self-destructing Service Worker to clear old caches
-self.addEventListener('install', (e) => {
+self.addEventListener('install', (_e) => {
   self.skipWaiting();
 });
 
@@ -17,6 +17,6 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-self.addEventListener('fetch', (e) => {
+self.addEventListener('fetch', (_e) => {
   // Do nothing, let the browser fetch from the network normally
 });

@@ -1,8 +1,5 @@
-import { navigate } from 'astro:transitions/client';
 import { atom } from 'nanostores';
 import { showToast } from './toast';
-import { escapeHTML } from './utils';
-import { allProducts } from './filters';
 import { handleAppRouting } from './routing';
 
 export function getWishlist(): string[] {

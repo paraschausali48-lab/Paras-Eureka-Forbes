@@ -1,9 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { translations } from '../scripts/translations';
+import { getTranslations } from '../scripts/translations';
 
 const lang = 'en';
-const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
+const translations = await getTranslations(lang);
+const t = (key: string) => translations[key] || key;
 ---
 
 <Layout title={t('error_title')} description={t('error_desc')} lang={lang}>

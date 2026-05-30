@@ -1,6 +1,6 @@
 ---
 // 1. SERVER-SIDE LOGIC (Runs only during the build process)
-import { translations } from '../../../scripts/translations';
+import { getTranslations } from '../../../scripts/translations';
 import Layout from '../../../layouts/Layout.astro';
 import products from '../../../../public/products.json';
 
@@ -34,7 +34,9 @@ export function getStaticPaths() {
 const { product, lang } = Astro.props;
 
 // Helper function to get translations server-side
-const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
+const translations = await getTranslations(lang);
+const fallbackTranslations = lang !== 'en' ? await getTranslations('en') : translations;
+const t = (key: string) => translations[key] || fallbackTranslations[key] || key;
 
 // Generate SEO Title and Description server-side
 const seoTitle = `${product.name} | ${t('header_rep_title')}`;
