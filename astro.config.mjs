@@ -3,7 +3,7 @@ import preact from '@astrojs/preact';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://paraschausali48-lab.github.io',
-  base: '/Paras-Eureka-Forbes',
+  base: '/paras-eureka-forbes',
   trailingSlash: 'always',
   prefetch: true,
   integrations: [preact()],
