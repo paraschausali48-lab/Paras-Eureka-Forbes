@@ -1,11 +1,7 @@
 ---
-import ProductGrid from '../../scripts/ProductGrid.tsx';
-import productsData from '../../../public/products.json';
-
-import type { Product } from '../../scripts/types';
-const currentLang = Astro.currentLocale || 'en';
 import Layout from '../../layouts/Layout.astro';
 import { translations } from '../../scripts/translations';
+import products from '../../../products.json';
 
 export async function getStaticPaths() {
   const languages = ['en', 'hi', 'mr', 'gu'];
@@ -16,21 +12,530 @@ export async function getStaticPaths() {
 }
 
 const { lang } = Astro.props;
-
-// Helper function to get translations at build time
 const t = (key: string) => translations[lang]?.[key] || translations['en'][key] || key;
+const baseUrl = import.meta.env.BASE_URL;
 
-const title = t('header_rep_title') + ' | Authorized Direct Sales Specialist';
-const description = t('vb_desc');
+// ==========================================
+// BUILD-TIME SSR LOGIC
+// ==========================================
+const getSku = (title: string) =>
+  'EF-' +
+  title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .toUpperCase();
+
+const categoryIcons: Record<string, string> = {
+  'Water Purifier': '<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path><path d="M9 13l2 2 4-4"></path>',
+  'Vacuum Cleaner':
+    '<rect x="4" y="14" width="16" height="6" rx="2"></rect><path d="M8 14V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v8"></path>',
+  'Air Purifier':
+    '<path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"></path>',
+  'Water Softener':
+    '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><path d="M12 11l-2.5 3c0 1.4 1.1 2.5 2.5 2.5s2.5-1.1 2.5-2.5L12 11z"></path>',
+};
+
+const getProductHighlights = (product: any) => {
+  const specs = product.specs || {};
+  const candidates: (string | number | undefined)[] = [];
+  if (product.category === 'Water Purifier') {
+    candidates.push(specs['TDS'], specs['Storage Capacity'], specs['Filter Life'], specs['Installation Type']);
+  } else if (product.category === 'Vacuum Cleaner') {
+    candidates.push(specs['Type'], specs['Application'], specs['Dust Capacity'], specs['Run Time']);
+  } else if (product.category === 'Air Purifier') {
+    candidates.push(specs['Ideal For'], specs['Air Flow'], specs['Purification Stages']);
+  } else if (product.category === 'Water Softener') {
+    candidates.push(specs['Max. Input Hardness (ppm)'], specs['Max. Input Flow Rate (LPH)'], specs['Technology']);
+  }
+  return candidates
+    .filter(Boolean)
+    .map((value) => String(value!).replace(/\s+/g, ' ').trim())
+    .filter((value, index, arr) => value && arr.indexOf(value) === index)
+    .slice(0, 3);
+};
 ---
 
-<Layout title={title} description={description} lang={lang}>
-  <main>
-    <!-- Paste your entire homepage <main> HTML here and update the text! -->
+<Layout title={t('header_rep_title')} description={t('vb_desc')} lang={lang}>
+  <main id="home">
+    <div class="container">
+      <!-- 1. Store Intro Banner -->
+      <section class="store-intro-banner active reveal">
+        <div class="intro-content">
+          <span class="intro-eyebrow">{t('products_eyebrow')}</span>
+          <h2>{t('products_title')}</h2>
+          <p>{t('products_desc')}</p>
+          <div class="intro-badges">
+            <div class="intro-badge">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+              {t('intro_badge1')}
+            </div>
+            <div class="intro-badge">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline
+                  points="9 22 9 12 15 12 15 22"
+                >
+                </polyline>
+              </svg>
+              {t('intro_badge2')}
+            </div>
+            <div class="intro-badge">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              {t('intro_badge3')}
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <!-- Replace your empty <div id="product-grid"> with this SSR block -->
-    <ProductGrid client:load initialProducts={productsData as any as Product[]} lang={currentLang} />
+      <!-- 2. Visual Filters -->
+      <div class="visual-filters-wrapper">
+        <div class="visual-filters">
+          <button class="visual-filter-btn" data-nav-category="Water Purifier">
+            <div class="vf-img-wrap">
+              <img src={`${baseUrl}images/cat-water.webp`} alt="Water Purifiers" onerror="this.style.display='none'" />
+            </div>
+            <span>{t('filter_water')}</span>
+          </button>
+          <button class="visual-filter-btn" data-nav-category="Vacuum Cleaner">
+            <div class="vf-img-wrap">
+              <img src={`${baseUrl}images/cat-vacuum.webp`} alt="Vacuum Cleaners" onerror="this.style.display='none'" />
+            </div>
+            <span>{t('filter_vacuum')}</span>
+          </button>
+          <button class="visual-filter-btn" data-nav-category="Air Purifier">
+            <div class="vf-img-wrap">
+              <img src={`${baseUrl}images/cat-air.webp`} alt="Air Purifiers" onerror="this.style.display='none'" />
+            </div>
+            <span>{t('filter_air')}</span>
+          </button>
+          <button class="visual-filter-btn" data-nav-category="Water Softener">
+            <div class="vf-img-wrap">
+              <img
+                src={`${baseUrl}images/cat-softener.webp`}
+                alt="Water Softeners"
+                onerror="this.style.display='none'"
+              />
+            </div>
+            <span>{t('filter_softener')}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Main Products Area (Filters & Grid) -->
+      <section id="products" class="products-layout reveal">
+        <!-- Filter Sidebar -->
+        <aside class="filter-sidebar" id="filter-sidebar">
+          <div class="filter-sidebar-header">
+            <h3>{t('filter_title')}</h3>
+            <button class="filter-clear-all" id="filter-clear-all">{t('filter_clear_all')}</button>
+            <button class="filter-sidebar-close" id="filter-sidebar-close">&times;</button>
+          </div>
+          <div class="filter-sidebar-inner">
+            <div class="filter-groups-wrapper">
+              <!-- Main Category Filters -->
+              <div class="filter-group">
+                <button class="filter-group-toggle" aria-expanded="true">
+                  <div class="filter-group-title">{t('filter_cat_title')}</div>
+                  <svg
+                    class="filter-chevron"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="filter-group-content">
+                  <label class="filter-option">
+                    <input type="checkbox" class="filter-cat" value="all" checked />
+                    {t('filter_all')}
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" class="filter-cat" value="Water Purifier" />
+                    {t('filter_water')}
+                    <span class="filter-count" data-cat="Water Purifier"></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" class="filter-cat" value="Vacuum Cleaner" />
+                    {t('filter_vacuum')}
+                    <span class="filter-count" data-cat="Vacuum Cleaner"></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" class="filter-cat" value="Air Purifier" />
+                    {t('filter_air')}
+                    <span class="filter-count" data-cat="Air Purifier"></span>
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" class="filter-cat" value="Water Softener" />
+                    {t('filter_softener')}
+                    <span class="filter-count" data-cat="Water Softener"></span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Sub-Technology Filters -->
+              <div class="filter-group water-filter">
+                <button class="filter-group-toggle" aria-expanded="true">
+                  <div class="filter-group-title">{t('filter_tech_title')}</div>
+                  <svg
+                    class="filter-chevron"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </button>
+                <div class="filter-group-content">
+                  <label class="filter-option">
+                    <input type="checkbox" class="filter-facet" value="ro" />
+                    {t('filter_tech_ro')}
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" class="filter-facet" value="uv" />
+                    {t('filter_tech_uv')}
+                  </label>
+                  <label class="filter-option">
+                    <input type="checkbox" class="filter-facet" value="uf" />
+                    {t('filter_tech_uf')}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Grid Area -->
+        <div class="products-main">
+          <!-- Mobile Actions -->
+          <div class="mobile-actions-wrapper">
+            <button class="mobile-action-btn" id="sort-mobile-toggle">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline>
+              </svg>
+              {t('btn_sort')}
+            </button>
+            <button class="mobile-action-btn" id="filter-mobile-toggle">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+              </svg>
+              {t('btn_filter')}
+              <span class="filter-badge" id="filter-badge" style="display:none;">0</span>
+            </button>
+          </div>
+
+          <!-- Desktop Sort Dropdown -->
+          <div class="desktop-sort-wrapper">
+            <select class="sort-select" id="desktop-sort-select" aria-label="Sort products">
+              <option value="relevance">{t('sort_desktop_relevance')}</option>
+              <option value="price-low">{t('sort_price_low')}</option>
+              <option value="price-high">{t('sort_price_high')}</option>
+            </select>
+          </div>
+
+          <!-- The Product Grid (SSR Hydrated from your logic!) -->
+          <div class="product-grid" id="product-grid">
+            {
+              products.map((product: any) => {
+                const sku = getSku(product.name);
+                const highlights = getProductHighlights(product);
+                const discount =
+                  product.mrp > product.mop && product.mop > 0
+                    ? Math.round(((product.mrp - product.mop) / product.mrp) * 100)
+                    : 0;
+
+                return (
+                  <article
+                    class={`product-card reveal active ${product.outOfStock ? 'out-of-stock' : ''}`}
+                    style="animation: filterReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;"
+                    data-sku={sku}
+                    data-subcategory={(product.subcategories || []).join(', ')}
+                    data-leaflet={product.leaflet || undefined}
+                  >
+                    {product.image ? (
+                      <div class="product-media">
+                        <img src={product.image} alt={product.name} loading="lazy" width="300" height="200" />
+                      </div>
+                    ) : (
+                      <div class="product-media product-media-placeholder" aria-hidden="true">
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.8"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          set:html={categoryIcons[product.category] || categoryIcons['Water Purifier']}
+                        />
+                        <span>{product.category}</span>
+                      </div>
+                    )}
+
+                    <div class="product-tag" data-category={product.category} data-i18n={product.i18nTag}>
+                      {t(product.i18nTag) || product.category}
+                    </div>
+
+                    <h3>{product.name}</h3>
+                    <p>{product.description}</p>
+
+                    {highlights.length > 0 && (
+                      <div class="product-highlights">
+                        {highlights.map((item) => (
+                          <span>{item}</span>
+                        ))}
+                      </div>
+                    )}
+
+                    <div class="price-info">
+                      <div class="mrp-wrapper">
+                        <div class="mrp">MRP ₹{product.mrp.toLocaleString('en-IN')}</div>
+                        {discount > 0 && <span class="discount-badge">{discount}% OFF</span>}
+                      </div>
+                      <div class="price">MOP ₹{product.mop.toLocaleString('en-IN')}</div>
+                    </div>
+
+                    <div class="product-trust-note">
+                      Inquiry only. Final purchase and billing through official Eureka Forbes channels.
+                    </div>
+
+                    <a href="#contact" class="product-btn" data-i18n="btn_more_info">
+                      {t('btn_more_info')}
+                    </a>
+
+                    <div class="hidden-specs" style="display: none">
+                      {product.specs && (
+                        <ul>
+                          {Object.entries(product.specs).map(([key, value]) => (
+                            <li>
+                              <strong>{key}:</strong> {value as string}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </article>
+                );
+              })
+            }
+          </div>
+
+          <!-- Empty Search State -->
+          <div class="empty-state" id="empty-state" style="display: none;">
+            <svg
+              width="64"
+              height="64"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              style="color:var(--color-gray-400); margin-bottom:16px;"
+            >
+              <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <h3>{t('empty_title')}</h3>
+            <p>{t('empty_desc')}</p>
+            <button class="btn btn-outline" id="empty-clear-btn" style="margin-top:16px;">{t('empty_btn')}</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 4. Special Offer Banner -->
+    <section class="special-offer-section reveal">
+      <div class="container offer-section">
+        <span class="eyebrow offer-eyebrow">{t('offer_eyebrow')}</span>
+        <h2 class="offer-title">{t('offer_title')}</h2>
+        <div class="offer-countdown" id="offer-countdown">
+          <div class="countdown-item"><span id="cd-days">00</span><small>{t('cd_days')}</small></div>
+          <div class="countdown-item"><span id="cd-hours">00</span><small>{t('cd_hours')}</small></div>
+          <div class="countdown-item"><span id="cd-mins">00</span><small>{t('cd_mins')}</small></div>
+          <div class="countdown-item"><span id="cd-secs">00</span><small>{t('cd_secs')}</small></div>
+        </div>
+        <p class="offer-desc">{t('offer_desc')}</p>
+        <a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="btn offer-wa-btn">
+          {t('offer_btn')}
+        </a>
+      </div>
+    </section>
+
+    <!-- 5. Value Banner Section -->
+    <section class="value-banner reveal">
+      <div class="container">
+        <div class="value-banner-header">
+          <span class="eyebrow">{t('vb_eyebrow')}</span>
+          <h2>{t('vb_title')}</h2>
+          <p class="value-desc">{t('vb_desc')}</p>
+        </div>
+        <div class="value-cards">
+          <div class="value-card">
+            <span class="value-card-icon">👨‍🔧</span>
+            <h3>{t('vb_card1_title')}</h3>
+            <p>{t('vb_card1_desc')}</p>
+          </div>
+          <div class="value-card">
+            <span class="value-card-icon">🏠</span>
+            <h3>{t('vb_card2_title')}</h3>
+            <p>{t('vb_card2_desc')}</p>
+          </div>
+          <div class="value-card">
+            <span class="value-card-icon">🎁</span>
+            <h3>{t('vb_card3_title')}</h3>
+            <p>{t('vb_card3_desc')}</p>
+          </div>
+          <div class="value-card">
+            <span class="value-card-icon">🛡️</span>
+            <h3>{t('vb_card4_title')}</h3>
+            <p>{t('vb_card4_desc')}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Contact Section -->
+    <section class="contact reveal" id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <div>
+            <span class="eyebrow">{t('contact_eyebrow')}</span>
+            <h2>{t('contact_title')}</h2>
+            <p>{t('contact_desc')}</p>
+            <div class="contact-details" style="margin-top: 24px;">
+              <p><strong>{t('contact_name')}</strong> Paras Singh Chawsali</p>
+              <p><strong>{t('contact_service_area')}</strong> Mumbai, Navi Mumbai & Thane</p>
+              <p><strong>{t('contact_phone')}</strong> <a href="tel:+919999999999">+91 99999 99999</a></p>
+            </div>
+            <div class="card-actions" style="margin-top: 32px; max-width: 400px;">
+              <a href="https://wa.me/919999999999" target="_blank" rel="noopener" class="btn">{t('contact_wa_btn')}</a>
+              <a href="mailto:contact@example.com" class="btn btn-outline">{t('contact_email_btn')}</a>
+            </div>
+          </div>
+          <div
+            style="text-align:center; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);"
+          >
+            <h3 style="color: var(--color-primary); margin-bottom: 12px; font-size: 1.1rem;">
+              {t('contact_official_title')}
+            </h3>
+            <p style="font-size: 0.9rem; color: #666; margin-bottom: 8px;">
+              {t('contact_official_phone')}<br /><strong>1860 266 1177</strong>
+            </p>
+            <p style="font-size: 0.9rem; color: #666;">
+              {t('contact_official_email')}<br /><strong>customercare@eurekaforbes.com</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <!-- Modals -->
+  <div class="pdp-modal" id="pdp-modal">
+    <div class="pdp-content">
+      <button class="pdp-close" aria-label="Close" tabindex="0">&times;</button>
+      <div class="pdp-layout" id="pdp-layout-container"></div>
+    </div>
+  </div>
+
+  <div class="filter-overlay pdp-modal" id="sort-modal">
+    <div class="demo-modal-content pdp-content" style="max-width: 400px; padding: 20px;">
+      <h3 class="demo-modal-title">{t('sort_title')}</h3>
+      <div class="sort-options-new">
+        <button class="sort-option-btn active" data-sort="relevance">{t('sort_relevance')}</button>
+        <button class="sort-option-btn" data-sort="price-low">{t('sort_price_low')}</button>
+        <button class="sort-option-btn" data-sort="price-high">{t('sort_price_high')}</button>
+      </div>
+      <button class="btn btn-outline sort-close" style="width: 100%; margin-top: 20px;">Cancel</button>
+    </div>
+  </div>
+
+  <div class="filter-overlay pdp-modal" id="wishlist-modal">
+    <div class="demo-modal-content pdp-content" style="max-width: 450px; padding: 24px;">
+      <div class="wishlist-header">
+        <h3 class="demo-modal-title" style="margin:0;">{t('wishlist_title')}</h3>
+        <button class="wishlist-clear-btn" id="wishlist-clear-btn">{t('wishlist_clear')}</button>
+      </div>
+      <div class="wishlist-container" id="wishlist-container">
+        <div class="wishlist-empty">{t('wishlist_empty')}</div>
+      </div>
+      <button class="btn btn-outline wishlist-close" style="width: 100%; margin-top: 20px;">Close</button>
+    </div>
+  </div>
+
+  <!-- Connect the page logic -->
+  <script src="../../scripts/main.ts"></script>
 </Layout>
 
-<script src="../../scripts/main.ts"></script>
+<style>
+  .product-highlights {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+  }
+  .product-highlights span {
+    background: var(--color-gray-50);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: var(--color-gray-600);
+    border: 1px solid var(--color-gray-200);
+  }
+  .product-trust-note {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 12px;
+  }
+  .product-media-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-gray-50);
+    height: 200px;
+    color: var(--color-gray-400);
+    border-radius: 8px;
+  }
+  .product-media-placeholder svg {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+</style>
