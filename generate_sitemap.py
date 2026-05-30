@@ -8,7 +8,7 @@ def generate_sitemap(data_file="public/products.json", output_file="public/sitem
     data_file = os.path.join(base_dir, data_file)
     output_file = os.path.join(base_dir, output_file)
 
-    base_url = "https://paraschausali48-lab.github.io/Paras-Eureka-Forbes"
+    base_url = "https://paraschausali48-lab.github.io/Paras-Eureka-Forbes/"
     today = datetime.now().strftime("%Y-%m-%d")
 
     print("--- 🗺️ Eureka Forbes Sitemap Generator ---")
