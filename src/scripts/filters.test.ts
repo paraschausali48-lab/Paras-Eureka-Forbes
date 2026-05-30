@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { productMatchesFacets } from './filters';
+import { describe, it, expect, beforeAll } from 'vitest';
+import { productMatchesFacets, setProductsData } from './filters';
 import type { Product } from './types';
 
 describe('Filtering Logic: productMatchesFacets', () => {
@@ -17,6 +17,11 @@ describe('Filtering Logic: productMatchesFacets', () => {
     mrp: 20000,
     mop: 12500, // Price is exactly 12,500
   };
+
+  beforeAll(() => {
+    // Bootstrap the filter module to dynamically build technology mappings
+    setProductsData([mockProduct]);
+  });
 
   it('should correctly match products within the specified price range', () => {
     // 12,500 falls in the 10000-15000 range
