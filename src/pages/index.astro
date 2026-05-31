@@ -522,4 +522,41 @@ setProductsData(products as any);
     height: 48px;
     margin-bottom: 8px;
   }
+
+  /* Colorize Category Tags (Water, Air, Vacuum, Softener) */
+  .product-card[data-category='Water Purifier'] .product-tag,
+  .product-card[data-category='Water Purifier'] .category-tag,
+  .product-card[data-category='Water Purifier'] .card-tag,
+  .product-card[data-category='Water Purifier'] .badge {
+    background-color: #eff6ff !important;
+    color: #1d4ed8 !important;
+    border-color: #bfdbfe !important;
+  }
+
+  .product-card[data-category='Air Purifier'] .product-tag,
+  .product-card[data-category='Air Purifier'] .category-tag,
+  .product-card[data-category='Air Purifier'] .card-tag,
+  .product-card[data-category='Air Purifier'] .badge {
+    background-color: #f0fdf4 !important;
+    color: #15803d !important;
+    border-color: #bbf7d0 !important;
+  }
+
+  .product-card[data-category='Vacuum Cleaner'] .product-tag,
+  .product-card[data-category='Vacuum Cleaner'] .category-tag,
+  .product-card[data-category='Vacuum Cleaner'] .card-tag,
+  .product-card[data-category='Vacuum Cleaner'] .badge {
+    background-color: #fff7ed !important;
+    color: #c2410c !important;
+    border-color: #fed7aa !important;
+  }
+
+  .product-card[data-category='Water Softener'] .product-tag,
+  .product-card[data-category='Water Softener'] .category-tag,
+  .product-card[data-category='Water Softener'] .card-tag,
+  .product-card[data-category='Water Softener'] .badge {
+    background-color: #fdf4ff !important;
+    color: #a21caf !important;
+    border-color: #fae8ff !important;
+  }
 </style>
