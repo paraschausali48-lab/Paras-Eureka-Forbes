@@ -118,14 +118,27 @@ export const $filteredCatalog = computed([$allProducts, $filterState], (products
     let words = searchWordsCache.get(product);
 
     if (!searchString || !words) {
-      const rawText = `${product.name} ${product.description}`.toLowerCase();
+      // Include the category in the raw text to expand the search match surface
+      const rawText = `${product.name} ${product.category} ${product.description}`.toLowerCase();
 
       // Cache individual words for fuzzy matching
-      words = Array.from(new Set(rawText.split(/[^a-z0-9]+/))).filter((w) => w.length > 2);
+      const extractedWords = Array.from(new Set(rawText.split(/[^a-z0-9]+/))).filter((w) => w.length > 2);
+
+      // Explicitly inject brand synonyms invisibly so search remains robust,
+      // ensuring queries like "aquaguard model x" hit perfectly even with UI brands removed.
+      const brandSynonyms = product.category.includes('Water')
+        ? ['aquaguard', 'eureka', 'forbes']
+        : ['eureka', 'forbes'];
+      brandSynonyms.forEach((b) => {
+        if (!extractedWords.includes(b)) extractedWords.push(b);
+      });
+
+      words = extractedWords;
       searchWordsCache.set(product, words);
 
       // Append no-space version to easily match "aqua guard" vs "aquaguard"
-      searchString = rawText + ' ' + rawText.replace(/\s+/g, '');
+      // and append our synonyms directly to the exact match string for O(1) matching speed
+      searchString = rawText + ' ' + rawText.replace(/\s+/g, '') + ' ' + brandSynonyms.join(' ');
       searchIndexCache.set(product, searchString);
     }
 
