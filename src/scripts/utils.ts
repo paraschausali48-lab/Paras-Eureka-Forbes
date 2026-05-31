@@ -3,7 +3,7 @@
  * be triggered. The function will be called after it stops being called for
  * N milliseconds.
  */
-export function debounce<T extends (...args: unknown[]) => void>(
+export function debounce<T extends (...args: any[]) => void>(
   func: T,
   wait: number,
 ): (this: ThisParameterType<T>, ...args: Parameters<T>) => void {
