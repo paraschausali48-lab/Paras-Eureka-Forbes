@@ -93,9 +93,11 @@ export default {
 
   contact_eyebrow: 'Contact Your Specialist',
   contact_title: 'Have a Question?',
-  contact_desc: 'Send a message, call, or WhatsApp directly to book products or schedule a free home demonstration.',
+  contact_desc:
+    'Send a message, call, or WhatsApp directly to book products or schedule a free home demonstration across the Mumbai Metropolitan Region (MMR).',
   contact_name: 'Name:',
   contact_service_area: 'Service Area:',
+  contact_service_area_value: 'Mumbai Metropolitan Region (MMR)',
   contact_phone: 'Phone:',
   contact_email: 'Email:',
   contact_whatsapp: 'WhatsApp:',
@@ -106,14 +108,18 @@ export default {
   contact_official_whatsapp: 'Official WhatsApp:',
   contact_official_email: 'Support Email:',
 
-  footer_text1: '© 2026 Eureka Forbes Direct Sales Specialist',
+  footer_text1: '© 2026 Paras Singh Chawsali - Independent Authorized Representative',
   footer_text2: 'Selected SKUs and offline-only offers for your customers.',
   footer_legal_link: 'Legal & Copyright Info',
   footer_disclaimer_text:
-    'Disclaimer: This website is independently operated by Paras Singh Chawsali, an Authorized Direct Sales Representative for Eureka Forbes. This is NOT the official website of Eureka Forbes Limited. All product names, logos, brands, trademarks, and images featured or referred to within this site are the sole property of Eureka Forbes Limited and are used strictly for informational and demonstrative purposes to facilitate direct sales. This platform is intended solely for product display and inquiry generation. No payments or financial transactions are processed through this website. All final purchases, billing, and installations are handled strictly through official Eureka Forbes channels.',
+    'Disclaimer: This website is an independent lead-generation portal operated personally by Paras Singh Chawsali, an employee and Direct Sales Representative of Eureka Forbes. This is NOT the official website of Eureka Forbes Limited. All product names, logos, brands, trademarks, and images featured or referred to within this site are the sole property of Eureka Forbes Limited and are used strictly for informational and demonstrative purposes to facilitate localized direct sales across the Mumbai Metropolitan Region (MMR). This platform is intended solely for product display and inquiry generation. No payments or financial transactions are processed through this website. All final purchases, billing, and installations are handled strictly through official Eureka Forbes channels.',
 
   header_rep_title: 'Paras Eureka Forbes',
-  header_rep_badge: 'Independent Authorized Direct Sales Representative',
+  header_rep_badge: 'Independent Lead Generation Portal - Authorized Sales Representative',
+
+  seo_title: 'Paras Eureka Forbes | Authorized Sales Specialist MMR',
+  seo_description:
+    'Independent authorized Eureka Forbes direct sales specialist serving the Mumbai Metropolitan Region (MMR). Book a free home demo for Aquaguard and vacuum cleaners.',
 
   faq_eyebrow: 'Common Questions',
   faq_title: 'Frequently Asked Questions',
@@ -133,7 +139,7 @@ export default {
   faq_q4: 'Is an Annual Maintenance Contract (AMC) a worthwhile investment?',
   faq_a4:
     "Absolutely. Think of your purifier as a protective shield; it works by physically trapping mud, chemical particles, and heavy metals so they don't enter your body. Over 6 to 12 months, these heavy-duty carbon blocks and membranes inevitably get completely choked with the dirt they blocked. An active AMC ensures a certified technician comes straight to your doorstep to deep-clean the system and swap cartridges with genuine factory spares before they fail, guaranteeing 365 days of instant health safety.",
-  faq_q5: 'Do I really need an RO purifier if I live in Mumbai, Navi Mumbai, or Thane?',
+  faq_q5: 'Do I really need an RO purifier if I live in the Mumbai Metropolitan Region (MMR)?',
   faq_a5:
     "It depends on your building's water source. If your society relies strictly on municipal water (NMMC, TMC, or BMC), the water is naturally soft and a UV+UF purifier is usually sufficient to remove pathogens and rust. However, if your society uses borewell water or orders private water tankers (common during summer cuts), an RO purifier is highly recommended to handle the fluctuating TDS (Total Dissolved Solids) and hardness.",
   faq_q6: 'Will an RO purifier remove essential minerals from my drinking water?',
@@ -171,7 +177,7 @@ export default {
   legal_subtitle: 'Important legal disclaimers regarding the operation of this independent sales portfolio.',
   legal_s1_title: 'Intellectual Property & Copyright Acknowledgment',
   legal_s1_text:
-    'The content provided on this website is for educational and sales inquiry purposes only. I, as an authorized direct salesperson, utilize official product images and specifications to accurately represent the water purifiers, vacuum cleaners, and other products to prospective clients. No copyright infringement is intended. The intellectual property rights of all product images, proprietary technology names, and brand assets remain entirely with Eureka Forbes Limited.',
+    'The content provided on this website is for educational and localized sales inquiry purposes only. I, as an employee and direct salesperson for Eureka Forbes, utilize official product images and specifications to accurately represent the products to prospective clients across the Mumbai Metropolitan Region (MMR). No copyright infringement is intended. The intellectual property rights of all product images, proprietary technology names, and brand assets remain entirely with Eureka Forbes Limited. This is a personal initiative to streamline appointment bookings and is not officially endorsed by Eureka Forbes corporate management.',
   legal_s2_title: 'No E-commerce Transactions',
   legal_s2_text:
     'To ensure customer security and adhere to authorized sales protocols, this website does not feature any payment gateways. Visitors cannot buy products directly on this site. If you wish to purchase a product after reviewing the information here, I will personally assist you with the official documentation and payment process as dictated by Eureka Forbes Limited.',

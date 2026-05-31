@@ -25,7 +25,7 @@ const baseUrl = import.meta.env.BASE_URL;
 setProductsData(products as any);
 ---
 
-<Layout title={t('header_rep_title')} description={t('vb_desc')} lang={lang}>
+<Layout title={t('seo_title')} description={t('seo_description')} lang={lang}>
   <main id="home">
     <div class="container">
       <!-- 1. Store Intro Banner -->
@@ -208,7 +208,7 @@ setProductsData(products as any);
             <p>{t('contact_desc')}</p>
             <div class="contact-details" style="margin-top: 24px;">
               <p><strong>{t('contact_name')}</strong> Paras Singh Chawsali</p>
-              <p><strong>{t('contact_service_area')}</strong> Mumbai, Navi Mumbai & Thane</p>
+              <p><strong>{t('contact_service_area')}</strong> {t('contact_service_area_value')}</p>
               <p><strong>{t('contact_phone')}</strong> <a href="tel:+918928002642">+91 8928002642</a></p>
             </div>
             <div class="card-actions" style="margin-top: 32px; max-width: 400px;">
