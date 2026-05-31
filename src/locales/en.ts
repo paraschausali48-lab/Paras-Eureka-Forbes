@@ -34,13 +34,15 @@ export default {
   // ============================================
   // PRODUCTS SECTION
   // ============================================
-  products_eyebrow: 'Featured Products',
-  products_title: 'Curated Collections & Special Pricing',
+  products_eyebrow: 'Mumbai Metropolitan Region (MMR)',
+  products_title: 'Authorized Eureka Forbes help, from product selection to installation.',
   products_desc:
-    'Explore top-tier models and unlock exclusive direct sales discounts, backed by personalized guidance and free home demonstrations.',
-  intro_badge1: 'Authorized Direct Sales',
-  intro_badge2: 'Free Home Demo',
-  intro_badge3: 'Exclusive Offers',
+    'Book a free water TDS check, compare Aquaguard and Forbes appliances, and get direct assistance from Paras Singh Chawsali before you buy.',
+  intro_badge1: 'Free home demo',
+  intro_badge2: 'Official installation support',
+  intro_badge3: 'No online payment collected here',
+  intro_btn_wa: 'WhatsApp Paras',
+  intro_btn_browse: 'Browse Products',
   filter_all: 'All Products',
   filter_water: 'Aquaguard Purifiers',
   filter_air: 'Eureka Forbes Air',
