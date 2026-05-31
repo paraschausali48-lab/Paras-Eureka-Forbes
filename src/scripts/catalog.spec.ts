@@ -42,7 +42,7 @@ test.describe('Catalog Filtering & Routing', () => {
     await page.waitForSelector('.product-card');
 
     // 1. Locate the first product's wishlist toggle button
-    const firstWishlistBtn = page.locator('.wishlist-toggle-btn').first();
+    const firstWishlistBtn = page.locator('.add-to-wishlist-btn').first();
 
     // 2. Add to wishlist
     await firstWishlistBtn.click();

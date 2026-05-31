@@ -438,7 +438,7 @@ textarea,
   color: var(--color-accent);
 }
 
-.wishlist-toggle-btn {
+.header-wishlist-link {
   background: none;
   border: none;
   cursor: pointer;
@@ -452,7 +452,7 @@ textarea,
     color 0.2s ease,
     transform 0.2s ease;
 }
-.wishlist-toggle-btn:hover {
+.header-wishlist-link:hover {
   color: #e63946;
   transform: scale(1.05);
 }
@@ -1352,13 +1352,11 @@ textarea,
     transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
     border-color 0.4s ease;
-  will-change: transform, box-shadow;
   overflow: hidden;
 }
 
 /* Out of Stock Styling */
-.product-card.out-of-stock::after {
-  content: 'Out of Stock';
+.product-card .out-of-stock-badge {
   position: absolute;
   top: 25px;
   right: -35px;
@@ -1375,25 +1373,18 @@ textarea,
   letter-spacing: 0.5px;
   text-align: center;
 }
-html:lang(hi) .product-card.out-of-stock::after {
-  content: 'स्टॉक में नहीं';
-  font-size: 0.65rem;
-  letter-spacing: 0;
-}
-html:lang(mr) .product-card.out-of-stock::after {
-  content: 'स्टॉकमध्ये नाही';
-  font-size: 0.6rem;
-  letter-spacing: 0;
-}
-.product-card.out-of-stock .product-tag {
+.product-card.out-of-stock .product-tag,
+.product-card:has(.out-of-stock-badge) .product-tag {
   opacity: 0.6;
 }
 
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 35px rgba(0, 114, 188, 0.15);
-  border-color: var(--color-primary-light);
-  z-index: 2;
+@media (hover: hover) {
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 35px rgba(0, 114, 188, 0.15);
+    border-color: var(--color-primary-light);
+    z-index: 2;
+  }
 }
 
 /* Dynamic Filtering State */
@@ -1421,8 +1412,10 @@ html:lang(mr) .product-card.out-of-stock::after {
   border-radius: inherit;
 }
 
-.product-card:hover::before {
-  animation: shimmerShine 0.75s ease-in-out forwards;
+@media (hover: hover) {
+  .product-card:hover::before {
+    animation: shimmerShine 0.75s ease-in-out forwards;
+  }
 }
 @keyframes shimmerShine {
   100% {
@@ -1480,6 +1473,38 @@ html:lang(mr) .product-card.out-of-stock::after {
   position: absolute;
   inset: 0;
   z-index: 1;
+}
+
+.add-to-wishlist-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--color-gray-100);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-gray-400);
+  z-index: 5;
+  transition:
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+.add-to-wishlist-btn:hover {
+  transform: scale(1.1);
+  color: #e63946;
+  background: var(--color-white);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.add-to-wishlist-btn:active {
+  transform: scale(0.95);
 }
 
 .product-card p {
@@ -1571,15 +1596,17 @@ html:lang(mr) .product-card.out-of-stock::after {
   display: none;
 }
 
-.product-card:hover .product-btn:not(.product-btn-secondary) {
-  background: var(--color-primary);
-  color: var(--color-white);
-  border-color: var(--color-primary);
-}
+@media (hover: hover) {
+  .product-card:hover .product-btn:not(.product-btn-secondary) {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+  }
 
-.product-card:hover .product-btn:not(.product-btn-secondary):hover {
-  background: var(--color-primary-light);
-  transform: none;
+  .product-card:hover .product-btn:not(.product-btn-secondary):hover {
+    background: var(--color-primary-light);
+    transform: none;
+  }
 }
 
 .product-btn:active {
@@ -1935,13 +1962,14 @@ html:lang(mr) .product-card.out-of-stock::after {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100dvh;
   background: rgba(0, 0, 0, 0.7);
   z-index: var(--z-modal);
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(5px);
   padding: 20px;
+  touch-action: none;
   transition:
     opacity 0.3s ease,
     visibility 0.3s ease;
@@ -1964,6 +1992,7 @@ html:lang(mr) .product-card.out-of-stock::after {
   transform: scale(0.95) translateY(10px);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform;
+  touch-action: auto;
 }
 
 .pdp-modal.active .pdp-content {
@@ -3269,7 +3298,10 @@ html:lang(mr) .product-card.out-of-stock::after {
   z-index: var(--z-modal);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease;
+  touch-action: none;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
 }
 .main-sidebar-overlay.active {
   opacity: 1;
@@ -3280,16 +3312,20 @@ html:lang(mr) .product-card.out-of-stock::after {
   top: 0;
   left: -320px;
   width: 280px;
-  height: 100vh;
+  height: 100dvh;
   background: var(--color-white);
   z-index: var(--z-sidebar);
-  transition: left 0.3s ease;
+  visibility: hidden;
+  transition:
+    left 0.3s ease,
+    visibility 0.3s ease;
   display: flex;
   flex-direction: column;
   box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
 }
 .main-sidebar.active {
   left: 0;
+  visibility: visible;
 }
 .sidebar-header {
   padding: 16px 20px;
