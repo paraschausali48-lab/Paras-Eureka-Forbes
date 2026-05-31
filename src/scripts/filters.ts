@@ -56,29 +56,43 @@ const catCache = new WeakMap<Product, string>();
 // 3. High-performance Levenshtein distance for Typo-Tolerant (Fuzzy) Search
 // Uses a single continuous memory block (1D array swap) to prevent GC pauses
 function isTypoMatch(term: string, word: string, maxDistance: number): boolean {
-  if (Math.abs(term.length - word.length) > maxDistance) return false;
-  if (term === word) return true;
+  // Fast path for exact prefix matches
+  if (word.startsWith(term)) return true;
 
-  let v0 = Array.from({ length: word.length + 1 }, (_, i) => i);
-  let v1 = new Array(word.length + 1);
+  // Truncate target word to allow matching a typoed prefix of a longer word.
+  // e.g., term = "puref" (5), word = "purifier" (8) -> targetWord = "purifie" (7)
+  const targetLength = Math.min(word.length, term.length + maxDistance);
+  const targetWord = word.substring(0, targetLength);
+
+  if (term.length - targetWord.length > maxDistance) return false;
+
+  let v0 = Array.from({ length: targetWord.length + 1 }, (_, i) => i);
+  let v1 = new Array(targetWord.length + 1);
 
   for (let i = 0; i < term.length; i++) {
     v1[0] = i + 1;
-    for (let j = 0; j < word.length; j++) {
-      const cost = term[i] === word[j] ? 0 : 1;
+    for (let j = 0; j < targetWord.length; j++) {
+      const cost = term[i] === targetWord[j] ? 0 : 1;
       v1[j + 1] = Math.min(v1[j] + 1, v0[j + 1] + 1, v0[j] + cost);
     }
     let tmp = v0;
     v0 = v1;
     v1 = tmp;
   }
-  return v0[word.length] <= maxDistance;
+
+  // Find the minimum distance against any valid prefix length of targetWord
+  let minDistance = maxDistance + 1;
+  const startCheck = Math.max(0, term.length - maxDistance);
+  for (let j = startCheck; j <= targetWord.length; j++) {
+    if (v0[j] < minDistance) minDistance = v0[j];
+  }
+  return minDistance <= maxDistance;
 }
 
 export function buildFacetGroups(facets: string[]): Record<string, string[]> {
   const groups: Record<string, string[]> = {};
   facets.forEach((val) => {
-    let groupName = 'other';
+    let groupName = val;
     if (/^\d+(-\d+|\+)$/.test(val)) {
       groupName = 'price';
     } else {
@@ -122,7 +136,7 @@ export const $filteredCatalog = computed([$allProducts, $filterState], (products
       const rawText = `${product.name} ${product.category} ${product.description}`.toLowerCase();
 
       // Cache individual words for fuzzy matching
-      const extractedWords = Array.from(new Set(rawText.split(/[^a-z0-9]+/))).filter((w) => w.length > 2);
+      const extractedWords = Array.from(new Set(rawText.split(/[^a-z0-9]+/))).filter(Boolean);
 
       // Explicitly inject brand synonyms invisibly so search remains robust,
       // ensuring queries like "aquaguard model x" hit perfectly even with UI brands removed.
@@ -145,8 +159,8 @@ export const $filteredCatalog = computed([$allProducts, $filterState], (products
     const matchesSearch =
       searchTerms.length === 0 ||
       searchTerms.every((term) => {
-        if (searchString!.includes(term)) return true; // Exact substring match is O(1) fast path
-        const tolerance = term.length <= 4 ? 1 : 2; // Allow 1 typo for short words, 2 for long
+        if (term.length > 2 && searchString!.includes(term)) return true; // Exact substring match is O(1) fast path
+        const tolerance = term.length <= 2 ? 0 : term.length <= 4 ? 1 : 2; // Allow 1 typo for short words, 2 for long
         return words!.some((word) => isTypoMatch(term, word, tolerance));
       });
 
@@ -272,6 +286,18 @@ export const FACET_GROUPS: Record<string, string[]> = {
   vac_app: [VacApp.DRY, VacApp.WET_DRY],
   vac_dust: [VacDust.BAGLESS, VacDust.BAGGED],
   vac_pow: [VacPow.CORDED, VacPow.CORDLESS],
+  offers: ['exchange', 'free-installation'],
+  water_source: ['municipal'],
+  special_features: [
+    'active-copper',
+    'hot-ambient',
+    'alkaline-boost',
+    'food-grade plastic',
+    'slim',
+    'smart',
+    'stainless-steel',
+    'zero-pressure-pump',
+  ],
 };
 
 export function productMatchesFacets(
@@ -348,18 +374,20 @@ export function setFilterState(newState: Partial<FilterState>) {
       newState.categories.some((c) => !currentState.categories.includes(c)));
   const isAllSelected = updatedState.categories.includes('all');
 
-  if (catsChanged && isAllSelected) {
-    const allDomainFacets = new Set<string>();
-    Object.values(FACET_DOMAINS).forEach((facets) => facets.forEach((f) => allDomainFacets.add(f)));
-    updatedState.facets = updatedState.facets.filter((f) => !allDomainFacets.has(f));
-  } else if (!isAllSelected) {
-    const allowedDomainFacets = new Set<string>();
-    updatedState.categories.forEach((cat) => {
-      FACET_DOMAINS[cat]?.forEach((f) => allowedDomainFacets.add(f));
-    });
-    const allDomainFacets = new Set<string>();
-    Object.values(FACET_DOMAINS).forEach((facets) => facets.forEach((f) => allDomainFacets.add(f)));
-    updatedState.facets = updatedState.facets.filter((f) => !allDomainFacets.has(f) || allowedDomainFacets.has(f));
+  if (catsChanged) {
+    if (isAllSelected) {
+      const allDomainFacets = new Set<string>();
+      Object.values(FACET_DOMAINS).forEach((facets) => facets.forEach((f) => allDomainFacets.add(f)));
+      updatedState.facets = updatedState.facets.filter((f) => !allDomainFacets.has(f));
+    } else {
+      const allowedDomainFacets = new Set<string>();
+      updatedState.categories.forEach((cat) => {
+        FACET_DOMAINS[cat]?.forEach((f) => allowedDomainFacets.add(f));
+      });
+      const allDomainFacets = new Set<string>();
+      Object.values(FACET_DOMAINS).forEach((facets) => facets.forEach((f) => allDomainFacets.add(f)));
+      updatedState.facets = updatedState.facets.filter((f) => !allDomainFacets.has(f) || allowedDomainFacets.has(f));
+    }
   }
 
   // Update the reactive store
@@ -404,7 +432,16 @@ if (typeof window !== 'undefined') {
     else url.searchParams.delete('facets');
     if (state.query) url.searchParams.set('q', state.query);
     else url.searchParams.delete('q');
+
+    if (state.sort && state.sort !== SortOption.RELEVANCE) url.searchParams.set('sort', state.sort);
+    else url.searchParams.delete('sort');
+
     window.history.replaceState(null, '', url);
+
+    const searchInput = document.getElementById('product-search') as HTMLInputElement;
+    if (searchInput && searchInput.value !== state.query) {
+      searchInput.value = state.query;
+    }
   });
 
   const handleSearchInput = debounce((e: Event) => {
@@ -415,7 +452,11 @@ if (typeof window !== 'undefined') {
     const val = target.value.trim();
     if (val && window.location.hash !== '#products') {
       window.history.pushState(null, '', window.location.pathname + window.location.search + '#products');
-      window.dispatchEvent(new Event('popstate'));
+
+      const productsEl = document.getElementById('products');
+      if (productsEl) productsEl.style.display = '';
+      document.body.classList.add('products-visible');
+
       document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     setFilterState({ query: target.value });
