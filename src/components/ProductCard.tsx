@@ -13,7 +13,11 @@ export function ProductCard({ product, t }: Props) {
   const mrp = `₹${product.mrp.toLocaleString('en-IN')}`;
   const wishlist = useStore($wishlist);
   const isWishlisted = wishlist.includes(sku);
-  const discount = Math.round(((product.mrp - product.mop) / product.mrp) * 100);
+  // Use pre-calculated discount, fallback to runtime calc if JSON is outdated
+  const discount =
+    (product as Product & { discount?: number }).discount ??
+    Math.round(((product.mrp - product.mop) / product.mrp) * 100);
+  const highlights = product.highlights;
 
   // Dynamically summarize the product description using its technical features (subcategories)
   const specSummary =
@@ -89,7 +93,7 @@ export function ProductCard({ product, t }: Props) {
       >
         <img
           src={`${import.meta.env.BASE_URL}images/products/${sku}.webp`}
-          alt={product.name}
+          alt={`${product.name} - ${product.category} by Eureka Forbes`}
           style={{
             maxHeight: '100%',
             maxWidth: '100%',
@@ -117,6 +121,17 @@ export function ProductCard({ product, t }: Props) {
       <p class="product-specs-summary" title={product.description}>
         {specSummary}
       </p>
+      {highlights && highlights.length > 0 ? (
+        <ul class="product-highlights">
+          {highlights.map((highlight, index) => (
+            <li key={index}>{highlight}</li>
+          ))}
+        </ul>
+      ) : (
+        <p class="product-specs-summary" title={product.description}>
+          {specSummary}
+        </p>
+      )}
 
       <div class="price-info">
         {product.mrp > product.mop && (

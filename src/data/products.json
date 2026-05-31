@@ -36,7 +36,32 @@
       "Storage Capacity": "7 liters (Approx.)",
       "Installation Type": "Under Counter",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD SELECT DESIGNO UTC RO+UV 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A premium under-the-counter water purifier featuring advanced RO+UV technology with a 9-stage purification process. It boasts a 7-liter storage capacity, handles TDS levels up to 2,000 mg/L, and offers an impressive filter life of 12,000 liters.",
+      "sku": "EF-AQUAGUARD-SELECT-DESIGNO-UTC-RO-UV-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 29999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "7 liters (Approx.) Storage Capacity",
+      "A premium under-the-counter water purifier featuring advanced RO+UV technology with a 9-stage purification process",
+      "It boasts a 7-liter storage capacity, handles TDS levels up to 2,000 mg/L, and offers an impressive filter life of 12,000 liters"
+    ],
+    "discount": 24
   },
   {
     "sku": "EF-AQUAGUARD-SELECT-DESIGNO-UTC-UV-UF-2X",
@@ -75,7 +100,32 @@
       "Storage Capacity": "7 liters (Approx.)",
       "Installation Type": "Under Counter",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD SELECT DESIGNO UTC UV+UF 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "This under-the-counter UV+UF purifier provides 8-stage purification suitable for municipal water. It comes with a 7-liter storage tank, handles TDS up to 2,000 mg/L, and features a long-lasting filter life of 12,000 liters.",
+      "sku": "EF-AQUAGUARD-SELECT-DESIGNO-UTC-UV-UF-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 28000,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "7 liters (Approx.) Storage Capacity",
+      "This under-the-counter UV+UF purifier provides 8-stage purification suitable for municipal water",
+      "It comes with a 7-liter storage tank, handles TDS up to 2,000 mg/L, and features a long-lasting filter life of 12,000 liters"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-SLIMTECH-UV-STG-2X",
@@ -116,7 +166,32 @@
       "Storage Capacity": "4 L",
       "Installation Type": "Wall Mounted",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE SLIMTECH UV STG 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A slim, wall-mounted UV purifier designed for municipal water with TDS up to 200 mg/L. It offers a 4-liter storage capacity, 5th Gen UV LED technology, and Active Copper enhancement, all with a 12,000-liter filter life.",
+      "sku": "EF-AQUAGUARD-ASPIRE-SLIMTECH-UV-STG-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 26000,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "4 L Storage Capacity",
+      "A slim, wall-mounted UV purifier designed for municipal water with TDS up to 200 mg/L",
+      "It offers a 4-liter storage capacity, 5th Gen UV LED technology, and Active Copper enhancement, all with a 12,000-liter filter life"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-SLIM-GLASS-UV-BAR-INLINE-2X",
@@ -155,7 +230,32 @@
       "Storage Capacity": "Inline",
       "Installation Type": "Wall mounted",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD SLIM GLASS UV BAR INLINE 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "An ultra-sleek, tankless inline UV purifier with a premium glass exterior. Ideal for municipal water (TDS up to 200 mg/L), it features 7-stage purification, 5th Gen UV LED, and Active Copper technology.",
+      "sku": "EF-AQUAGUARD-SLIM-GLASS-UV-BAR-INLINE-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 23500,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "Advanced UV Technology",
+      "Inline Storage Capacity",
+      "5.8 kgs (approx) Weight"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-SS-2X",
@@ -178,7 +278,31 @@
     "mop": 24999,
     "specs": {
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE NOVA RO+UV+SS 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A high-performance RO+UV water purifier featuring a durable stainless steel tank. It delivers advanced multi-stage purification with active copper technology, ensuring safe and mineral-rich drinking water.",
+      "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-SS-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 24999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "A high-performance RO+UV water purifier featuring a durable stainless steel tank",
+      "It delivers advanced multi-stage purification with active copper technology, ensuring safe and mineral-rich drinking water"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-NOVA-UV-UF-SS-2X",
@@ -201,7 +325,31 @@
     "mop": 24999,
     "specs": {
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE NOVA UV+UF+SS 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "This UV+UF purifier combines advanced multi-stage filtration with the hygiene of a stainless steel storage tank. It effectively removes impurities while retaining essential minerals for your family.",
+      "sku": "EF-AQUAGUARD-ASPIRE-NOVA-UV-UF-SS-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 24999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "This UV+UF purifier combines advanced multi-stage filtration with the hygiene of a stainless steel storage tank",
+      "It effectively removes impurities while retaining essential minerals for your family"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-2X",
@@ -224,7 +372,31 @@
     "mop": 22999,
     "specs": {
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE NOVA RO+UV 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "An efficient RO+UV water purifier equipped with smart TDS adjustment and a food-grade plastic storage tank. It ensures comprehensive purification and safe drinking water for all sources.",
+      "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 22999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "An efficient RO+UV water purifier equipped with smart TDS adjustment and a food-grade plastic storage tank",
+      "It ensures comprehensive purification and safe drinking water for all sources"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-NOVA-UV-UF-2X",
@@ -247,7 +419,31 @@
     "mop": 22999,
     "specs": {
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE NOVA UV+UF 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A reliable UV+UF water purifier designed for municipal water sources. It features a high-quality food-grade plastic storage tank and advanced filtration technology for safe, everyday drinking water.",
+      "sku": "EF-AQUAGUARD-ASPIRE-NOVA-UV-UF-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 22999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "A reliable UV+UF water purifier designed for municipal water sources",
+      "It features a high-quality food-grade plastic storage tank and advanced filtration technology for safe, everyday drinking water"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ENRICH-VECTOR-RO-UV-MC-2X",
@@ -287,7 +483,32 @@
       "Storage Capacity": "6 Litres",
       "Installation Type": "Wall Mounted / Table Top",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ENRICH VECTOR RO+UV+MC 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A robust RO+UV purifier with a 6-liter storage capacity, capable of purifying high TDS water up to 2,000 mg/L. It offers a 12,000-liter filter life and essential mineral retention for healthier hydration.",
+      "sku": "EF-AQUAGUARD-ENRICH-VECTOR-RO-UV-MC-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 22500,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "6 Litres Storage Capacity",
+      "A robust RO+UV purifier with a 6-liter storage capacity, capable of purifying high TDS water up to 2,000 mg/L",
+      "It offers a 12,000-liter filter life and essential mineral retention for healthier hydration"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-ALK-2X",
@@ -310,7 +531,31 @@
     "mop": 22999,
     "specs": {
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE NOVA RO+UV ALK 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "This RO+UV purifier features advanced alkaline boost technology to balance your water's pH levels. It effectively purifies water while preserving essential minerals for enhanced antioxidant benefits.",
+      "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-ALK-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 22999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "This RO+UV purifier features advanced alkaline boost technology to balance your water's pH levels",
+      "It effectively purifies water while preserving essential minerals for enhanced antioxidant benefits"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-ALK-SS-2X",
@@ -333,7 +578,31 @@
     "mop": 24999,
     "specs": {
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE NOVA RO+UV+ALK+SS 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A premium RO+UV water purifier combining alkaline boost technology with a hygienic stainless steel storage tank. It delivers perfectly pH-balanced, safe, and mineral-enriched water.",
+      "sku": "EF-AQUAGUARD-ASPIRE-NOVA-RO-UV-ALK-SS-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 24999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "A premium RO+UV water purifier combining alkaline boost technology with a hygienic stainless steel storage tank",
+      "It delivers perfectly pH-balanced, safe, and mineral-enriched water"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-BLAZE-RO-UV-SS-2X",
@@ -375,7 +644,32 @@
       "Storage Capacity": "5.6 Litres",
       "Installation Type": "Wall Mounted / Table Top",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE BLAZE RO+UV+SS 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A premium RO+UV purifier providing both hot and ambient water. It features a 5.6-liter storage capacity, handles TDS up to 2,000 mg/L, and includes Active Copper technology for enhanced health benefits.",
+      "sku": "EF-AQUAGUARD-ASPIRE-BLAZE-RO-UV-SS-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 39000,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "5.6 Litres Storage Capacity",
+      "A premium RO+UV purifier providing both hot and ambient water",
+      "6-liter storage capacity, handles TDS up to 2,000 mg/L, and includes Active Copper technology for enhanced health benefits"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-BLAZE-UV-UF-SS-2X",
@@ -417,7 +711,32 @@
       "Storage Capacity": "5.6 Litres",
       "Installation Type": "Wall Mounted / Table Top",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE BLAZE UV+UF+SS 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "This advanced UV+UF purifier offers the convenience of hot and ambient water dispensing. It comes with a 5.6-liter storage capacity and advanced purification modules suitable for various water sources.",
+      "sku": "EF-AQUAGUARD-ASPIRE-BLAZE-UV-UF-SS-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 32500,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "5.6 Litres Storage Capacity",
+      "This advanced UV+UF purifier offers the convenience of hot and ambient water dispensing",
+      "It comes with a 5"
+    ],
+    "discount": 0
   },
   {
     "sku": "EF-AQUAGUARD-ENRICH-CREST-UV-DUO-2X",
@@ -458,7 +777,32 @@
       "Storage Capacity": "Inline",
       "Installation Type": "Wall Mounted",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ENRICH CREST UV DUO 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A compact, tankless inline UV purifier designed for municipal water up to 200 mg/L TDS. It offers a 12,000-liter filter life and gives you a choice between Active Copper or Alkaline Boost enhancements.",
+      "sku": "EF-AQUAGUARD-ENRICH-CREST-UV-DUO-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 14499,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "Advanced UV Technology",
+      "Inline Storage Capacity",
+      "A compact, tankless inline UV purifier designed for municipal water up to 200 mg/L TDS"
+    ],
+    "discount": 12
   },
   {
     "sku": "EF-AQUAGUARD-ENRICH-BOOSTER-UV-2X",
@@ -499,7 +843,32 @@
       "Inline Model": "Inline",
       "Installation Type": "Wall Mounted",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ENRICH BOOSTER UV 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "This efficient, wall-mounted inline UV purifier is ideal for low TDS water (up to 200 mg/L). It features 6-stage purification, Active Copper technology, and an extended 12,000-liter filter life.",
+      "sku": "EF-AQUAGUARD-ENRICH-BOOSTER-UV-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 15499,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "Advanced UV Technology",
+      "This efficient, wall-mounted inline UV purifier is ideal for low TDS water (up to 200 mg/L)",
+      "It features 6-stage purification, Active Copper technology, and an extended 12,000-liter filter life"
+    ],
+    "discount": 16
   },
   {
     "sku": "EF-AQUAGUARD-ENRICH-CRYSTAL-BOOSTER-UV-UF-2X",
@@ -541,7 +910,32 @@
       "Storage Capacity": "6 liters (Approx.)",
       "Installation Type": "Wall Mounted / Table Top",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ENRICH CRYSTAL BOOSTER UV+UF 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A dependable UV+UF purifier offering a 6-liter storage tank and a 6,000-liter filter life. Designed for municipal water (TDS up to 200 mg/L), it includes Active Copper technology for enriched drinking water.",
+      "sku": "EF-AQUAGUARD-ENRICH-CRYSTAL-BOOSTER-UV-UF-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 15499,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "6 liters (Approx.) Storage Capacity",
+      "A dependable UV+UF purifier offering a 6-liter storage tank and a 6,000-liter filter life",
+      "Designed for municipal water (TDS up to 200 mg/L), it includes Active Copper technology for enriched drinking water"
+    ],
+    "discount": 37
   },
   {
     "sku": "EF-AQUAGUARD-ASPIRE-MINERVA-RO-UV-SS-2X",
@@ -583,7 +977,32 @@
       "Storage Capacity": "5 Liters (Approx.)",
       "Installation Type": "Wall Mounted / Table Top",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD ASPIRE MINERVA RO+UV+SS 2X",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A high-capacity RO+UV purifier that efficiently handles TDS up to 2,000 mg/L. It features a 5-liter storage tank, a 12,000-liter filter life, and Active Copper enrichment for safe, healthy water.",
+      "sku": "EF-AQUAGUARD-ASPIRE-MINERVA-RO-UV-SS-2X",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 15499,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "5 Liters (Approx.) Storage Capacity",
+      "A high-capacity RO+UV purifier that efficiently handles TDS up to 2,000 mg/L",
+      "It features a 5-liter storage tank, a 12,000-liter filter life, and Active Copper enrichment for safe, healthy water"
+    ],
+    "discount": 60
   },
   {
     "sku": "EF-FORBES-AIR-PURIFIER-355-SURROUND-360-SM",
@@ -621,7 +1040,32 @@
       "Weight": "4.3 Kg",
       "Cord Length": "205 cm",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES AIR PURIFIER 355 SURROUND 360° SM",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A smart, 4-stage air purifier featuring True H13 HEPA and Plasma filtration. Designed for living rooms up to 480 sq. ft., it delivers an air flow of 355 m³/hr with real-time PM 2.5 monitoring.",
+      "sku": "EF-FORBES-AIR-PURIFIER-355-SURROUND-360-SM",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 16499,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "4.3 Kg Weight",
+      "A smart, 4-stage air purifier featuring True H13 HEPA and Plasma filtration",
+      "Designed for living rooms up to 480 sq"
+    ],
+    "discount": 25
   },
   {
     "sku": "EF-FORBES-AIR-PURIFIER-500-SURROUND-360-SM",
@@ -659,7 +1103,32 @@
       "Weight": "6.3 Kg",
       "Cord Length": "185 cm",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES AIR PURIFIER 500 SURROUND 360° SM",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A powerful air purifier ideal for large spaces up to 670 sq. ft. It provides a high air flow of 500 m³/hr through 4-stage True H13 HEPA and Plasma filtration, complete with a smart touch interface.",
+      "sku": "EF-FORBES-AIR-PURIFIER-500-SURROUND-360-SM",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 21999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "6.3 Kg Weight",
+      "A powerful air purifier ideal for large spaces up to 670 sq",
+      "It provides a high air flow of 500 m³/hr through 4-stage True H13 HEPA and Plasma filtration, complete with a smart touch interface"
+    ],
+    "discount": 21
   },
   {
     "sku": "EF-FORBES-AIR-PURIFIER-270-SURROUND-360",
@@ -686,7 +1155,31 @@
       "Sensor Touch User Interface Panel": "Yes",
       "Filter Change Indicator": "Yes",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES AIR PURIFIER 270 SURROUND 360°",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "Designed for rooms up to 365 sq. ft., this purifier uses True H13 HEPA and Ionizer technology to clean your air. It features an air flow of 270 m³/hr, a sensor touch panel, and multi-speed settings.",
+      "sku": "EF-FORBES-AIR-PURIFIER-270-SURROUND-360",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 9499,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "Designed for rooms up to 365 sq",
+      ", this purifier uses True H13 HEPA and Ionizer technology to clean your air"
+    ],
+    "discount": 19
   },
   {
     "sku": "EF-FORBES-AIR-PURIFIER-230-SURROUND-360",
@@ -713,7 +1206,31 @@
       "Sensor Touch User Interface Panel": "Yes",
       "Filter Change Indicator": "Yes",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES AIR PURIFIER 230 SURROUND 360°",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A compact and efficient air purifier for medium rooms up to 310 sq. ft. It delivers an air flow of 230 m³/hr with True H13 HEPA and Ionizer filtration, controllable via a sleek touch interface.",
+      "sku": "EF-FORBES-AIR-PURIFIER-230-SURROUND-360",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 7999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "A compact and efficient air purifier for medium rooms up to 310 sq",
+      "It delivers an air flow of 230 m³/hr with True H13 HEPA and Ionizer filtration, controllable via a sleek touch interface"
+    ],
+    "discount": 23
   },
   {
     "sku": "EF-FORBES-ATOM",
@@ -741,7 +1258,31 @@
       "Noise Level": "<78 dB",
       "Dust Capacity": "0.5 litres",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES ATOM",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A lightweight and handy 600W vacuum cleaner with a 0.5-liter dust capacity. It comes with 7 versatile accessories including floor brushes and crevice nozzles for efficient daily cleanups.",
+      "sku": "EF-FORBES-ATOM",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 2599,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "A lightweight and handy 600W vacuum cleaner with a 0",
+      "5-liter dust capacity"
+    ],
+    "discount": 42
   },
   {
     "sku": "EF-FORBES-SELECT-WD-X2",
@@ -776,7 +1317,32 @@
       "Input Voltage": "230 VAC, 50 Hz",
       "Accessory Modules": "Floor Brush, Carpet Brush, Corner Cleaner, All Surface Cleaner, Hose Pipe, Aromiser, Car Wash Adapter, Flexi Cleaner, 3 Extension Tubes, and Floor Wet Squeegee",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES SELECT WD X2",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A heavy-duty 1300W wet and dry vacuum cleaner boasting an 8-liter dust capacity. It features auto-clean technology, dynamic power control, and a comprehensive set of cleaning accessories.",
+      "sku": "EF-FORBES-SELECT-WD-X2",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 16499,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "6.67 kg Weight",
+      "A heavy-duty 1300W wet and dry vacuum cleaner boasting an 8-liter dust capacity",
+      "It features auto-clean technology, dynamic power control, and a comprehensive set of cleaning accessories"
+    ],
+    "discount": 6
   },
   {
     "sku": "EF-FORBES-CORDLESS-ZEROBEND-Z15",
@@ -812,7 +1378,31 @@
       "Colour": "Red and Dark Grey",
       "Included components of packaging": "Product, Accessory Kit, User Manual",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES CORDLESS ZEROBEND Z15",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A versatile 450W cordless vacuum offering up to 40 minutes of runtime. It delivers powerful 150 Air Watts of suction in turbo mode with a lightweight design that eliminates the need to bend.",
+      "sku": "EF-FORBES-CORDLESS-ZEROBEND-Z15",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 30999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "A versatile 450W cordless vacuum offering up to 40 minutes of runtime",
+      "It delivers powerful 150 Air Watts of suction in turbo mode with a lightweight design that eliminates the need to bend"
+    ],
+    "discount": 40
   },
   {
     "sku": "EF-FORBES-CORDLESS-ZEROBEND-Z21WM",
@@ -844,7 +1434,31 @@
       "Dimensions": "25.2 x 26 x 118",
       "Motor": "550 W",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES CORDLESS ZEROBEND Z21WM",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A high-performance 550W cordless vacuum that provides up to 60 minutes of runtime. It generates an impressive 210 Air Watts of suction, perfect for deep cleaning across all home surfaces.",
+      "sku": "EF-FORBES-CORDLESS-ZEROBEND-Z21WM",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 52999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "A high-performance 550W cordless vacuum that provides up to 60 minutes of runtime",
+      "It generates an impressive 210 Air Watts of suction, perfect for deep cleaning across all home surfaces"
+    ],
+    "discount": 32
   },
   {
     "sku": "EF-FORBES-SMARTCLEAN-FULLYAUTOMATIC-STATION",
@@ -878,7 +1492,31 @@
       "Dust Bag Capacity": "3L",
       "Clean Water Tank Capacity": "4L (max filling level 3.8L)",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES SMARTCLEAN FULLYAUTOMATIC STATION",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "An advanced robotic vacuum featuring a fully automatic docking station. It offers powerful 7000 Pascal suction, Wi-Fi connectivity, and up to 4 hours of runtime, covering both sweeping and mopping.",
+      "sku": "EF-FORBES-SMARTCLEAN-FULLYAUTOMATIC-STATION",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 72999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/OutOfStock"
+      }
+    },
+    "highlights": [
+      "An advanced robotic vacuum featuring a fully automatic docking station",
+      "It offers powerful 7000 Pascal suction, Wi-Fi connectivity, and up to 4 hours of runtime, covering both sweeping and mopping"
+    ],
+    "discount": 20
   },
   {
     "sku": "EF-FORBES-SMARTCLEAN-WITH-AUTO-BIN-S2",
@@ -911,7 +1549,31 @@
       "Water Tank Capacity": "300 ml",
       "Noise Level": "<85 dB",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES SMARTCLEAN with AUTO BIN S2",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A premium robotic vacuum with an auto-empty bin and an exceptional 9000 Pascal suction power. With up to 5 hours of runtime and smart Wi-Fi control, it ensures effortless, hands-free cleaning.",
+      "sku": "EF-FORBES-SMARTCLEAN-WITH-AUTO-BIN-S2",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 38499,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "A premium robotic vacuum with an auto-empty bin and an exceptional 9000 Pascal suction power",
+      "With up to 5 hours of runtime and smart Wi-Fi control, it ensures effortless, hands-free cleaning"
+    ],
+    "discount": 21
   },
   {
     "sku": "EF-FORBES-TORNADO-VAC",
@@ -942,7 +1604,32 @@
       "Noise Level": "<78 dB",
       "Dust Capacity": "2.5 L",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "FORBES TORNADO VAC",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A powerful 1200W canister vacuum cleaner delivering 24 kPa of suction power. It features a 4-stage cyclonic HEPA filtration system and a large 2.5-liter dust capacity for thorough home cleaning.",
+      "sku": "EF-FORBES-TORNADO-VAC",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 9999,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "4 stage (Cyclonic, Hepa+Foam, Foam) Filtration",
+      "24 kPa* Suction Power",
+      "A powerful 1200W canister vacuum cleaner delivering 24 kPa of suction power"
+    ],
+    "discount": 19
   },
   {
     "sku": "EF-AQUAGUARD-SELECT-WATER-SOFTENER-AWS-5000",
@@ -976,7 +1663,32 @@
       "Weight": "75",
       "Salt Storage Capacity (kg)": "80",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD SELECT WATER SOFTENER AWS 5000",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A high-capacity water softener utilizing Ionic-Transfer Technology to tackle water hardness up to 2100 ppm. It delivers a maximum flow rate of 3000 LPH and yields 5000 liters between regenerations.",
+      "sku": "EF-AQUAGUARD-SELECT-WATER-SOFTENER-AWS-5000",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 82490,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "75 Weight",
+      "A high-capacity water softener utilizing Ionic-Transfer Technology to tackle water hardness up to 2100 ppm",
+      "It delivers a maximum flow rate of 3000 LPH and yields 5000 liters between regenerations"
+    ],
+    "discount": 19
   },
   {
     "sku": "EF-AQUAGUARD-SELECT-WATER-SOFTENER-AWS-7500",
@@ -1010,7 +1722,32 @@
       "Weight": "102",
       "Salt Storage Capacity (kg)": "120",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD SELECT WATER SOFTENER AWS 7500",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "Designed for larger homes, this water softener handles up to 2200 ppm hardness with a robust 4000 LPH flow rate. It efficiently provides 7500 liters of soft water per regeneration cycle.",
+      "sku": "EF-AQUAGUARD-SELECT-WATER-SOFTENER-AWS-7500",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 95990,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "102 Weight",
+      "Designed for larger homes, this water softener handles up to 2200 ppm hardness with a robust 4000 LPH flow rate",
+      "It efficiently provides 7500 liters of soft water per regeneration cycle"
+    ],
+    "discount": 11
   },
   {
     "sku": "EF-AQUAGUARD-SELECT-WATER-SOFTENER-I-2500",
@@ -1044,6 +1781,31 @@
       "Weight": "35",
       "Salt Storage Capacity (kg)": "50",
       "Warranty": "1 Year Factory Warranty"
-    }
+    },
+    "schema": {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "AQUAGUARD SELECT WATER SOFTENER I 2500",
+      "image": "https://paraseurekaforbes.com/default-product.jpg",
+      "description": "A compact and efficient water softening solution ideal for input hardness up to 1900 ppm. It offers a 2100 LPH flow rate and provides 2500 liters of soft water before requiring regeneration.",
+      "sku": "EF-AQUAGUARD-SELECT-WATER-SOFTENER-I-2500",
+      "brand": {
+        "@type": "Brand",
+        "name": "Eureka Forbes"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "INR",
+        "price": 57990,
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      }
+    },
+    "highlights": [
+      "35 Weight",
+      "A compact and efficient water softening solution ideal for input hardness up to 1900 ppm",
+      "It offers a 2100 LPH flow rate and provides 2500 liters of soft water before requiring regeneration"
+    ],
+    "discount": 11
   }
 ]

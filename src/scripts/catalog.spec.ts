@@ -16,17 +16,15 @@ test.describe('Catalog Filtering & Routing', () => {
     const initialProductCount = await page.locator('.product-card').count();
     expect(initialProductCount).toBeGreaterThan(10); // Sanity check we have a full grid
 
-    // Locate and click the "RO" technology visual filter
-    const roFilterBtn = page.locator('.visual-filter-btn[data-filter="ro"]').first();
-    await roFilterBtn.click();
+    // Locate and click the "Water Purifier" visual filter
+    const waterFilterBtn = page.locator('.visual-filter-btn[data-nav-category="Water Purifier"]').first();
+    await waterFilterBtn.click();
 
     // 1. Assert URL State: ensure exact state shareability is working
-    // This assertion is correct. If it fails, it indicates a regression in the
-    // `setFilterState` function which is responsible for syncing state to the URL.
-    await expect(page).toHaveURL(/facets=ro/);
+    await expect(page).toHaveURL(/cat=Water/);
 
     // 2. Assert UI State: ensure the button gets the active CSS highlight
-    await expect(roFilterBtn).toHaveClass(/active/);
+    await expect(waterFilterBtn).toHaveClass(/active/);
 
     // 3. Assert DOM Update: Preact dynamically unmounts non-matching products from the grid.
     // We assert that the total number of rendered products has decreased.

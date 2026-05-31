@@ -11,4 +11,6 @@ export interface Product {
   mrp: number;
   mop: number;
   specs?: Record<string, any>;
+  schema?: Record<string, any>;
+  highlights?: string[];
 }

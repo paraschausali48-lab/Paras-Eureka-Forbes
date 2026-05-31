@@ -1,5 +1,8 @@
 import { map, atom, computed } from 'nanostores';
 import type { Product } from './types';
+import { registerClickAction } from './events';
+import { handleAppRouting, closeActiveOverlay } from './routing';
+import { debounce } from './utils';
 
 export interface FilterState {
   categories: string[];
@@ -8,13 +11,23 @@ export interface FilterState {
   sort: string;
 }
 
-// 1. Create a reactive, framework-agnostic Nano Store
-export const $filterState = map<FilterState>({
-  categories: ['all'],
-  facets: [],
-  query: '',
-  sort: 'relevance',
-});
+// 1. Synchronously read URL parameters to prevent hydration mismatches and ensure
+// JS-enabled crawlers see the exact filtered state immediately upon execution.
+const getInitialState = (): FilterState => {
+  const defaultState = { categories: ['all'], facets: [], query: '', sort: 'relevance' };
+  if (typeof window === 'undefined') return defaultState;
+
+  const params = new URLSearchParams(window.location.search);
+  return {
+    categories: params.get('cat')?.split(',') || defaultState.categories,
+    facets: params.get('facets')?.split(',') || defaultState.facets,
+    query: params.get('q') || defaultState.query,
+    sort: params.get('sort') || defaultState.sort,
+  };
+};
+
+// Create a reactive, framework-agnostic Nano Store
+export const $filterState = map<FilterState>(getInitialState());
 
 export const $allProducts = atom<Product[]>([]);
 
@@ -211,6 +224,29 @@ export function setFilterState(newState: Partial<FilterState>) {
 
 // 3. Decouple Environment Side Effects (URL Sync) from UI Rendering
 if (typeof window !== 'undefined') {
+  const getAnnouncer = () => {
+    let el = document.getElementById('a11y-announcer');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'a11y-announcer';
+      el.className = 'sr-only';
+      el.setAttribute('aria-live', 'polite');
+      el.setAttribute('aria-atomic', 'true');
+      document.body.appendChild(el);
+    }
+    return el;
+  };
+
+  let initialLoad = true;
+  $catalogMeta.subscribe((meta) => {
+    if (initialLoad) {
+      initialLoad = false;
+      return; // Standard a11y practice: Don't announce on first render
+    }
+    const announcer = getAnnouncer();
+    announcer.textContent = `Showing ${meta.visibleCount} products.`;
+  });
+
   $filterState.subscribe((state) => {
     // Prevent URL pollution on non-catalog pages (e.g., Legal Terms) during View Transitions
     if (!document.getElementById('product-grid')) return;
@@ -225,5 +261,102 @@ if (typeof window !== 'undefined') {
     if (state.query) url.searchParams.set('q', state.query);
     else url.searchParams.delete('q');
     window.history.replaceState(null, '', url);
+  });
+
+  // ============= UI EVENT BINDINGS (Decoupled Routing) =============
+  registerClickAction({
+    selector: '.visual-filter-btn',
+    handle: (el: HTMLElement) => {
+      if (window.location.hash !== '#products') {
+        window.history.pushState(null, '', '#products');
+      }
+      const productsEl = document.getElementById('products');
+      if (productsEl) productsEl.style.display = '';
+      document.body.classList.add('products-visible');
+
+      const navCat = el.dataset.navCategory;
+      const filterVal = el.dataset.filter;
+
+      const parentContainer = el.closest('.visual-filters');
+      if (parentContainer) {
+        parentContainer.querySelectorAll('.visual-filter-btn').forEach((b) => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+      }
+      el.classList.add('active');
+      el.setAttribute('aria-pressed', 'true');
+
+      if (navCat) {
+        setFilterState({ categories: [navCat], facets: [], query: '' });
+      } else if (filterVal) {
+        // Hardcoded domain strings removed, defaults to data-target-category
+        const targetCat = el.dataset.targetCategory || 'Water Purifier';
+        setFilterState({ categories: [targetCat], facets: [filterVal], query: '' });
+      }
+
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    },
+  });
+
+  registerClickAction({
+    selector: '#sort-mobile-toggle',
+    handle: () => {
+      const currentState = $filterState.get();
+      document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.sort === currentState.sort);
+      });
+      const url = new URL(window.location.href);
+      url.searchParams.set('view', 'sort');
+      window.history.pushState(null, '', url);
+      handleAppRouting();
+    },
+  });
+
+  registerClickAction({
+    selector: '.sort-option-btn',
+    handle: (el: HTMLElement) => {
+      const sortValue = el.dataset.sort;
+      if (sortValue) setFilterState({ sort: sortValue });
+      setTimeout(() => closeActiveOverlay(), 250);
+    },
+  });
+
+  registerClickAction({
+    selector: '#filter-clear-all',
+    handle: () => setFilterState({ categories: ['all'], facets: [], query: '' }),
+  });
+
+  document.addEventListener('change', (e: Event) => {
+    const target = e.target as HTMLSelectElement;
+    if (target.id === 'desktop-sort-select') {
+      setFilterState({ sort: target.value });
+      document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
+        btn.classList.toggle('active', btn.dataset.sort === target.value);
+      });
+    }
+  });
+
+  const handleSearchInput = debounce((e: Event) => {
+    const target = e.target as HTMLInputElement;
+    if (target.id !== 'product-search') return;
+
+    const prodEl = document.getElementById('products');
+    if (prodEl && prodEl.style.display === 'none') {
+      prodEl.style.display = '';
+      document.body.classList.add('products-visible');
+      prodEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    setFilterState({ query: target.value });
+  }, 300);
+
+  document.addEventListener('input', handleSearchInput);
+
+  document.addEventListener('submit', (e: Event) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('.header-search')) {
+      e.preventDefault();
+      document.getElementById('product-search')?.blur();
+    }
   });
 }

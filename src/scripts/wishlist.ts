@@ -27,6 +27,14 @@ if (typeof window !== 'undefined') {
   $wishlist.listen((newWishlist) => {
     localStorage.setItem('ef_wishlist', JSON.stringify(newWishlist));
   });
+
+  // 4. Sync wishlist across multiple open tabs
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'ef_wishlist' && e.newValue) {
+      $wishlist.set(JSON.parse(e.newValue));
+      updateWishlistUI();
+    }
+  });
 }
 
 export function saveWishlist(list: string[]) {

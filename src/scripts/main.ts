@@ -1,6 +1,6 @@
 import { navigate } from 'astro:transitions/client';
-import { debounce, enableSwipeToClose, handleFocusTrap } from './utils';
-import { $filterState, setFilterState, type FilterState } from './filters';
+import { enableSwipeToClose, handleFocusTrap } from './utils';
+import { setFilterState, type FilterState } from './filters';
 import { handleAppRouting, closeActiveOverlay, closePDPAndCleanURL } from './routing';
 import { initScrollAnimations, initHeaderScroll, initAccordions } from './ui';
 import { initProductNavigation } from './pdp';
@@ -69,150 +69,10 @@ window.addEventListener(
   { passive: true },
 );
 
-// Initialize global debounced search handler outside of lifecycles
-const handleSearchInput = debounce((e: Event) => {
-  const target = e.target as HTMLInputElement;
-  if (target.id !== 'product-search') return;
-
-  const prodEl = document.getElementById('products');
-  if (prodEl && prodEl.style.display === 'none') {
-    prodEl.style.display = '';
-    document.body.classList.add('products-visible');
-    prodEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-  setFilterState({ query: target.value });
-}, 300);
-
-document.addEventListener('input', handleSearchInput);
-
 // ============= TOP-LEVEL EVENT DELEGATION =============
 // Attach once to the document. Survives Astro view transitions automatically.
 
 initGlobalEventRouter();
-
-registerClickAction({
-  selector: '.visual-filter-btn',
-  handle: (el: HTMLElement) => {
-    if (window.location.hash !== '#products') {
-      window.history.pushState(null, '', '#products');
-    }
-    const productsEl = document.getElementById('products');
-    if (productsEl) productsEl.style.display = '';
-    document.body.classList.add('products-visible');
-
-    const navCat = el.dataset.navCategory;
-    const filterVal = el.dataset.filter;
-
-    const parentContainer = el.closest('.visual-filters');
-    if (parentContainer) {
-      parentContainer.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
-    }
-    el.classList.add('active');
-
-    if (navCat) {
-      setFilterState({ categories: [navCat], facets: [], query: '' });
-    } else if (filterVal) {
-      let targetCat = 'Water Purifier';
-      if (['robotic', 'canister', 'handheld', 'wet-dry'].includes(filterVal)) targetCat = 'Vacuum Cleaner';
-      else if (['Air Purifier', 'Water Softener'].includes(filterVal)) targetCat = filterVal;
-      setFilterState({ categories: [targetCat], facets: [filterVal], query: '' });
-    }
-
-    document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  },
-});
-
-registerClickAction({
-  selector: '.lang-btn',
-  handle: (el: HTMLElement) => {
-    const lang = el.getAttribute('data-lang');
-    const docLang = document.documentElement.lang || 'en';
-    if (lang && lang !== docLang) {
-      try {
-        localStorage.setItem('preferredLanguage', lang);
-      } catch (e) {}
-      const url = new URL(window.location.href);
-      const baseUrl = import.meta.env.BASE_URL;
-      const pathParts = url.pathname.replace(baseUrl, '').split('/').filter(Boolean);
-      if (pathParts.length > 0 && ['en', 'hi', 'mr', 'gu'].includes(pathParts[0])) {
-        pathParts[0] = lang;
-        url.pathname = baseUrl + pathParts.join('/');
-      } else {
-        url.pathname = baseUrl + lang + '/' + pathParts.join('/');
-      }
-      if (!url.pathname.endsWith('/')) url.pathname += '/';
-      navigate(url.pathname + url.search + url.hash);
-    }
-    const mainSidebar = document.getElementById('main-sidebar');
-    if (mainSidebar?.classList.contains('active')) document.getElementById('sidebar-close')?.click();
-  },
-});
-
-registerClickAction({
-  selector: '#sort-mobile-toggle',
-  handle: () => {
-    const currentState = $filterState.get();
-    document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
-      btn.classList.toggle('active', btn.dataset.sort === currentState.sort);
-    });
-    const url = new URL(window.location.href);
-    url.searchParams.set('view', 'sort');
-    window.history.pushState(null, '', url);
-    handleAppRouting();
-  },
-});
-
-registerClickAction({
-  selector: '.sort-option-btn',
-  handle: (el: HTMLElement) => {
-    const sortValue = el.dataset.sort;
-    if (sortValue) setFilterState({ sort: sortValue });
-    setTimeout(() => closeActiveOverlay(), 250);
-  },
-});
-
-registerClickAction({
-  selector: '#filter-clear-all',
-  handle: () => setFilterState({ categories: ['all'], facets: [], query: '' }),
-});
-
-registerClickAction({
-  selector: '.share-btn, #share-btn, .share-action-btn',
-  handle: async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: document.title,
-          url: window.location.href,
-        });
-      } catch (e) {
-        // User dismissed share sheet gracefully
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      import('./toast').then(({ showToast }) => showToast(document.body.dataset.toastLinkCopied || 'Link Copied!'));
-    }
-  },
-});
-
-document.addEventListener('change', (e: Event) => {
-  const target = e.target as HTMLSelectElement;
-  if (target.id === 'desktop-sort-select') {
-    setFilterState({ sort: target.value });
-    document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
-      btn.classList.toggle('active', btn.dataset.sort === target.value);
-    });
-  }
-});
-
-document.addEventListener('submit', (e: Event) => {
-  const target = e.target as HTMLElement;
-  if (target.closest('.header-search')) {
-    e.preventDefault();
-    document.getElementById('product-search')?.blur();
-  }
-});
-
 // Manage lifecycle teardowns across Astro page transitions
 let pageTransitionController: AbortController | null = null;
 let swipeCleanupFns: Array<() => void> = [];
@@ -299,15 +159,17 @@ document.addEventListener('astro:page-load', function () {
     const initQ = params.get('q');
 
     if (initCats || initFacets || initQ) {
-      const newState: Partial<FilterState> = { categories: ['all'], facets: [], query: '' };
+      const newState: Partial<FilterState> = { categories: ['all'], facets: [], query: '', sort: 'relevance' };
       if (initCats) newState.categories = initCats.split(',');
       if (initFacets) newState.facets = initFacets.split(',');
       if (initQ) newState.query = initQ;
+      const initSort = params.get('sort');
+      if (initSort) newState.sort = initSort;
       setFilterState(newState);
       if (window.location.hash !== '#products')
         window.history.replaceState(null, '', window.location.search + '#products');
     } else {
-      setFilterState({});
+      setFilterState({ categories: ['all'], facets: [], query: '', sort: 'relevance' });
     }
 
     // Remove the SSG Anti-FOUC style now that JS state has successfully hydrated

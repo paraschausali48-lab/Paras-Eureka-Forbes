@@ -1,4 +1,5 @@
 import { registerClickAction } from './events';
+import { navigate } from 'astro:transitions/client';
 
 let revealObserver: IntersectionObserver | null = null;
 
@@ -14,7 +15,7 @@ export function initScrollAnimations() {
         }
       });
     },
-    { rootMargin: '0px 0px -50px 0px', threshold: 0.05 },
+    { rootMargin: '0px 0px 150px 0px', threshold: 0 },
   );
 
   document.querySelectorAll('.reveal').forEach((el) => {
@@ -103,3 +104,50 @@ registerClickAction({
   selector: '#scrollToTop',
   handle: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
 });
+
+if (typeof window !== 'undefined') {
+  registerClickAction({
+    selector: '.lang-btn',
+    handle: (el: HTMLElement) => {
+      const lang = el.getAttribute('data-lang');
+      const docLang = document.documentElement.lang || 'en';
+      if (lang && lang !== docLang) {
+        try {
+          localStorage.setItem('preferredLanguage', lang);
+        } catch (e) {}
+        const url = new URL(window.location.href);
+        const baseUrl = import.meta.env.BASE_URL;
+        const pathParts = url.pathname.replace(baseUrl, '').split('/').filter(Boolean);
+        if (pathParts.length > 0 && ['en', 'hi', 'mr', 'gu'].includes(pathParts[0])) {
+          pathParts[0] = lang;
+          url.pathname = baseUrl + pathParts.join('/');
+        } else {
+          url.pathname = baseUrl + lang + '/' + pathParts.join('/');
+        }
+        if (!url.pathname.endsWith('/')) url.pathname += '/';
+        navigate(url.pathname + url.search + url.hash);
+      }
+      const mainSidebar = document.getElementById('main-sidebar');
+      if (mainSidebar?.classList.contains('active')) document.getElementById('sidebar-close')?.click();
+    },
+  });
+
+  registerClickAction({
+    selector: '.share-btn, #share-btn, .share-action-btn',
+    handle: async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: document.title,
+            url: window.location.href,
+          });
+        } catch (e) {
+          // User dismissed share sheet gracefully
+        }
+      } else {
+        navigator.clipboard.writeText(window.location.href);
+        import('./toast').then(({ showToast }) => showToast(document.body.dataset.toastLinkCopied || 'Link Copied!'));
+      }
+    },
+  });
+}

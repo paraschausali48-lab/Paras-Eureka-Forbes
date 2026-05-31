@@ -32,6 +32,12 @@ const t = await useTranslations(lang);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta
+      name="robots"
+      content={Astro.url.searchParams.has('facets') || Astro.url.searchParams.has('q')
+        ? 'noindex, nofollow'
+        : 'index, follow'}
+    />
     <meta name="theme-color" content="#012d5a" />
     <ClientRouter />
 
