@@ -1,4 +1,5 @@
 import { useStore } from '@nanostores/preact';
+import { useState } from 'preact/hooks';
 import { $filterState, $catalogMeta, setFilterState } from '../scripts/filters';
 import { ProductCategory, WaterTech, VacType, VacPow } from '../scripts/types';
 
@@ -9,24 +10,18 @@ interface Props {
 export function FilterSidebar({ translations }: Props) {
   const state = useStore($filterState);
   const meta = useStore($catalogMeta);
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
   const t = (key: string) => translations[key] || key;
 
   const handleCategoryChange = (e: Event) => {
     const target = e.target as HTMLInputElement;
     const val = target.value;
-    let newCats = [...state.categories];
+    let newCats = ['all'];
 
-    if (val === 'all') {
-      newCats = ['all'];
-    } else {
-      newCats = newCats.filter((c) => c !== 'all');
-      if (target.checked) {
-        newCats.push(val);
-      } else {
-        newCats = newCats.filter((c) => c !== val);
-      }
-      if (newCats.length === 0) newCats = ['all'];
+    if (val !== 'all' && target.checked) {
+      newCats = [val];
     }
+
     setFilterState({ categories: newCats });
   };
 
@@ -48,13 +43,19 @@ export function FilterSidebar({ translations }: Props) {
   };
 
   const closeSidebar = () => {
-    document.getElementById('filter-sidebar')?.classList.remove('active');
-    document.body.style.overflow = '';
+    const url = new URL(window.location.href);
+    url.searchParams.delete('view');
+    window.history.pushState(null, '', url);
+    window.dispatchEvent(new Event('popstate'));
   };
 
   const isAll = state.categories.includes('all');
   const showWater = isAll || state.categories.includes(ProductCategory.WATER_PURIFIER);
   const showVacuum = isAll || state.categories.includes(ProductCategory.VACUUM_CLEANER);
+
+  const toggleAccordion = (group: string) => {
+    setExpanded((prev) => ({ ...prev, [group]: prev[group] === false ? true : false }));
+  };
 
   const WATER_FACETS = [
     {
@@ -69,10 +70,10 @@ export function FilterSidebar({ translations }: Props) {
       group: 'filter_feat_title',
       options: [
         { val: 'active-copper', label: 'filter_feat_copper' },
-        { val: 'hot', label: 'filter_feat_hot' },
-        { val: 'alkaline', label: 'filter_feat_alk' },
+        { val: 'hot-ambient', label: 'filter_feat_hot' },
+        { val: 'alkaline-boost', label: 'filter_feat_alk' },
         { val: 'stainless-steel', label: 'filter_feat_ss' },
-        { val: 'zero-pressure', label: 'filter_feat_zp' },
+        { val: 'zero-pressure-pump', label: 'filter_feat_zp' },
       ],
     },
   ];
@@ -101,7 +102,7 @@ export function FilterSidebar({ translations }: Props) {
       <div className="filter-sidebar-header">
         <h2>{t('filter_title')}</h2>
         {(state.facets.length > 0 || !isAll || state.query !== '') && (
-          <button onClick={clearAll} className="clear-all-btn" id="filter-clear-all">
+          <button onClick={clearAll} className="filter-clear-all" id="filter-clear-all">
             {t('filter_clear_all')}
           </button>
         )}
@@ -112,81 +113,164 @@ export function FilterSidebar({ translations }: Props) {
 
       {/* Main Categories */}
       <div className="filter-group">
-        <h3 className="filter-group-title">{t('filter_cat_title')}</h3>
-        <label className="filter-option">
-          <input type="checkbox" value="all" checked={isAll} onChange={handleCategoryChange} />
-          <span>{t('filter_all')}</span>
-        </label>
+        <button
+          className="filter-group-toggle"
+          aria-expanded={expanded['categories'] !== false ? 'true' : 'false'}
+          type="button"
+          onClick={() => toggleAccordion('categories')}
+        >
+          <div className="filter-group-title">{t('filter_cat_title')}</div>
+          <span className="filter-chevron">
+            <svg
+              aria-hidden="true"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
+        </button>
+        <div className="filter-group-content">
+          <label className="filter-option">
+            <input type="radio" name="category" value="all" checked={isAll} onChange={handleCategoryChange} />
+            <span>{t('filter_all')}</span>
+          </label>
 
-        {[
-          ProductCategory.WATER_PURIFIER,
-          ProductCategory.VACUUM_CLEANER,
-          ProductCategory.AIR_PURIFIER,
-          ProductCategory.WATER_SOFTENER,
-        ].map((cat) => {
-          const count = meta.categoryCounts[cat] || 0;
-          const tKey =
-            cat === ProductCategory.WATER_PURIFIER
-              ? 'filter_water'
-              : cat === ProductCategory.VACUUM_CLEANER
-                ? 'filter_vacuum'
-                : cat === ProductCategory.AIR_PURIFIER
-                  ? 'filter_air'
-                  : 'filter_softener';
+          {[
+            ProductCategory.WATER_PURIFIER,
+            ProductCategory.VACUUM_CLEANER,
+            ProductCategory.AIR_PURIFIER,
+            ProductCategory.WATER_SOFTENER,
+          ].map((cat) => {
+            const count = meta.categoryCounts[cat] || 0;
+            const tKey =
+              cat === ProductCategory.WATER_PURIFIER
+                ? 'filter_water'
+                : cat === ProductCategory.VACUUM_CLEANER
+                  ? 'filter_vacuum'
+                  : cat === ProductCategory.AIR_PURIFIER
+                    ? 'filter_air'
+                    : 'filter_softener';
 
-          return (
-            <label key={cat} className="filter-option">
-              <input
-                type="checkbox"
-                value={cat}
-                checked={state.categories.includes(cat)}
-                onChange={handleCategoryChange}
-              />
-              <span>
-                {t(tKey)} <span className="filter-count">({count})</span>
-              </span>
-            </label>
-          );
-        })}
+            return (
+              <label key={cat} className="filter-option">
+                <input
+                  type="radio"
+                  name="category"
+                  value={cat}
+                  checked={state.categories.includes(cat)}
+                  onChange={handleCategoryChange}
+                />
+                <span>
+                  {t(tKey)} <span className="filter-count">({count})</span>
+                </span>
+              </label>
+            );
+          })}
+        </div>
       </div>
 
       {/* Dynamic Water Purifier Facets */}
       {showWater &&
-        WATER_FACETS.map((section) => (
-          <div key={section.group} className="filter-group water-filter">
-            <h3 className="filter-group-title">{t(section.group)}</h3>
-            {section.options.map((opt) => (
-              <label key={opt.val} className="filter-option">
-                <input
-                  type="checkbox"
-                  value={opt.val}
-                  checked={state.facets.includes(opt.val)}
-                  onChange={handleFacetChange}
-                />
-                <span>{t(opt.label)}</span>
-              </label>
-            ))}
-          </div>
-        ))}
+        WATER_FACETS.map((section) => {
+          const activeCount = section.options.filter((opt) => state.facets.includes(opt.val)).length;
+          return (
+            <div key={section.group} className="filter-group water-filter">
+              <button
+                className="filter-group-toggle"
+                aria-expanded={expanded[section.group] !== false ? 'true' : 'false'}
+                type="button"
+                onClick={() => toggleAccordion(section.group)}
+              >
+                <div className="filter-group-title" data-selected-count={activeCount.toString()}>
+                  {t(section.group)}
+                </div>
+                <span className="filter-chevron">
+                  <svg
+                    aria-hidden="true"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+              <div className="filter-group-content">
+                {section.options.map((opt) => (
+                  <label key={opt.val} className="filter-option">
+                    <input
+                      type="checkbox"
+                      value={opt.val}
+                      checked={state.facets.includes(opt.val)}
+                      onChange={handleFacetChange}
+                    />
+                    <span>{t(opt.label)}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          );
+        })}
 
       {/* Dynamic Vacuum Cleaner Facets */}
       {showVacuum &&
-        VACUUM_FACETS.map((section) => (
-          <div key={section.group} className="filter-group vacuum-filter">
-            <h3 className="filter-group-title">{t(section.group)}</h3>
-            {section.options.map((opt) => (
-              <label key={opt.val} className="filter-option">
-                <input
-                  type="checkbox"
-                  value={opt.val}
-                  checked={state.facets.includes(opt.val)}
-                  onChange={handleFacetChange}
-                />
-                <span>{t(opt.label)}</span>
-              </label>
-            ))}
-          </div>
-        ))}
+        VACUUM_FACETS.map((section) => {
+          const activeCount = section.options.filter((opt) => state.facets.includes(opt.val)).length;
+          return (
+            <div key={section.group} className="filter-group vacuum-filter">
+              <button
+                className="filter-group-toggle"
+                aria-expanded={expanded[section.group] !== false ? 'true' : 'false'}
+                type="button"
+                onClick={() => toggleAccordion(section.group)}
+              >
+                <div className="filter-group-title" data-selected-count={activeCount.toString()}>
+                  {t(section.group)}
+                </div>
+                <span className="filter-chevron">
+                  <svg
+                    aria-hidden="true"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </span>
+              </button>
+              <div className="filter-group-content">
+                {section.options.map((opt) => (
+                  <label key={opt.val} className="filter-option">
+                    <input
+                      type="checkbox"
+                      value={opt.val}
+                      checked={state.facets.includes(opt.val)}
+                      onChange={handleFacetChange}
+                    />
+                    <span>{t(opt.label)}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          );
+        })}
     </aside>
   );
 }

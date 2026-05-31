@@ -12,25 +12,20 @@ export function VisualFilters({ translations, baseUrl }: Props) {
   const t = (key: string) => translations[key] || key;
 
   const toggleCategory = (navCat: string) => {
-    const isActiveCat = state.categories.includes(navCat);
-    let nextCategories = [...state.categories];
-
-    if (isActiveCat) {
-      nextCategories = nextCategories.filter((c) => c !== navCat);
-      if (nextCategories.length === 0) nextCategories = ['all'];
-    } else {
-      const isAll = nextCategories.includes('all');
-      nextCategories = isAll ? [navCat] : Array.from(new Set([...nextCategories, navCat]));
-    }
+    const isActiveCat = state.categories.includes(navCat) && state.categories.length === 1;
+    const nextCategories = isActiveCat ? ['all'] : [navCat];
 
     setFilterState({ categories: nextCategories });
 
     // Scroll to the product grid section smoothly
     if (window.location.hash !== '#products') {
       window.history.pushState(null, '', window.location.pathname + window.location.search + '#products');
-      window.dispatchEvent(new Event('popstate'));
+
+      const productsEl = document.getElementById('product-grid');
+      if (productsEl) productsEl.style.display = '';
+      document.body.classList.add('products-visible');
     }
-    document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('product-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const categories = [

@@ -164,13 +164,16 @@ export const $filteredCatalog = computed([$allProducts, $filterState], (products
         return words!.some((word) => isTypoMatch(term, word, tolerance));
       });
 
-    const matchesFacet = productMatchesFacets(product, facets, prebuiltGroups);
-
-    if (matchesCat && matchesSearch && matchesFacet) {
+    // Compute absolute category availability (independent of the currently selected category)
+    if (matchesSearch) {
       if (counts[product.category] !== undefined) {
         counts[product.category]++;
       }
+    }
 
+    const matchesFacet = productMatchesFacets(product, facets, prebuiltGroups);
+
+    if (matchesCat && matchesSearch && matchesFacet) {
       // Calculate active facet counts dynamically
       let subcats = subcatCache.get(product);
       if (!subcats) {
@@ -453,11 +456,11 @@ if (typeof window !== 'undefined') {
     if (val && window.location.hash !== '#products') {
       window.history.pushState(null, '', window.location.pathname + window.location.search + '#products');
 
-      const productsEl = document.getElementById('products');
+      const productsEl = document.getElementById('product-grid');
       if (productsEl) productsEl.style.display = '';
       document.body.classList.add('products-visible');
 
-      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('product-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     setFilterState({ query: target.value });
   }, 300);

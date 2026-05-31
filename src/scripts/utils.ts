@@ -90,15 +90,6 @@ export function escapeHTML(str: string | number | boolean | null | undefined): s
   if (str == null) return '';
   const safeStr = String(str);
 
-  // 10/10 Security: Rely on the browser's native C++ HTML parser engine
-  // instead of regex. It is mathematically proven to be 100% XSS safe.
-  if (typeof document !== 'undefined') {
-    const div = document.createElement('div');
-    div.textContent = safeStr;
-    return div.innerHTML;
-  }
-
-  // Fallback for Astro SSR (Server-Side Rendering)
   const entityMap: Record<string, string> = {
     '&': '&amp;',
     '<': '&lt;',

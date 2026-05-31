@@ -6,6 +6,7 @@ import { showToast } from '../scripts/toast';
 
 export default function Wishlist() {
   const list = useStore($wishlist);
+  const allProducts = useStore($allProducts);
 
   const handleRemove = (sku: string) => {
     saveWishlist(list.filter((s) => s !== sku));
@@ -16,15 +17,15 @@ export default function Wishlist() {
     if (modal) modal.classList.remove('active');
     document.body.style.overflow = '';
 
-    const productsEl = document.getElementById('products');
+    const productsEl = document.getElementById('product-grid');
     if (productsEl) productsEl.style.display = '';
 
     const card = document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`);
     if (card) {
-      card.click();
+      card.querySelector<HTMLElement>('a')?.click();
     } else {
       const lang = document.documentElement?.lang || 'en';
-      navigate(`${import.meta.env.BASE_URL}${lang}/products/${sku}`);
+      navigate(`${import.meta.env.BASE_URL}${lang}/products/${sku}/`);
     }
   };
 
@@ -50,17 +51,11 @@ export default function Wishlist() {
   return (
     <div class="wishlist-container">
       {list.map((sku) => {
-        const product = $allProducts.get().find((p) => p.sku === sku);
-        const card =
-          typeof document !== 'undefined'
-            ? document.querySelector<HTMLElement>(`.product-card[data-sku="${sku}"]`)
-            : null;
+        const product = allProducts.find((p) => p.sku === sku);
 
-        const title = product?.name || card?.querySelector('h3')?.textContent || sku;
-        const category = product?.category || card?.querySelector('.product-tag')?.getAttribute('data-category') || '';
-        const priceText = product
-          ? `₹${product.mop.toLocaleString('en-IN')}`
-          : card?.querySelector('.price')?.textContent || '';
+        const title = product?.name || sku;
+        const category = product?.category || '';
+        const priceText = product ? `₹${product.mop.toLocaleString('en-IN')}` : '';
 
         return (
           <div class="wishlist-item" key={sku}>
@@ -95,7 +90,7 @@ export default function Wishlist() {
         id="wishlist-clear-all"
         onClick={handleClear}
         style={{ display: 'block', width: '100%', marginTop: '1rem' }}
-        class="primary-btn"
+        class="btn"
       >
         Clear All
       </button>

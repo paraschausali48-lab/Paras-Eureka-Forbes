@@ -27,8 +27,10 @@ export function initProductNavigation() {
     const card = (e.target as HTMLElement).closest('.product-card') as HTMLElement;
     if (!card) return;
 
-    // If they clicked a button or a native link (like More Info), let it behave naturally
-    if ((e.target as HTMLElement).closest('button') || (e.target as HTMLElement).closest('a')) return;
+    if ((e.target as HTMLElement).closest('button')) return;
+
+    const anchor = (e.target as HTMLElement).closest('a');
+    if (anchor) e.preventDefault(); // Stop native navigation, enforce SPA transition
 
     setLastFocused(card);
 

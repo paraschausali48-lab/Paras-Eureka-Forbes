@@ -2,7 +2,7 @@ import { navigate } from 'astro:transitions/client';
 import { enableSwipeToClose, handleFocusTrap } from './utils';
 import { setFilterState, type FilterState } from './filters';
 import { handleAppRouting, closeActiveOverlay, closePDPAndCleanURL } from './routing';
-import { initScrollAnimations, initHeaderScroll, initAccordions } from './ui';
+import { initScrollAnimations, initHeaderScroll } from './ui';
 import { initProductNavigation } from './pdp';
 import { initTelemetry } from './telemetry';
 import { registerClickAction, initGlobalEventRouter } from './events';
@@ -97,9 +97,6 @@ document.addEventListener('astro:page-load', function () {
   // ============= 2. HEADER SCROLL EFFECT =============
   initHeaderScroll();
 
-  // ============= 2.8 ACCORDION GENERATION =============
-  initAccordions();
-
   // ============= 3. FACETED FILTERING ENGINE =============
   const filterSidebar = document.getElementById('filter-sidebar');
   const sortModal = document.getElementById('sort-modal');
@@ -144,10 +141,10 @@ document.addEventListener('astro:page-load', function () {
       if (cleanup) swipeCleanupFns.push(cleanup);
     }
   };
-  bindSwipe(sortModal?.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'down');
+  bindSwipe(sortModal?.querySelector<HTMLElement>('.demo-modal-content'), closeActiveOverlay, 'down');
   bindSwipe(filterSidebar, closeActiveOverlay, 'down');
   bindSwipe(pdpModal?.querySelector<HTMLElement>('.pdp-content'), closePDPAndCleanURL, 'right');
-  bindSwipe(wishlistModal?.querySelector<HTMLElement>('.pdp-content'), closeActiveOverlay, 'right');
+  bindSwipe(wishlistModal?.querySelector<HTMLElement>('.demo-modal-content'), closeActiveOverlay, 'right');
   bindSwipe(mainSidebarEl, () => document.getElementById('sidebar-close')?.click(), 'left');
 
   // ============= 12. DATA HYDRATION & URL STATE =============
@@ -157,19 +154,22 @@ document.addEventListener('astro:page-load', function () {
     const initCats = params.get('cat');
     const initFacets = params.get('facets');
     const initQ = params.get('q');
+    const initSort = params.get('sort');
 
-    if (initCats || initFacets || initQ) {
-      const newState: Partial<FilterState> = { categories: ['all'], facets: [], query: '', sort: 'relevance' };
-      if (initCats) newState.categories = initCats.split(',');
-      if (initFacets) newState.facets = initFacets.split(',');
-      if (initQ) newState.query = initQ;
-      const initSort = params.get('sort');
-      if (initSort) newState.sort = initSort;
-      setFilterState(newState);
-      if (window.location.hash !== '#products')
-        window.history.replaceState(null, '', window.location.search + '#products');
-    } else {
-      setFilterState({ categories: ['all'], facets: [], query: '', sort: 'relevance' });
+    if (document.getElementById('product-grid')) {
+      if (initCats || initFacets || initQ || initSort) {
+        const newState: Partial<FilterState> = { categories: ['all'], facets: [], query: '', sort: 'relevance' };
+        if (initCats) newState.categories = initCats.split(',');
+        if (initFacets) newState.facets = initFacets.split(',');
+        if (initQ) newState.query = initQ;
+        if (initSort) newState.sort = initSort;
+        setFilterState(newState);
+        if (window.location.hash !== '#products') {
+          window.history.replaceState(null, '', window.location.search + '#products');
+        }
+      } else {
+        setFilterState({ categories: ['all'], facets: [], query: '', sort: 'relevance' });
+      }
     }
 
     // Remove the SSG Anti-FOUC style now that JS state has successfully hydrated

@@ -11,7 +11,8 @@ export function MobileFilterActions({ translations }: Props) {
   const t = (key: string) => translations[key] || key;
 
   // Compute active filters natively
-  const activeFilterCount = state.facets.length + (state.categories.includes('all') ? 0 : state.categories.length);
+  const activeFilterCount =
+    state.facets.length + (state.categories.includes('all') ? 0 : state.categories.length) + (state.query ? 1 : 0);
 
   const triggerOverlay = (view: string) => {
     const url = new URL(window.location.href);

@@ -39,7 +39,7 @@ export default function ProductGrid({ products, translations }: Props) {
         <div class="empty-state-content">
           <h3>{t('empty_title')}</h3>
           <p>{t('empty_desc')}</p>
-          <button class="primary-btn" onClick={() => setFilterState({ categories: ['all'], facets: [], query: '' })}>
+          <button class="btn" onClick={() => setFilterState({ categories: ['all'], facets: [], query: '' })}>
             {t('empty_btn')}
           </button>
         </div>

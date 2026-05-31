@@ -16,7 +16,7 @@ export function ProductCard({ product, t }: Props) {
   // Use pre-calculated discount, fallback to runtime calc if JSON is outdated
   const discount =
     (product as Product & { discount?: number }).discount ??
-    Math.round(((product.mrp - product.mop) / product.mrp) * 100);
+    (product.mrp > 0 ? Math.round(((product.mrp - product.mop) / product.mrp) * 100) : 0);
   const highlights = product.highlights;
 
   // Dynamically summarize the product description using its technical features (subcategories)
@@ -37,10 +37,11 @@ export function ProductCard({ product, t }: Props) {
 
   return (
     <div
-      class={`product-card reveal ${product.outOfStock ? 'out-of-stock' : ''}`}
+      class={`product-card ${product.outOfStock ? 'out-of-stock' : ''}`}
       data-sku={sku}
       data-category={product.category}
     >
+      {product.outOfStock && <div class="out-of-stock-badge">Out of Stock</div>}
       <span class="product-tag" data-category={product.category}>
         {product.i18nTag ? t(product.i18nTag) : product.category}
       </span>
@@ -108,6 +109,12 @@ export function ProductCard({ product, t }: Props) {
             target.style.opacity = '1';
             target.parentElement?.classList.remove('skeleton-wrapper');
           }}
+          ref={(el) => {
+            if (el && el.complete) {
+              el.style.opacity = '1';
+              el.parentElement?.classList.remove('skeleton-wrapper');
+            }
+          }}
           onError={(e) => ((e.target as HTMLImageElement).style.display = 'none')}
         />
       </div>
@@ -118,9 +125,6 @@ export function ProductCard({ product, t }: Props) {
         </a>
       </h3>
 
-      <p class="product-specs-summary" title={product.description}>
-        {specSummary}
-      </p>
       {highlights && highlights.length > 0 ? (
         <ul class="product-highlights">
           {highlights.map((highlight, index) => (

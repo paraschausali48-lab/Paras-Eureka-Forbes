@@ -57,48 +57,6 @@ export function initHeaderScroll() {
   );
 }
 
-export function initAccordions() {
-  document.querySelectorAll('.filter-group').forEach((group) => {
-    const titleEl = group.querySelector('.filter-group-title');
-    if (!titleEl || group.querySelector('.filter-group-toggle')) return;
-
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'filter-group-toggle';
-    toggleBtn.setAttribute('aria-expanded', 'true');
-    const contentId = `filter-content-${Math.random().toString(36).substring(2, 11)}`;
-    toggleBtn.setAttribute('aria-controls', contentId);
-    toggleBtn.setAttribute('type', 'button');
-
-    const chevron = document.createElement('span');
-    chevron.className = 'filter-chevron';
-    chevron.innerHTML =
-      '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
-
-    const newTitle = document.createElement('div');
-    newTitle.className = 'filter-group-title';
-    newTitle.textContent = titleEl.textContent;
-    toggleBtn.appendChild(newTitle);
-    toggleBtn.appendChild(chevron);
-
-    const contentDiv = document.createElement('div');
-    contentDiv.className = 'filter-group-content';
-    contentDiv.id = contentId;
-
-    Array.from(group.children).forEach((child) => {
-      if (child !== titleEl) contentDiv.appendChild(child);
-    });
-
-    titleEl.remove();
-    group.appendChild(toggleBtn);
-    group.appendChild(contentDiv);
-
-    toggleBtn.addEventListener('click', () => {
-      const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
-      toggleBtn.setAttribute('aria-expanded', String(!expanded));
-    });
-  });
-}
-
 // ============= UI EVENT BINDINGS =============
 registerClickAction({
   selector: '#scrollToTop',

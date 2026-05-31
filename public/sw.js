@@ -16,7 +16,7 @@ const limitCacheSize = async (name, size) => {
   const keys = await cache.keys();
   if (keys.length > size) {
     await cache.delete(keys[0]);
-    limitCacheSize(name, size);
+    await limitCacheSize(name, size);
   }
 };
 
@@ -88,7 +88,12 @@ self.addEventListener('fetch', (event) => {
               return networkResponse;
             })
             .catch(() => cachedResponse); // Fallback to cache if offline
-          return cachedResponse || fetchPromise;
+
+          if (cachedResponse) {
+            event.waitUntil(fetchPromise); // Keep SW alive for background update
+            return cachedResponse;
+          }
+          return fetchPromise;
         });
       }),
     );
@@ -116,7 +121,7 @@ self.addEventListener('fetch', (event) => {
                       statusText: networkResponse.statusText,
                       headers: headers,
                     });
-                    cache.put(event.request, cacheResponse).then(() => manageImageCache());
+                    event.waitUntil(cache.put(event.request, cacheResponse).then(() => manageImageCache()));
                   });
               }
               return networkResponse;
