@@ -2,6 +2,7 @@ import { useStore } from '@nanostores/preact';
 import { $filterState, setFilterState } from '../scripts/filters';
 import { closeActiveOverlay } from '../scripts/routing';
 import { SortOption } from '../scripts/types';
+import styles from './MobileActions.module.css';
 
 interface Props {
   translations: Record<string, string>;
@@ -18,21 +19,21 @@ export function MobileSortModal({ translations }: Props) {
   };
 
   return (
-    <div class="sort-options-new">
+    <div class={styles.sortOptionsNew}>
       <button
-        class={`sort-option-btn ${state.sort === SortOption.RELEVANCE ? 'active' : ''}`}
+        class={`${styles.sortOptionBtn} ${state.sort === SortOption.RELEVANCE ? styles.sortOptionBtnActive : ''}`}
         onClick={() => handleSort(SortOption.RELEVANCE)}
       >
         {t('sort_relevance')}
       </button>
       <button
-        class={`sort-option-btn ${state.sort === SortOption.PRICE_LOW ? 'active' : ''}`}
+        class={`${styles.sortOptionBtn} ${state.sort === SortOption.PRICE_LOW ? styles.sortOptionBtnActive : ''}`}
         onClick={() => handleSort(SortOption.PRICE_LOW)}
       >
         {t('sort_price_low')}
       </button>
       <button
-        class={`sort-option-btn ${state.sort === SortOption.PRICE_HIGH ? 'active' : ''}`}
+        class={`${styles.sortOptionBtn} ${state.sort === SortOption.PRICE_HIGH ? styles.sortOptionBtnActive : ''}`}
         onClick={() => handleSort(SortOption.PRICE_HIGH)}
       >
         {t('sort_price_high')}

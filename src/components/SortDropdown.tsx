@@ -1,6 +1,7 @@
 import { useStore } from '@nanostores/preact';
 import { $filterState, setFilterState } from '../scripts/filters';
 import { SortOption } from '../scripts/types';
+import styles from './MobileActions.module.css';
 
 interface Props {
   translations: Record<string, string>;
@@ -13,7 +14,7 @@ export function SortDropdown({ translations }: Props) {
   return (
     <select
       id="desktop-sort-select"
-      class="sort-select"
+      class={styles.sortSelect}
       value={state.sort}
       onChange={(e) => setFilterState({ sort: e.currentTarget.value })}
     >

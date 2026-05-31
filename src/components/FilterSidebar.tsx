@@ -2,6 +2,7 @@ import { useStore } from '@nanostores/preact';
 import { useState } from 'preact/hooks';
 import { $filterState, $catalogMeta, setFilterState } from '../scripts/filters';
 import { ProductCategory, WaterTech, VacType, VacPow } from '../scripts/types';
+import styles from './FilterSidebar.module.css';
 
 interface Props {
   translations: Record<string, string>;
@@ -98,29 +99,29 @@ export function FilterSidebar({ translations }: Props) {
   ];
 
   return (
-    <aside className="filter-sidebar" id="filter-sidebar">
-      <div className="filter-sidebar-header">
+    <aside class={`${styles.filterSidebar} filter-sidebar`} id="filter-sidebar">
+      <div class={styles.filterSidebarHeader}>
         <h2>{t('filter_title')}</h2>
         {(state.facets.length > 0 || !isAll || state.query !== '') && (
-          <button onClick={clearAll} className="filter-clear-all" id="filter-clear-all">
+          <button onClick={clearAll} class={styles.filterClearAll} id="filter-clear-all">
             {t('filter_clear_all')}
           </button>
         )}
-        <button onClick={closeSidebar} className="filter-sidebar-close" aria-label="Close filters">
+        <button onClick={closeSidebar} class={styles.filterSidebarClose} aria-label="Close filters">
           &times;
         </button>
       </div>
 
       {/* Main Categories */}
-      <div className="filter-group">
+      <div class={styles.filterGroup}>
         <button
-          className="filter-group-toggle"
+          class={styles.filterGroupToggle}
           aria-expanded={expanded['categories'] !== false ? 'true' : 'false'}
           type="button"
           onClick={() => toggleAccordion('categories')}
         >
-          <div className="filter-group-title">{t('filter_cat_title')}</div>
-          <span className="filter-chevron">
+          <div class={styles.filterGroupTitle}>{t('filter_cat_title')}</div>
+          <span class={styles.filterChevron}>
             <svg
               aria-hidden="true"
               width="16"
@@ -136,8 +137,8 @@ export function FilterSidebar({ translations }: Props) {
             </svg>
           </span>
         </button>
-        <div className="filter-group-content">
-          <label className="filter-option">
+        <div class={styles.filterGroupContent}>
+          <label class={styles.filterOption}>
             <input type="radio" name="category" value="all" checked={isAll} onChange={handleCategoryChange} />
             <span>{t('filter_all')}</span>
           </label>
@@ -159,7 +160,7 @@ export function FilterSidebar({ translations }: Props) {
                     : 'filter_softener';
 
             return (
-              <label key={cat} className="filter-option">
+              <label key={cat} class={styles.filterOption}>
                 <input
                   type="radio"
                   name="category"
@@ -168,7 +169,7 @@ export function FilterSidebar({ translations }: Props) {
                   onChange={handleCategoryChange}
                 />
                 <span>
-                  {t(tKey)} <span className="filter-count">({count})</span>
+                  {t(tKey)} <span class={styles.filterCount}>({count})</span>
                 </span>
               </label>
             );
@@ -181,17 +182,17 @@ export function FilterSidebar({ translations }: Props) {
         WATER_FACETS.map((section) => {
           const activeCount = section.options.filter((opt) => state.facets.includes(opt.val)).length;
           return (
-            <div key={section.group} className="filter-group water-filter">
+            <div key={section.group} class={`${styles.filterGroup} water-filter`}>
               <button
-                className="filter-group-toggle"
+                class={styles.filterGroupToggle}
                 aria-expanded={expanded[section.group] !== false ? 'true' : 'false'}
                 type="button"
                 onClick={() => toggleAccordion(section.group)}
               >
-                <div className="filter-group-title" data-selected-count={activeCount.toString()}>
+                <div class={styles.filterGroupTitle} data-selected-count={activeCount.toString()}>
                   {t(section.group)}
                 </div>
-                <span className="filter-chevron">
+                <span class={styles.filterChevron}>
                   <svg
                     aria-hidden="true"
                     width="16"
@@ -207,9 +208,9 @@ export function FilterSidebar({ translations }: Props) {
                   </svg>
                 </span>
               </button>
-              <div className="filter-group-content">
+              <div class={styles.filterGroupContent}>
                 {section.options.map((opt) => (
-                  <label key={opt.val} className="filter-option">
+                  <label key={opt.val} class={styles.filterOption}>
                     <input
                       type="checkbox"
                       value={opt.val}
@@ -229,17 +230,17 @@ export function FilterSidebar({ translations }: Props) {
         VACUUM_FACETS.map((section) => {
           const activeCount = section.options.filter((opt) => state.facets.includes(opt.val)).length;
           return (
-            <div key={section.group} className="filter-group vacuum-filter">
+            <div key={section.group} class={`${styles.filterGroup} vacuum-filter`}>
               <button
-                className="filter-group-toggle"
+                class={styles.filterGroupToggle}
                 aria-expanded={expanded[section.group] !== false ? 'true' : 'false'}
                 type="button"
                 onClick={() => toggleAccordion(section.group)}
               >
-                <div className="filter-group-title" data-selected-count={activeCount.toString()}>
+                <div class={styles.filterGroupTitle} data-selected-count={activeCount.toString()}>
                   {t(section.group)}
                 </div>
-                <span className="filter-chevron">
+                <span class={styles.filterChevron}>
                   <svg
                     aria-hidden="true"
                     width="16"
@@ -255,9 +256,9 @@ export function FilterSidebar({ translations }: Props) {
                   </svg>
                 </span>
               </button>
-              <div className="filter-group-content">
+              <div class={styles.filterGroupContent}>
                 {section.options.map((opt) => (
-                  <label key={opt.val} className="filter-option">
+                  <label key={opt.val} class={styles.filterOption}>
                     <input
                       type="checkbox"
                       value={opt.val}

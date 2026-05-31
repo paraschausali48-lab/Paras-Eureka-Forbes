@@ -1,6 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { getTranslations } from '../scripts/translations';
+import styles from '../components/Faq.module.css';
+import headingStyles from '../components/SectionHeading.module.css';
+import eyebrowStyles from '../components/Eyebrow.module.css';
 
 const lang = 'en';
 const translations = await getTranslations(lang);
@@ -9,18 +12,18 @@ const t = (key: string) => translations[key] || key;
 
 <Layout title={t('faq_title') + ' | Paras Eureka Forbes'} description={t('faq_desc')} lang={lang}>
   <main class="py-main">
-    <section class="faq-section" id="faq">
+    <section class={`${styles.faqSection} faq-section`} id="faq">
       <div class="container">
-        <div class="section-heading">
-          <span class="eyebrow">{t('faq_eyebrow')}</span>
+        <div class={`${headingStyles.sectionHeading} section-heading`}>
+          <span class={`${eyebrowStyles.eyebrow} eyebrow`}>{t('faq_eyebrow')}</span>
           <h2>{t('faq_title')}</h2>
           <p>{t('faq_desc')}</p>
         </div>
 
         <!-- Category Tabs -->
-        <div class="faq-tabs" role="tablist">
+        <div class={`${styles.faqTabs} faq-tabs`} role="tablist">
           <button
-            class="faq-tab active"
+            class={`${styles.faqTab} faq-tab active`}
             role="tab"
             aria-selected="true"
             data-faq-tab="aquaguards"
@@ -28,22 +31,39 @@ const t = (key: string) => translations[key] || key;
           >
             <span>{t('faq_tab_aquaguards')}</span>
           </button>
-          <button class="faq-tab" role="tab" aria-selected="false" data-faq-tab="vacuums" id="faq-tab-vacuums">
+          <button
+            class={`${styles.faqTab} faq-tab`}
+            role="tab"
+            aria-selected="false"
+            data-faq-tab="vacuums"
+            id="faq-tab-vacuums"
+          >
             <span>{t('faq_tab_vacuums')}</span>
           </button>
-          <button class="faq-tab" role="tab" aria-selected="false" data-faq-tab="service" id="faq-tab-service">
+          <button
+            class={`${styles.faqTab} faq-tab`}
+            role="tab"
+            aria-selected="false"
+            data-faq-tab="service"
+            id="faq-tab-service"
+          >
             <span>{t('faq_tab_service')}</span>
           </button>
         </div>
 
         <!-- FAQ Accordion Container -->
-        <div class="faq-accordion" id="faq-accordion-container">
+        <div class={`${styles.faqAccordion} faq-accordion`} id="faq-accordion-container">
           <!-- ===== AQUAGUARDS TAB ===== -->
-          <div class="faq-tab-panel" role="tabpanel" data-faq-panel="aquaguards" aria-labelledby="faq-tab-aquaguards">
-            <div class="faq-item active" data-faq-category="aquaguards">
-              <button class="faq-question" aria-expanded="true">
-                <span class="faq-question-text">{t('faq_q1')}</span>
-                <span class="faq-chevron">
+          <div
+            class={`${styles.faqTabPanel} faq-tab-panel`}
+            role="tabpanel"
+            data-faq-panel="aquaguards"
+            aria-labelledby="faq-tab-aquaguards"
+          >
+            <div class={`${styles.faqItem} faq-item active`} data-faq-category="aquaguards">
+              <button class={`${styles.faqQuestion} faq-question`} aria-expanded="true">
+                <span class={styles.faqQuestionText}>{t('faq_q1')}</span>
+                <span class={styles.faqChevron}>
                   <svg
                     width="16"
                     height="16"
@@ -58,17 +78,17 @@ const t = (key: string) => translations[key] || key;
                   </svg>
                 </span>
               </button>
-              <div class="faq-answer" style="max-height: 800px; opacity: 1">
-                <div class="faq-answer-content">
+              <div class={styles.faqAnswer} style="max-height: 800px; opacity: 1">
+                <div class={styles.faqAnswerContent}>
                   <p>{t('faq_a1')}</p>
                 </div>
               </div>
             </div>
 
-            <div class="faq-item" data-faq-category="aquaguards">
-              <button class="faq-question">
-                <span class="faq-question-text">{t('faq_q2')}</span>
-                <span class="faq-chevron">
+            <div class={`${styles.faqItem} faq-item`} data-faq-category="aquaguards">
+              <button class={`${styles.faqQuestion} faq-question`}>
+                <span class={styles.faqQuestionText}>{t('faq_q2')}</span>
+                <span class={styles.faqChevron}>
                   <svg
                     width="16"
                     height="16"
@@ -83,17 +103,17 @@ const t = (key: string) => translations[key] || key;
                   </svg>
                 </span>
               </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
+              <div class={styles.faqAnswer}>
+                <div class={styles.faqAnswerContent}>
                   <p>{t('faq_a2')}</p>
                 </div>
               </div>
             </div>
 
-            <div class="faq-item" data-faq-category="aquaguards">
-              <button class="faq-question">
-                <span class="faq-question-text">{t('faq_q3')}</span>
-                <span class="faq-chevron">
+            <div class={`${styles.faqItem} faq-item`} data-faq-category="aquaguards">
+              <button class={`${styles.faqQuestion} faq-question`}>
+                <span class={styles.faqQuestionText}>{t('faq_q3')}</span>
+                <span class={styles.faqChevron}>
                   <svg
                     width="16"
                     height="16"
@@ -108,17 +128,17 @@ const t = (key: string) => translations[key] || key;
                   </svg>
                 </span>
               </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
+              <div class={styles.faqAnswer}>
+                <div class={styles.faqAnswerContent}>
                   <p>{t('faq_a3')}</p>
                 </div>
               </div>
             </div>
 
-            <div class="faq-item" data-faq-category="aquaguards">
-              <button class="faq-question">
-                <span class="faq-question-text">{t('faq_q5')}</span>
-                <span class="faq-chevron">
+            <div class={`${styles.faqItem} faq-item`} data-faq-category="aquaguards">
+              <button class={`${styles.faqQuestion} faq-question`}>
+                <span class={styles.faqQuestionText}>{t('faq_q5')}</span>
+                <span class={styles.faqChevron}>
                   <svg
                     width="16"
                     height="16"
@@ -133,17 +153,17 @@ const t = (key: string) => translations[key] || key;
                   </svg>
                 </span>
               </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
+              <div class={styles.faqAnswer}>
+                <div class={styles.faqAnswerContent}>
                   <p>{t('faq_a5')}</p>
                 </div>
               </div>
             </div>
 
-            <div class="faq-item" data-faq-category="aquaguards">
-              <button class="faq-question">
-                <span class="faq-question-text">{t('faq_q6')}</span>
-                <span class="faq-chevron">
+            <div class={`${styles.faqItem} faq-item`} data-faq-category="aquaguards">
+              <button class={`${styles.faqQuestion} faq-question`}>
+                <span class={styles.faqQuestionText}>{t('faq_q6')}</span>
+                <span class={styles.faqChevron}>
                   <svg
                     width="16"
                     height="16"
@@ -158,17 +178,17 @@ const t = (key: string) => translations[key] || key;
                   </svg>
                 </span>
               </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
+              <div class={styles.faqAnswer}>
+                <div class={styles.faqAnswerContent}>
                   <p>{t('faq_a6')}</p>
                 </div>
               </div>
             </div>
 
-            <div class="faq-item" data-faq-category="aquaguards">
-              <button class="faq-question">
-                <span class="faq-question-text">{t('faq_q7')}</span>
-                <span class="faq-chevron">
+            <div class={`${styles.faqItem} faq-item`} data-faq-category="aquaguards">
+              <button class={`${styles.faqQuestion} faq-question`}>
+                <span class={styles.faqQuestionText}>{t('faq_q7')}</span>
+                <span class={styles.faqChevron}>
                   <svg
                     width="16"
                     height="16"
@@ -183,17 +203,17 @@ const t = (key: string) => translations[key] || key;
                   </svg>
                 </span>
               </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
+              <div class={styles.faqAnswer}>
+                <div class={styles.faqAnswerContent}>
                   <p>{t('faq_a7')}</p>
                 </div>
               </div>
             </div>
 
-            <div class="faq-item" data-faq-category="aquaguards">
-              <button class="faq-question">
-                <span class="faq-question-text">{t('faq_q8')}</span>
-                <span class="faq-chevron">
+            <div class={`${styles.faqItem} faq-item`} data-faq-category="aquaguards">
+              <button class={`${styles.faqQuestion} faq-question`}>
+                <span class={styles.faqQuestionText}>{t('faq_q8')}</span>
+                <span class={styles.faqChevron}>
                   <svg
                     width="16"
                     height="16"
@@ -208,8 +228,8 @@ const t = (key: string) => translations[key] || key;
                   </svg>
                 </span>
               </button>
-              <div class="faq-answer">
-                <div class="faq-answer-content">
+              <div class={styles.faqAnswer}>
+                <div class={styles.faqAnswerContent}>
                   <p>{t('faq_a8')}</p>
                 </div>
               </div>

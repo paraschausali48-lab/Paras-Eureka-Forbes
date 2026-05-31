@@ -14,18 +14,6 @@ initTelemetry();
 // Top-level module code only runs once per session, safely avoiding duplicate
 // bindings during Astro View Transitions without polluting the window object.
 
-function updateWaButtonVisibility() {
-  const waBtn = document.querySelector<HTMLElement>('.whatsapp-float');
-  if (!waBtn) return;
-  const hash = window.location.hash;
-  const params = new URLSearchParams(window.location.search);
-  if (!params.has('p') && (!hash || hash === '' || hash === '#home')) {
-    waBtn.style.display = 'flex';
-  } else {
-    waBtn.style.display = 'none';
-  }
-}
-
 document.addEventListener('keydown', (e: KeyboardEvent) => {
   if (e.key === 'Escape') {
     const activeOverlay = document.querySelector('.pdp-modal.active, .filter-sidebar.open, .main-sidebar.active');
@@ -39,7 +27,6 @@ document.addEventListener('keydown', (e: KeyboardEvent) => {
 
 window.addEventListener('popstate', () => {
   handleAppRouting();
-  updateWaButtonVisibility();
 
   const sku = new URLSearchParams(window.location.search).get('p');
   if (sku) {
@@ -55,19 +42,7 @@ window.addEventListener('popstate', () => {
 
 window.addEventListener('hashchange', () => {
   handleAppRouting();
-  updateWaButtonVisibility();
 });
-
-window.addEventListener(
-  'scroll',
-  () => {
-    const dynamicBtn = document.getElementById('scrollToTop');
-    if (dynamicBtn) {
-      window.scrollY > 300 ? dynamicBtn.classList.add('show') : dynamicBtn.classList.remove('show');
-    }
-  },
-  { passive: true },
-);
 
 // ============= TOP-LEVEL EVENT DELEGATION =============
 // Attach once to the document. Survives Astro view transitions automatically.
@@ -80,10 +55,6 @@ let swipeCleanupFns: Array<() => void> = [];
 // Use Astro's page-load event instead of DOMContentLoaded to ensure JS
 // re-runs and attaches to the new DOM elements when using View Transitions.
 document.addEventListener('astro:page-load', function () {
-  const langButtons = document.querySelectorAll<HTMLElement>('.lang-btn[data-lang]');
-  const docLang = document.documentElement.lang || 'en';
-  langButtons.forEach((b) => b.classList.toggle('active', b.getAttribute('data-lang') === docLang));
-
   if (pageTransitionController) pageTransitionController.abort();
   pageTransitionController = new AbortController();
 
@@ -128,9 +99,6 @@ document.addEventListener('astro:page-load', function () {
 
   // ============= 9. WISHLIST & SECONDARY MODALS (Lazy Loaded) =============
   import('./wishlist').then((module) => module.initWishlistEvents());
-
-  // Always execute once on current page load to ensure correct initial state
-  updateWaButtonVisibility();
 
   const wishlistModal = document.getElementById('wishlist-modal');
   const mainSidebarEl = document.getElementById('main-sidebar');

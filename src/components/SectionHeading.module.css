@@ -1,0 +1,32 @@
+.sectionHeading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sectionHeading h2 {
+  margin: 18px 0 0;
+  font-size: 2.3rem;
+  color: var(--color-primary);
+}
+
+.sectionHeading p {
+  max-width: 680px;
+  margin: 14px auto 0;
+  color: var(--color-gray-600);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  .sectionHeading h2 {
+    font-size: 1.6rem;
+  }
+  .sectionHeading p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .sectionHeading h2 {
+    font-size: 1.4rem;
+  }
+}

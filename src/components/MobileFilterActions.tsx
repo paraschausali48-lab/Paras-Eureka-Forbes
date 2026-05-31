@@ -1,6 +1,7 @@
 import { useStore } from '@nanostores/preact';
 import { $filterState } from '../scripts/filters';
 import { handleAppRouting } from '../scripts/routing';
+import styles from './MobileActions.module.css';
 
 interface Props {
   translations: Record<string, string>;
@@ -22,20 +23,20 @@ export function MobileFilterActions({ translations }: Props) {
   };
 
   return (
-    <div class="mobile-actions-wrapper">
-      <button id="sort-mobile-toggle" class="mobile-action-btn" onClick={() => triggerOverlay('sort')}>
+    <div class={styles.mobileActionsWrapper}>
+      <button id="sort-mobile-toggle" class={styles.mobileActionBtn} onClick={() => triggerOverlay('sort')}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="12" y1="5" x2="12" y2="19"></line>
           <polyline points="19 12 12 19 5 12"></polyline>
         </svg>
         {t('btn_sort')}
       </button>
-      <button id="filter-mobile-toggle" class="mobile-action-btn" onClick={() => triggerOverlay('filter')}>
+      <button id="filter-mobile-toggle" class={styles.mobileActionBtn} onClick={() => triggerOverlay('filter')}>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
         </svg>
         {t('btn_filter')}
-        <span class="filter-badge" id="filter-badge" style={{ display: activeFilterCount > 0 ? 'flex' : 'none' }}>
+        <span class={styles.filterBadge} id="filter-badge" style={{ display: activeFilterCount > 0 ? 'flex' : 'none' }}>
           {activeFilterCount}
         </span>
       </button>

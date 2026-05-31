@@ -1,6 +1,7 @@
 import { useStore } from '@nanostores/preact';
 import { $filterState, setFilterState } from '../scripts/filters';
 import { ProductCategory } from '../scripts/types';
+import styles from './VisualFilters.module.css';
 
 interface Props {
   translations: Record<string, string>;
@@ -36,29 +37,31 @@ export function VisualFilters({ translations, baseUrl }: Props) {
   ];
 
   return (
-    <div class="visual-filters">
-      {categories.map((cat) => {
-        const isActive = state.categories.includes(cat.id);
-        return (
-          <button
-            key={cat.id}
-            class={`visual-filter-btn ${isActive ? 'active' : ''}`}
-            aria-pressed={isActive ? 'true' : 'false'}
-            onClick={() => toggleCategory(cat.id)}
-          >
-            <div class="vf-img-wrap">
-              <img
-                src={`${baseUrl}${cat.img}`}
-                alt={t(cat.key)}
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = 'none';
-                }}
-              />
-            </div>
-            <span>{t(cat.key)}</span>
-          </button>
-        );
-      })}
+    <div class={styles.visualFiltersWrapper}>
+      <div class={styles.visualFilters}>
+        {categories.map((cat) => {
+          const isActive = state.categories.includes(cat.id);
+          return (
+            <button
+              key={cat.id}
+              class={`${styles.visualFilterBtn} ${isActive ? styles.visualFilterBtnActive : ''}`}
+              aria-pressed={isActive ? 'true' : 'false'}
+              onClick={() => toggleCategory(cat.id)}
+            >
+              <div class={styles.vfImgWrap}>
+                <img
+                  src={`${baseUrl}${cat.img}`}
+                  alt={t(cat.key)}
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              </div>
+              <span>{t(cat.key)}</span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

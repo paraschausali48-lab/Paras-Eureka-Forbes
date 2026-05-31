@@ -1,0 +1,146 @@
+/* Mobile Actions Wrapper (Sort & Filter triggers) */
+.mobileActionsWrapper {
+  display: none;
+  width: 100%;
+  background: var(--color-white);
+}
+
+.mobileActionBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 10px;
+  background: transparent;
+  border: none;
+  color: var(--color-primary-light);
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.mobileActionBtn:first-child {
+  border-right: 2px solid var(--color-primary-light);
+}
+
+.mobileActionBtn:hover {
+  background: #eaf4ff;
+}
+
+/* Desktop Sort Dropdown */
+.sortSelect {
+  padding: 8px 30px 8px 16px;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-white);
+  color: var(--color-gray-700);
+  font-family: var(--font-family);
+  font-size: 0.95rem;
+  cursor: pointer;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%234b5874" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.sortSelect:focus {
+  outline: none;
+  border-color: var(--color-primary-light);
+}
+
+/* Mobile Sort Options (Bottom Sheet Content) */
+.sortOptionsNew {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+.sortOptionBtn {
+  background: none;
+  border: none;
+  padding: 16px 0;
+  text-align: left;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-gray-800);
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-gray-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.2s ease;
+}
+
+.sortOptionBtn:hover {
+  background-color: var(--color-gray-50);
+}
+
+.sortOptionBtnActive {
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.sortOptionBtnActive::after {
+  content: '✔';
+  font-size: 1.2rem;
+  color: var(--color-accent);
+}
+
+/* Filter Badge */
+.filterBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-size: 0.8rem;
+  font-weight: 700;
+  height: 22px;
+  min-width: 22px;
+  border-radius: 11px;
+  padding: 0 6px;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 900px) {
+  .mobileActionsWrapper {
+    display: flex;
+    position: sticky;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    z-index: var(--z-sticky);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    background: var(--color-white);
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  .mobileActionBtn {
+    border: none;
+    border-radius: 0;
+    padding: 12px 20px;
+    color: var(--color-primary-dark);
+    position: relative;
+  }
+
+  .mobileActionBtn:first-child {
+    border-right: none;
+  }
+
+  .mobileActionBtn:first-child::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background: var(--color-gray-200);
+  }
+}

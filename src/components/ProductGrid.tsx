@@ -3,6 +3,7 @@ import { useEffect } from 'preact/hooks';
 import { $filteredCatalog, setFilterState, setProductsData, $allProducts } from '../scripts/filters';
 import type { Product } from '../scripts/types';
 import { ProductCard } from './ProductCard';
+import styles from './ProductGrid.module.css';
 
 interface Props {
   products: Product[];
@@ -31,12 +32,12 @@ export default function ProductGrid({ products, translations }: Props) {
   const t = (key: string) => translations[key] || key;
 
   return (
-    <div id="product-grid" class="product-grid">
+    <div id="product-grid" class={styles.productGrid}>
       {visibleProducts.map((product) => (
         <ProductCard key={product.sku} product={product} t={t} />
       ))}
-      <div id="empty-state" class="empty-state" style={{ display: visibleCount === 0 ? 'flex' : 'none' }}>
-        <div class="empty-state-content">
+      <div id="empty-state" class={styles.emptyState} style={{ display: visibleCount === 0 ? 'flex' : 'none' }}>
+        <div>
           <h3>{t('empty_title')}</h3>
           <p>{t('empty_desc')}</p>
           <button class="btn" onClick={() => setFilterState({ categories: ['all'], facets: [], query: '' })}>

@@ -58,10 +58,6 @@ export function initHeaderScroll() {
 }
 
 // ============= UI EVENT BINDINGS =============
-registerClickAction({
-  selector: '#scrollToTop',
-  handle: () => window.scrollTo({ top: 0, behavior: 'smooth' }),
-});
 
 if (typeof window !== 'undefined') {
   registerClickAction({

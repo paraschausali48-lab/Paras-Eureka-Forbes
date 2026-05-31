@@ -1,6 +1,7 @@
 import { useStore } from '@nanostores/preact';
 import type { Product } from '../scripts/types';
 import { $wishlist, handleWishlistToggle } from '../scripts/wishlist';
+import styles from './ProductCard.module.css';
 
 interface Props {
   product: Product;
@@ -37,18 +38,18 @@ export function ProductCard({ product, t }: Props) {
 
   return (
     <div
-      class={`product-card ${product.outOfStock ? 'out-of-stock' : ''}`}
+      class={`${styles.productCard} ${product.outOfStock ? styles.outOfStock : ''}`}
       data-sku={sku}
       data-category={product.category}
     >
-      {product.outOfStock && <div class="out-of-stock-badge">Out of Stock</div>}
-      <span class="product-tag" data-category={product.category}>
+      {product.outOfStock && <div class={styles.outOfStockBadge}>Out of Stock</div>}
+      <span class={styles.productTag} data-category={product.category}>
         {product.i18nTag ? t(product.i18nTag) : product.category}
       </span>
 
       <button
         type="button"
-        class="add-to-wishlist-btn"
+        class={styles.addToWishlistBtn}
         aria-label={isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
         aria-pressed={isWishlisted}
         onClick={(e) => {
@@ -120,13 +121,13 @@ export function ProductCard({ product, t }: Props) {
       </div>
 
       <h3>
-        <a href={`?p=${sku}`} class="product-card-link">
+        <a href={`?p=${sku}`} class={styles.productCardLink}>
           {product.name}
         </a>
       </h3>
 
       {highlights && highlights.length > 0 ? (
-        <ul class="product-highlights">
+        <ul class={styles.productHighlights}>
           {highlights.map((highlight, index) => (
             <li key={index}>{highlight}</li>
           ))}
@@ -137,17 +138,17 @@ export function ProductCard({ product, t }: Props) {
         </p>
       )}
 
-      <div class="price-info">
+      <div class={styles.priceInfo}>
         {product.mrp > product.mop && (
-          <div class="mrp-wrapper">
-            <span class="mrp">{mrp}</span>
-            <span class="discount-badge">{discount}% OFF</span>
+          <div class={styles.mrpWrapper}>
+            <span class={styles.mrp}>{mrp}</span>
+            <span class={styles.discountBadge}>{discount}% OFF</span>
           </div>
         )}
-        <div class="price">{price}</div>
+        <div class={styles.price}>{price}</div>
       </div>
 
-      <div class="card-actions" style={{ gridTemplateColumns: '1fr' }}>
+      <div class={styles.cardActions} style={{ gridTemplateColumns: '1fr' }}>
         <a href={`?p=${sku}`} class="product-btn" data-sku={sku} style={{ position: 'relative', zIndex: 2 }}>
           {t('btn_more_info')}
         </a>

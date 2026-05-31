@@ -1,0 +1,169 @@
+.visualFiltersWrapper {
+  margin: 0 auto 32px;
+  overflow: hidden;
+  position: relative;
+  /* Subtle gradient fading at edges for mobile scroll indication */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 16px, black calc(100% - 16px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 16px, black calc(100% - 16px), transparent 100%);
+  animation: loadFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
+}
+
+.visualFilters {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding: 10px 16px 20px;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  justify-content: center;
+}
+
+.visualFilters::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Safely center flex items even when they overflow */
+.visualFilters::before,
+.visualFilters::after {
+  content: '';
+  margin: auto;
+}
+
+.visualFilterBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  min-width: 86px;
+  transition: transform 0.2s ease;
+}
+
+.visualFilterBtn:hover {
+  transform: translateY(-2px);
+}
+
+.vfImgWrap {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: var(--color-white);
+  border: 2px solid var(--color-gray-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  padding: 10px;
+}
+
+.vfImgWrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.vfImgWrap svg {
+  width: 40px;
+  height: 40px;
+  color: var(--color-primary);
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.3s ease;
+}
+
+.visualFilterBtn:hover .vfImgWrap svg,
+.visualFilterBtnActive .vfImgWrap svg {
+  color: var(--color-accent);
+}
+
+.visualFilterBtn:hover .vfImgWrap {
+  border-color: var(--color-primary-light);
+  box-shadow: 0 6px 15px rgba(0, 114, 188, 0.15);
+}
+
+.visualFilterBtn:hover .vfImgWrap img,
+.visualFilterBtn:hover .vfImgWrap svg {
+  transform: scale(1.1);
+}
+
+@keyframes subtlePulse {
+  0% {
+    box-shadow:
+      0 6px 15px rgba(0, 114, 188, 0.2),
+      0 0 0 0 rgba(0, 114, 188, 0.4);
+  }
+  70% {
+    box-shadow:
+      0 6px 15px rgba(0, 114, 188, 0.2),
+      0 0 0 10px rgba(0, 114, 188, 0);
+  }
+  100% {
+    box-shadow:
+      0 6px 15px rgba(0, 114, 188, 0.2),
+      0 0 0 0 rgba(0, 114, 188, 0);
+  }
+}
+
+.visualFilterBtnActive .vfImgWrap {
+  border-color: var(--color-primary);
+  border-width: 3px;
+  animation: subtlePulse 2s infinite;
+}
+
+.visualFilterBtn span {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-gray-700);
+  text-align: center;
+  line-height: 1.2;
+  transition: color 0.2s;
+  white-space: normal;
+  max-width: 100px;
+}
+
+.visualFilterBtn:hover span,
+.visualFilterBtnActive span {
+  color: var(--color-accent);
+}
+
+@media (max-width: 680px) {
+  .visualFiltersWrapper {
+    margin-left: -12px;
+    margin-right: -12px;
+    width: calc(100% + 24px);
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0%,
+      black 12px,
+      black calc(100% - 12px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(to right, transparent 0%, black 12px, black calc(100% - 12px), transparent 100%);
+  }
+  .visualFilters {
+    gap: 12px;
+    scroll-snap-type: x mandatory;
+    padding: 10px 16px 20px;
+    justify-content: flex-start;
+  }
+  .vfImgWrap {
+    width: 64px;
+    height: 64px;
+    padding: 10px;
+  }
+  .visualFilterBtn span {
+    font-size: 0.75rem;
+    max-width: 72px;
+  }
+  .visualFilterBtn {
+    min-width: 64px;
+    scroll-snap-align: center;
+  }
+}

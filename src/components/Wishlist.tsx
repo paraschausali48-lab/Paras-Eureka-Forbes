@@ -3,6 +3,8 @@ import { navigate } from 'astro:transitions/client';
 import { $wishlist, saveWishlist } from '../scripts/wishlist';
 import { $allProducts } from '../scripts/filters';
 import { showToast } from '../scripts/toast';
+import styles from './Wishlist.module.css';
+import btnStyles from './Button.module.css';
 
 export default function Wishlist() {
   const list = useStore($wishlist);
@@ -42,14 +44,14 @@ export default function Wishlist() {
         : 'Your wishlist is currently empty.';
 
     return (
-      <div class="wishlist-empty">
+      <div class={styles.wishlistEmpty}>
         <p>{emptyText}</p>
       </div>
     );
   }
 
   return (
-    <div class="wishlist-container">
+    <div class={styles.wishlistContainer}>
       {list.map((sku) => {
         const product = allProducts.find((p) => p.sku === sku);
 
@@ -58,8 +60,8 @@ export default function Wishlist() {
         const priceText = product ? `₹${product.mop.toLocaleString('en-IN')}` : '';
 
         return (
-          <div class="wishlist-item" key={sku}>
-            <div class="wishlist-item-details">
+          <div class={styles.wishlistItem} key={sku}>
+            <div class={styles.wishlistItemDetails}>
               <div
                 style={{
                   fontSize: '0.8rem',
@@ -70,13 +72,13 @@ export default function Wishlist() {
               >
                 {category}
               </div>
-              <div class="wishlist-item-title" onClick={() => handleNavigate(sku)} style={{ cursor: 'pointer' }}>
+              <div class={styles.wishlistItemTitle} onClick={() => handleNavigate(sku)} style={{ cursor: 'pointer' }}>
                 {title}
               </div>
-              <div class="wishlist-item-price">{priceText}</div>
+              <div class={styles.wishlistItemPrice}>{priceText}</div>
             </div>
             <button
-              class="wishlist-item-remove"
+              class={styles.wishlistItemRemove}
               onClick={() => handleRemove(sku)}
               aria-label={`Remove ${title} from wishlist`}
             >
@@ -90,7 +92,7 @@ export default function Wishlist() {
         id="wishlist-clear-all"
         onClick={handleClear}
         style={{ display: 'block', width: '100%', marginTop: '1rem' }}
-        class="btn"
+        class={`${btnStyles.btn} btn`}
       >
         Clear All
       </button>

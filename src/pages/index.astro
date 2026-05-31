@@ -14,6 +14,11 @@ import { SortDropdown } from '../components/SortDropdown.tsx';
 import { MobileSortModal } from '../components/MobileSortModal.tsx';
 // @ts-ignore
 import { MobileFilterActions } from '../components/MobileFilterActions.tsx';
+import contactStyles from '../components/Contact.module.css';
+import pdpStyles from '../components/PdpModal.module.css';
+import vbStyles from '../components/ValueBanner.module.css';
+import btnStyles from '../components/Button.module.css';
+import eyebrowStyles from '../components/Eyebrow.module.css';
 import { setProductsData } from '../scripts/filters';
 
 export async function getStaticPaths() {
@@ -44,7 +49,7 @@ setProductsData(products as any);
           <p>{t('products_desc')}</p>
           <div class="intro-actions" style="margin-top: 24px; display: flex; gap: 16px; flex-wrap: wrap;">
             <a
-              class="btn"
+              class={`${btnStyles.btn} btn`}
               style="background: var(--color-white); color: var(--color-primary-dark); font-weight: 600; display: flex; align-items: center; justify-content: center;"
               href="https://wa.me/918928002642?text=Hello%20Paras%2C%20I%20would%20like%20help%20choosing%20a%20Eureka%20Forbes%20product."
               target="_blank"
@@ -69,7 +74,7 @@ setProductsData(products as any);
               {t('intro_btn_wa')}
             </a>
             <a
-              class="btn btn-outline"
+              class={`${btnStyles.btn} ${btnStyles.btnOutline} btn btn-outline`}
               style="color: var(--color-white); border-color: rgba(255,255,255,0.4);"
               href="#products"
             >
@@ -133,9 +138,7 @@ setProductsData(products as any);
       </section>
 
       <!-- 2. Visual Filters -->
-      <div class="visual-filters-wrapper">
-        <VisualFilters client:load translations={langData} baseUrl={baseUrl} />
-      </div>
+      <VisualFilters client:load translations={langData} baseUrl={baseUrl} />
 
       <!-- 3. Main Products Area (Filters & Grid) -->
       <section id="products" class="products-layout reveal">
@@ -159,36 +162,36 @@ setProductsData(products as any);
     </div>
 
     <!-- 4. Value Banner Section -->
-    <section class="value-banner reveal">
+    <section class={`${vbStyles.valueBanner} value-banner reveal`}>
       <div class="container">
-        <div class="value-banner-header">
-          <span class="eyebrow">{t('vb_eyebrow')}</span>
+        <div class={vbStyles.valueBannerHeader}>
+          <span class={`${eyebrowStyles.eyebrow} eyebrow`}>{t('vb_eyebrow')}</span>
           <h2>{t('vb_title')}</h2>
-          <p class="value-desc">{t('vb_desc')}</p>
+          <p class={vbStyles.valueDesc}>{t('vb_desc')}</p>
         </div>
-        <div class="value-cards">
-          <div class="value-card">
-            <span class="value-card-icon">👨‍🔧</span>
+        <div class={vbStyles.valueCards}>
+          <div class={vbStyles.valueCard}>
+            <span class={vbStyles.valueCardIcon}>👨‍🔧</span>
             <h3>{t('vb_card1_title')}</h3>
             <p>{t('vb_card1_desc')}</p>
           </div>
-          <div class="value-card">
-            <span class="value-card-icon">🏠</span>
+          <div class={vbStyles.valueCard}>
+            <span class={vbStyles.valueCardIcon}>🏠</span>
             <h3>{t('vb_card2_title')}</h3>
             <p>{t('vb_card2_desc')}</p>
           </div>
-          <div class="value-card">
-            <span class="value-card-icon">🎁</span>
+          <div class={vbStyles.valueCard}>
+            <span class={vbStyles.valueCardIcon}>🎁</span>
             <h3>{t('vb_card3_title')}</h3>
             <p>{t('vb_card3_desc')}</p>
           </div>
-          <div class="value-card">
-            <span class="value-card-icon">🛡️</span>
+          <div class={vbStyles.valueCard}>
+            <span class={vbStyles.valueCardIcon}>🛡️</span>
             <h3>{t('vb_card4_title')}</h3>
             <p>{t('vb_card4_desc')}</p>
           </div>
-          <div class="value-card">
-            <span class="value-card-icon">📞</span>
+          <div class={vbStyles.valueCard}>
+            <span class={vbStyles.valueCardIcon}>📞</span>
             <h3>{t('vb_card5_title')}</h3>
             <p>{t('vb_card5_desc')}</p>
           </div>
@@ -197,21 +200,25 @@ setProductsData(products as any);
     </section>
 
     <!-- 5. Contact Section -->
-    <section class="contact reveal" id="contact">
+    <section class={`${contactStyles.contact} reveal`} id="contact">
       <div class="container">
-        <div class="contact-card">
+        <div class={contactStyles.contactCard}>
           <div>
-            <span class="eyebrow">{t('contact_eyebrow')}</span>
+            <span class={`${eyebrowStyles.eyebrow} eyebrow`}>{t('contact_eyebrow')}</span>
             <h2>{t('contact_title')}</h2>
             <p>{t('contact_desc')}</p>
-            <div class="contact-details" style="margin-top: 24px;">
+            <div class={contactStyles.contactDetails} style="margin-top: 24px;">
               <p><strong>{t('contact_name')}</strong> Paras Singh Chawsali</p>
               <p><strong>{t('contact_service_area')}</strong> {t('contact_service_area_value')}</p>
               <p><strong>{t('contact_phone')}</strong> <a href="tel:+918928002642">+91 8928002642</a></p>
             </div>
-            <div class="card-actions" style="margin-top: 32px; max-width: 400px;">
-              <a href="https://wa.me/918928002642" target="_blank" rel="noopener" class="btn">{t('contact_wa_btn')}</a>
-              <a href="mailto:contact@example.com" class="btn btn-outline">{t('contact_email_btn')}</a>
+            <div class={contactStyles.cardActions} style="margin-top: 32px; max-width: 400px;">
+              <a href="https://wa.me/918928002642" target="_blank" rel="noopener" class={`${btnStyles.btn} btn`}>
+                {t('contact_wa_btn')}
+              </a>
+              <a href="mailto:contact@example.com" class={`${btnStyles.btn} ${btnStyles.btnOutline} btn btn-outline`}>
+                {t('contact_email_btn')}
+              </a>
             </div>
           </div>
           <div
@@ -233,18 +240,23 @@ setProductsData(products as any);
   </main>
 
   <!-- Modals -->
-  <div class="pdp-modal" id="pdp-modal">
-    <div class="pdp-content">
-      <button class="pdp-close" aria-label="Close" tabindex="0">&times;</button>
-      <div class="pdp-layout" id="pdp-layout-container"></div>
+  <div class={`${pdpStyles.pdpModal} pdp-modal`} id="pdp-modal">
+    <div class={`${pdpStyles.pdpContent} pdp-content`}>
+      <button class={`${pdpStyles.pdpClose} pdp-close`} aria-label="Close" tabindex="0">&times;</button>
+      <div class={`${pdpStyles.pdpLayout} pdp-layout`} id="pdp-layout-container"></div>
     </div>
   </div>
 
-  <div class="filter-overlay pdp-modal" id="sort-modal">
-    <div class="demo-modal-content pdp-content" style="max-width: 400px; padding: 20px;">
-      <h3 class="demo-modal-title">{t('sort_title')}</h3>
+  <div class={`filter-overlay ${pdpStyles.pdpModal} pdp-modal`} id="sort-modal">
+    <div class={`demo-modal-content ${pdpStyles.pdpContent} pdp-content`} style="max-width: 400px; padding: 20px;">
+      <h3 class={`${pdpStyles.demoModalTitle} demo-modal-title`}>{t('sort_title')}</h3>
       <MobileSortModal client:load translations={langData} />
-      <button class="btn btn-outline sort-close" style="width: 100%; margin-top: 20px;">Cancel</button>
+      <button
+        class={`${btnStyles.btn} ${btnStyles.btnOutline} btn btn-outline sort-close`}
+        style="width: 100%; margin-top: 20px;"
+      >
+        Cancel
+      </button>
     </div>
   </div>
 
@@ -252,232 +264,7 @@ setProductsData(products as any);
   <script src="../scripts/main.ts"></script>
 </Layout>
 
-<style>
-  /* =========================================
-     Store Intro Banner (Customized Top Section)
-     ========================================= */
-  .store-intro-banner {
-    padding: 40px 48px;
-    border-radius: var(--radius-xl);
-    background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
-    color: var(--color-white);
-    box-shadow: var(--shadow-xl);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 12px;
-  }
-  .store-intro-banner::before {
-    content: '';
-    position: absolute;
-    top: -60%;
-    right: -10%;
-    width: 350px;
-    height: 350px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .store-intro-banner::after {
-    content: '';
-    position: absolute;
-    bottom: -40%;
-    left: 20%;
-    width: 250px;
-    height: 250px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .intro-content {
-    position: relative;
-    z-index: 2;
-    max-width: 650px;
-  }
-  .intro-eyebrow {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 6px 14px;
-    border-radius: var(--radius-full);
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 16px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  .store-intro-banner h2 {
-    font-size: 2.4rem;
-    margin-bottom: 12px;
-    line-height: 1.2;
-    color: var(--color-white);
-  }
-  .store-intro-banner p {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    line-height: 1.6;
-    margin: 0;
-    animation: loadFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
-  }
-  .intro-badges {
-    display: flex;
-    gap: 16px;
-    margin-top: 28px;
-    flex-wrap: wrap;
-  }
-  .intro-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 10px 18px;
-    border-radius: var(--radius-full);
-    font-size: 0.9rem;
-    font-weight: 600;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    transition: var(--transition);
-    opacity: 0;
-  }
-  .intro-badge:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-  }
-  .store-intro-banner.active .intro-badge {
-    opacity: 1;
-    animation: badgePop 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  }
-  .store-intro-banner.active .intro-badge:nth-child(1) {
-    animation-delay: 0.3s;
-  }
-  .store-intro-banner.active .intro-badge:nth-child(2) {
-    animation-delay: 0.45s;
-  }
-  .store-intro-banner.active .intro-badge:nth-child(3) {
-    animation-delay: 0.6s;
-  }
-  @keyframes badgePop {
-    0% {
-      opacity: 0;
-      transform: scale(0.8) translateY(15px);
-    }
-    60% {
-      opacity: 1;
-      transform: scale(1.05) translateY(-2px);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-  }
-  .intro-badge svg {
-    color: #b8dfff;
-  }
-
-  /* =========================================
-     Value Banner Section (Why Direct Specialist)
-     ========================================= */
-  .value-banner {
-    padding: 64px 0;
-    background-color: var(--color-white);
-    border-top: 1px solid var(--color-gray-100);
-    border-bottom: 1px solid var(--color-gray-100);
-  }
-  .value-banner.reveal {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .value-banner.active .value-banner-header {
-    animation: cardPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  }
-  .value-banner-header {
-    text-align: center;
-    max-width: 780px;
-    margin: 0 auto 36px;
-  }
-  .value-banner h2 {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    color: var(--color-primary);
-    margin: 0 0 12px;
-    line-height: 1.3;
-  }
-  .value-desc {
-    color: var(--color-gray-600);
-    font-size: 1.05rem;
-    line-height: 1.7;
-    max-width: 650px;
-    margin: 0 auto;
-  }
-  .value-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-  }
-  .value-card {
-    background: var(--color-white);
-    border-radius: 12px;
-    padding: 28px 24px;
-    box-shadow: none;
-    border: 1px solid var(--color-gray-100);
-    transition: var(--transition-slow);
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    opacity: 0;
-    position: relative;
-    overflow: hidden;
-  }
-  .value-banner.active .value-card {
-    opacity: 1;
-    animation: cardPop 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  }
-  .value-banner.active .value-card:nth-child(1) {
-    animation-delay: 0.15s;
-  }
-  .value-banner.active .value-card:nth-child(2) {
-    animation-delay: 0.3s;
-  }
-  .value-banner.active .value-card:nth-child(3) {
-    animation-delay: 0.45s;
-  }
-  .value-banner.active .value-card:nth-child(4) {
-    animation-delay: 0.6s;
-  }
-  .value-banner.active .value-card:nth-child(5) {
-    animation-delay: 0.75s;
-  }
-  .value-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04);
-    border-color: var(--color-gray-200);
-  }
-  .value-card-icon {
-    font-size: 2rem;
-    line-height: 1;
-    margin-bottom: 4px;
-    display: inline-block;
-  }
-  .value-card h3 {
-    font-size: 1.15rem;
-    color: var(--color-gray-900);
-    margin: 0;
-    font-weight: 700;
-  }
-  .value-card p {
-    margin: 0;
-    color: var(--color-gray-600);
-    font-size: 0.95rem;
-    line-height: 1.65;
-    flex-grow: 1;
-  }
-</style>
+<style></style>
 
 <style is:global>
   .product-highlights {

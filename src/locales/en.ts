@@ -35,9 +35,9 @@ export default {
   // PRODUCTS SECTION
   // ============================================
   products_eyebrow: 'Mumbai Metropolitan Region (MMR)',
-  products_title: 'Authorized Eureka Forbes help, from product selection to installation.',
+  products_title: 'Curated Collections & Special Pricing',
   products_desc:
-    'Book a free water TDS check, compare Aquaguard and Forbes appliances, and get direct assistance from Paras Singh Chawsali before you buy.',
+    'Explore top-tier models and unlock exclusive direct sales discounts, backed by personalized guidance and free home demonstrations.',
   intro_badge1: 'Free home demo',
   intro_badge2: 'Official installation support',
   intro_badge3: 'No online payment collected here',
@@ -111,7 +111,8 @@ export default {
   contact_official_email: 'Support Email:',
 
   footer_text1: '© 2026 Paras Singh Chawsali - Independent Authorized Representative',
-  footer_text2: 'Selected SKUs and offline-only offers for your customers.',
+  footer_text2:
+    'Delivering expert guidance, authentic Eureka Forbes products, and exclusive direct sales offers across MMR.',
   footer_legal_link: 'Legal & Copyright Info',
   footer_disclaimer_text:
     'Disclaimer: This website is an independent lead-generation portal operated personally by Paras Singh Chawsali, an employee and Direct Sales Representative of Eureka Forbes. This is NOT the official website of Eureka Forbes Limited. All product names, logos, brands, trademarks, and images featured or referred to within this site are the sole property of Eureka Forbes Limited and are used strictly for informational and demonstrative purposes to facilitate localized direct sales across the Mumbai Metropolitan Region (MMR). This platform is intended solely for product display and inquiry generation. No payments or financial transactions are processed through this website. All final purchases, billing, and installations are handled strictly through official Eureka Forbes channels.',

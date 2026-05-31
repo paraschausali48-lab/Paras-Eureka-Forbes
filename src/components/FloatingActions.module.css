@@ -1,0 +1,127 @@
+.whatsappFloat {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #25d366;
+  color: var(--color-white);
+  padding: 12px 20px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: var(--z-header);
+  transition: var(--transition-slow);
+  animation: waPopIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.8s backwards;
+  isolation: isolate;
+}
+
+@keyframes waPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.whatsappFloat::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  animation: waPulse 2s infinite;
+  z-index: -1;
+}
+
+@keyframes waPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsappFloat:hover {
+  transform: scale(1.08);
+  background-color: #128c7e;
+  color: var(--color-white);
+  /* Uses the global loadFadeInUp keyframe */
+  animation: loadFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+.whatsappFloat img,
+.whatsappFloat svg {
+  width: 25px;
+  height: 25px;
+}
+
+.scrollToTop {
+  position: fixed;
+  bottom: 90px;
+  right: 30px;
+  width: 45px;
+  height: 45px;
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.5) translateY(20px);
+  transition:
+    opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    visibility 0.5s,
+    background-color 0.3s,
+    box-shadow 0.3s;
+  will-change: opacity, transform;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: var(--z-sticky);
+}
+
+.scrollToTop:global(.show) {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1) translateY(0);
+}
+
+.scrollToTop:hover {
+  background: var(--color-primary-light);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 900px) {
+  .whatsappFloat {
+    bottom: 95px;
+    right: 20px;
+    padding: 12px;
+    border-radius: 50%;
+  }
+  .whatsappFloat span {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+  .scrollToTop {
+    bottom: 155px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+  }
+}
