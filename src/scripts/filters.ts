@@ -1,5 +1,17 @@
 import { map, atom, computed } from 'nanostores';
-import type { Product } from './types';
+import type { Product, ProductSubcategory } from './types';
+import {
+  ProductCategory,
+  SortOption,
+  PriceBracket,
+  WaterTech,
+  Placement,
+  Capacity,
+  VacType,
+  VacApp,
+  VacDust,
+  VacPow,
+} from './types';
 import { registerClickAction } from './events';
 import { handleAppRouting, closeActiveOverlay } from './routing';
 import { debounce } from './utils';
@@ -8,21 +20,24 @@ export interface FilterState {
   categories: string[];
   facets: string[];
   query: string;
-  sort: string;
+  sort: SortOption | string;
 }
 
 // 1. Synchronously read URL parameters to prevent hydration mismatches and ensure
 // JS-enabled crawlers see the exact filtered state immediately upon execution.
 const getInitialState = (): FilterState => {
-  const defaultState = { categories: ['all'], facets: [], query: '', sort: 'relevance' };
+  const defaultState = { categories: ['all'], facets: [], query: '', sort: SortOption.RELEVANCE };
   if (typeof window === 'undefined') return defaultState;
 
   const params = new URLSearchParams(window.location.search);
+  const catParam = params.get('cat');
+  const facetParam = params.get('facets');
+
   return {
-    categories: params.get('cat')?.split(',') || defaultState.categories,
-    facets: params.get('facets')?.split(',') || defaultState.facets,
+    categories: catParam ? catParam.split(',') : defaultState.categories,
+    facets: facetParam ? facetParam.split(',') : defaultState.facets,
     query: params.get('q') || defaultState.query,
-    sort: params.get('sort') || defaultState.sort,
+    sort: (params.get('sort') as SortOption) || defaultState.sort,
   };
 };
 
@@ -32,125 +47,41 @@ export const $filterState = map<FilterState>(getInitialState());
 export const $allProducts = atom<Product[]>([]);
 
 // 2. Pure business logic: Compute the catalog strictly from the state.
-// This completely removes the Preact useEffect cascade.
-export const $filteredCatalog = computed([$allProducts, $filterState], (products, state) => {
-  const { categories, facets, query, sort } = state;
-  const isAllSelected = categories.includes('all');
-  const searchTerms = query.toLowerCase().trim().split(' ').filter(Boolean);
+// Memoize string computations to prevent O(N) memory allocations during rapid state changes
+const searchIndexCache = new WeakMap<Product, string>();
+const searchWordsCache = new WeakMap<Product, string[]>();
+const subcatCache = new WeakMap<Product, string[]>();
+const catCache = new WeakMap<Product, string>();
 
-  const filtered: Product[] = [];
-  const counts: Record<string, number> = {
-    'Water Purifier': 0,
-    'Air Purifier': 0,
-    'Vacuum Cleaner': 0,
-    'Water Softener': 0,
-  };
+// 3. High-performance Levenshtein distance for Typo-Tolerant (Fuzzy) Search
+// Uses a single continuous memory block (1D array swap) to prevent GC pauses
+function isTypoMatch(term: string, word: string, maxDistance: number): boolean {
+  if (Math.abs(term.length - word.length) > maxDistance) return false;
+  if (term === word) return true;
 
-  products.forEach((product) => {
-    const matchesCat = isAllSelected || categories.includes(product.category);
-    const searchString = `${product.name} ${product.description}`.toLowerCase();
-    const matchesSearch = searchTerms.length === 0 || searchTerms.every((term) => searchString.includes(term));
-    const matchesFacet = productMatchesFacets(product, facets);
+  let v0 = Array.from({ length: word.length + 1 }, (_, i) => i);
+  let v1 = new Array(word.length + 1);
 
-    if (matchesCat && matchesSearch && matchesFacet) {
-      if (counts[product.category] !== undefined) {
-        counts[product.category]++;
-      }
-      filtered.push(product);
+  for (let i = 0; i < term.length; i++) {
+    v1[0] = i + 1;
+    for (let j = 0; j < word.length; j++) {
+      const cost = term[i] === word[j] ? 0 : 1;
+      v1[j + 1] = Math.min(v1[j] + 1, v0[j + 1] + 1, v0[j] + cost);
     }
-  });
-
-  if (sort !== 'relevance') {
-    filtered.sort((a, b) => (sort === 'price-low' ? a.mop - b.mop : b.mop - a.mop));
+    let tmp = v0;
+    v0 = v1;
+    v1 = tmp;
   }
-
-  return { visibleProducts: filtered, visibleCount: filtered.length, categoryCounts: counts };
-});
-
-export interface CatalogMeta {
-  visibleCount: number;
-  categoryCounts: Record<string, number>;
+  return v0[word.length] <= maxDistance;
 }
 
-export const $catalogMeta = computed($filteredCatalog, (catalog) => ({
-  visibleCount: catalog.visibleCount,
-  categoryCounts: catalog.categoryCounts,
-}));
-
-/**
- * Domain Knowledge Dictionary: Defines which facets belong exclusively to which categories.
- * This completely replaces the need to query the DOM to validate filter state cleanup.
- * (Note: Ensure these match the exact 'value' attributes of your HTML inputs)
- */
-let FACET_DOMAINS: Record<string, string[]> = {};
-
-const SPECIAL_MAPPINGS: Record<string, string[]> = {
-  small: ['small', 'without-storage'],
-  medium: ['medium', 'storage'],
-  upright: ['upright', 'stick'],
-  bagless: ['bagless', 'cyclonic'],
-  cordless: ['cordless', 'battery'],
-};
-
-export function setProductsData(products: Product[]) {
-  $allProducts.set(products);
-
-  // Dynamically generate FACET_DOMAINS and tech SPECIAL_MAPPINGS to decouple business logic
-  FACET_DOMAINS = {};
-  const roSet = new Set<string>(['ro']);
-  const uvSet = new Set<string>(['uv']);
-  const ufSet = new Set<string>(['uf']);
-
-  products.forEach((p) => {
-    if (!FACET_DOMAINS[p.category]) {
-      // Initialize with base tech facets so UI state cleanup works properly
-      FACET_DOMAINS[p.category] = p.category === 'Water Purifier' ? ['ro', 'uv', 'uf'] : [];
-    }
-
-    p.subcategories.forEach((sub) => {
-      const s = sub.toLowerCase();
-      if (!FACET_DOMAINS[p.category].includes(s)) {
-        FACET_DOMAINS[p.category].push(s);
-      }
-      if (s.includes('ro')) roSet.add(s);
-      if (s.includes('uv')) uvSet.add(s);
-      if (s.includes('uf')) ufSet.add(s);
-    });
-  });
-
-  SPECIAL_MAPPINGS['ro'] = Array.from(roSet);
-  SPECIAL_MAPPINGS['uv'] = Array.from(uvSet);
-  SPECIAL_MAPPINGS['uf'] = Array.from(ufSet);
-}
-
-// Configuration object for generic facet groupings.
-// This moves business logic out of the core filtering algorithm.
-const FACET_GROUPS: Record<string, string[]> = {
-  tech: ['ro', 'uv', 'uf'],
-  placement: ['wall-mounted', 'under-counter', 'table-top'],
-  capacity: ['small', 'medium', 'large'],
-  vac_type: ['canister', 'handheld', 'upright', 'robotic'],
-  vac_app: ['dry', 'wet-dry'],
-  vac_dust: ['bagless', 'bagged'],
-  vac_pow: ['corded', 'cordless'],
-};
-
-export function productMatchesFacets(product: Product, facets: string[]): boolean {
-  if (facets.length === 0) return true;
-  const subcategories = product.subcategories.map((s) => s.toLowerCase());
-  const cat = product.category.toLowerCase();
-
-  // 1. Dynamically group active facets into their logical families
+export function buildFacetGroups(facets: string[]): Record<string, string[]> {
   const groups: Record<string, string[]> = {};
-
   facets.forEach((val) => {
     let groupName = 'other';
-
-    // Dynamically detect price bands (e.g., "10000-15000", "20000+")
     if (/^\d+(-\d+|\+)$/.test(val)) {
       groupName = 'price';
     } else {
-      // Resolve group from configuration
       for (const [gName, gFacets] of Object.entries(FACET_GROUPS)) {
         if (gFacets.includes(val)) {
           groupName = gName;
@@ -158,10 +89,198 @@ export function productMatchesFacets(product: Product, facets: string[]): boolea
         }
       }
     }
-
     if (!groups[groupName]) groups[groupName] = [];
     groups[groupName].push(val);
   });
+  return groups;
+}
+
+// This completely removes the Preact useEffect cascade.
+export const $filteredCatalog = computed([$allProducts, $filterState], (products, state) => {
+  const { categories, facets, query, sort } = state;
+  const isAllSelected = categories.includes('all');
+  const searchTerms = query.toLowerCase().trim().split(/\s+/).filter(Boolean);
+  const prebuiltGroups = buildFacetGroups(facets);
+
+  const filtered: Product[] = [];
+  const counts: Record<string, number> = {
+    [ProductCategory.WATER_PURIFIER]: 0,
+    [ProductCategory.AIR_PURIFIER]: 0,
+    [ProductCategory.VACUUM_CLEANER]: 0,
+    [ProductCategory.WATER_SOFTENER]: 0,
+  };
+  const facetCounts: Record<string, number> = {};
+
+  products.forEach((product) => {
+    const matchesCat = isAllSelected || categories.includes(product.category);
+
+    let searchString = searchIndexCache.get(product);
+    let words = searchWordsCache.get(product);
+
+    if (!searchString || !words) {
+      const rawText = `${product.name} ${product.description}`.toLowerCase();
+
+      // Cache individual words for fuzzy matching
+      words = Array.from(new Set(rawText.split(/[^a-z0-9]+/))).filter((w) => w.length > 2);
+      searchWordsCache.set(product, words);
+
+      // Append no-space version to easily match "aqua guard" vs "aquaguard"
+      searchString = rawText + ' ' + rawText.replace(/\s+/g, '');
+      searchIndexCache.set(product, searchString);
+    }
+
+    const matchesSearch =
+      searchTerms.length === 0 ||
+      searchTerms.every((term) => {
+        if (searchString!.includes(term)) return true; // Exact substring match is O(1) fast path
+        const tolerance = term.length <= 4 ? 1 : 2; // Allow 1 typo for short words, 2 for long
+        return words!.some((word) => isTypoMatch(term, word, tolerance));
+      });
+
+    const matchesFacet = productMatchesFacets(product, facets, prebuiltGroups);
+
+    if (matchesCat && matchesSearch && matchesFacet) {
+      if (counts[product.category] !== undefined) {
+        counts[product.category]++;
+      }
+
+      // Calculate active facet counts dynamically
+      let subcats = subcatCache.get(product);
+      if (!subcats) {
+        subcats = product.subcategories.map((s) => s.toLowerCase());
+        subcatCache.set(product, subcats);
+      }
+      subcats.forEach((sub) => {
+        facetCounts[sub] = (facetCounts[sub] || 0) + 1;
+      });
+
+      if (subcats.some((s) => s.includes(WaterTech.RO)))
+        facetCounts[WaterTech.RO] = (facetCounts[WaterTech.RO] || 0) + 1;
+      if (subcats.some((s) => s.includes(WaterTech.UV)))
+        facetCounts[WaterTech.UV] = (facetCounts[WaterTech.UV] || 0) + 1;
+      if (subcats.some((s) => s.includes(WaterTech.UF)))
+        facetCounts[WaterTech.UF] = (facetCounts[WaterTech.UF] || 0) + 1;
+
+      if (product.mop < 10000) facetCounts[PriceBracket.UNDER_10K] = (facetCounts[PriceBracket.UNDER_10K] || 0) + 1;
+      else if (product.mop < 15000)
+        facetCounts[PriceBracket.BETWEEN_10K_15K] = (facetCounts[PriceBracket.BETWEEN_10K_15K] || 0) + 1;
+      else if (product.mop < 20000)
+        facetCounts[PriceBracket.BETWEEN_15K_20K] = (facetCounts[PriceBracket.BETWEEN_15K_20K] || 0) + 1;
+      else facetCounts[PriceBracket.ABOVE_20K] = (facetCounts[PriceBracket.ABOVE_20K] || 0) + 1;
+
+      filtered.push(product);
+    }
+  });
+
+  if (sort !== SortOption.RELEVANCE) {
+    filtered.sort((a, b) => (sort === SortOption.PRICE_LOW ? a.mop - b.mop : b.mop - a.mop));
+  }
+
+  return { visibleProducts: filtered, visibleCount: filtered.length, categoryCounts: counts, facetCounts };
+});
+
+export interface CatalogMeta {
+  visibleCount: number;
+  categoryCounts: Record<string, number>;
+  facetCounts: Record<string, number>;
+}
+
+export const $catalogMeta = computed($filteredCatalog, (catalog) => ({
+  visibleCount: catalog.visibleCount,
+  categoryCounts: catalog.categoryCounts,
+  facetCounts: catalog.facetCounts,
+}));
+
+/**
+ * Domain Knowledge Dictionary: Defines which facets belong exclusively to which categories.
+ * This completely replaces the need to query the DOM to validate filter state cleanup.
+ * (Note: Ensure these match the exact 'value' attributes of your HTML inputs)
+ */
+export let FACET_DOMAINS: Record<string, string[]> = {};
+
+const SPECIAL_MAPPINGS: Record<string, string[]> = {
+  [Capacity.SMALL]: [Capacity.SMALL, 'without-storage'],
+  [Capacity.MEDIUM]: [Capacity.MEDIUM, 'storage'],
+  [VacType.UPRIGHT]: [VacType.UPRIGHT, VacType.STICK],
+  [VacDust.BAGLESS]: [VacDust.BAGLESS, VacDust.CYCLONIC],
+  [VacPow.CORDLESS]: [VacPow.CORDLESS, VacPow.BATTERY],
+};
+
+export function setProductsData(products: Product[]) {
+  $allProducts.set(products);
+
+  // Dynamically generate FACET_DOMAINS and tech SPECIAL_MAPPINGS to decouple business logic
+  FACET_DOMAINS = {};
+  const roSet = new Set<string>([WaterTech.RO]);
+  const uvSet = new Set<string>([WaterTech.UV]);
+  const ufSet = new Set<string>([WaterTech.UF]);
+
+  products.forEach((p) => {
+    if (!FACET_DOMAINS[p.category]) {
+      // Initialize with base tech facets so UI state cleanup works properly
+      FACET_DOMAINS[p.category] =
+        p.category === ProductCategory.WATER_PURIFIER ? [WaterTech.RO, WaterTech.UV, WaterTech.UF] : [];
+    }
+
+    p.subcategories.forEach((sub) => {
+      const s = sub.toLowerCase();
+      if (!FACET_DOMAINS[p.category].includes(s)) {
+        FACET_DOMAINS[p.category].push(s);
+      }
+      if (s.includes(WaterTech.RO)) roSet.add(s);
+      if (s.includes(WaterTech.UV)) uvSet.add(s);
+      if (s.includes(WaterTech.UF)) ufSet.add(s);
+    });
+  });
+
+  // Fix 4: Inject abstract mapped facets so they are recognized by the domain leakage engine
+  const injectMapping = (cat: string, mappingKeys: string[]) => {
+    if (FACET_DOMAINS[cat]) {
+      mappingKeys.forEach((key) => {
+        if (!FACET_DOMAINS[cat].includes(key)) FACET_DOMAINS[cat].push(key);
+      });
+    }
+  };
+  injectMapping(ProductCategory.VACUUM_CLEANER, [VacDust.BAGLESS, VacPow.CORDLESS, VacType.UPRIGHT]);
+  injectMapping(ProductCategory.WATER_PURIFIER, [Capacity.SMALL, Capacity.MEDIUM]);
+
+  SPECIAL_MAPPINGS[WaterTech.RO] = Array.from(roSet);
+  SPECIAL_MAPPINGS[WaterTech.UV] = Array.from(uvSet);
+  SPECIAL_MAPPINGS[WaterTech.UF] = Array.from(ufSet);
+}
+
+// Configuration object for generic facet groupings.
+// This moves business logic out of the core filtering algorithm.
+export const FACET_GROUPS: Record<string, string[]> = {
+  tech: [WaterTech.RO, WaterTech.UV, WaterTech.UF],
+  placement: [Placement.WALL_MOUNTED, Placement.UNDER_COUNTER, Placement.TABLE_TOP],
+  capacity: [Capacity.SMALL, Capacity.MEDIUM, Capacity.LARGE],
+  vac_type: [VacType.CANISTER, VacType.HANDHELD, VacType.UPRIGHT, VacType.ROBOTIC],
+  vac_app: [VacApp.DRY, VacApp.WET_DRY],
+  vac_dust: [VacDust.BAGLESS, VacDust.BAGGED],
+  vac_pow: [VacPow.CORDED, VacPow.CORDLESS],
+};
+
+export function productMatchesFacets(
+  product: Product,
+  facets: string[],
+  prebuiltGroups?: Record<string, string[]>,
+): boolean {
+  if (facets.length === 0) return true;
+
+  let subcategories = subcatCache.get(product);
+  if (!subcategories) {
+    subcategories = product.subcategories.map((s) => s.toLowerCase());
+    subcatCache.set(product, subcategories);
+  }
+
+  let cat = catCache.get(product);
+  if (!cat) {
+    cat = product.category.toLowerCase();
+    catCache.set(product, cat);
+  }
+
+  const groups = prebuiltGroups || buildFacetGroups(facets);
 
   // 2. Evaluate OR within the same group, AND across different groups
   for (const [groupName, groupFacets] of Object.entries(groups)) {
@@ -189,7 +308,11 @@ export function productMatchesFacets(product: Product, facets: string[]): boolea
 
       if (hasMatch) {
         groupMatch = true;
-      } else if (val === 'wall-mounted' && cat === 'water purifier' && !subcategories.includes('under-counter')) {
+      } else if (
+        val === Placement.WALL_MOUNTED &&
+        cat === ProductCategory.WATER_PURIFIER.toLowerCase() &&
+        !subcategories.includes(Placement.UNDER_COUNTER)
+      ) {
         groupMatch = true;
       }
     }
@@ -205,18 +328,26 @@ export function setFilterState(newState: Partial<FilterState>) {
   const currentState = $filterState.get();
   let updatedState = { ...currentState, ...newState };
 
+  // Fix 1 & 2: Intelligent Domain Leakage Prevention. Only clean up domain facets when switching categories.
+  const catsChanged =
+    newState.categories &&
+    (newState.categories.length !== currentState.categories.length ||
+      newState.categories.some((c) => !currentState.categories.includes(c)));
   const isAllSelected = updatedState.categories.includes('all');
-  let newFacets = [...updatedState.facets];
 
-  if (!isAllSelected) {
-    if (!updatedState.categories.includes('Water Purifier')) {
-      newFacets = newFacets.filter((f) => !FACET_DOMAINS['Water Purifier']?.includes(f));
-    }
-    if (!updatedState.categories.includes('Vacuum Cleaner')) {
-      newFacets = newFacets.filter((f) => !FACET_DOMAINS['Vacuum Cleaner']?.includes(f));
-    }
+  if (catsChanged && isAllSelected) {
+    const allDomainFacets = new Set<string>();
+    Object.values(FACET_DOMAINS).forEach((facets) => facets.forEach((f) => allDomainFacets.add(f)));
+    updatedState.facets = updatedState.facets.filter((f) => !allDomainFacets.has(f));
+  } else if (!isAllSelected) {
+    const allowedDomainFacets = new Set<string>();
+    updatedState.categories.forEach((cat) => {
+      FACET_DOMAINS[cat]?.forEach((f) => allowedDomainFacets.add(f));
+    });
+    const allDomainFacets = new Set<string>();
+    Object.values(FACET_DOMAINS).forEach((facets) => facets.forEach((f) => allDomainFacets.add(f)));
+    updatedState.facets = updatedState.facets.filter((f) => !allDomainFacets.has(f) || allowedDomainFacets.has(f));
   }
-  updatedState.facets = newFacets;
 
   // Update the reactive store
   $filterState.set(updatedState);
@@ -263,89 +394,16 @@ if (typeof window !== 'undefined') {
     window.history.replaceState(null, '', url);
   });
 
-  // ============= UI EVENT BINDINGS (Decoupled Routing) =============
-  registerClickAction({
-    selector: '.visual-filter-btn',
-    handle: (el: HTMLElement) => {
-      if (window.location.hash !== '#products') {
-        window.history.pushState(null, '', '#products');
-      }
-      const productsEl = document.getElementById('products');
-      if (productsEl) productsEl.style.display = '';
-      document.body.classList.add('products-visible');
-
-      const navCat = el.dataset.navCategory;
-      const filterVal = el.dataset.filter;
-
-      const parentContainer = el.closest('.visual-filters');
-      if (parentContainer) {
-        parentContainer.querySelectorAll('.visual-filter-btn').forEach((b) => {
-          b.classList.remove('active');
-          b.setAttribute('aria-pressed', 'false');
-        });
-      }
-      el.classList.add('active');
-      el.setAttribute('aria-pressed', 'true');
-
-      if (navCat) {
-        setFilterState({ categories: [navCat], facets: [], query: '' });
-      } else if (filterVal) {
-        // Hardcoded domain strings removed, defaults to data-target-category
-        const targetCat = el.dataset.targetCategory || 'Water Purifier';
-        setFilterState({ categories: [targetCat], facets: [filterVal], query: '' });
-      }
-
-      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    },
-  });
-
-  registerClickAction({
-    selector: '#sort-mobile-toggle',
-    handle: () => {
-      const currentState = $filterState.get();
-      document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
-        btn.classList.toggle('active', btn.dataset.sort === currentState.sort);
-      });
-      const url = new URL(window.location.href);
-      url.searchParams.set('view', 'sort');
-      window.history.pushState(null, '', url);
-      handleAppRouting();
-    },
-  });
-
-  registerClickAction({
-    selector: '.sort-option-btn',
-    handle: (el: HTMLElement) => {
-      const sortValue = el.dataset.sort;
-      if (sortValue) setFilterState({ sort: sortValue });
-      setTimeout(() => closeActiveOverlay(), 250);
-    },
-  });
-
-  registerClickAction({
-    selector: '#filter-clear-all',
-    handle: () => setFilterState({ categories: ['all'], facets: [], query: '' }),
-  });
-
-  document.addEventListener('change', (e: Event) => {
-    const target = e.target as HTMLSelectElement;
-    if (target.id === 'desktop-sort-select') {
-      setFilterState({ sort: target.value });
-      document.querySelectorAll<HTMLElement>('.sort-option-btn').forEach((btn) => {
-        btn.classList.toggle('active', btn.dataset.sort === target.value);
-      });
-    }
-  });
-
   const handleSearchInput = debounce((e: Event) => {
     const target = e.target as HTMLInputElement;
     if (target.id !== 'product-search') return;
 
-    const prodEl = document.getElementById('products');
-    if (prodEl && prodEl.style.display === 'none') {
-      prodEl.style.display = '';
-      document.body.classList.add('products-visible');
-      prodEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Fix 4: Prevent empty search scroll hijacking
+    const val = target.value.trim();
+    if (val && window.location.hash !== '#products') {
+      window.history.pushState(null, '', window.location.pathname + window.location.search + '#products');
+      window.dispatchEvent(new Event('popstate'));
+      document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
     setFilterState({ query: target.value });
   }, 300);
@@ -357,6 +415,13 @@ if (typeof window !== 'undefined') {
     if (target.closest('.header-search')) {
       e.preventDefault();
       document.getElementById('product-search')?.blur();
+
+      // A11y Focus Management: Shift focus to the product grid when search is executed
+      const productGrid = document.getElementById('product-grid');
+      if (productGrid) {
+        productGrid.setAttribute('tabindex', '-1');
+        productGrid.focus({ preventScroll: true });
+      }
     }
   });
 }

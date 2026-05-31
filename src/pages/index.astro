@@ -6,6 +6,14 @@ import products from '../data/products.json';
 import ProductGrid from '../components/ProductGrid.tsx';
 // @ts-ignore
 import { FilterSidebar } from '../components/FilterSidebar.tsx';
+// @ts-ignore
+import { VisualFilters } from '../components/VisualFilters.tsx';
+// @ts-ignore
+import { SortDropdown } from '../components/SortDropdown.tsx';
+// @ts-ignore
+import { MobileSortModal } from '../components/MobileSortModal.tsx';
+// @ts-ignore
+import { MobileFilterActions } from '../components/MobileFilterActions.tsx';
 import { setProductsData } from '../scripts/filters';
 
 export async function getStaticPaths() {
@@ -126,36 +134,7 @@ setProductsData(products as any);
 
       <!-- 2. Visual Filters -->
       <div class="visual-filters-wrapper">
-        <div class="visual-filters">
-          <button class="visual-filter-btn" data-nav-category="Water Purifier">
-            <div class="vf-img-wrap">
-              <img src={`${baseUrl}images/cat-water.webp`} alt="Water Purifiers" onerror="this.style.display='none'" />
-            </div>
-            <span>{t('filter_water')}</span>
-          </button>
-          <button class="visual-filter-btn" data-nav-category="Vacuum Cleaner">
-            <div class="vf-img-wrap">
-              <img src={`${baseUrl}images/cat-vacuum.webp`} alt="Vacuum Cleaners" onerror="this.style.display='none'" />
-            </div>
-            <span>{t('filter_vacuum')}</span>
-          </button>
-          <button class="visual-filter-btn" data-nav-category="Air Purifier">
-            <div class="vf-img-wrap">
-              <img src={`${baseUrl}images/cat-air.webp`} alt="Air Purifiers" onerror="this.style.display='none'" />
-            </div>
-            <span>{t('filter_air')}</span>
-          </button>
-          <button class="visual-filter-btn" data-nav-category="Water Softener">
-            <div class="vf-img-wrap">
-              <img
-                src={`${baseUrl}images/cat-softener.webp`}
-                alt="Water Softeners"
-                onerror="this.style.display='none'"
-              />
-            </div>
-            <span>{t('filter_softener')}</span>
-          </button>
-        </div>
+        <VisualFilters client:load translations={langData} baseUrl={baseUrl} />
       </div>
 
       <!-- 3. Main Products Area (Filters & Grid) -->
@@ -166,29 +145,11 @@ setProductsData(products as any);
         <!-- Main Grid Area -->
         <div class="products-main">
           <!-- Mobile Actions -->
-          <div class="mobile-actions-wrapper">
-            <button class="mobile-action-btn" id="sort-mobile-toggle">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline>
-              </svg>
-              {t('btn_sort')}
-            </button>
-            <button class="mobile-action-btn" id="filter-mobile-toggle">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-              </svg>
-              {t('btn_filter')}
-              <span class="filter-badge" id="filter-badge" style="display:none;">0</span>
-            </button>
-          </div>
+          <MobileFilterActions client:load translations={langData} />
 
           <!-- Desktop Sort Dropdown -->
           <div class="desktop-sort-wrapper">
-            <select class="sort-select" id="desktop-sort-select" aria-label="Sort products">
-              <option value="relevance">{t('sort_desktop_relevance')}</option>
-              <option value="price-low">{t('sort_price_low')}</option>
-              <option value="price-high">{t('sort_price_high')}</option>
-            </select>
+            <SortDropdown client:load translations={langData} />
           </div>
 
           <!-- The Preact Product Grid Island -->
@@ -282,11 +243,7 @@ setProductsData(products as any);
   <div class="filter-overlay pdp-modal" id="sort-modal">
     <div class="demo-modal-content pdp-content" style="max-width: 400px; padding: 20px;">
       <h3 class="demo-modal-title">{t('sort_title')}</h3>
-      <div class="sort-options-new">
-        <button class="sort-option-btn active" data-sort="relevance">{t('sort_relevance')}</button>
-        <button class="sort-option-btn" data-sort="price-low">{t('sort_price_low')}</button>
-        <button class="sort-option-btn" data-sort="price-high">{t('sort_price_high')}</button>
-      </div>
+      <MobileSortModal client:load translations={langData} />
       <button class="btn btn-outline sort-close" style="width: 100%; margin-top: 20px;">Cancel</button>
     </div>
   </div>

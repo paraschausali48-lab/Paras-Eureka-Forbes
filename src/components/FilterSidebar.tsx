@@ -1,5 +1,6 @@
 import { useStore } from '@nanostores/preact';
 import { $filterState, $catalogMeta, setFilterState } from '../scripts/filters';
+import { ProductCategory, WaterTech, VacType, VacPow } from '../scripts/types';
 
 interface Props {
   translations: Record<string, string>;
@@ -52,16 +53,16 @@ export function FilterSidebar({ translations }: Props) {
   };
 
   const isAll = state.categories.includes('all');
-  const showWater = isAll || state.categories.includes('Water Purifier');
-  const showVacuum = isAll || state.categories.includes('Vacuum Cleaner');
+  const showWater = isAll || state.categories.includes(ProductCategory.WATER_PURIFIER);
+  const showVacuum = isAll || state.categories.includes(ProductCategory.VACUUM_CLEANER);
 
   const WATER_FACETS = [
     {
       group: 'filter_tech_title',
       options: [
-        { val: 'ro', label: 'filter_tech_ro' },
-        { val: 'uv', label: 'filter_tech_uv' },
-        { val: 'uf', label: 'filter_tech_uf' },
+        { val: WaterTech.RO, label: 'filter_tech_ro' },
+        { val: WaterTech.UV, label: 'filter_tech_uv' },
+        { val: WaterTech.UF, label: 'filter_tech_uf' },
       ],
     },
     {
@@ -80,17 +81,17 @@ export function FilterSidebar({ translations }: Props) {
     {
       group: 'filter_vac_type_title',
       options: [
-        { val: 'canister', label: 'filter_vac_type_can' },
-        { val: 'handheld', label: 'filter_vac_type_hand' },
-        { val: 'upright', label: 'filter_vac_type_stick' },
-        { val: 'robotic', label: 'filter_vac_type_rob' },
+        { val: VacType.CANISTER, label: 'filter_vac_type_can' },
+        { val: VacType.HANDHELD, label: 'filter_vac_type_hand' },
+        { val: VacType.UPRIGHT, label: 'filter_vac_type_stick' },
+        { val: VacType.ROBOTIC, label: 'filter_vac_type_rob' },
       ],
     },
     {
       group: 'filter_vac_pow_title',
       options: [
-        { val: 'corded', label: 'filter_vac_pow_corded' },
-        { val: 'cordless', label: 'filter_vac_pow_cordless' },
+        { val: VacPow.CORDED, label: 'filter_vac_pow_corded' },
+        { val: VacPow.CORDLESS, label: 'filter_vac_pow_cordless' },
       ],
     },
   ];
@@ -100,7 +101,7 @@ export function FilterSidebar({ translations }: Props) {
       <div className="filter-sidebar-header">
         <h2>{t('filter_title')}</h2>
         {(state.facets.length > 0 || !isAll || state.query !== '') && (
-          <button onClick={clearAll} className="clear-all-btn">
+          <button onClick={clearAll} className="clear-all-btn" id="filter-clear-all">
             {t('filter_clear_all')}
           </button>
         )}
@@ -117,14 +118,19 @@ export function FilterSidebar({ translations }: Props) {
           <span>{t('filter_all')}</span>
         </label>
 
-        {['Water Purifier', 'Vacuum Cleaner', 'Air Purifier', 'Water Softener'].map((cat) => {
+        {[
+          ProductCategory.WATER_PURIFIER,
+          ProductCategory.VACUUM_CLEANER,
+          ProductCategory.AIR_PURIFIER,
+          ProductCategory.WATER_SOFTENER,
+        ].map((cat) => {
           const count = meta.categoryCounts[cat] || 0;
           const tKey =
-            cat === 'Water Purifier'
+            cat === ProductCategory.WATER_PURIFIER
               ? 'filter_water'
-              : cat === 'Vacuum Cleaner'
+              : cat === ProductCategory.VACUUM_CLEANER
                 ? 'filter_vacuum'
-                : cat === 'Air Purifier'
+                : cat === ProductCategory.AIR_PURIFIER
                   ? 'filter_air'
                   : 'filter_softener';
 

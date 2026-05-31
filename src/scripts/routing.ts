@@ -70,7 +70,6 @@ export function hideProductsView() {
   const prodEl = document.getElementById('products');
   if (prodEl) prodEl.style.display = 'none';
   document.body.classList.remove('products-visible');
-  document.querySelectorAll('.visual-filter-btn').forEach((b) => b.classList.remove('active'));
   const clearAllBtn = document.getElementById('filter-clear-all');
   if (clearAllBtn) clearAllBtn.click();
 }
